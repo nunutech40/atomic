@@ -7,6 +7,7 @@ import { renderElementDetail } from './components/ElementDetail';
 import { renderMoleculeBuilder } from './components/MoleculeBuilder';
 import { renderPhenomenonStory } from './components/PhenomenonStory';
 import { renderDiscovererStory } from './components/DiscovererStory';
+import { renderPhenomenaList } from './components/PhenomenaList';
 
 
 initTheme();
@@ -50,6 +51,7 @@ addRoute('/molecule', () => {
 
 addRoute('/phenomena', () => {
     main.innerHTML = '';
+    renderPhenomenaList(main);
     setCleanup(() => { });
 });
 

@@ -9116,3 +9116,277 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PHENOMENA LIST PAGE
+═══════════════════════════════════════════════════════════════ */
+.phenomena-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+/* Header */
+.phenomena-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.phenomena-hero-icon {
+  font-size: 52px;
+  line-height: 1;
+  margin-bottom: 12px;
+  display: block;
+  filter: drop-shadow(0 0 24px rgba(251, 191, 36, .5));
+}
+
+.phenomena-title {
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 900;
+  color: var(--text-1);
+  letter-spacing: -.02em;
+  margin-bottom: 10px;
+}
+
+.phenomena-subtitle {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto 14px;
+}
+
+.phenomena-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.phenomena-stats strong {
+  color: var(--text-1);
+}
+
+/* Search */
+.phenomena-search-wrap {
+  margin-bottom: 20px;
+}
+
+.phenomena-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  transition: border-color .2s;
+}
+
+.phenomena-search-box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent)20;
+}
+
+.phenomena-search-icon {
+  font-size: 16px;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+.phenomena-search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-1);
+  font-family: var(--font-sans);
+}
+
+.phenomena-search-input::placeholder {
+  color: var(--text-3);
+}
+
+/* Category tabs */
+.phenomena-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.ptab {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all .18s;
+}
+
+.ptab:hover {
+  border-color: var(--tc, var(--accent));
+  color: var(--tc, var(--accent));
+}
+
+.ptab--active {
+  background: var(--tc, var(--accent));
+  border-color: var(--tc, var(--accent));
+  color: #fff !important;
+}
+
+.ptab-count {
+  background: rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 0 6px;
+  font-size: 11px;
+}
+
+.ptab:not(.ptab--active) .ptab-count {
+  background: var(--bg-3);
+  color: var(--text-3);
+}
+
+/* Card grid */
+.phenomena-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.phen-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.phen-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--pc, var(--accent));
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.phen-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--pc, var(--accent))60;
+  box-shadow: 0 8px 24px var(--pc, var(--accent))20;
+}
+
+.phen-card:hover::before {
+  opacity: 1;
+}
+
+.phen-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.phen-card-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.phen-card-cat {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.phen-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1.3;
+}
+
+.phen-card-en {
+  font-size: 11px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.phen-card-tagline {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.phen-card-atoms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.phen-atom-chip {
+  background: var(--bg-3);
+  color: var(--text-3);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.phen-card-cta {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pc, var(--accent));
+  letter-spacing: .03em;
+}
+
+/* No result */
+.phenomena-no-result {
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 0;
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .phenomena-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .phenomena-tabs {
+    gap: 6px;
+  }
+
+  .ptab {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
