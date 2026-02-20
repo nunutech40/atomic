@@ -373,6 +373,44 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildNucleoOnionAnim();
   } else if (animClass === 'anim-nucleo-supernova') {
     atomAnimation = buildNucleoSupernovaAnim();
+  } else if (animClass === 'anim-photo-hook') {
+    atomAnimation = buildPhotosynthesisHookAnim();
+  } else if (animClass === 'anim-photo-equation') {
+    atomAnimation = buildPhotosynthesisEquationAnim();
+  } else if (animClass === 'anim-photo-chlorophyll') {
+    atomAnimation = buildPhotosynthesisChlorophyllAnim();
+  } else if (animClass === 'anim-photo-calvin') {
+    atomAnimation = buildPhotosynthesisCalvinAnim();
+  } else if (animClass === 'anim-dna-hook') {
+    atomAnimation = buildDnaHookAnim();
+  } else if (animClass === 'anim-dna-structure') {
+    atomAnimation = buildDnaStructureAnim();
+  } else if (animClass === 'anim-dna-transcription') {
+    atomAnimation = buildDnaTranscriptionAnim();
+  } else if (animClass === 'anim-crystal-hook') {
+    atomAnimation = buildCrystalHookAnim();
+  } else if (animClass === 'anim-diamond-lattice') {
+    atomAnimation = buildDiamondLatticeAnim();
+  } else if (animClass === 'anim-graphite-layers') {
+    atomAnimation = buildGraphiteLayersAnim();
+  } else if (animClass === 'anim-fire-hook') {
+    atomAnimation = buildFireHookAnim();
+  } else if (animClass === 'anim-combustion-reaction') {
+    atomAnimation = buildCombustionReactionAnim();
+  } else if (animClass === 'anim-rust-hook') {
+    atomAnimation = buildRustHookAnim();
+  } else if (animClass === 'anim-rust-reaction') {
+    atomAnimation = buildRustReactionAnim();
+  } else if (animClass === 'anim-stability-hook') {
+    atomAnimation = buildStabilityHookAnim();
+  } else if (animClass === 'anim-energy-hill') {
+    atomAnimation = buildEnergyHillAnim();
+  } else if (animClass === 'anim-sodium-water') {
+    atomAnimation = buildSodiumWaterAnim();
+  } else if (animClass === 'anim-gold-hook') {
+    atomAnimation = buildGoldHookAnim();
+  } else if (animClass === 'anim-gold-electron') {
+    atomAnimation = buildGoldElectronAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -1354,6 +1392,222 @@ function buildNucleoSupernovaAnim(): string {
         ${['C', 'O', 'N', 'Fe', 'Au', 'Ca'].map((el, i) => `<div class="ps-sn-eject" style="--i:${i}">${el}</div>`).join('')}
       </div>
       <div class="ps-sn-label">Kolaps inti (0.1 detik) → shockwave → elemen terlempar ke angkasa</div>
+    </div>
+  `;
+}
+
+// ── PHOTOSYNTHESIS ANIMATIONS ────────────────────────────────────────────────
+function buildPhotosynthesisHookAnim(): string {
+  return `
+    <div class="ps-anim-generic">
+      <div class="ps-gen-icon" style="font-size:52px;animation:ps-gen-pulse 2s ease-in-out infinite alternate">🌿</div>
+      <div class="ps-gen-label">Ditemukan 1771 · Mekanisme dipahami ~1990</div>
+    </div>
+  `;
+}
+function buildPhotosynthesisEquationAnim(): string {
+  return `
+    <div class="ps-anim-equation">
+      <div class="ps-eq-row"><span class="ps-eq-in">6CO₂</span><span class="ps-eq-plus">+</span><span class="ps-eq-in">6H₂O</span><span class="ps-eq-plus">+</span><span class="ps-eq-light">☀️</span></div>
+      <div class="ps-eq-arrow">↓</div>
+      <div class="ps-eq-row"><span class="ps-eq-out">C₆H₁₂O₆</span><span class="ps-eq-plus">+</span><span class="ps-eq-out">6O₂</span></div>
+      <div class="ps-eq-note">Limbah fotosintesis = oksigen yang kamu hirup</div>
+    </div>
+  `;
+}
+function buildPhotosynthesisChlorophyllAnim(): string {
+  return `
+    <div class="ps-anim-chlorophyll">
+      <div class="ps-chl-ring">
+        <div class="ps-chl-center">Mg</div>
+        ${[0, 60, 120, 180, 240, 300].map(deg => `<div class="ps-chl-arm" style="--deg:${deg}deg">N</div>`).join('')}
+      </div>
+      <div class="ps-chl-label">1 atom Mg di tengah klorofil · menangkap foton</div>
+    </div>
+  `;
+}
+function buildPhotosynthesisCalvinAnim(): string {
+  const steps = ['CO₂', '3-PGA', 'G3P', 'Glukosa'];
+  return `
+    <div class="ps-anim-cycle">
+      ${steps.map((s, i) => `<div class="ps-cyc-node" style="--i:${i}">${s}</div>`).join('<div class="ps-cyc-arrow">→</div>')}
+      <div class="ps-cyc-label">Siklus Calvin · 3 putaran = 1 glukosa</div>
+    </div>
+  `;
+}
+
+// ── DNA ANIMATIONS ───────────────────────────────────────────────────────────
+function buildDnaHookAnim(): string {
+  const atoms = [{ s: 'C', c: '#f59e0b' }, { s: 'H', c: '#60a5fa' }, { s: 'O', c: '#ef4444' }, { s: 'N', c: '#22c55e' }, { s: 'P', c: '#a78bfa' }];
+  return `
+    <div class="ps-anim-dna-atoms">
+      <div class="ps-da-title">5 atom · Semua kehidupan di Bumi</div>
+      <div class="ps-da-atoms">
+        ${atoms.map((a, i) => `<div class="ps-da-atom" style="--c:${a.c};--i:${i}">${a.s}</div>`).join('')}
+      </div>
+      <div class="ps-da-arrow">↓</div>
+      <div class="ps-da-label">🦠 Bakteri · 🌳 Pohon · 🐳 Paus · 🧑 Kamu</div>
+    </div>
+  `;
+}
+function buildDnaStructureAnim(): string {
+  return `
+    <div class="ps-anim-helix">
+      ${Array.from({ length: 8 }, (_, i) => `
+        <div class="ps-hx-rung" style="--i:${i}">
+          <span class="ps-hx-base" style="color:#60a5fa">${['A', 'G', 'T', 'C', 'A', 'T', 'G', 'C'][i]}</span>
+          <span class="ps-hx-bond">—</span>
+          <span class="ps-hx-base" style="color:#f59e0b">${['T', 'C', 'A', 'G', 'T', 'A', 'C', 'G'][i]}</span>
+        </div>
+      `).join('')}
+      <div class="ps-hx-label">A-T · G-C · selalu berpasangan</div>
+    </div>
+  `;
+}
+function buildDnaTranscriptionAnim(): string {
+  return `
+    <div class="ps-anim-central-dogma">
+      <div class="ps-cd-step" style="--c:#3b82f6">🧬 DNA</div>
+      <div class="ps-cd-arrow">→ transkripsi →</div>
+      <div class="ps-cd-step" style="--c:#8b5cf6">📜 RNA</div>
+      <div class="ps-cd-arrow">→ translasi →</div>
+      <div class="ps-cd-step" style="--c:#22c55e">⚙️ Protein</div>
+    </div>
+  `;
+}
+
+// ── CRYSTAL ANIMATIONS ───────────────────────────────────────────────────────
+function buildCrystalHookAnim(): string {
+  return `
+    <div class="ps-anim-crystal-compare">
+      <div class="ps-cc-side">
+        <div class="ps-cc-icon">💎</div>
+        <div class="ps-cc-name">Berlian</div>
+        <div class="ps-cc-formula">C — 3D tetrahedral</div>
+        <div class="ps-cc-prop">Mohs 10 · Paling keras</div>
+      </div>
+      <div class="ps-cc-vs">VS</div>
+      <div class="ps-cc-side">
+        <div class="ps-cc-icon">✏️</div>
+        <div class="ps-cc-name">Grafit</div>
+        <div class="ps-cc-formula">C — Lapisan 2D</div>
+        <div class="ps-cc-prop">Mohs 1 · Meninggalkan bekas</div>
+      </div>
+    </div>
+  `;
+}
+function buildDiamondLatticeAnim(): string {
+  return `
+    <div class="ps-anim-lattice">
+      <div class="ps-lat-center">C</div>
+      ${[0, 72, 144, 216, 288].map(d => `<div class="ps-lat-bond" style="--deg:${d}deg"><div class="ps-lat-atom">C</div></div>`).join('')}
+      <div class="ps-lat-label">Setiap C berikatan dengan 4 C lain · tidak ada titik lemah</div>
+    </div>
+  `;
+}
+function buildGraphiteLayersAnim(): string {
+  return `
+    <div class="ps-anim-layers">
+      <div class="ps-lay-stack">
+        ${[0, 1, 2].map(i => `<div class="ps-lay-layer" style="--i:${i}">C—C—C—C—C—C</div>`).join('')}
+      </div>
+      <div class="ps-lay-label">Lapisan mudah tergelincir → meninggalkan bekas di kertas</div>
+    </div>
+  `;
+}
+
+// ── COMBUSTION ANIMATIONS ────────────────────────────────────────────────────
+function buildFireHookAnim(): string {
+  return `
+    <div class="ps-anim-fire">
+      <div class="ps-fire-icon">🔥</div>
+      <div class="ps-fire-eq">C + H + O₂ → CO₂ + H₂O + energi</div>
+      <div class="ps-fire-note">Api bukan zat — api adalah proses</div>
+    </div>
+  `;
+}
+function buildCombustionReactionAnim(): string {
+  return `
+    <div class="ps-anim-equation">
+      <div class="ps-eq-row"><span class="ps-eq-in">C</span><span class="ps-eq-plus">+</span><span class="ps-eq-in">O₂</span></div>
+      <div class="ps-eq-arrow">→ Exothermic →</div>
+      <div class="ps-eq-row"><span class="ps-eq-out">CO₂</span><span class="ps-eq-plus">+</span><span class="ps-eq-out">🔥 Energi</span></div>
+    </div>
+  `;
+}
+
+// ── RUST ANIMATIONS ──────────────────────────────────────────────────────────
+function buildRustHookAnim(): string {
+  return `
+    <div class="ps-anim-generic">
+      <div class="ps-gen-icon" style="font-size:48px">🪨</div>
+      <div class="ps-gen-label">Mars merah = Fe₂O₃ skala planet</div>
+    </div>
+  `;
+}
+function buildRustReactionAnim(): string {
+  return `
+    <div class="ps-anim-equation">
+      <div class="ps-eq-row"><span class="ps-eq-in">4Fe</span><span class="ps-eq-plus">+</span><span class="ps-eq-in">3O₂</span><span class="ps-eq-plus">+</span><span class="ps-eq-in">6H₂O</span></div>
+      <div class="ps-eq-arrow">↓</div>
+      <div class="ps-eq-row"><span class="ps-eq-out" style="color:#b45309">Fe₂O₃·3H₂O (karat)</span></div>
+    </div>
+  `;
+}
+
+// ── STABILITY ANIMATIONS ─────────────────────────────────────────────────────
+function buildStabilityHookAnim(): string {
+  return `
+    <div class="ps-anim-stability">
+      <div class="ps-stab-title">Semua atom menuju energi minimum</div>
+      <div class="ps-stab-examples">
+        <div class="ps-stab-item">Na 💧 → Ledakan</div>
+        <div class="ps-stab-item">Fe 🌧️ → Karat</div>
+        <div class="ps-stab-item">He → Tidak bereaksi</div>
+        <div class="ps-stab-item">C+O₂ 🔥 → CO₂</div>
+      </div>
+    </div>
+  `;
+}
+function buildEnergyHillAnim(): string {
+  return `
+    <div class="ps-anim-hill">
+      <div class="ps-hill-curve">
+        <div class="ps-hill-ball" id="hill-ball">⚪</div>
+      </div>
+      <div class="ps-hill-labels">
+        <span>Bahan bakar (tidak stabil)</span>
+        <span>→</span>
+        <span>CO₂+H₂O (stabil)</span>
+      </div>
+    </div>
+  `;
+}
+function buildSodiumWaterAnim(): string {
+  return `
+    <div class="ps-anim-equation">
+      <div class="ps-eq-row"><span class="ps-eq-in">2Na</span><span class="ps-eq-plus">+</span><span class="ps-eq-in">2H₂O</span></div>
+      <div class="ps-eq-arrow">→ MELEDAK →</div>
+      <div class="ps-eq-row"><span class="ps-eq-out">2NaOH</span><span class="ps-eq-plus">+</span><span class="ps-eq-out">H₂↑💥</span></div>
+    </div>
+  `;
+}
+
+// ── GOLD ANIMATIONS ──────────────────────────────────────────────────────────
+function buildGoldHookAnim(): string {
+  return `
+    <div class="ps-anim-gold">
+      <div class="ps-gold-icon">👑</div>
+      <div class="ps-gold-years">3.300 tahun</div>
+      <div class="ps-gold-label">Mahkota firaun masih berkilap — tidak satu pun noda karat</div>
+    </div>
+  `;
+}
+function buildGoldElectronAnim(): string {
+  return `
+    <div class="ps-anim-generic">
+      <div class="ps-gen-icon" style="font-size:44px;color:#fbbf24">Au</div>
+      <div class="ps-gen-label">Efek relativistik · orbital 6s menyusut · terikat kuat · tidak mau bereaksi</div>
     </div>
   `;
 }

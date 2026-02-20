@@ -617,101 +617,6 @@ export const phenomenonStories: PhenomenonStory[] = [
         ],
     },
 
-    // ── NUKLEOSINTESIS BINTANG ──────────────────────────────────────────────────
-    {
-        id: 'nucleosynthesis',
-        slides: [
-            {
-                type: 'hook',
-                title: 'Kamu Terbuat dari Bintang yang Sudah Mati',
-                body: 'Atom besi di dalam darahmu. Atom kalsium di tulangmu. Atom oksigen yang kamu hirup setiap detik. Semuanya tidak pernah ada saat alam semesta lahir. Mereka diciptakan di dalam perut bintang raksasa miliaran tahun lalu — lalu dilemparkan ke seluruh galaksi saat bintang itu meledak. Kamu adalah abu dari bintang yang sudah mati.',
-                visual: '⭐',
-                animKey: 'anim-stardust',
-                highlight: 'Hidrogen dan helium → Big Bang · Semua yang lebih berat → Bintang',
-            },
-            {
-                type: 'history',
-                title: 'Bagaimana Kita Tahu Ini?',
-                body: 'Pada tahun 1957, empat ilmuwan menerbitkan sebuah makalah yang dikenal hanya dengan inisial penulisnya: "B²FH" (Burbidge, Burbidge, Fowler, dan Hoyle). Makalah itu berjudul "Sintesis Unsur-unsur di Bintang" dan menjelaskan secara matematis bagaimana setiap unsur di tabel periodik terbentuk di dalam bintang. Ini adalah salah satu makalah ilmiah paling berpengaruh sepanjang sejarah.',
-                quote: 'Kita semua adalah abu dari bintang. Nitrogen di DNA kita, kalsium di gigi kita, besi di darah kita, karbon di pai apel kita — dibuat di bagian dalam bintang yang runtuh. Kita terbuat dari materi bintang.',
-                quoteAuthor: 'Carl Sagan, Cosmos (1980)',
-                visual: '🔭',
-                history: [
-                    { year: '1920', event: 'Arthur Eddington mengusulkan bahwa matahari ditenagai oleh fusi hidrogen menjadi helium', person: 'Arthur Eddington' },
-                    { year: '1939', event: 'Hans Bethe menghitung siklus reaksi fusi di bintang secara detail — meraih Nobel 1967', person: 'Hans Bethe' },
-                    { year: '1957', event: 'Makalah B²FH — blueprint lengkap bagaimana semua unsur tercipta di bintang', person: 'Burbidge, Burbidge, Fowler & Hoyle' },
-                    { year: '2017', event: 'LIGO mendeteksi tabrakan dua bintang neutron — konfirmasi visual bahwa emas dan platinum lahir dari kilonova', person: 'LIGO/Virgo Collaboration' },
-                ],
-            },
-            {
-                type: 'step',
-                title: 'Step 1: Lahir dari Big Bang — Hanya H dan He',
-                body: 'Big Bang 13,8 miliar tahun lalu hanya menghasilkan dua unsur: hidrogen (75%) dan helium (25%), plus jejak litium yang sangat kecil. Tidak ada karbon, tidak ada oksigen, tidak ada besi. Alam semesta awal sangat sederhana — dan sangat membosankan. Seluruh keragaman kimia yang ada hari ini belum ada.',
-                visual: '🌌',
-                animKey: 'anim-bigbang',
-                highlight: 'Big Bang → H (75%) + He (24%) + Li (<1%) · Tidak ada yang lain',
-            },
-            {
-                type: 'step',
-                title: 'Step 2: Bintang Menyalakan Diri',
-                body: 'Gravitasi menarik awan hidrogen semakin rapat sampai pusat awan itu mencapai suhu 10 juta Kelvin. Di sinilah fusi proton-proton dimulai: 4 inti hidrogen bergabung menjadi 1 inti helium. "Massa yang hilang" terkonversi menjadi cahaya dan panas — sinar matahari. Matahari kita membakar 600 juta ton hidrogen per detik melalui fusi ini.',
-                visual: '☀️',
-                animKey: 'anim-stellar-fusion',
-                highlight: '4 H → He + energi (0.7% massa hilang = 4 × 10²⁶ Watt)',
-            },
-            {
-                type: 'step',
-                title: 'Step 3: Bintang Raksasa Membuat Karbon & Oksigen',
-                body: 'Ketika bintang kehabisan hidrogen di intinya, ia menyusut dan memanas lagi — sampai 100 juta Kelvin. Cukup panas untuk bintang baru: fusi helium menjadi karbon (triple-alpha process: 3 He → C). Lalu karbon + helium → oksigen. Inilah asal mula semua karbon di tubuhmu dan oksigen yang kamu hirup.',
-                visual: '💚',
-                animKey: 'anim-carbon-fusion',
-                highlight: 'Triple-alpha: ³He → C-12 · C-12 + He → O-16',
-            },
-            {
-                type: 'step',
-                title: 'Step 4: Bintang Masif Menempa Tabel Periodik',
-                body: 'Bintang yang 8× lebih masif dari matahari terus memanas dan membakar lapisan demi lapisan: karbon → neon → oksigen → silikon → besi. Setiap lapisan baru membutuhkan suhu lebih tinggi. Besi adalah akhir jalan — fusi besi tidak menghasilkan energi, malah menyerapnya. Ketika inti menjadi besi murni, bintang mati.',
-                visual: '🔥',
-                animKey: 'anim-onion-layers',
-                highlight: 'H → He → C → Ne → O → Si → Fe (akhir jalan fusi)',
-            },
-            {
-                type: 'step',
-                title: 'Step 5: Supernova — Ledakan Terbesar di Alam Semesta',
-                body: 'Inti besi yang tidak bisa lagi terbakar runtuh dalam sepersepuluh detik — dimampatkan dari ukuran Bumi menjadi bola neutron seukuran kota. Energi runtuhnya dahsyat menghasilkan ledakan supernova yang lebih terang dari satu miliar matahari. Ledakan ini melontarkan semua unsur yang pernah dibuat bintang itu ke seluruh penjuru galaksi.',
-                visual: '💥',
-                animKey: 'anim-supernova',
-                highlight: 'Supernova menghasilkan semua unsur dari He sampai Fe — lalu menyebarkannya',
-            },
-            {
-                type: 'step',
-                title: 'Step 6: Emas Lahir dari Tabrakan Bintang Neutron',
-                body: 'Ternyata ada yang tidak bisa dibuat supernova biasa: emas (Au), platinum (Pt), dan unsur-unsur berat lainnya. Mereka hanya bisa terbentuk dalam kondisi yang jauh lebih ekstrem: tabrakan dua bintang neutron (kilonova). Pada 2017, teleskop LIGO mendeteksi gelombang gravitasi dari kilonova — dan spektroskopnya menunjukkan emas dalam jumlah massa setara Planet Jupiter.',
-                visual: '🥇',
-                animKey: 'anim-kilonova',
-                highlight: 'Kilonova 2017: menghasilkan > 200 massa Bumi emas & platinum',
-            },
-            {
-                type: 'scale',
-                title: 'Kamu adalah 13,8 Miliar Tahun Sejarah',
-                body: 'Setiap atom di dalam tubuhmu punya kisah perjalanan yang luar biasa. Hidrogen di air dalam tubuhmu — lahir detik-detik setelah Big Bang, 13,8 miliar tahun lalu. Karbon di DNA-mu — ditempa di inti bintang yang sudah mati sebelum matahari terbentuk. Besi di sel darah merahmu — mungkin lahir dari supernova yang meledak 5 miliar tahun lalu, melemparkan materinya ke awan nebula yang kemudian membentuk matahari dan bumi.',
-                visual: '🌠',
-                highlight: 'Tubuhmu = 10²⁸ atom · dari berjuta bintang berbeda · selama miliaran tahun',
-            },
-            {
-                type: 'impact',
-                title: 'Kita Semua Satu Keluarga dengan Bintang',
-                body: 'Nukleosintesis bukan hanya fakta ilmiah — ia mengubah cara kita memandang diri sendiri. Kita bukan terpisah dari alam semesta. Kita adalah bagian darinya — secara harfiah, sampai ke atom terkecil di tubuh kita. Batas antara "kita" dan "langit" lebur. Spektroskop di observatorium bisa membaca tabel periodik dari cahaya bintang yang berjarak ribuan tahun cahaya — dan hasilnya sama dengan yang ada di laboratorium bumi.',
-                visual: '🌌',
-                history: [
-                    { year: '4,6 miliar tahun lalu', event: 'Nebula bintang-bintang mati runtuh menjadi matahari dan tata surya kita' },
-                    { year: '3,8 miliar tahun lalu', event: 'Kehidupan pertama di Bumi — atom-atom bintang mulai bereplikasi' },
-                    { year: 'Hari ini', event: 'Tubuhmu terus meminjam atom dari lingkungan dan mengembalikannya — daur kosmik tak henti' },
-                ],
-                highlight: '"Kita semua adalah cara alam semesta mengenal dirinya sendiri." — Carl Sagan',
-            },
-        ],
-    },
 
     // ── FUSI NUKLIR ──────────────────────────────────────────────────────────
     {
@@ -879,6 +784,349 @@ export const phenomenonStories: PhenomenonStory[] = [
                 highlight: 'Nobel Fisika 1903 + Nobel Kimia 1911 · Satu-satunya peraih Nobel ganda lintas bidang · Buku catatan masih radioaktif hingga tahun ~3400',
             },
 
+        ],
+    },
+
+    // ── FOTOSINTESIS ─────────────────────────────────────────────────────────
+    {
+        id: 'photosynthesis',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Kita Baru Mengerti Ini di Tahun 1990-an',
+                body: 'Fotosintesis ditemukan tahun 1771. Manusia sudah 200 tahun tahu bahwa daun mengubah cahaya matahari jadi makanan. Tapi bagaimana kelak persis mekanismenya, langkah per langkah, molekul per molekul — itu baru terjawab di tahun 1990-an. Dan ternyata jawabannya lebih gila dari yang pernah diduga siapa pun.',
+                visual: '🌿',
+                animKey: 'anim-photo-hook',
+                highlight: 'Ditemukan 1771 · Benar-benar dipahami ~1990 · Lebih dari 2 abad misteri',
+            },
+            {
+                type: 'history',
+                title: 'Siapa yang Menemukan Fotosintesis?',
+                body: 'Tahun 1771, Joseph Priestley menaruh tikus bersama tanaman mint di dalam toples tertutup. Normalnya tikus akan mati kehabisan udara. Tapi dengan mint — tikus hidup. Ia tidak tahu kenapa. Jan Ingenhousz (1779) menemukan cahaya diperlukan. Nicolas de Saussure (1804) membuktikan CO₂ dan air adalah bahan bakunya. Cornelis van Niel (1931) menyadari oksigen berasal dari air, bukan CO₂. Tiap generasi menemukan sepotong — tapi puzzle utuhnya baru terlihat di era mikroskop elektron dan kristalografi sinar-X.',
+                visual: '🔬',
+                history: [
+                    { year: '1771', event: 'Priestley: tanaman mint menyelamatkan tikus dalam toples tertutup', person: 'Joseph Priestley' },
+                    { year: '1779', event: 'Ingenhousz: cahaya diperlukan, kegelapan membalik prosesnya', person: 'Jan Ingenhousz' },
+                    { year: '1804', event: 'de Saussure: CO₂ + H₂O = bahan baku utama', person: 'Nicolas de Saussure' },
+                    { year: '1937', event: 'Hill: oksigen dibebaskan dari pemecahan air, bukan CO₂', person: 'Robert Hill' },
+                    { year: '1954', event: 'Siklus Calvin-Benson: bagaimana CO₂ diubah menjadi gula, lengkap', person: 'Melvin Calvin' },
+                    { year: '1988', event: 'Struktur 3D fotosistem pertama berhasil dipetakan lewat kristalografi — Nobel Kimia', person: 'Deisenhofer, Huber, Michel' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Bahan Baku yang Sesederhana Mungkin',
+                body: 'Fotosintesis cuma butuh 3 hal: cahaya matahari, air (H₂O), dan karbon dioksida (CO₂) dari udara. Hasilnya: glukosa (C₆H₁₂O₆) — bahan bakar untuk semua makhluk hidup — plus oksigen (O₂) yang dibuang begitu saja sebagai limbah. Limbah fotosintesis adalah oksigen yang kamu hirup sekarang.',
+                visual: '⚗️',
+                animKey: 'anim-photo-equation',
+                highlight: '6CO₂ + 6H₂O + cahaya → C₆H₁₂O₆ + 6O₂',
+            },
+            {
+                type: 'step',
+                title: 'Klorofil: Antena Foton Ajaib',
+                body: 'Di tengah setiap molekul klorofil ada satu atom magnesium (Mg). Atom Mg inilah yang bikin daun bisa menangkap foton. Klorofil menyerap cahaya merah dan biru, memantulkan hijau — makanya daun terlihat hijau. Energi foton yang ditangkap digunakan untuk memecah molekul air: H₂O → 2H⁺ + ½O₂ + 2e⁻. Elektron yang terlepas itulah yang menggerakkan seluruh mesin fotosintesis.',
+                visual: '🍃',
+                animKey: 'anim-photo-chlorophyll',
+                highlight: '1 atom Mg di tengah klorofil · menyerap merah+biru · memantulkan hijau',
+            },
+            {
+                type: 'step',
+                title: 'Siklus Calvin: Pabrik Gula Nano',
+                body: 'Energi yang ditangkap klorofil dipakai oleh siklus Calvin untuk "menangkap" CO₂ dari udara dan menyusunnya menjadi glukosa. Ini bukan proses simpel — butuh 3 putaran siklus untuk menghasilkan 1 molekul glukosa, melibatkan lebih dari 12 reaksi biokimia berbeda, dibantu enzim bernama RuBisCO — enzim paling melimpah di Bumi, mungkin protein yang paling banyak diproduksi di seluruh sejarah kehidupan.',
+                visual: '🔄',
+                animKey: 'anim-photo-calvin',
+                highlight: 'RuBisCO: enzim paling melimpah di Bumi · mengikat 7% dari semua CO₂ atmosfer per tahun',
+            },
+            {
+                type: 'scale',
+                title: 'Skala yang Bikin Kepala Muter',
+                body: 'Setiap tahun, seluruh tumbuhan dan organisme fotosintetik di Bumi mengikat sekitar 120 miliar ton karbon dari atmosfer. Itu setara dengan massa lebih dari 10.000 piramida Giza per tahun — dan semuanya berasal dari CO₂ yang "tidak terlihat" di udara. Seluruh oksigen di atmosfer Bumi adalah produk sampingan fotosintesis yang menumpuk selama 3+ miliar tahun.',
+                visual: '🌍',
+                highlight: '120 miliar ton C ditangkap per tahun · semua O₂ di atmosfer = hasil sampingan fotosintesis',
+            },
+            {
+                type: 'impact',
+                title: 'Tanpa Fotosintesis, Kamu Tidak Bisa Ada',
+                body: 'Setiap kalori yang pernah kamu makan — nasi, daging, susu, apapun — bisa ditelusuri ke satu sumber: fotosintesis. Hewan makan tumbuhan atau hewan yang makan tumbuhan. Fotosintesis adalah fondasi seluruh rantai makanan di Bumi. Lebih jauh lagi: seluruh bahan bakar fosil (minyak, batu bara, gas) adalah sisa-sisa organisme fotosintetik yang mati dan tertekan jutaan tahun. Setiap kali kamu menyalakan kompor, kamu membakar fotosintesis kuno.',
+                visual: '🌱',
+                highlight: 'Semua energi di biosfer Bumi bersumber dari satu proses: fotosintesis',
+            },
+        ],
+    },
+
+    // ── DNA ──────────────────────────────────────────────────────────────────
+    {
+        id: 'dna-atoms',
+        slides: [
+            {
+                type: 'hook',
+                title: '5 Jenis Atom, Satu Instruksi untuk Semua Makhluk Hidup',
+                body: 'DNA hanya terbuat dari 5 jenis atom: karbon (C), hidrogen (H), oksigen (O), nitrogen (N), dan fosfor (P). Itu saja. Dari 5 atom biasa yang ada di mana-mana itu — tersusunlah instruksi untuk membangun semua 8 juta lebih spesies yang pernah ada di Bumi. Ulat bulu, paus biru, jamur, bakteri, dan kamu — semuanya pakai kode yang sama.',
+                visual: '🧬',
+                animKey: 'anim-dna-hook',
+                highlight: 'C · H · O · N · P — 5 atom · 1 kode · semua kehidupan di Bumi',
+            },
+            {
+                type: 'history',
+                title: 'Perlombaan Paling Dramatis dalam Sains',
+                body: 'Tahun 1952, semua orang tahu DNA menyimpan informasi genetik — tapi tidak ada yang tahu bentuknya. Linus Pauling (peraih Nobel) menduga triple helix, tapi salah. Rosalind Franklin membuat foto sinar-X kristal DNA yang paling tajam yang pernah ada — \"Photo 51\". Foto itu dicuri tanpa izin oleh Watson & Crick, yang menggunakannya untuk membangun model double helix mereka. Watson, Crick, dan Wilkins memenangkan Nobel 1962. Franklin meninggal 1958 — sebelum pengumuman Nobel.',
+                visual: '🏆',
+                quote: 'Foto 51 seketika memberi tahu saya semua yang perlu saya tahu.',
+                quoteAuthor: 'James Watson, soal foto Rosalind Franklin yang ia lihat tanpa izin',
+                history: [
+                    { year: '1869', event: 'Friedrich Miescher menemukan zat misterius dari inti sel — ia menyebutnya "nuclein"', person: 'Friedrich Miescher' },
+                    { year: '1944', event: 'Avery, MacLeod, McCarty membuktikan DNA (bukan protein) yang membawa informasi genetik', person: 'Avery, MacLeod, McCarty' },
+                    { year: '1952', event: 'Rosalind Franklin membuat Photo 51 — foto sinar-X DNA paling tajam pernah ada', person: 'Rosalind Franklin' },
+                    { year: '1953', event: 'Watson & Crick menerbitkan model double helix di Nature — menggunakan data Franklin tanpa izin', person: 'Watson & Crick' },
+                    { year: '1962', event: 'Nobel Prize Fisiologi: Watson, Crick, Wilkins. Franklin sudah meninggal 4 tahun sebelumnya.', person: 'Watson, Crick, Wilkins' },
+                    { year: '2003', event: 'Human Genome Project selesai — 3 miliar pasang basa manusia terpetakan lengkap', person: 'International Consortium' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Struktur: Tangga Spiral Raksasa',
+                body: 'DNA berbentuk double helix — dua rantai yang saling melilit. Tulang punggungnya adalah gula deoksiribosa dan fosfat yang berulang. Di antara dua rantai ada "anak tangga" — pasangan basa: Adenin selalu berpasangan dengan Timin (A-T), Guanin selalu dengan Sitosin (G-C). Aturan pasangan basa ini yang membuat DNA bisa dikopi dengan akurat setiap kali sel membelah.',
+                visual: '🔬',
+                animKey: 'anim-dna-structure',
+                highlight: 'A-T · G-C · selalu berpasangan · inilah yang membuat DNA bisa dikopi',
+            },
+            {
+                type: 'step',
+                title: 'Cara Kerja: Cetak Biru → Protein',
+                body: 'DNA tidak langsung "dipakai" — ia dibaca. Enzim RNA Polimerase membaca urutan basa DNA dan membuat salinan RNA (transkripsi). RNA dibawa keluar nukleus ke ribosom. Ribosom membaca 3 basa sekaligus (kodon) dan menyusun asam amino satu per satu menjadi protein (translasi). Protein itulah yang mengerjakan semua fungsi tubuh: enzim, hormon, antibodi, struktur sel — semuanya.',
+                visual: '⚙️',
+                animKey: 'anim-dna-transcription',
+                highlight: 'DNA → RNA (transkripsi) → Protein (translasi) · Central Dogma biologi',
+            },
+            {
+                type: 'scale',
+                title: 'Skala yang Tidak Masuk Akal',
+                body: 'Satu sel tubuhmu mengandung ~3 miliar pasang basa. Jika DNA di satu sel direntangkan, panjangnya 2 meter. Tapi seluruhnya dipadatkan ke dalam inti sel berdiameter 6 mikrometer (200× lebih kecil dari rambut). Kalau semua DNA dari semua sel tubuhmu disambung, panjangnya 170 miliar km — cukup bolak-balik ke Pluto 10 kali.',
+                visual: '📏',
+                highlight: '2 meter DNA · 6 mikrometer inti sel · 37 triliun sel dalam tubuhmu',
+            },
+            {
+                type: 'scale',
+                title: 'Kesamaan yang Mencengangkan',
+                body: 'Kamu berbagi 99,9% DNA dengan orang asing yang baru kamu temui. Kamu berbagi 98,7% DNA dengan simpanse. Kamu berbagi 85% DNA dengan tikus. 60% dengan lalat buah. Dan 31% dengan ragi — jamur bersel satu yang dipakai bikin roti. Perbedaan antara manusia dan ragi, secara DNA, hanya 69%. Semua kehidupan di Bumi adalah satu keluarga besar.',
+                visual: '🌳',
+                highlight: '99.9% DNA = kamu dan orang asing · 98.7% = kamu dan simpanse · 31% = kamu dan ragi',
+            },
+            {
+                type: 'impact',
+                title: 'Ini Baru Permulaan',
+                body: 'Kita sudah bisa membaca DNA (sequencing). Kita sudah bisa mengedit DNA — CRISPR-Cas9 memungkinkan ilmuwan memotong dan menyisipkan segmen DNA dengan presisi huruf per huruf. Vaksin mRNA COVID-19 adalah instruksi DNA yang dikirim langsung ke selmu. Terapi gen untuk penyakit genetik sudah dalam uji klinis. Kita sedang belajar menulis ulang kode kehidupan — tapi seberapa bijak kita menggunakannya adalah pertanyaan lain.',
+                visual: '✂️',
+                history: [
+                    { year: '1953', event: 'Struktur double helix DNA terungkap', person: 'Watson & Crick' },
+                    { year: '2003', event: 'Seluruh genom manusia selesai dipetakan', person: 'Human Genome Project' },
+                    { year: '2012', event: 'CRISPR-Cas9: alat edit DNA yang mudah, murah, dan presisi', person: 'Doudna & Charpentier (Nobel 2020)' },
+                    { year: '2021', event: 'Vaksin mRNA COVID-19: instruksi DNA untuk melawan virus', person: 'Moderna & BioNTech' },
+                    { year: 'Masa depan', event: 'Terapi gen untuk kanker, kelainan genetik, dan lebih banyak lagi', person: 'Generasi kita' },
+                ],
+                highlight: 'Dari menemukan struktur DNA (1953) hingga mengeditnya (2012): 59 tahun · Kita baru mulai',
+            },
+        ],
+    },
+
+    // ── STRUKTUR KRISTAL ─────────────────────────────────────────────────────
+    {
+        id: 'crystal-structure',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Berlian dan Pensil Terbuat dari Atom yang Sama',
+                body: 'Berlian adalah benda paling keras di alam. Grafit di dalam pensil begitu lunak sampai meninggalkan bekas di kertas hanya dengan sedikit tekanan. Keduanya terbuat dari atom karbon (C) yang sama persis. Yang beda hanya satu hal: bagaimana atom-atom itu disusun. Susunan berbeda = sifat berbeda total. Ini inti dari seluruh ilmu material.',
+                visual: '💎',
+                animKey: 'anim-crystal-hook',
+                highlight: 'Berlian (C) = paling keras · Grafit (C) = bisa nulis di kertas · Atom sama persis',
+            },
+            {
+                type: 'step',
+                title: 'Berlian: Setiap Atom Pegang 4 Tetangga',
+                body: 'Dalam berlian, setiap atom karbon berikatan kovalen dengan 4 atom C lain dalam struktur tetrahedral 3D yang sempurna. Tidak ada atom "bebas" — semua terkunci. Tidak ada titik lemah. Untuk memecahkan berlian, kamu harus memutus ikatan C-C yang sangat kuat secara bersamaan di seluruh kristal. Makanya berlian tidak bisa digores oleh apapun kecuali berlian lain.',
+                visual: '🔷',
+                animKey: 'anim-diamond-lattice',
+                highlight: 'Setiap C berikatan dengan 4 C lain · 3D tanpa celah lemah · Mohs 10 (tertinggi)',
+            },
+            {
+                type: 'step',
+                title: 'Grafit: Lapisan-Lapisan yang Mudah Tergelincir',
+                body: 'Grafit juga karbon murni — tersusun berbeda. Atom-atom C membentuk lapisan heksagonal 2D seperti sarang lebah. Di dalam satu lapisan, ikatan sangat kuat. Tapi antar lapisan hanya ada gaya van der Waals yang lemah. Ketika kamu menggores kertas, lapisan-lapisan grafit tergelincir dan menempel di kertas.',
+                visual: '✏️',
+                animKey: 'anim-graphite-layers',
+                highlight: 'Lapisan heksagonal kuat · antar lapisan lemah · tergelincir = bekas di kertas',
+            },
+            {
+                type: 'impact',
+                title: 'Satu Atom, Sifat Tak Terbatas',
+                body: 'Karbon saja bisa jadi: berlian (paling keras), grafit (konduktor), grafen (kuat 200x baja, tipis 1 atom), fullerene (bola C60). Silikon tersusun seperti berlian jadi semikonduktor — dasar seluruh elektronik modern. Titanium dalam susunan tertentu lebih kuat dari baja sekaligus lebih ringan dari aluminium. Prinsipnya: atur susunan atom, kontrol sifat material.',
+                visual: '🚀',
+                highlight: 'Grafen = 1 lapisan atom C · 200x lebih kuat dari baja · lebih tipis dari rambut dibagi 1.000.000',
+            },
+        ],
+    },
+
+    // ── PEMBAKARAN ───────────────────────────────────────────────────────────
+    {
+        id: 'combustion',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Api Bukan Zat — Api Adalah Reaksi',
+                body: 'Tunjuk api lilin dan tanya: terbuat dari apa? Jawabannya bukan lilin, bukan oksigen — api tidak terbuat dari apapun. Api adalah reaksi kimia, bukan materi. Yang kamu lihat adalah cahaya dan panas yang dilepaskan saat atom karbon dan hidrogen bergabung dengan oksigen. Ketika kamu meniup api — kamu tidak menghilangkan zat, kamu menghentikan reaksi.',
+                visual: '🔥',
+                animKey: 'anim-fire-hook',
+                highlight: 'Api bukan zat · api adalah proses · padamkan = hentikan reaksinya',
+            },
+            {
+                type: 'step',
+                title: 'Apa yang Terjadi Saat Benda Terbakar',
+                body: 'Bahan bakar (kayu, bensin, lilin) mengandung atom karbon (C) dan hidrogen (H). Ketika dipanaskan cukup, atom-atom ini bereaksi dengan oksigen (O2) dari udara dengan sangat cepat. Karbon menjadi CO2. Hidrogen menjadi H2O. Reaksi ini exothermic — melepaskan energi yang jauh lebih besar dari yang dibutuhkan memulainya. Energi berlebih keluar sebagai panas dan cahaya. Itulah api.',
+                visual: '⚗️',
+                animKey: 'anim-combustion-reaction',
+                highlight: 'C + O2 → CO2 + energi · H2 + O2 → H2O + energi',
+            },
+            {
+                type: 'scale',
+                title: 'Kamu Juga Sedang "Terbakar"',
+                body: 'Respirasi seluler di tubuhmu adalah pembakaran yang sangat lambat dan terkontrol. Glukosa bereaksi dengan oksigen menghasilkan CO2 dan H2O — sama persis dengan membakar kayu. Bedanya: tubuhmu melakukan ini pada 37 derajat Celsius, menghasilkan ATP bukan nyala api. Tapi secara kimiawi, kamu dan api unggun sedang melakukan hal yang sama.',
+                visual: '💨',
+                highlight: 'Respirasi = pembakaran terkontrol 37C · Glukosa + O2 menghasilkan CO2 + H2O + ATP',
+            },
+            {
+                type: 'impact',
+                title: 'Api yang Mengubah Peradaban',
+                body: 'Api di gua membuat makanan matang sehingga otak manusia bisa tumbuh lebih besar. Mesin uap dari batu bara menghasilkan Revolusi Industri. Mesin pembakaran membuat mobil, pesawat, roket, dan akhirnya manusia ke bulan. Pembakaran fosil menghasilkan listrik yang memungkinkan internet. Seluruh peradaban modern dibangun di atas reaksi C + O2. Dan sekarang, akumulasi CO2 itulah masalah terbesar yang kita hadapi bersama.',
+                visual: '🌍',
+                highlight: 'Dari api gua hingga roket SpaceX: sama-sama C + O menghasilkan CO2 + energi',
+            },
+        ],
+    },
+
+    // ── KOROSI ───────────────────────────────────────────────────────────────
+    {
+        id: 'rusting',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Mars Berwarna Merah Karena Planet Itu Berkarat',
+                body: 'Warna merah Mars bukan cat — itu karat. Permukaan Mars tertutup besi oksida (Fe2O3), alias karat, dalam skala satu planet penuh. Besi di Mars bereaksi dengan oksigen dari atmosfer tipisnya miliaran tahun lalu. Hasilnya: planet karat raksasa yang bisa kamu lihat dengan mata telanjang dari Bumi.',
+                visual: '🪨',
+                animKey: 'anim-rust-hook',
+                highlight: 'Mars merah = Fe2O3 skala planet · sama persis dengan karat di pagar besi rumahmu',
+            },
+            {
+                type: 'step',
+                title: 'Mengapa Besi Berkarat?',
+                body: 'Besi (Fe) tidak stabil secara kimiawi — ia lapar oksigen. Ketika besi terkena air dan oksigen, terjadi reaksi elektrokimia: besi melepaskan elektron, oksigen menangkapnya, lalu bergabung membentuk Fe2O3 yang berwarna coklat kemerahan. Air berperan sebagai perantara elektron. Tanpa air, besi tidak berkarat meski ada oksigen.',
+                visual: '⚗️',
+                animKey: 'anim-rust-reaction',
+                highlight: '4Fe + 3O2 + 6H2O menghasilkan karat coklat Fe2O3',
+            },
+            {
+                type: 'step',
+                title: 'Stainless Steel: Pertahanan Diri Sendiri',
+                body: 'Stainless steel mengandung setidaknya 10,5% kromium (Cr). Kromium bereaksi cepat dengan oksigen membentuk lapisan Cr2O3 transparan di permukaan yang menghalangi oksigen mencapai besi di bawahnya. Kalau lapisan tergores, Cr2O3 baru langsung terbentuk sendiri: self-healing. Besi di dalamnya tidak pernah melihat udara.',
+                visual: '🔩',
+                highlight: 'Cr2O3 transparan · self-healing · besi di bawahnya tidak pernah kontak oksigen',
+            },
+            {
+                type: 'impact',
+                title: '$2,5 Triliun Per Tahun Hanya Untuk Melawan Karat',
+                body: 'Korosi menghabiskan lebih dari $2,5 triliun per tahun secara global — 3,4% dari PDB seluruh dunia, lebih dari GDP Prancis atau Inggris. Jembatan runtuh, pipa bocor, kapal tenggelam, pesawat dipensiun lebih awal — semuanya karena Fe + O2 + H2O. Solusi: galvanisasi (lapisan seng), anoda korban (logam yang sengaja dikorbankan duluan), polimer nano.',
+                visual: '🛡️',
+                highlight: '$2,5 triliun per tahun · 3,4% GDP dunia · Galvanisasi · anoda korban · polimer nano',
+            },
+        ],
+    },
+
+    // ── PRINSIP KESTABILAN ───────────────────────────────────────────────────
+    {
+        id: 'stability-principle',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Semua Atom Malas — Dan Itulah yang Menggerakkan Segalanya',
+                body: 'Satu aturan berlaku untuk setiap atom di alam semesta: semua selalu bergerak menuju keadaan dengan energi paling rendah — paling santai, paling stabil. Bukan karena ada tujuan — tapi karena fisika bekerja begitu. Dan dari kemalasan inilah muncul api, baterai, makanan yang kamu makan, dan seluruh kimia yang kamu kenal.',
+                visual: '😴',
+                animKey: 'anim-stability-hook',
+                highlight: 'Hukum paling fundamental kimia: semua menuju energi minimum — tanpa kecuali',
+            },
+            {
+                type: 'step',
+                title: 'Bola di Atas Bukit',
+                body: 'Bayangkan bola di puncak bukit — energi tinggi, tidak stabil. Ia menggelinding ke bawah kecuali ada penghalang. Bahan bakar adalah bola di puncak bukit: C dan H bisa bereaksi dengan O2 menjadi CO2 dan H2O yang lebih stabil. Butuh percikan untuk melewati energi aktivasi. Korek api adalah dorongan awal melewati punggung bukit. Setelah itu, reaksi berlanjut sendiri sambil menghasilkan energi.',
+                visual: '⛰️',
+                animKey: 'anim-energy-hill',
+                highlight: 'Energi aktivasi = penghalang bukit · korek api = dorongan awal · reaksi = bola menggelinding',
+            },
+            {
+                type: 'step',
+                title: 'Gas Mulia: Sudah di Dasar Bukit',
+                body: 'Helium, neon, argon tidak pernah bereaksi dengan siapapun. Bukan sombong — kulit elektron terluarnya sudah penuh sempurna. Tidak ada yang bisa ditawarkan atom lain yang membuat mereka lebih stabil. Energi yang dilepaskan dari ikatan baru tidak cukup mengimbangi biayanya. Mereka sudah di dasar bukit — tidak perlu kemana-mana.',
+                visual: '🫧',
+                highlight: 'He · Ne · Ar · Kr · Xe · Rn — kulit penuh, energi sudah minimum, tidak perlu bereaksi',
+            },
+            {
+                type: 'step',
+                title: 'Natrium Meledak di Air',
+                body: 'Di ujung lain: natrium (Na) punya 1 elektron di kulit terluar — jauh dari stabil, jauh dari puncak bukit ke dasar bukit tertentu. Ketika Na bertemu air, ia melepaskan elektron itu kepada H2O dengan sangat agresif. Gas hidrogen yang terbentuk langsung terbakar. Ledakan yang kamu lihat di video adalah energi yang terlepas saat Na terjun dari energi tinggi ke energi minimum.',
+                visual: '💥',
+                animKey: 'anim-sodium-water',
+                highlight: '2Na + 2H2O menghasilkan NaOH + H2 naik dan terbakar · Na lapar melepas elektron',
+            },
+            {
+                type: 'impact',
+                title: 'Prinsip Ini Adalah Dasar Semua Kimia',
+                body: 'Baterai bekerja karena perbedaan kestabilan antara anoda dan katoda — elektron mengalir dari yang kurang stabil ke yang lebih stabil, dan aliran itu adalah listrik. Obat bekerja karena lebih stabil saat berikatan dengan reseptor tertentu. Fotosintesis mendorong reaksi ke atas bukit menggunakan energi cahaya — melawan kecenderungan alami. Seluruh industri kimia adalah tentang memanfaatkan kecenderungan atom untuk jatuh ke energi minimum.',
+                visual: '⚡',
+                highlight: 'Baterai · obat · plastik · fotosintesis — semuanya dikendalikan oleh satu prinsip: energi minimum',
+            },
+        ],
+    },
+
+    // ── LOGAM MULIA ──────────────────────────────────────────────────────────
+    {
+        id: 'noble-metals',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Mahkota Firaun 3.300 Tahun — Masih Berkilap',
+                body: 'Di makam Tutankhamun yang dibuka tahun 1922, ditemukan mahkota dan perhiasan emas yang terkubur 3.300 tahun. Masih berkilap sempurna — tidak satu pun noda karat. Sementara besi dari era yang sama sudah lama hancur jadi debu merah. Mengapa emas bertahan? Bukan keajaiban — tapi karena konfigurasi elektronnya membuat emas nyaris tidak mau bereaksi dengan siapapun.',
+                visual: '🥇',
+                animKey: 'anim-gold-hook',
+                highlight: 'Emas 3.300 tahun di makam firaun masih berkilap · besi dari era sama sudah karat',
+            },
+            {
+                type: 'step',
+                title: 'Mengapa Emas Tidak Mau Bereaksi?',
+                body: 'Efek relativistik — elektron bergerak mendekati kecepatan cahaya karena nomor atom yang tinggi (79) — menyusutkan orbital 6s emas dan membuatnya sangat terikat kuat ke inti. Energi yang dibutuhkan untuk memaksa emas bereaksi lebih besar dari energi yang dihasilkan. Jadi reaksi tidak terjadi secara alami. Itulah mengapa emas masih berkilap ribuan tahun kemudian.',
+                visual: '⚛️',
+                animKey: 'anim-gold-electron',
+                highlight: 'Efek relativistik · orbital 6s menyusut · emas nyaris immun terhadap reaksi kimia',
+            },
+            {
+                type: 'step',
+                title: 'Medali Nobel yang Dilarutkan untuk Selamatkan dari Nazi',
+                body: 'Satu campuran bisa melarutkan emas: aqua regia (3 bagian HCl dan 1 bagian HNO3). Selama PD2, ilmuwan Denmark Niels Bohr melarutkan medali Nobel emasnya dalam aqua regia di dalam botol untuk menyembunyikannya dari pasukan Nazi yang menduduki Denmark. Setelah perang berakhir, ia memisahkan emas dari larutan dan mencetak ulang medalinya.',
+                visual: '🧪',
+                highlight: 'Aqua regia = satu-satunya yang bisa larutkan Au · Niels Bohr sembunyikan Nobel dari Nazi',
+            },
+            {
+                type: 'step',
+                title: 'Platinum Lebih Mulia dari Emas',
+                body: 'Platinum bahkan lebih malas dari emas — titik leleh lebih tinggi (1.768 derajat vs 1.064 derajat), lebih tahan korosi. Iridium adalah yang paling tahan: tidak bereaksi bahkan dengan asam kuat. Kilogram standar internasional sampai tahun 2019 terbuat dari alloy platinum-iridium 90:10 — karena keduanya paling stabil dari waktu ke waktu.',
+                visual: '⚖️',
+                highlight: 'Pt lebih mulia dari Au · Ir paling mulia · kilogram standar dunia dulu = Pt-Ir 90:10',
+            },
+            {
+                type: 'impact',
+                title: 'Logam Mulia Ada di Mana-Mana',
+                body: 'Logam mulia bukan hanya perhiasan. Platinum di catalytic converter mobil mengkatalisis CO dan NOx menjadi CO2 dan N2 tanpa habis terpakai. Emas di kontak listrik HP-mu tidak teroksidasi dan tetap konduktif selamanya. Iridium di ujung pena ballpoint premium. Palladium di busi. Investasi terbesar dalam logam mulia bukan di lemari perhiasan — tapi di dalam setiap perangkat elektronik di seluruh dunia.',
+                visual: '📱',
+                highlight: 'Au di kontak HP · Pt di knalpot mobil · Ir di ujung pena · semua logam mulia ada di sekitarmu',
+            },
         ],
     },
 ];
