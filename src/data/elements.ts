@@ -1,6 +1,8 @@
+import { enrichment } from './element-enrichment';
+
 export interface Element {
   n: number; sym: string; name: string; nameId?: string;
-  mass: string | number; cat: string;
+  mass: string | number | number[]; cat: string;
   period: number; group: number;
   config: string; phase: string;
   density: number | null; mp: number | null; bp: number | null;
@@ -8,6 +10,7 @@ export interface Element {
   radius: number | null; year: number | string | null;
   ox: string | number | null; discovered: string | null;
   desc?: string;
+  funFact?: string;
 }
 
 export const elements: Element[] = [
@@ -2440,3 +2443,13 @@ export const elements: Element[] = [
     "discovered": null
   }
 ];
+
+// Apply enrichment (nameId, desc, funFact) to each element
+elements.forEach(el => {
+  const e = enrichment[el.sym];
+  if (e) {
+    el.nameId = e.nameId;
+    el.desc = e.desc;
+    el.funFact = e.funFact;
+  }
+});

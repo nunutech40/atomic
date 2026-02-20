@@ -274,6 +274,22 @@ export function renderElementDetail(container: HTMLElement, n: number) {
         right.appendChild(descSec);
     }
 
+    // Fun Fact
+    if (el.funFact) {
+        const factSec = document.createElement('div');
+        factSec.style.cssText = 'margin-top:14px;';
+        factSec.innerHTML = `
+            <div class="fun-fact-card">
+                <span class="fun-fact-icon">💡</span>
+                <div>
+                    <div class="fun-fact-label">Tahukah kamu?</div>
+                    <div class="fun-fact-text">${el.funFact}</div>
+                </div>
+            </div>
+        `;
+        right.appendChild(factSec);
+    }
+
     // Radioactive warning
     if (Array.isArray(el.mass)) {
         const warning = document.createElement('div');
