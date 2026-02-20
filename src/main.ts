@@ -4,7 +4,7 @@ import { initRouter, addRoute, setCleanup } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderPeriodicTable } from './components/PeriodicTable';
 import { renderElementDetail } from './components/ElementDetail';
-import { renderMoleculeBuilder, renderPhenomena } from './components/MoleculeBuilder';
+import { renderMoleculeBuilder } from './components/MoleculeBuilder';
 import { renderPhenomenonStory } from './components/PhenomenonStory';
 
 
@@ -44,11 +44,6 @@ addRoute('/element/:n', (params) => {
 addRoute('/molecule', () => {
     main.innerHTML = '';
     const cleanup = renderMoleculeBuilder(main);
-    // Append phenomena section below molecule builder
-    const phWrap = document.createElement('div');
-    phWrap.id = 'phenomena-wrap';
-    main.appendChild(phWrap);
-    renderPhenomena(phWrap);
     setCleanup(cleanup);
 });
 

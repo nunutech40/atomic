@@ -14,7 +14,7 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
       </div>
       <div class="nav-links">
         <a class="nav-link" id="nav-tabel" href="#/">🔬 Tabel</a>
-        <a class="nav-link" id="nav-molekul" href="#/molecule">⚗️ Molekul</a>
+        <a class="nav-link" id="nav-kimia-lab" href="#/molecule">⚗️ Kimia Lab</a>
         <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ Fenomena</a>
       </div>
       <button class="nav-btn" id="lang-btn">${getLang() === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'}</button>
