@@ -4,6 +4,7 @@ import { initRouter, addRoute, setCleanup } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderPeriodicTable } from './components/PeriodicTable';
 import { renderElementDetail } from './components/ElementDetail';
+import { renderMoleculeBuilder } from './components/MoleculeBuilder';
 
 initTheme();
 
@@ -35,6 +36,12 @@ addRoute('/element/:n', (params) => {
     const n = parseInt(params?.n || '1', 10);
     main.innerHTML = '';
     const cleanup = renderElementDetail(main, n);
+    setCleanup(cleanup);
+});
+
+addRoute('/molecule', () => {
+    main.innerHTML = '';
+    const cleanup = renderMoleculeBuilder(main);
     setCleanup(cleanup);
 });
 

@@ -8,6 +8,13 @@
   padding: 0;
 }
 
+/* Ensure [hidden] always wins even when element has display:flex or grid */
+[hidden] {
+  display: none !important;
+}
+
+
+
 :root {
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -1602,5 +1609,565 @@ body {
   .hero-btn-primary,
   .hero-btn-secondary {
     text-align: center;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   MOLECULE BUILDER
+   ══════════════════════════════════════════════════════ */
+
+.mb-page {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Top bar ────────────────────────────────────────── */
+.mb-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.mb-back {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.mb-back:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.mb-topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.mb-topbar-icon {
+  font-size: 22px;
+}
+
+.mb-topbar-sub {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-3);
+  margin-left: auto;
+  text-align: right;
+}
+
+/* ── Body split ─────────────────────────────────────── */
+.mb-body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  flex: 1;
+  align-items: start;
+}
+
+/* ── LEFT PANEL ─────────────────────────────────────── */
+.mb-left {
+  position: sticky;
+  top: 80px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mb-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Atom palette grid */
+.mb-palette {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.mb-atom-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: var(--bg-3);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-sans);
+  border-color: rgba(128, 128, 128, 0.12);
+}
+
+.mb-atom-btn:hover {
+  border-color: var(--atom-clr, var(--accent));
+  background: color-mix(in srgb, var(--atom-clr, var(--accent)) 10%, transparent);
+  transform: scale(1.04);
+}
+
+.mb-atom-sym {
+  font-size: 16px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--atom-clr, var(--text));
+}
+
+.mb-atom-name {
+  font-size: 9px;
+  color: var(--text-3);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Quick examples */
+.mb-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mb-quick-btn {
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text-2);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mb-quick-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(108, 99, 255, 0.08);
+}
+
+/* Reset button */
+.mb-reset-btn {
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-3);
+  font-size: 11px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mb-reset-btn:hover {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+/* Mix area */
+.mb-mix {
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mb-mix-empty {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.mb-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+}
+
+.mb-chip-sym {
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  min-width: 28px;
+}
+
+.mb-chip-count {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 18px;
+  text-align: center;
+}
+
+.mb-chip-btns {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.mb-chip-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-4);
+  color: var(--text-2);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  transition: all 0.12s;
+  line-height: 1;
+  padding: 0;
+}
+
+.mb-chip-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Hint */
+.mb-hint {
+  font-size: 12px;
+  color: var(--accent);
+  padding: 8px 12px;
+  background: rgba(108, 99, 255, 0.08);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+/* Combine button */
+.mb-combine-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-sans);
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
+  margin-top: 8px;
+}
+
+.mb-combine-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  box-shadow: none;
+}
+
+.mb-combine-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.45);
+}
+
+/* ── RIGHT PANEL ─────────────────────────────────────── */
+.mb-right {
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Empty state */
+.mb-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 40px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.mb-empty-icon {
+  font-size: 48px;
+  opacity: 0.4;
+}
+
+.mb-empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.mb-empty-sub {
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+/* Result layout */
+.mb-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Canvas */
+.mb-canvas-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  aspect-ratio: 1;
+}
+
+.mb-canvas-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mb-canvas-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text-3);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 3px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* Molecule info */
+.mb-mol-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mb-mol-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.mb-mol-formula {
+  font-size: 36px;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.mb-mol-names {
+  flex: 1;
+}
+
+.mb-mol-name-id {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mb-mol-name-en {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.mb-mol-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(108, 99, 255, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(108, 99, 255, 0.25);
+  align-self: flex-start;
+}
+
+.mb-mol-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--glass);
+  border: 1px solid var(--border);
+}
+
+.mb-mol-meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.mb-mol-meta-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  min-width: 72px;
+}
+
+.mb-comp {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.mb-comp-atom {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+.mb-comp-atom sub {
+  font-size: 10px;
+}
+
+.mb-mol-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+.mb-mol-funfact {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: rgba(108, 99, 255, 0.06);
+  border: 1px solid rgba(108, 99, 255, 0.15);
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.mb-mol-funfact-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.mb-mol-legend {
+  margin-top: 4px;
+}
+
+.mb-mol-legend-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+
+.mb-mol-legend-items {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+}
+
+.mb-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  vertical-align: middle;
+}
+
+/* Not found */
+.mb-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px 40px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.mb-nf-icon {
+  font-size: 40px;
+  opacity: 0.5;
+}
+
+.mb-nf-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.mb-nf-sub {
+  font-size: 13px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+}
+
+.mb-nf-tip {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .mb-body {
+    grid-template-columns: 1fr;
+  }
+
+  .mb-left {
+    position: static;
+  }
+
+  .mb-result {
+    grid-template-columns: 1fr;
   }
 }
