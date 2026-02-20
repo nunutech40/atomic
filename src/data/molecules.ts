@@ -37,7 +37,8 @@ export interface Molecule {
     composition: Record<string, number>;  // used for matching: { H:2, O:1 }
     atoms: MolAtom[];
     bonds: MolBond[];
-    category: 'common' | 'organic' | 'inorganic' | 'acid' | 'base' | 'oxide' | 'salt' | 'gas';
+    category: 'common' | 'organic' | 'inorganic' | 'acid' | 'base' | 'oxide' | 'salt' | 'gas' | 'material';
+    stability?: 'high' | 'medium' | 'low';
     shape: string;
     bondType: string;
     desc: string;
@@ -448,7 +449,120 @@ export const molecules: Molecule[] = [
         desc: 'Alkohol yang dikonsumsi manusia, juga bahan bakar nabati dan pelarut industri. Dihasilkan dari fermentasi gula oleh ragi.',
         funFact: 'Manusia menghasilkan etanol sendiri dalam tubuh dalam jumlah sangat kecil lewat fermentasi bakteri usus — secara teknis kita semua selalu "sedikit mabuk".',
     },
+
+    // ── MATERIALS & STRUCTURES ────────────────────────────────────────────
+    // Kenapa berlian keras, besi kuat, kayu lunak?
+    // JAWABAN: bukan jenis atomnya — tapi BAGAIMANA atom-atom itu tersusun dan berikatan.
+    {
+        formula: 'C (Berlian)',
+        name: 'Diamond unit cell', nameId: 'Berlian — Unit Tetrahedral',
+        composition: { C: 5 },
+        atoms: [
+            // Centre + 4 tetrahedral neighbours (C-C bond ~1.54 Å, scaled)
+            { sym: 'C', pos: [0.00, 0.00, 0.00] },
+            { sym: 'C', pos: [0.89, 0.89, 0.89] },
+            { sym: 'C', pos: [-0.89, -0.89, 0.89] },
+            { sym: 'C', pos: [-0.89, 0.89, -0.89] },
+            { sym: 'C', pos: [0.89, -0.89, -0.89] },
+        ],
+        bonds: [
+            { a: 0, b: 1, type: 'single' }, { a: 0, b: 2, type: 'single' },
+            { a: 0, b: 3, type: 'single' }, { a: 0, b: 4, type: 'single' },
+        ],
+        category: 'material', shape: 'Tetrahedral 3D — 109.5° (jaringan tak terbatas)', bondType: 'Kovalen nonpolar (sangat kuat)',
+        stability: 'high',
+        desc: 'Berlian hanya terdiri dari atom karbon — sama persis dengan pensil (grafit). Bedanya: di berlian, setiap atom C berikatan dengan 4 atom C lain ke semua arah 3D, membentuk jaringan raksasa yang tidak punya bagian lemah. Inilah mengapa berlian adalah benda alami paling keras di Bumi.',
+        funFact: 'Berlian dan grafit sama-sama 100% karbon. Berlian terbentuk di kedalaman 150 km di dalam bumi pada tekanan 45.000–60.000 atm. Secara termodinamika, grafit sebenarnya lebih stabil dari berlian di permukaan bumi — tapi berlian tidak berubah menjadi grafit karena butuh energi aktivasi yang sangat besar.',
+    },
+    {
+        formula: 'C (Grafit)',
+        name: 'Graphite layer unit', nameId: 'Grafit — Unit Cincin Heksagonal',
+        composition: { C: 6 },
+        atoms: [
+            // Benzene-like hexagonal ring (aromatic C layer)
+            { sym: 'C', pos: [0.71, 0.00, 0] },
+            { sym: 'C', pos: [0.36, 0.61, 0] },
+            { sym: 'C', pos: [-0.36, 0.61, 0] },
+            { sym: 'C', pos: [-0.71, 0.00, 0] },
+            { sym: 'C', pos: [-0.36, -0.61, 0] },
+            { sym: 'C', pos: [0.36, -0.61, 0] },
+        ],
+        bonds: [
+            { a: 0, b: 1, type: 'double' }, { a: 1, b: 2, type: 'single' },
+            { a: 2, b: 3, type: 'double' }, { a: 3, b: 4, type: 'single' },
+            { a: 4, b: 5, type: 'double' }, { a: 5, b: 0, type: 'single' },
+        ],
+        category: 'material', shape: 'Planar hexagonal — lapisan 2D bertumpuk', bondType: 'Kovalen aromatik + van der Waals (antar lapisan)',
+        stability: 'high',
+        desc: 'Grafit adalah karbon yang sama dengan berlian, tapi tersusun dalam lembaran-lembaran heksagonal (seperti sarang lebah) yang bertumpuk. Dalam satu lapisan, ikatan karbon sangat kuat. Tapi antar lapisan, hanya ada gaya van der Waals yang lemah — sehingga lapisan mudah tergelincir. Itulah mengapa grafit bisa menulis dan terasa licin.',
+        funFact: 'Satu lapisan grafit disebut graphene — material 2D pertama yang pernah diisolasi manusia (2004). Lebih kuat dari berlian dalam satu bidang, tapi hanya setebal satu atom. Penemu graphene meraih Nobel 2010 dengan mengelupas grafit menggunakan selotip biasa.',
+    },
+    {
+        formula: 'Fe (Logam)',
+        name: 'Iron metal — BCC cluster', nameId: 'Besi — Unit Kristal Logam',
+        composition: { Fe: 9 },
+        atoms: [
+            // Body-Centred Cubic inspired cluster
+            { sym: 'Fe', pos: [0.00, 0.00, 0.00] },  // centre
+            { sym: 'Fe', pos: [1.20, 0.00, 0.00] },
+            { sym: 'Fe', pos: [-1.20, 0.00, 0.00] },
+            { sym: 'Fe', pos: [0.00, 1.20, 0.00] },
+            { sym: 'Fe', pos: [0.00, -1.20, 0.00] },
+            { sym: 'Fe', pos: [0.00, 0.00, 1.20] },
+            { sym: 'Fe', pos: [0.00, 0.00, -1.20] },
+            { sym: 'Fe', pos: [0.85, 0.85, 0.85] },
+            { sym: 'Fe', pos: [-0.85, -0.85, -0.85] },
+        ],
+        bonds: [
+            { a: 0, b: 1, type: 'single' }, { a: 0, b: 2, type: 'single' },
+            { a: 0, b: 3, type: 'single' }, { a: 0, b: 4, type: 'single' },
+            { a: 0, b: 5, type: 'single' }, { a: 0, b: 6, type: 'single' },
+            { a: 0, b: 7, type: 'single' }, { a: 0, b: 8, type: 'single' },
+        ],
+        category: 'material', shape: 'Kubik pusat badan (BCC)', bondType: 'Ikatan logam (lautan elektron bebas)',
+        stability: 'medium',
+        desc: 'Besi atom-atomnya tersusun rapat dalam kisi kubik dengan elektron yang "mengalir bebas" di antara semua atom (lautan elektron). Ini yang membuat besi kuat, menghantarkan listrik, dan bisa ditempa. Tapi besi "lapar" oksigen — secara termodinamika, Fe₂O₃ (karat) jauh lebih stabil dari Fe + O₂. Tanpa lapisan pelindung, besi pasti akhirnya berkarat.',
+        funFact: 'Inti Bumi (inner core) terbuat dari besi-nikel padat bersuhu 5.400°C — sepanas permukaan matahari. Medan magnet Bumi yang melindungi kita dari angin matahari dihasilkan oleh pergerakan besi cair di outer core.',
+    },
+    {
+        formula: 'C₆H₁₂O₆', name: 'Glucose', nameId: 'Glukosa — Energi di Balik Kayu',
+        composition: { C: 6, H: 12, O: 6 },
+        atoms: [
+            // Open-chain form, simplified
+            { sym: 'C', pos: [-2.25, 0.70, 0.00] },
+            { sym: 'C', pos: [-1.50, 0.00, 0.00] },
+            { sym: 'C', pos: [-0.75, 0.70, 0.00] },
+            { sym: 'C', pos: [0.00, 0.00, 0.00] },
+            { sym: 'C', pos: [0.75, 0.70, 0.00] },
+            { sym: 'C', pos: [1.50, 0.00, 0.00] },
+            { sym: 'O', pos: [-2.25, 1.90, 0.00] },   // C1=O (aldehyde)
+            { sym: 'O', pos: [-1.50, -1.10, 0.00] },   // C2-OH
+            { sym: 'O', pos: [-0.75, 1.90, 0.00] },   // C3-OH
+            { sym: 'O', pos: [0.00, -1.10, 0.00] },   // C4-OH
+            { sym: 'O', pos: [0.75, 1.90, 0.00] },   // C5-OH
+            { sym: 'O', pos: [1.50, -1.10, 0.00] },   // C6-OH
+            { sym: 'H', pos: [-1.50, 0.00, -1.00] },
+            { sym: 'H', pos: [-0.75, 0.70, -1.00] },
+            { sym: 'H', pos: [0.00, 0.00, -1.00] },
+        ],
+        bonds: [
+            { a: 0, b: 1, type: 'single' }, { a: 1, b: 2, type: 'single' },
+            { a: 2, b: 3, type: 'single' }, { a: 3, b: 4, type: 'single' },
+            { a: 4, b: 5, type: 'single' },
+            { a: 0, b: 6, type: 'double' },
+            { a: 1, b: 7, type: 'single' }, { a: 2, b: 8, type: 'single' },
+            { a: 3, b: 9, type: 'single' }, { a: 4, b: 10, type: 'single' },
+            { a: 5, b: 11, type: 'single' },
+            { a: 1, b: 12, type: 'single' }, { a: 2, b: 13, type: 'single' },
+            { a: 3, b: 14, type: 'single' },
+        ],
+        category: 'material', shape: 'Rantai karbon terbuka (atau cincin piranosa)', bondType: 'Kovalen polar',
+        stability: 'medium',
+        desc: 'Kayu bukan satu molekul — ia adalah polimer selulosa, tersusun dari ribuan unit glukosa yang saling berantai. Glukosa adalah "bola di atas bukit" — mengandung energi tersimpan yang siap dilepas. Saat dibakar: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energi. Kayu terbakar bukan karena atom-atomnya "menghilang" — mereka hanya bergabung ulang dengan oksigen menjadi CO₂ dan air yang lebih stabil.',
+        funFact: 'Kayu, gula, nasi, roti — semuanya glukosa atau polimer glukosa. Makan nasi = memotong polimer panjang itu jadi satuan glukosa, lalu "membakarnya" perlahan di sel tubuh menggunakan oksigen. Respirasi sel adalah pembakaran yang sangat lambat dan terkontrol.',
+    },
 ];
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MATCHING FUNCTION
@@ -475,4 +589,5 @@ export const CATEGORY_LABELS: Record<string, string> = {
     oxide: 'Oksida',
     salt: 'Garam',
     gas: 'Gas',
+    material: 'Material / Struktur',
 };

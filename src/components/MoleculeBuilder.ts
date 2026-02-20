@@ -1,7 +1,9 @@
 import type { Molecule } from '../data/molecules';
 import { molecules, matchMolecule, CATEGORY_LABELS } from '../data/molecules';
+import { phenomena, PHENOMENON_CATEGORIES } from '../data/phenomena';
 import { MoleculeScene } from '../three/moleculeScene';
 import { navigate } from '../core/router';
+
 
 // Atoms palette — most commonly used in chemistry
 const PALETTE = [
@@ -33,7 +35,12 @@ const QUICK_EXAMPLES: { label: string; composition: Record<string, number> }[] =
   { label: '⚗️ NH₃', composition: { N: 1, H: 3 } as Record<string, number> },
   { label: '🔥 CH₄', composition: { C: 1, H: 4 } as Record<string, number> },
   { label: '🪨 Fe₂O₃', composition: { Fe: 2, O: 3 } as Record<string, number> },
+  { label: '💎 Berlian', composition: { C: 5 } as Record<string, number> },
+  { label: '✏️ Grafit', composition: { C: 6 } as Record<string, number> },
+  { label: '⚙️ Besi', composition: { Fe: 9 } as Record<string, number> },
+  { label: '🍬 Glukosa', composition: { C: 6, H: 12, O: 6 } as Record<string, number> },
 ];
+
 
 export function renderMoleculeBuilder(container: HTMLElement): () => void {
   let selection: Record<string, number> = {};  // current atom selection
@@ -355,9 +362,83 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
         `;
   }
 
-  // Cleanup function returned to router
+  // Cleanup function
   return () => { destroyScene(); };
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHENOMENA SECTION — rendered below the molecule builder
+// ─────────────────────────────────────────────────────────────────────────────
+export function renderPhenomena(container: HTMLElement): void {
+  const cats = Object.keys(PHENOMENON_CATEGORIES) as (keyof typeof PHENOMENON_CATEGORIES)[];
+
+  container.innerHTML = `
+  <div class="ph-page">
+    <div class="ph-header">
+      <div class="ph-header-title">⚡ Fenomena Atom</div>
+      <div class="ph-header-sub">Dari ledakan nuklir hingga DNA — semuanya dimulai dari atom</div>
+    </div>
+
+    <div class="ph-filter" id="ph-filter">
+      <button class="ph-filter-btn ph-filter-btn--active" data-cat="all">Semua</button>
+      ${cats.map(c => `<button class="ph-filter-btn" data-cat="${c}" style="--ph-clr:${PHENOMENON_CATEGORIES[c].color}">${PHENOMENON_CATEGORIES[c].label}</button>`).join('')}
+    </div>
+
+    <div class="ph-grid" id="ph-grid">
+      ${phenomena.map(p => {
+    const cat = PHENOMENON_CATEGORIES[p.category];
+    return `
+        <div class="ph-card" data-cat="${p.category}">
+          <div class="ph-card-top">
+            <span class="ph-icon">${p.icon}</span>
+            <span class="ph-cat-badge" style="color:${cat.color};background:${cat.bg}">${cat.label}</span>
+          </div>
+          <div class="ph-title">${p.title}</div>
+          <div class="ph-tagline">${p.tagline}</div>
+          <div class="ph-desc">${p.desc.replace(/\n/g, '<br><br>')}</div>
+          <div class="ph-divider"></div>
+          <div class="ph-meta">
+            <div class="ph-meta-row">
+              <span class="ph-meta-icon">💡</span>
+              <span class="ph-meta-label">Fakta</span>
+              <span class="ph-meta-val">${p.funFact}</span>
+            </div>
+            <div class="ph-meta-row">
+              <span class="ph-meta-icon">📏</span>
+              <span class="ph-meta-label">Skala</span>
+              <span class="ph-meta-val">${p.scale}</span>
+            </div>
+            <div class="ph-meta-row">
+              <span class="ph-meta-icon">🌍</span>
+              <span class="ph-meta-label">Nyata</span>
+              <span class="ph-meta-val">${p.realWorld}</span>
+            </div>
+          </div>
+          ${p.atoms.length ? `<div class="ph-atoms">${p.atoms.map(a => `<span class="ph-atom-tag">${a}</span>`).join('')}</div>` : ''}
+        </div>`;
+  }).join('')}
+    </div>
+  </div>
+  `;
+
+  // Filter logic
+  const filterEl = container.querySelector('#ph-filter')!;
+  const gridEl = container.querySelector('#ph-grid')!;
+
+  filterEl.addEventListener('click', e => {
+    const btn = (e.target as HTMLElement).closest('[data-cat]') as HTMLElement | null;
+    if (!btn) return;
+    const cat = btn.dataset.cat!;
+
+    filterEl.querySelectorAll('.ph-filter-btn').forEach(b => b.classList.remove('ph-filter-btn--active'));
+    btn.classList.add('ph-filter-btn--active');
+
+    gridEl.querySelectorAll<HTMLElement>('.ph-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  });
+}
+
 
 // Hex string version of CPK colors for HTML (MoleculeScene uses 0xRRGGBB)
 const CPK_COLORS_HEX: Record<string, string> = {
