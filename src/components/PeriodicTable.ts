@@ -186,12 +186,157 @@ export function renderPeriodicTable(container: HTMLElement) {
       </div>
     </section>
 
+    <!-- ═══ CARA MEMBACA TABEL PERIODIK ═══ -->
+    <section class="how-to-section" id="how-to-section">
+      <button class="how-to-toggle" id="how-to-toggle" aria-expanded="false">
+        <span class="how-to-toggle-left">
+          <span class="how-to-toggle-icon">🗺️</span>
+          <span>Cara Membaca Tabel Periodik <span class="how-to-subtitle-pill">tanpa hafalan</span></span>
+        </span>
+        <span class="how-to-arrow" id="how-to-arrow">▼</span>
+      </button>
+
+      <div class="how-to-content" id="how-to-content">
+
+        <!-- Intro -->
+        <p class="how-to-intro">
+          Tabel periodik bukan daftar hafalan — ini adalah <strong>peta logis</strong>.
+          Setiap posisi elemen mengandung informasi. Sekali paham sistemnya, kamu bisa <em>membaca</em> sifat elemen hanya dari letaknya.
+        </p>
+
+        <!-- Step 1: Anatomy of one cell -->
+        <div class="how-to-step">
+          <div class="how-to-step-num">01</div>
+          <div class="how-to-step-body">
+            <div class="how-to-step-title">Baca satu kotak elemen</div>
+            <p class="how-to-step-desc">Setiap kotak berisi 4 informasi utama:</p>
+            <div class="how-to-cell-demo">
+              <div class="hcd-cell">
+                <span class="hcd-num">26</span>
+                <span class="hcd-sym">Fe</span>
+                <span class="hcd-name">Besi</span>
+                <span class="hcd-mass">55.85</span>
+              </div>
+              <div class="hcd-labels">
+                <div class="hcd-label hcd-label--num">← Nomor Atom<br><small>Jumlah proton, identitas unik elemen</small></div>
+                <div class="hcd-label hcd-label--sym">← Simbol<br><small>1–2 huruf singkatan internasional</small></div>
+                <div class="hcd-label hcd-label--name">← Nama<br><small>Nama resmi elemen</small></div>
+                <div class="hcd-label hcd-label--mass">← Massa Atom<br><small>Rata-rata massa isotop (dalam satuan u)</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Periods (rows) -->
+        <div class="how-to-step">
+          <div class="how-to-step-num">02</div>
+          <div class="how-to-step-body">
+            <div class="how-to-step-title">BARIS = Periode → jumlah kulit elektron</div>
+            <p class="how-to-step-desc">Tabel punya <strong>7 baris (periode)</strong>. Nomor periode = jumlah kulit elektron yang terisi elemen itu.</p>
+            <div class="how-to-periods">
+              <div class="how-to-period-row" style="--pc:#60a5fa"><span class="hp-num">Periode 1</span><span class="hp-bar" style="width:11%">H, He</span><span class="hp-note">2 elemen · 1 kulit</span></div>
+              <div class="how-to-period-row" style="--pc:#34d399"><span class="hp-num">Periode 2</span><span class="hp-bar" style="width:44%">Li → Ne</span><span class="hp-note">8 elemen · 2 kulit</span></div>
+              <div class="how-to-period-row" style="--pc:#fbbf24"><span class="hp-num">Periode 3</span><span class="hp-bar" style="width:44%">Na → Ar</span><span class="hp-note">8 elemen · 3 kulit</span></div>
+              <div class="how-to-period-row" style="--pc:#f97316"><span class="hp-num">Periode 4</span><span class="hp-bar" style="width:100%">K → Kr</span><span class="hp-note">18 elemen · 4 kulit</span></div>
+              <div class="how-to-period-row" style="--pc:#f43f5e"><span class="hp-num">P. 6 &amp; 7</span><span class="hp-bar" style="width:100%">Cs-Rn &amp; Fr-Og</span><span class="hp-note">32 elemen · 6-7 kulit<br>Lantanida &amp; Aktinida disisipkan di bawah</span></div>
+            </div>
+            <div class="how-to-tip">💡 <strong>Trik:</strong> Makin ke bawah → atom makin besar, karena tambah kulit. Na lebih besar dari Li yang lebih besar dari H.</div>
+          </div>
+        </div>
+
+        <!-- Step 3: Groups (columns) -->
+        <div class="how-to-step">
+          <div class="how-to-step-num">03</div>
+          <div class="how-to-step-body">
+            <div class="how-to-step-title">KOLOM = Golongan → elektron valensi yang sama</div>
+            <p class="how-to-step-desc">Tabel punya <strong>18 kolom (golongan)</strong>. Elemen satu kolom punya jumlah elektron valensi (terluar) yang sama → sifat kimia mirip!</p>
+            <div class="how-to-groups">
+              <div class="how-to-group-card" style="--gc:#ef4444">
+                <div class="hgc-num">Gol. 1</div>
+                <div class="hgc-name">Logam Alkali</div>
+                <div class="hgc-elems">Li, Na, K, Rb, Cs, Fr</div>
+                <div class="hgc-fact">1 elektron valensi → sangat reaktif, meledak di air</div>
+              </div>
+              <div class="how-to-group-card" style="--gc:#f97316">
+                <div class="hgc-num">Gol. 2</div>
+                <div class="hgc-name">Logam Alkali Tanah</div>
+                <div class="hgc-elems">Mg, Ca, Sr, Ba</div>
+                <div class="hgc-fact">2 elektron valensi → reaktif tapi lebih stabil dari gol. 1</div>
+              </div>
+              <div class="how-to-group-card" style="--gc:#22c55e">
+                <div class="hgc-num">Gol. 17</div>
+                <div class="hgc-name">Halogen</div>
+                <div class="hgc-elems">F, Cl, Br, I, At</div>
+                <div class="hgc-fact">7 elektron valensi → sangat reaktif, butuh 1 elektron lagi</div>
+              </div>
+              <div class="how-to-group-card" style="--gc:#818cf8">
+                <div class="hgc-num">Gol. 18</div>
+                <div class="hgc-name">Gas Mulia</div>
+                <div class="hgc-elems">He, Ne, Ar, Kr, Xe</div>
+                <div class="hgc-fact">8 elektron valensi → penuh, sama sekali tidak reaktif</div>
+              </div>
+            </div>
+            <div class="how-to-tip">💡 <strong>Trik:</strong> Semua elemen di kolom yang sama bereaksi dengan cara serupa. NaCl (garam dapur) mirip dengan KCl, LiCl — karena Na, K, Li satu golongan.</div>
+          </div>
+        </div>
+
+        <!-- Step 4: Trends -->
+        <div class="how-to-step">
+          <div class="how-to-step-num">04</div>
+          <div class="how-to-step-body">
+            <div class="how-to-step-title">Tren dalam tabel — tanpa hafal, cukup pahami arahnya</div>
+            <div class="how-to-trends">
+              <div class="how-to-trend-item">
+                <div class="hti-arrow hti-arrow--right">→</div>
+                <div class="hti-content">
+                  <div class="hti-label">Ke kanan (periode sama)</div>
+                  <div class="hti-desc">Nomor atom naik → lebih banyak proton → tarikan nukleus lebih kuat → <strong>ukuran atom mengecil</strong>, <strong>elektronegativitas naik</strong></div>
+                </div>
+              </div>
+              <div class="how-to-trend-item">
+                <div class="hti-arrow hti-arrow--down">↓</div>
+                <div class="hti-content">
+                  <div class="hti-label">Ke bawah (golongan sama)</div>
+                  <div class="hti-desc">Ditambah kulit → elektron terluar lebih jauh dari inti → lebih mudah dilepas → <strong>ukuran atom membesar</strong>, <strong>reaktivitas logam naik</strong></div>
+                </div>
+              </div>
+              <div class="how-to-trend-item">
+                <div class="hti-arrow" style="background:var(--accent)20;color:var(--accent)">⚡</div>
+                <div class="hti-content">
+                  <div class="hti-label">Metalik vs Non-metalik</div>
+                  <div class="hti-desc">Kiri-bawah = paling metalik (Cs, Fr). Kanan-atas = paling non-metalik (F, O, N). Ada garis diagonal "metalloid" di tengah.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: What about lanthanides? -->
+        <div class="how-to-step">
+          <div class="how-to-step-num">05</div>
+          <div class="how-to-step-body">
+            <div class="how-to-step-title">Kenapa ada 2 baris yang "mengambang" di bawah?</div>
+            <p class="how-to-step-desc">
+              Lantanida (La–Lu) dan Aktinida (Ac–Lr) seharusnya ada di periode 6 dan 7, tapi karena akan membuat tabel terlalu lebar (32 kolom!),
+              mereka <em>dipindah ke bawah</em>. Konvensi visual untuk menghemat tempat — bukan karena mereka "spesial" secara kimia.
+            </p>
+            <div class="how-to-tip">💡 Lantanida dan aktinida sebenarnya masuk antara kolom 2 (Ba/Ra) dan kolom 3 (Hf/Rf). Tanda putus-putus di tabel menunjukkan titik sisipannya.</div>
+          </div>
+        </div>
+
+        <div class="how-to-footer">
+          <span>🎉 Sekarang kamu bisa membaca tabel periodik seperti peta — bukan seperti daftar hafalan.</span>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══ TABLE SECTION HEADER ═══ -->
     <div class="home-section-title">
       <span>🔬 Tabel Periodik</span>
       <span class="home-section-count">118 elemen · klik untuk detail</span>
     </div>
     `;
+
 
   container.appendChild(hub);
 
@@ -269,6 +414,22 @@ export function renderPeriodicTable(container: HTMLElement) {
   });
 
   hub.querySelector('#prereq-goto-learn')!.addEventListener('click', () => navigate('/learn'));
+
+  // ── How-to accordion ─────────────────────────────────────────────────
+  const howToToggle = hub.querySelector('#how-to-toggle') as HTMLButtonElement;
+  const howToContent = hub.querySelector('#how-to-content') as HTMLElement;
+  const howToArrow = hub.querySelector('#how-to-arrow') as HTMLElement;
+  let howToOpen = false;
+  howToContent.style.maxHeight = '0';
+  howToContent.style.overflow = 'hidden';
+  howToContent.style.transition = 'max-height 0.5s ease';
+
+  howToToggle.addEventListener('click', () => {
+    howToOpen = !howToOpen;
+    howToContent.style.maxHeight = howToOpen ? howToContent.scrollHeight + 'px' : '0';
+    howToArrow.style.transform = howToOpen ? 'rotate(180deg)' : '';
+    howToToggle.setAttribute('aria-expanded', String(howToOpen));
+  });
 
   // ── PERIODIC TABLE ────────────────────────────────────────────────────
   const wrapper = document.createElement('div');
