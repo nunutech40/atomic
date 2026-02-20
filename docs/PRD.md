@@ -17,6 +17,83 @@ Atomic dibuat untuk menjawab kebutuhan alat belajar kimia yang interaktif, visua
 
 ---
 
+## 1.5 Filosofi Desain Emosional — "Bikin Hati Bergetar Dulu"
+
+> **Prinsip inti:** Sebelum user belajar, mereka harus merasa **kagum**. Rasa kagum adalah pintu masuk ke semangat belajar yang tulus.
+
+Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalaman yang membuat user berpikir:
+> *"Wait... atom itu segini menakjubkan? Gue mau tahu lebih."*
+
+### 🌟 Dua Jenis "Wow" yang Berbeda
+
+| Jenis Wow | Contoh | Dampak |
+|-----------|--------|--------|
+| **Wow Visual** | Animasi 3D yang keren | Kesan pertama bagus, tapi dangkal |
+| **Wow Eksistensial** | "Setiap atom di tubuhmu pernah berada di dalam bintang." | Mengubah cara pandang tentang diri dan alam semesta |
+
+**Atomic mengejar Wow Eksistensial.** Visual hanyalah kendaraan — isinya adalah kisah yang menggetarkan.
+
+### 🗺️ The Journey — Dari Kagum ke Pemahaman
+
+Narasi yang harus dirasakan user saat menjelajahi Atomic, secara berurutan:
+
+```
+1. KAGUM dulu
+   "Materi yang gue pegang adalah 99.99% ruang kosong?!"
+   → User berhenti sejenak, tidak percaya
+
+2. PENASARAN terpicu
+   "Kalau begitu, apa yang 'nyata' dari meja ini?"
+   → Rasa ingin tahu muncul secara organik
+
+3. PETUALANGAN dimulai
+   "Oke, gue mau pahami ini dari nol."
+   → User memilih path belajar dengan motivasi internal
+
+4. KONEKSI personal
+   "Oh jadi emas di cincinku berasal dari tabrakan bintang neutron."
+   → Ilmu terasa relevan dan personal
+
+5. MAKIN DALAM
+   "Terus elektron itu gimana bisa ada di 'lapisan'?"
+   → User ingin tahu lebih, bukan karena harus tapi karena mau
+
+6. BERBAGI
+   "Eh, tau gak sih kalau..." → User menceritakan ke teman
+   → Pembelajaran menjadi bagian dari identitas mereka
+```
+
+### ✍️ Storytelling Principles untuk Setiap Halaman
+
+**Home page:**
+- Buka dengan fakta mengejutkan yang berputar (bukan tagline produk)
+- Contoh: *"Tubuhmu tersusun dari 7 oktilion atom. Setiap satu pernah berada di dalam bintang."*
+- Langsung tunjukkan: "Ini bukan hafalan — ini kisah tentang dirimu sendiri."
+
+**Element detail page:**
+- Setiap elemen punya **kisah penemuan** yang dramatis (bukan sekedar "ditemukan oleh X pada tahun Y")
+- Contoh Radium: "Marie Curie bekerja selama bertahun-tahun di gudang bocor atapnya, memproses ton bijih uranium untuk mendapat segelintir gram. Ia tidak tahu itu akan membunuhnya perlahan."
+- Contoh Emas: "Emas di cincinmu bukan dari Bumi. Ia lahir dari tabrakan dua bintang neutron, miliaran tahun sebelum tata surya terbentuk."
+
+**Modul belajar:**
+- Setiap modul dimulai dengan PERTANYAAN yang bikin penasaran, bukan penjelasan
+- Contoh mengganti "Elektron ada di lapisan karena..." dengan "Mengapa elektron tidak jatuh ke nukleus? Ini pertanyaan yang membuat fisikawan pusing selama puluhan tahun."
+
+**Molecule builder:**
+- Bukan sekedar "H₂ + O = H₂O"
+- Tapi: "Air yang kamu minum hari ini mungkin pernah melewati tubuh dinosaurus, 65 juta tahun lalu."
+
+### 📐 Hierarki Emosi dalam UI
+
+Setiap halaman harus menjawab 3 pertanyaan secara berurutan:
+1. **"Kenapa ini penting buat gue?"** → Koneksi personal dulu
+2. **"Ini keren banget, ada apa lagi?"** → Rasa ingin tahu
+3. **"Oke, gue mau pelajari lebih dalam."** → Baru aksi belajar
+
+Jika urutan ini terbalik (langsung ke materi tanpa membangun rasa kagum), user akan skip atau bosan.
+
+---
+
 ## 2. Pengguna Target (User Persona)
 
 | Persona | Profil | Kebutuhan Utama |
