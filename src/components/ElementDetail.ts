@@ -5,6 +5,8 @@ import { getElectronShells, getShellLabel } from '../utils/electronConfig';
 import { t } from '../core/i18n';
 import { navigate } from '../core/router';
 import { getDiscoverer } from '../data/discoverers';
+import { getOrigin } from '../data/origins';
+
 
 export function renderElementDetail(container: HTMLElement, n: number) {
     const el = elements.find(e => e.n === n);
@@ -210,6 +212,55 @@ export function renderElementDetail(container: HTMLElement, n: number) {
 
         discSec.appendChild(card);
         right.appendChild(discSec);
+    }
+
+    // ── Cosmic Origin Card ───────────────────────────────────────────────
+    const origin = getOrigin(el.sym);
+    if (origin) {
+        const originSec = document.createElement('div');
+        originSec.style.marginTop = '20px';
+        originSec.innerHTML = `<div class="section-title">Asal Usul Kosmik</div>`;
+
+        const originCard = document.createElement('div');
+        originCard.className = 'origin-card';
+        originCard.style.cssText = `
+            border-radius:12px;
+            border:1px solid ${origin.color}30;
+            background:${origin.color}10;
+            padding:16px;
+            cursor:pointer;
+            transition:all .2s;
+        `;
+        originCard.innerHTML = `
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                <div style="font-size:28px;line-height:1;">${origin.icon}</div>
+                <div>
+                    <div style="font-size:11px;color:${origin.color};font-weight:700;letter-spacing:.08em;text-transform:uppercase;">${origin.label}</div>
+                    <div style="font-size:13px;color:var(--text-1);font-weight:600;margin-top:2px;">${origin.tagline}</div>
+                </div>
+            </div>
+            <div class="origin-story" style="font-size:12.5px;color:var(--text-2);line-height:1.7;display:none;">
+                ${origin.story.split('\n\n').map(p => `<p style="margin:0 0 8px 0;">${p}</p>`).join('')}
+            </div>
+            <div class="origin-toggle" style="font-size:11px;color:${origin.color};margin-top:6px;font-weight:600;">Baca selengkapnya ▾</div>
+        `;
+
+        let expanded = false;
+        originCard.addEventListener('click', () => {
+            expanded = !expanded;
+            const storyEl = originCard.querySelector('.origin-story') as HTMLElement;
+            const toggleEl = originCard.querySelector('.origin-toggle') as HTMLElement;
+            storyEl.style.display = expanded ? 'block' : 'none';
+            toggleEl.textContent = expanded
+                ? 'Tutup ▴'
+                : 'Baca selengkapnya ▾';
+            toggleEl.style.color = origin.color;
+        });
+        originCard.addEventListener('mouseenter', () => { originCard.style.borderColor = origin.color + '60'; });
+        originCard.addEventListener('mouseleave', () => { originCard.style.borderColor = origin.color + '30'; });
+
+        originSec.appendChild(originCard);
+        right.appendChild(originSec);
     }
 
     // Description
