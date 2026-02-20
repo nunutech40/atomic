@@ -75,7 +75,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'step',
                 title: 'Bintang: Pabrik Elemen yang Terbakar Perlahan',
-                body: 'Bintang seperti matahari membakar hidrogen selama miliaran tahun. Ketika hidrogen habis, inti mengerut dan memanas — mulai membakar helium jadi karbon dan oksigen. Ketika helium habis, karbon terbakar jadi neon, magnesium, silikon. Terus onion-like: lapisan demi lapisan elemen yang makin berat.<br><br>Untuk bintang yang cukup besar (lebih dari 8× massa matahari), proses ini berakhir di besi. Besi adalah dinding terakhir: fusinya tidak menghasilkan energi, malah menyerap. Inti bintang berhenti menghasilkan tekanan untuk melawan gravitasi — dan kolaps dalam sepersekian detik.',
+                body: 'Bintang seperti matahari membakar hidrogen selama miliaran tahun. Ketika hidrogen habis, inti mengerut dan memanas — mulai membakar helium jadi karbon dan oksigen. Ketika helium habis, karbon terbakar jadi neon, magnesium, silikon. Terus berlapis seperti bawang — lapisan demi lapisan elemen yang makin berat.<br><br>Untuk bintang yang cukup besar (lebih dari 8× massa matahari), proses ini berakhir di besi. Besi adalah dinding terakhir: fusinya tidak menghasilkan energi, malah menyerap. Inti bintang berhenti menghasilkan tekanan untuk melawan gravitasi — dan kolaps dalam sepersekian detik.',
                 visual: '🔥',
                 animKey: 'anim-nucleo-onion',
                 highlight: 'Bintang masif: H→He→C→O→Ne→Mg→Si→Fe · Besi = dinding akhir · Tidak bisa dibakar lebih lanjut',
@@ -174,7 +174,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'scale',
                 title: 'Harga yang Tidak Masuk Akal',
-                body: 'Satu miligram antimateri (0.001 gram) butuh energi sekitar 25 miliar kWh untuk dibuat — senilai lebih dari 2,5 triliun rupiah hanya untuk listriknya. CERN, akselerator partikel terbesar di dunia, menghasilkan sekitar 1–10 nanogram antihydrogen per tahun.<br><br>Pada rate itu, untuk mengumpulkan satu gram antimateri dibutuhkan sekitar 100 juta tahun operasi CERN penuh. Dan penyimpanannya? Antimateri tidak bisa menyentuh wadah biasa — harus disuspensikan di dalam medan magnet dan vakum sempurna.',
+                body: 'Satu miligram antimateri (0.001 gram) butuh energi sekitar 25 miliar kWh untuk dibuat — senilai lebih dari 2,5 triliun rupiah hanya untuk listriknya. CERN, akselerator partikel terbesar di dunia, menghasilkan sekitar 1–10 nanogram antihydrogen per tahun.<br><br>Pada laju itu, untuk mengumpulkan satu gram antimateri dibutuhkan sekitar 100 juta tahun operasi CERN penuh. Dan penyimpanannya? Antimateri tidak bisa menyentuh wadah biasa — harus ditahan melayang di dalam medan magnet dan vakum sempurna.',
                 visual: '🔬',
                 highlight: '1 mg antimateri = Rp 2,5 triliun hanya untuk listrik · CERN produksi ~10 ng/tahun · butuh 100 juta tahun untuk 1 gram',
             },
@@ -271,7 +271,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'impact',
                 title: 'Kucing yang Lebih Besar dari Penciptanya',
-                body: 'Erwin Schrödinger meninggal pada 1961, 26 tahun setelah ia menulis esai yang melahirkan kucing itu. Sepanjang hidupnya ia terus berdebat melawan interpretasi Copenhagen — dan selalu kalah. Mekanika kuantum berhasil, interprestasinya tidak pernah disangkal oleh eksperimen.<br><br>Tapi warisannya tetap luar biasa: persamaan gelombang Schrödinger adalah tulang punggung seluruh kimia kuantum dan fisika materi. Setiap kali kamu mengisi baterai HP, setiap kali laser menyala, setiap kali MRI bekerja — persamaannya yang menjelaskan itu semua.<br><br>Dan kucingnya? Jadi meme. Jadi ikon budaya pop. Jadi cara jutaan orang pertama kali menyentuh fisika kuantum.',
+                body: 'Erwin Schrödinger meninggal pada 1961, 26 tahun setelah ia menulis esai yang melahirkan kucing itu. Sepanjang hidupnya ia terus berdebat melawan interpretasi Copenhagen — dan selalu kalah. Mekanika kuantum berhasil, interpretasinya tidak pernah disangkal oleh eksperimen.<br><br>Tapi warisannya tetap luar biasa: persamaan gelombang Schrödinger adalah tulang punggung seluruh kimia kuantum dan fisika materi. Setiap kali kamu mengisi baterai HP, setiap kali laser menyala, setiap kali MRI bekerja — persamaannya yang menjelaskan itu semua.<br><br>Dan kucingnya? Jadi meme. Jadi ikon budaya pop. Jadi cara jutaan orang pertama kali menyentuh fisika kuantum.',
                 visual: '🏆',
                 history: [
                     { year: '1926', event: 'Persamaan gelombang Schrödinger — tulang punggung kimia kuantum modern', person: 'Erwin Schrödinger' },
@@ -406,10 +406,10 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'step',
                 title: 'Jawaban Einstein: Cahaya adalah Partikel (Foton)',
-                body: 'Einstein mengambil ide kuantum Planck dan mendorongnya le langkah lebih jauh: cahaya tidak hanya bergerak dalam paket — cahaya ADALAH paket. Setiap paket disebut foton. Energi satu foton = h × f (frekuensi). Satu foton memukul satu elektron — seperti bola billiard. Jika energi foton cukup besar (frekuensi tinggi = cahaya biru/ungu), elektron terlepas. Jika tidak cukup (frekuensi rendah = cahaya merah), tidak ada yang terjadi — tidak peduli berapa banyak foton datang.<br><br>Intensitas hanya menentukan JUMLAH foton, bukan energi per foton. Banyak foton lemah tetap tidak bisa melepas satu elektron yang butuh energi lebih besar.',
+                body: 'Einstein mengambil ide kuantum Planck dan mendorongnya ke langkah lebih jauh: cahaya tidak hanya bergerak dalam paket — cahaya ADALAH paket. Setiap paket disebut foton. Energi satu foton = h × f (frekuensi). Satu foton memukul satu elektron — seperti bola billiard. Jika energi foton cukup besar (frekuensi tinggi = cahaya biru/ungu), elektron terlepas. Jika tidak cukup (frekuensi rendah = cahaya merah), tidak ada yang terjadi — tidak peduli berapa banyak foton datang.<br><br>Intensitas hanya menentukan JUMLAH foton, bukan energi per foton. Banyak foton lemah tetap tidak bisa melepas satu elektron yang butuh energi lebih besar.',
                 visual: '☀️',
                 animKey: 'anim-photo-foton',
-                highlight: 'E = h × f · h = konstantan Planck (6.626×10⁻³⁴ J·s) · f = frekuensi cahaya',
+                highlight: 'E = h × f · h = konstanta Planck (6.626×10⁻³⁴ J·s) · f = frekuensi cahaya',
             },
             {
                 type: 'step',
@@ -689,7 +689,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'impact',
                 title: 'Ini Bukan Mimpi Lagi',
-                body: 'Desember 2022: National Ignition Facility di California pertama kali mencapai "ignition" — input 2.05 MJ laser, output 3.15 MJ energi fusi. Lebih banyak energi keluar dari yang masuk. Ini adalah tonggak sejarah yang sama besarnya dengan Wright Brothers pertama terbang. Kita baru di awal, tapi physics bekerja.<br><br>ITER di Prancis, yang dibangun oleh 35 negara termasuk China, AS, Eropa, dan Rusia bersama-sama, ditargetkan beroperasi 2035 dengan output 10× dari input. Private fusion companies (Commonwealth Fusion, Helion, TAE) berlomba mencapai commercial fusion sebelum 2040.<br><br>Mimpi 100 tahun itu sedang menjadi kenyataan.',
+                body: 'Desember 2022: National Ignition Facility di California pertama kali mencapai "ignition" — input 2.05 MJ laser, output 3.15 MJ energi fusi. Lebih banyak energi keluar dari yang masuk. Ini adalah tonggak sejarah yang sama besarnya dengan Wright Brothers pertama terbang. Kita baru di awal, tapi physics bekerja.<br><br>ITER di Prancis, yang dibangun oleh 35 negara termasuk China, AS, Eropa, dan Rusia bersama-sama, ditargetkan beroperasi 2035 dengan output 10× dari input. Private fusion companies (Commonwealth Fusion, Helion, TAE) berlomba mencapai energi fusi komersial sebelum 2040.<br><br>Mimpi 100 tahun itu sedang menjadi kenyataan.',
                 visual: '🚀',
                 history: [
                     { year: '2022', event: 'NIF mencapai ignition — pertama dalam sejarah: energi keluar > energi masuk (laser)', person: 'National Ignition Facility, USA' },
@@ -742,7 +742,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'step',
                 title: 'Tiga Jenis Radiasi: α, β, γ',
-                body: '<b>Alfa (α):</b> Inti atom memuntahkan 2 proton + 2 neutron (inti helium). Partikel besar, lambat — bisa dihentikan selembar kertas, tapi jika masuk ke tubuh, efeknya dahsyat.\n\n<b>Beta (β):</b> Neutron berubah menjadi proton dengan memancarkan elektron (β⁻). Lebih ringan dan lebih penetratif dari alfa, bisa dihentikan lempengan aluminium.\n\n<b>Gamma (γ):</b> Energi murni — gelombang elektromagnetik berenergi tinggi. Tidak ada massa. Menembus segalanya kecuali timbal tebal atau beton. Yang dipakai untuk terapi kanker.',
+                body: '<b>Alfa (α):</b> Inti atom memuntahkan 2 proton + 2 neutron (inti helium). Partikel besar, lambat — bisa dihentikan selembar kertas, tapi jika masuk ke tubuh, efeknya dahsyat.<br><br><b>Beta (β):</b> Neutron berubah menjadi proton dengan memancarkan elektron (β⁻). Lebih ringan dan lebih penetratif dari alfa, bisa dihentikan lempengan aluminium.<br><br><b>Gamma (γ):</b> Energi murni — gelombang elektromagnetik berenergi tinggi. Tidak ada massa. Menembus segalanya kecuali timbal tebal atau beton. Yang dipakai untuk terapi kanker.',
                 visual: '🎯',
                 animKey: 'anim-radiation-types',
                 highlight: 'α: dihentikan kertas · β: dihentikan aluminium · γ: perlu timbal tebal',
@@ -794,7 +794,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'hook',
                 title: 'Kita Baru Mengerti Ini di Tahun 1990-an',
-                body: 'Fotosintesis ditemukan tahun 1771. Manusia sudah 200 tahun tahu bahwa daun mengubah cahaya matahari jadi makanan. Tapi bagaimana kelak persis mekanismenya, langkah per langkah, molekul per molekul — itu baru terjawab di tahun 1990-an. Dan ternyata jawabannya lebih gila dari yang pernah diduga siapa pun.',
+                body: 'Fotosintesis ditemukan tahun 1771. Manusia sudah 200 tahun tahu bahwa daun mengubah cahaya matahari jadi makanan. Tapi bagaimana persis mekanismenya, langkah per langkah, molekul per molekul — itu baru terjawab di tahun 1990-an. Dan ternyata jawabannya lebih gila dari yang pernah diduga siapa pun.',
                 visual: '🌿',
                 animKey: 'anim-photo-hook',
                 highlight: 'Ditemukan 1771 · Benar-benar dipahami ~1990 · Lebih dari 2 abad misteri',
@@ -915,7 +915,7 @@ export const phenomenonStories: PhenomenonStory[] = [
             {
                 type: 'impact',
                 title: 'Ini Baru Permulaan',
-                body: 'Kita sudah bisa membaca DNA (sequencing). Kita sudah bisa mengedit DNA — CRISPR-Cas9 memungkinkan ilmuwan memotong dan menyisipkan segmen DNA dengan presisi huruf per huruf. Vaksin mRNA COVID-19 adalah instruksi DNA yang dikirim langsung ke selmu. Terapi gen untuk penyakit genetik sudah dalam uji klinis. Kita sedang belajar menulis ulang kode kehidupan — tapi seberapa bijak kita menggunakannya adalah pertanyaan lain.',
+                body: 'Kita sudah bisa membaca DNA (sequencing). Kita sudah bisa mengedit DNA — CRISPR-Cas9 memungkinkan ilmuwan memotong dan menyisipkan segmen DNA dengan presisi huruf per huruf. Vaksin mRNA COVID-19 adalah instruksi berupa rantai mRNA yang dikirim langsung ke sel-selmu — sel membaca kode itu dan membuat protein yang mengajari sistem imun, tanpa pernah menyentuh DNA-mu. Terapi gen untuk penyakit genetik sudah dalam uji klinis. Kita sedang belajar menulis ulang kode kehidupan — tapi seberapa bijak kita menggunakannya adalah pertanyaan lain.',
                 visual: '✂️',
                 history: [
                     { year: '1953', event: 'Struktur double helix DNA terungkap', person: 'Watson & Crick' },
