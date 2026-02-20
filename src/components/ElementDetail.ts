@@ -4,6 +4,7 @@ import { AtomScene } from '../three/atomScene';
 import { getElectronShells, getShellLabel } from '../utils/electronConfig';
 import { t } from '../core/i18n';
 import { navigate } from '../core/router';
+import { getDiscoverer } from '../data/discoverers';
 
 export function renderElementDetail(container: HTMLElement, n: number) {
     const el = elements.find(e => e.n === n);
@@ -178,6 +179,38 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     });
 
     right.appendChild(propsGrid);
+
+    // ── Discoverer Card ──────────────────────────────────────────────────
+    const discoverer = getDiscoverer(el.sym);
+    if (discoverer) {
+        const discSec = document.createElement('div');
+        discSec.innerHTML = `<div class="section-title" style="margin-top:20px">Penemu</div>`;
+
+        const card = document.createElement('div');
+        card.className = 'discoverer-card';
+        card.id = 'discoverer-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.innerHTML = `
+            <img
+                class="discoverer-thumb"
+                src="${discoverer.photoUrl}"
+                alt="${discoverer.name}"
+                onerror="this.outerHTML='<div class=discoverer-thumb-fallback>👤</div>'"
+            />
+            <div class="discoverer-card-info">
+                <div class="discoverer-card-label">Penemu &amp; Pengisolasi</div>
+                <div class="discoverer-card-name">${discoverer.name}</div>
+                <div class="discoverer-card-meta">${discoverer.nationality} · ${discoverer.born}–${discoverer.died}</div>
+            </div>
+            <div class="discoverer-card-cta">Selengkapnya →</div>
+        `;
+        card.addEventListener('click', () => navigate(`/discoverer/${el.sym}`));
+        card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') navigate(`/discoverer/${el.sym}`); });
+
+        discSec.appendChild(card);
+        right.appendChild(discSec);
+    }
 
     // Description
     if (el.desc) {

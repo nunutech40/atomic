@@ -6,6 +6,7 @@ import { renderPeriodicTable } from './components/PeriodicTable';
 import { renderElementDetail } from './components/ElementDetail';
 import { renderMoleculeBuilder } from './components/MoleculeBuilder';
 import { renderPhenomenonStory } from './components/PhenomenonStory';
+import { renderDiscovererStory } from './components/DiscovererStory';
 
 
 initTheme();
@@ -49,13 +50,18 @@ addRoute('/molecule', () => {
 
 addRoute('/phenomena', () => {
     main.innerHTML = '';
-    renderPhenomena(main);
     setCleanup(() => { });
 });
 
 addRoute('/phenomena/:id', (params) => {
     main.innerHTML = '';
     const cleanup = renderPhenomenonStory(main, params?.id ?? '');
+    setCleanup(cleanup);
+});
+
+addRoute('/discoverer/:sym', (params) => {
+    main.innerHTML = '';
+    const cleanup = renderDiscovererStory(main, params?.sym ?? '');
     setCleanup(cleanup);
 });
 
