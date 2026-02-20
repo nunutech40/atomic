@@ -327,6 +327,12 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildHalfLifeAnim();
   } else if (animClass === 'anim-radium-glow') {
     atomAnimation = buildRadiumGlowAnim();
+  } else if (animClass === 'anim-chain-hook') {
+    atomAnimation = buildChainHookAnim();
+  } else if (animClass === 'anim-critical-mass') {
+    atomAnimation = buildCriticalMassAnim();
+  } else if (animClass === 'anim-control-rods') {
+    atomAnimation = buildControlRodsAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -774,6 +780,70 @@ function buildHalfLifeAnim(): string {
         </div>
       </div>
       <div class="ps-hl-note">Ra-226: T½ = 1.600 tahun → buku Curie masih radioaktif hingga tahun ~3600</div>
+    </div>
+  `;
+}
+
+function buildChainHookAnim(): string {
+  return `
+    <div class="ps-anim-chain-hook">
+      <div class="ps-ch-pile">
+        ${Array.from({ length: 5 }, (_, row) =>
+    `<div class="ps-ch-row" style="--row:${row}">${Array.from({ length: 5 - row }, (_, col) =>
+      `<div class="ps-ch-block" style="--i:${row * 5 + col}">${(row + col) % 3 === 0 ? 'U' : 'C'}</div>`
+    ).join('')}</div>`
+  ).join('')}
+        <div class="ps-ch-glow"></div>
+      </div>
+      <div class="ps-ch-label">Chicago Pile-1 · 49 ton Uranium · 385 ton Grafit</div>
+    </div>
+  `;
+}
+
+function buildCriticalMassAnim(): string {
+  return `
+    <div class="ps-anim-critmass">
+      <div class="ps-cm-pair">
+        <div class="ps-cm-sphere sub">
+          <div class="ps-cm-label">Sub-kritis</div>
+          <div class="ps-cm-neutrons">
+            ${Array.from({ length: 6 }, (_, i) => `<div class="ps-cm-n cm-escape" style="--i:${i}">n</div>`).join('')}
+          </div>
+          <div class="ps-cm-desc">Neutron kabur → reaksi mati</div>
+        </div>
+        <div class="ps-cm-sphere super">
+          <div class="ps-cm-label">Super-kritis</div>
+          <div class="ps-cm-neutrons">
+            ${Array.from({ length: 6 }, (_, i) => `<div class="ps-cm-n cm-hit" style="--i:${i}">n</div>`).join('')}
+          </div>
+          <div class="ps-cm-desc">Neutron mengenai → eksponensial</div>
+        </div>
+      </div>
+      <div class="ps-cm-note">U-235: massa kritis = 52 kg · Pu-239: 10 kg</div>
+    </div>
+  `;
+}
+
+function buildControlRodsAnim(): string {
+  return `
+    <div class="ps-anim-rods">
+      <div class="ps-rods-reactor">
+        <div class="ps-rods-core">
+          <div class="ps-rods-fuel">⬛ Grafit + Uranium</div>
+          <div class="ps-rods-neutrons">
+            ${Array.from({ length: 5 }, (_, i) => `<div class="ps-rn" style="--i:${i}">n</div>`).join('')}
+          </div>
+        </div>
+        <div class="ps-rods-bars">
+          <div class="ps-rod" style="--depth:30%"><div class="ps-rod-body">Cd</div></div>
+          <div class="ps-rod" style="--depth:30%"><div class="ps-rod-body">Cd</div></div>
+          <div class="ps-rod" style="--depth:30%"><div class="ps-rod-body">Cd</div></div>
+        </div>
+      </div>
+      <div class="ps-rods-legend">
+        <div class="ps-rl-item"><span class="ps-rl-dot green"></span> Rod ditarik → reaksi aktif</div>
+        <div class="ps-rl-item"><span class="ps-rl-dot red"></span> Rod masuk → reaksi berhenti</div>
+      </div>
     </div>
   `;
 }

@@ -36,6 +36,89 @@ export interface PhenomenonStory {
 
 export const phenomenonStories: PhenomenonStory[] = [
 
+    // ── REAKSI BERANTAI ───────────────────────────────────────────────────────
+    {
+        id: 'chain-reaction',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Reaktor Nuklir Pertama Dibangun di Bawah Tribun Stadion Sepakbola',
+                body: 'Desember 1942. Di bawah tribun West Stands Stagg Field — stadion Universitas Chicago — Enrico Fermi dan 48 ilmuwan diam-diam membangun tumpukan grafit dan uranium. Di atas mereka, 30.000 kursi kosong karena liga sepakbola sedang absen perang. Tidak ada izin dari walikota. Tidak ada pemberitahuan ke siapapun. Mereka akan memulai reaksi berantai nuklir pertama dalam sejarah manusia — dan tidak ada yang tahu apakah mereka bisa menghentikannya.',
+                visual: '⛓️',
+                animKey: 'anim-chain-hook',
+                highlight: 'CP-1: Chicago Pile-1 · 2 Desember 1942 · 3:25 PM · Reaksi berantai pertama di Bumi',
+            },
+            {
+                type: 'history',
+                title: 'Fermi — Pengungsi yang Membangun Apokalips',
+                body: 'Enrico Fermi lahir di Roma 1901. Pada 1938, ia pergi ke Stockholm menerima Nobel Prize — dan tidak pernah kembali ke Italia. Mussolini sudah menerapkan hukum rasial; istrinya, Laura, adalah Yahudi. Dari Stockholm, mereka langsung ke New York. Fermi membawa serta kepala fisika terbaik Eropa yang melarikan diri dari Nazi dan Fasis — Szilard, Teller, Wigner, Weisskopf. Bersama-sama, mereka akan membangun senjata paling mematikan yang pernah ada, atas nama satu ketakutan: jika mereka tidak melakukannya lebih dulu, Hitler yang akan melakukannya.',
+                quote: 'Tumpukan grafit itu berhasil. Reaksi berantai menjadi self-sustaining. Kami tahu saat itu: dunia tidak akan pernah sama lagi.',
+                quoteAuthor: 'Arthur Compton, telepon ke Washington D.C., 2 Desember 1942',
+                visual: '👨‍🔬',
+                history: [
+                    { year: '1938', event: 'Hahn & Strassmann membelah uranium — fisi ditemukan. Fermi melarikan diri ke Amerika.', person: 'Enrico Fermi' },
+                    { year: '1939', event: 'Einstein-Szilard Letter: memperingatkan Roosevelt bahwa Jerman mungkin sedang membangun bom atom', person: 'Einstein & Szilard' },
+                    { year: '1941', event: 'Manhattan Project dimulai. Fermi ditugaskan membuktikan reaksi berantai bisa dikendalikan.', person: 'US Government' },
+                    { year: 'Des 1942', event: 'CP-1 aktif — 28 menit reaksi berantai terkontrol pertama dalam sejarah', person: 'Enrico Fermi & tim' },
+                    { year: '1945', event: 'Trinity Test → Hiroshima → Nagasaki. Fermi menyaksikan Trinity dari bunker 10 km jauhnya.', person: 'Manhattan Project' },
+                    { year: '1954', event: 'Fermi meninggal karena kanker lambung — mungkin akibat radiasi bertahun-tahun. Usia 53.', person: 'Enrico Fermi' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Eksponensial: Satu Menjadi Satu Miliar dalam 80 Langkah',
+                body: 'Ketika satu atom U-235 pecah, ia melepaskan 2–3 neutron. Setiap neutron membelah atom uranium lain — melepas 2–3 neutron baru lagi. Generasi pertama: 1 atom. Generasi kedua: 2–3 atom. Generasi ketiga: 4–9 atom. Setiap generasi terjadi dalam ~10 nanosecond. Setelah 80 generasi (kurang dari satu milidetik), sudah terbentuk lebih dari 10²⁴ fisi — cukup untuk ledakan nuklir penuh.',
+                visual: '💥',
+                animKey: 'anim-chain',
+                highlight: 'gen 1: 1 atom → gen 10: 1.024 → gen 80: ~10²⁴ · semua dalam < 1 milidetik',
+            },
+            {
+                type: 'step',
+                title: 'Massa Kritis: Batas Antara Reaktor dan Bom',
+                body: 'Tidak semua neutron mengenai atom uranium — sebagian kabur keluar. Jika bahan bakar terlalu sedikit atau terlalu tipis, lebih banyak neutron kabur daripada yang memicu fisi baru → reaksi mati. Ini disebut "sub-critical". Di atas massa kritis — setiap neutron yang hilang digantikan oleh lebih banyak — reaksi tumbuh tak terkendali. Untuk U-235 murni, massa kritis sekitar 52 kg (bola berdiameter 17 cm). Untuk Pu-239: hanya 10 kg.',
+                visual: '⚖️',
+                animKey: 'anim-critical-mass',
+                highlight: 'U-235 murni: massa kritis ~52 kg · Pu-239: ~10 kg · Bom Fat Man Nagasaki: 6.4 kg Pu',
+            },
+            {
+                type: 'step',
+                title: 'Control Rods: Mengendalikan Apokalips dengan Batang Grafit',
+                body: 'CP-1 Fermi dikendalikan oleh tiga batang cadmium — logam yang menyerap neutron seperti spons. Tarik batang keluar: lebih banyak neutron bebas, reaksi menguat. Dorong masuk: neutron tersumbat, reaksi melemah. Di pagi 2 Desember 1942, Fermi secara bertahap menarik batang kontrol satu sentimeter per satu sentimeter, sambil mengamati detektor Geiger. Pukul 15:25 — batang sudah cukup keluar. Reaksi menjadi self-sustaining. Fermi membiarkannya berjalan 28 menit.<br><br>Kemudian ia mendorong batang kembali masuk. Reaksi berhenti.',
+                visual: '🎛️',
+                animKey: 'anim-control-rods',
+                highlight: 'Cadmium menyerap neutron · Ditarik = lebih banyak fisi · Didorong = reaksi berhenti',
+            },
+            {
+                type: 'scale',
+                title: 'Angka yang Tidak Bisa Dibayangkan',
+                body: 'Jika kamu melipat selembar kertas 42 kali, tebalnya akan mencapai bulan. Prinsip matematika yang sama dengan reaksi berantai: eksponensial selalu menang melawan intuisi manusia.<br><br>Reaksi berantai dalam bom Little Boy Hiroshima: berlangsung dalam 0,0000001 detik. Dalam waktu itu, terjadi sekitar 80 generasi pembelahan. Energi yang dilepas: setara dengan 15.000 ton TNT. Dari 64 kg uranium — hanya ~900 gram yang sempat bereaksi sebelum ledakan menghancurkan sisanya.',
+                visual: '🔢',
+                highlight: '0.9 kg uranium bereaksi → 15.000 ton TNT · Efisiensi: 1.4% — sisanya terbuang sia-sia oleh ledakannya sendiri',
+            },
+            {
+                type: 'scale',
+                title: 'Paradoks: Teknologi yang Sama Membunuh dan Menerangi',
+                body: 'Reaksi berantai yang menghancurkan Hiroshima dan Nagasaki adalah prinsip yang identik dengan yang menyalakan 440 reaktor nuklir di seluruh dunia hari ini. Perbedaannya hanya pada kecepatan: bom = reaksi tak terkontrol dalam milidetik. Reaktor = reaksi terkontrol selama bertahun-tahun.<br><br>Prancis menghasilkan 75% listriknya dari nuklir — dan punya jejak karbon per kapita yang lebih rendah dari Jerman yang bergantung batu bara. Paris yang indah di malam hari menyala dari reaksi berantai yang dikendalikan.',
+                visual: '⚡',
+                highlight: '440 reaktor nuklir aktif · 10% listrik global · Prancis: 75% listrik dari nuklir sejak 1970an',
+            },
+            {
+                type: 'impact',
+                title: 'Warisan: Api yang Tidak Pernah Padam',
+                body: 'CP-1 berhasil dioperasikan selama beberapa bulan sebelum dibongkar dan dipindahkan ke lokasi lebih aman di luar kota. Saat ini, tempatnya ditandai dengan plakat perunggu di bawah tribun yang sudah dirombak.<br><br>Fermi tidak pernah melihat buah dari pekerjaannya — ia meninggal 1954 dari kanker lambung yang mungkin dipercepat oleh radiasi bertahun-tahun. Tapi warisannya hidup: teknologi reaktor nuklirnya menjadi blueprint seluruh industri nuklir dunia. Dan paradoks terbesar: pria yang melarikan diri karena takut fasis — justru membangun senjata yang mengakhiri perang fasis.',
+                visual: '🏛️',
+                history: [
+                    { year: '1942', event: 'CP-1 aktif — reaktor nuklir terkontrol pertama di dunia', person: 'Fermi & team' },
+                    { year: '1951', event: 'EBR-I: reaktor nuklir pertama yang menghasilkan listrik, Idaho USA', person: 'AEC' },
+                    { year: '1954', event: 'Obninsk, USSR: PLTN komersial pertama di dunia (5 MW)', person: 'Soviet Union' },
+                    { year: '1986', event: 'Chernobyl: control rods gagal → reaksi berantai tak terkendali → meltdown', person: 'Operator RBMK-1000' },
+                    { year: '2024', event: '440 reaktor aktif global · Gen IV reactors & SMRs dalam pengembangan', person: 'IAEA' },
+                ],
+                highlight: 'Teknologi yang sama: bom Hiroshima & PLTN Paris · Perbedaan: kecepatan reaksi',
+            },
+        ],
+    },
+
     // ── FISI NUKLIR ──────────────────────────────────────────────────────────
     {
         id: 'fission',
