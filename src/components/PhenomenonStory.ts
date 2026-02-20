@@ -349,6 +349,14 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildTunnelThicknessAnim();
   } else if (animClass === 'anim-tunnel-sun') {
     atomAnimation = buildTunnelSunAnim();
+  } else if (animClass === 'anim-super-hook') {
+    atomAnimation = buildSuperHookAnim();
+  } else if (animClass === 'anim-super-wave') {
+    atomAnimation = buildSuperWaveAnim();
+  } else if (animClass === 'anim-super-slit') {
+    atomAnimation = buildSuperSlitAnim();
+  } else if (animClass === 'anim-super-decoherence') {
+    atomAnimation = buildSuperDecoherenceAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -1058,6 +1066,99 @@ function buildTunnelSunAnim(): string {
         </div>
       </div>
       <div class="ps-ts-result">☀️ 10⁵⁷ proton × peluang kecil = cukup → 3.8×10²⁶ W</div>
+    </div>
+  `;
+}
+
+function buildSuperHookAnim(): string {
+  return `
+    <div class="ps-anim-super-hook">
+      <div class="ps-sh-box">
+        <div class="ps-sh-box-label">Kotak Schrödinger</div>
+        <div class="ps-sh-inside">
+          <div class="ps-sh-cat alive">😸 Hidup</div>
+          <div class="ps-sh-slash">/</div>
+          <div class="ps-sh-cat dead">🐱 Mati</div>
+        </div>
+        <div class="ps-sh-question">?</div>
+      </div>
+      <div class="ps-sh-label">Sebelum dibuka: keduanya nyata · Sesudah dibuka: salah satu</div>
+    </div>
+  `;
+}
+
+function buildSuperWaveAnim(): string {
+  return `
+    <div class="ps-anim-super-wave">
+      <div class="ps-sw-electron">
+        <div class="ps-sw-states">
+          <div class="ps-sw-state up">↑ spin atas</div>
+          <div class="ps-sw-plus">+</div>
+          <div class="ps-sw-state down">↓ spin bawah</div>
+        </div>
+        <div class="ps-sw-brace">⎫ sekaligus</div>
+      </div>
+      <div class="ps-sw-arrow">⇩ diukur</div>
+      <div class="ps-sw-result">
+        <div class="ps-sw-collapsed">↑ atau ↓ (acak, tidak bisa diprediksi)</div>
+      </div>
+      <div class="ps-sw-formula">|ψ⟩ = α|↑⟩ + β|↓⟩</div>
+    </div>
+  `;
+}
+
+function buildSuperSlitAnim(): string {
+  return `
+    <div class="ps-anim-super-slit">
+      <div class="ps-ss-pair">
+        <div class="ps-ss-case ss-nodect">
+          <div class="ps-ss-title">Tanpa detektor</div>
+          <div class="ps-ss-wall">
+            <div class="ps-ss-slit"></div>
+            <div class="ps-ss-slit"></div>
+          </div>
+          <div class="ps-ss-screen">
+            ${Array.from({ length: 7 }, (_, i) => `<div class="ps-ss-band" style="--i:${i};opacity:${[0.2, 0.5, 0.8, 1, 0.8, 0.5, 0.2][i]}"></div>`).join('')}
+          </div>
+          <div class="ps-ss-label ss-wave">Pola gelombang ✓</div>
+        </div>
+        <div class="ps-ss-case ss-dect">
+          <div class="ps-ss-title">Dengan detektor</div>
+          <div class="ps-ss-wall">
+            <div class="ps-ss-slit"></div>
+            <div class="ps-ss-slit"></div>
+          </div>
+          <div class="ps-ss-screen">
+            <div class="ps-ss-band particle-band" style="--i:2;opacity:0.9"></div>
+            <div class="ps-ss-band particle-band" style="--i:4;opacity:0.9"></div>
+          </div>
+          <div class="ps-ss-label ss-particle">Pola partikel !</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildSuperDecoherenceAnim(): string {
+  return `
+    <div class="ps-anim-super-deco">
+      <div class="ps-sd-scene">
+        <div class="ps-sd-atom">
+          <div class="ps-sd-core"></div>
+          ${Array.from({ length: 6 }, (_, i) => `<div class="ps-sd-env-particle" style="--i:${i}"></div>`).join('')}
+        </div>
+        <div class="ps-sd-info">
+          <div class="ps-sd-row">
+            <span class="ps-sd-dot isolated"></span>
+            <span>Terisolasi: superposisi terjaga</span>
+          </div>
+          <div class="ps-sd-row">
+            <span class="ps-sd-dot disturbed"></span>
+            <span>Terpapar lingkungan: runtuh dalam 10⁻¹³ detik</span>
+          </div>
+        </div>
+      </div>
+      <div class="ps-sd-label">Kucing: 10²³ atom interaksi → dekoherensi instan</div>
     </div>
   `;
 }

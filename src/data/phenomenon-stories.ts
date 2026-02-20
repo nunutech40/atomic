@@ -36,6 +36,89 @@ export interface PhenomenonStory {
 
 export const phenomenonStories: PhenomenonStory[] = [
 
+    // ── SUPERPOSISI ──────────────────────────────────────────────────────────
+    {
+        id: 'superposition',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Schrödinger Benci Kucingnya Sendiri',
+                body: 'Semua orang tahu Kucing Schrödinger — hidup sekaligus mati di dalam kotak, sampai dibuka. Tapi yang jarang diceritakan: Schrödinger sendiri membenci eksperimen itu.<br><br>Ia tidak membuat itu sebagai ilustrasi kuantum yang keren. Ia membuatnya sebagai ejekan — untuk menunjukkan betapa absurdnya interpretasi mekanika kuantum yang waktu itu sedang populer. "Kalau ini benar," katanya, "berarti kucing bisa hidup dan mati di waktu bersamaan. Ini gila."<br><br>Ironisnya: kucing itu jadi konsep paling terkenal dalam fisika modern. Dan Schrödinger tidak pernah lepas darinya sampai ia meninggal.',
+                visual: '🐱',
+                animKey: 'anim-super-hook',
+                highlight: 'Schrödinger membuat eksperimen kucing sebagai ejekan terhadap mekanika kuantum — dan justru itu yang membuatnya abadi',
+            },
+            {
+                type: 'history',
+                title: 'Perang Surat: Einstein vs Bohr',
+                body: 'Tahun 1935. Albert Einstein — yang sudah tidak percaya mekanika kuantum sejak awal — menulis surat ke Erwin Schrödinger. Ia frustrasi dengan interpretasi Copenhagen dari Niels Bohr yang bilang: partikel tidak punya keadaan pasti sampai diukur. Baginya itu omong kosong.<br><br>Schrödinger membalas dengan setuju. Ia lalu membuat eksperimen pikiran — kucing, kotak, bom kecil, atom radioaktif — untuk membuktikan betapa konyolnya ide Bohr jika diterapkan ke skala makro. Hasilnya: esai 1935 yang melahirkan "Kucing Schrödinger".<br><br>Einstein senang. Tapi sejarah membuktikan Bohr yang benar.',
+                quote: 'Tuhan tidak bermain dadu dengan alam semesta.',
+                quoteAuthor: 'Albert Einstein — yang akhirnya kalah debat dengan kuantum',
+                visual: '✉️',
+                history: [
+                    { year: '1925', event: 'Heisenberg: matriks mekanika kuantum — partikel tidak punya posisi pasti', person: 'Werner Heisenberg' },
+                    { year: '1926', event: 'Schrödinger: persamaan gelombang — alternatif yang lebih intuitif dari versi Heisenberg', person: 'Erwin Schrödinger' },
+                    { year: '1927', event: 'Interpretasi Copenhagen: Bohr & Heisenberg — realitas tidak ada sebelum diukur', person: 'Niels Bohr & Heisenberg' },
+                    { year: '1935', event: 'Schrödinger menulis esai "Situasi Saat Ini dalam Mekanika Kuantum" — lahirnya kucing', person: 'Erwin Schrödinger' },
+                    { year: '1957', event: 'Hugh Everett: Many-Worlds Interpretation — setiap pengukuran membelah alam semesta', person: 'Hugh Everett III' },
+                    { year: '2019', event: 'Superposisi kuantum dipertahankan di suhu ruang untuk pertama kali — langkah besar ke komputer kuantum', person: 'Google AI & IBM' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Apa Itu Superposisi? Semua Kemungkinan Sekaligus',
+                body: 'Ambil sebuah elektron. Tanyakan: spin-nya ke atas atau ke bawah? Sebelum kamu ukur, jawaban yang benar bukan "salah satu" — tapi "keduanya sekaligus". Ini bukan karena kita tidak tahu. Ini karena secara fisika, elektron itu memang belum memilih.<br><br>Fungsi gelombang elektron adalah jumlahan (superposisi) dari semua kemungkinan keadaan — masing-masing dengan koefisien probabilitas. Saat kamu ukur, fungsi gelombang "runtuh" ke satu nilai tertentu. Sebelum diukur: semua kemungkinan nyata. Ini yang disebut superposisi kuantum.',
+                visual: '↕️',
+                animKey: 'anim-super-wave',
+                highlight: '|ψ⟩ = α|↑⟩ + β|↓⟩ · |α|² + |β|² = 1 · Sebelum diukur: keduanya nyata',
+            },
+            {
+                type: 'step',
+                title: 'Pengamatan Meruntuhkan Realitas',
+                body: 'Ini bagian yang paling bikin pusing: bukan hanya partikel yang tidak punya keadaan pasti — tapi tindakan mengamati itu sendiri yang memaksa partikel memilih. Eksperimen double-slit membuktikan ini secara dramatis.<br><br>Tembak elektron satu per satu ke dua celah: pola interferensi muncul di layar — bukti elektron lewat dua celah sekaligus. Tapi saat kamu pasang detektor untuk tahu elektron lewat celah mana — pola interferensi hilang. Elektron tiba-tiba berkelakuan seperti partikel biasa. Pengamatan mengubah hasilnya.',
+                visual: '👁️',
+                animKey: 'anim-super-slit',
+                highlight: 'Double-slit tanpa detektor: pola gelombang · Dengan detektor: pola partikel · Pengamatan mengubah realitas',
+            },
+            {
+                type: 'step',
+                title: 'Kenapa Kucing Tidak Bisa Superposisi?',
+                body: 'Pertanyaan wajarnya: kalau elektron bisa superposisi, kenapa kucing tidak bisa hidup-mati sekaligus? Jawaban: dekoherensi.<br><br>Superposisi itu rapuh. Begitu partikel kuantum berinteraksi dengan lingkungannya — udara, foton, getaran — informasi tentang keadaannya "bocor" ke lingkungan dan superposisi hancur dalam hitungan femtodetik. Kucing punya 10²³ atom yang terus berinteraksi satu sama lain dan lingkungan. Tidak ada cara superposisi itu bertahan lebih dari sepersekian detik. Itulah kenapa dunia makro terasa "klasik".',
+                visual: '🌡️',
+                animKey: 'anim-super-decoherence',
+                highlight: 'Dekoherensi: interaksi dengan lingkungan → superposisi runtuh dalam ~10⁻¹³ detik untuk benda makro',
+            },
+            {
+                type: 'scale',
+                title: 'Komputer Kuantum: Superposisi sebagai Kekuatan',
+                body: 'Komputer biasa bekerja dengan bit: 0 atau 1. Komputer kuantum bekerja dengan qubit yang bisa berada dalam superposisi 0 dan 1 sekaligus. Satu qubit = 2 kemungkinan. 2 qubit = 4. 10 qubit = 1.024. 300 qubit = lebih banyak kemungkinan dari atom di alam semesta yang bisa dihitung sekaligus.<br><br>Tapi ada tangkapan besar: qubit sangat mudah terganggu oleh dekoherensi. Komputer kuantum Google "Sycamore" harus didinginkan sampai 0.015 Kelvin — 100 kali lebih dingin dari angkasa luar — agar qubitnya stabil cukup lama untuk menghitung.',
+                visual: '💻',
+                highlight: '300 qubit = 2³⁰⁰ kemungkinan sekaligus · Google Sycamore: 53 qubit · didinginkan ke 0.015 K',
+            },
+            {
+                type: 'scale',
+                title: 'Paradoks Terbesar: Siapa yang Mengamati Pengamat?',
+                body: 'Kalau pengamatan meruntuhkan superposisi — lalu siapa yang mengamati pengamat? Ini masalah yang belum terpecahkan dalam fisika. Ada tiga kubu besar:<br><br><b>Copenhagen:</b> Cukup sampai di sini. Jangan tanya apa yang terjadi sebelum pengukuran.<br><b>Many-Worlds:</b> Setiap pengukuran membelah alam semesta — satu versi kamu membaca ini, versi lain sedang tidak. Tidak ada yang runtuh, semuanya terjadi.<br><b>Pilot Wave:</b> Partikel punya posisi nyata setiap saat, tapi dituntun oleh gelombang yang tidak terlihat.<br><br>Tidak ada yang bisa dibuktikan salah. Semua konsisten dengan eksperimen.',
+                visual: '🌌',
+                highlight: 'Copenhagen vs Many-Worlds vs Pilot Wave — 100 tahun berdebat, belum ada pemenang',
+            },
+            {
+                type: 'impact',
+                title: 'Kucing yang Lebih Besar dari Penciptanya',
+                body: 'Erwin Schrödinger meninggal pada 1961, 26 tahun setelah ia menulis esai yang melahirkan kucing itu. Sepanjang hidupnya ia terus berdebat melawan interpretasi Copenhagen — dan selalu kalah. Mekanika kuantum berhasil, interprestasinya tidak pernah disangkal oleh eksperimen.<br><br>Tapi warisannya tetap luar biasa: persamaan gelombang Schrödinger adalah tulang punggung seluruh kimia kuantum dan fisika materi. Setiap kali kamu mengisi baterai HP, setiap kali laser menyala, setiap kali MRI bekerja — persamaannya yang menjelaskan itu semua.<br><br>Dan kucingnya? Jadi meme. Jadi ikon budaya pop. Jadi cara jutaan orang pertama kali menyentuh fisika kuantum.',
+                visual: '🏆',
+                history: [
+                    { year: '1926', event: 'Persamaan gelombang Schrödinger — tulang punggung kimia kuantum modern', person: 'Erwin Schrödinger' },
+                    { year: '1933', event: 'Nobel Prize Fisika bersama Dirac — untuk persamaan gelombang', person: 'Erwin Schrödinger' },
+                    { year: '1935', event: 'Kucing Schrödinger lahir — sebagai ejekan, jadi ikon', person: 'Erwin Schrödinger' },
+                    { year: '1994', event: 'NIST: superposisi pertama di ion tunggal yang terkontrol', person: 'David Wineland, NIST' },
+                    { year: '2019', event: 'Google: "quantum supremacy" — 200 detik vs 10.000 tahun komputer klasik', person: 'Google AI' },
+                ],
+                highlight: 'Ide yang ia benci → konsep paling terkenal fisika modern → dasar komputer kuantum masa depan',
+            },
+        ],
+    },
+
     // ── TEROWONGAN KUANTUM ───────────────────────────────────────────────────
     {
         id: 'quantum-tunneling',
