@@ -220,13 +220,7 @@ export const phenomena: Phenomenon[] = [
         tagline: 'Semua atom dan molekul selalu mencari posisi paling santai',
         category: 'everyday',
         atoms: ['C', 'O', 'H', 'N', 'He', 'Ne'],
-        desc: `Ini adalah prinsip paling fundamental dalam kimia: SEMUA atom dan molekul selalu bergerak menuju keadaan energi PALING RENDAH (paling stabil). 
-
-Bahan bakar (bensin, gas alam, kayu) → tidak stabil karena atom C dan H bisa membentuk ikatan yang lebih kuat dengan O₂. Ketika dibakar, mereka "jatuh" ke state yang lebih stabil: CO₂ + H₂O, sambil melepaskan kelebihan energinya sebagai panas dan cahaya.
-
-CO₂ sendiri sangat stabil — karbon sudah berikatan sempurna dengan dua oksigen. Inilah mengapa menangkap dan memecah CO₂ di atmosfer sangat sulit dan butuh energi besar.
-
-Gas mulia (He, Ne, Ar) tidak pernah bereaksi dengan siapapun karena kulit elektron terluarnya sudah penuh sempurna — mereka sudah di state paling stabil. Tidak ada yang bisa ditawarkan atom lain.`,
+        desc: 'Ini adalah prinsip paling fundamental dalam kimia: semua atom dan molekul selalu bergerak menuju keadaan energi paling rendah (paling stabil). Bahan bakar (bensin, kayu) tidak stabil — atom C dan H bisa membentuk ikatan lebih kuat dengan O₂. Ketika dibakar, mereka "jatuh" ke state lebih stabil: CO₂ + H₂O, sambil melepaskan energinya sebagai panas dan cahaya. Gas mulia (He, Ne, Ar) tidak pernah bereaksi karena kulit elektron terluarnya sudah penuh sempurna — mereka sudah di state paling stabil.',
         funFact: 'Semua reaksi kimia yang menghasilkan energi (exothermic) adalah atom-atom yang "jatuh" ke keadaan lebih stabil dan melemparkan kelebihan energinya. Api, baterai, makanan yang kamu makan — semuanya sistem yang jatuh ke energi lebih rendah.',
         scale: 'Bayangkan bola di atas bukit. Ia akan selalu menggelinding ke bawah (energi minimum) kecuali ada penghalang. Bahan bakar adalah bola di atas bukit — percikan api adalah dorongan kecil yang memulai jatuhnya.',
         realWorld: 'Seluruh industri kimia, farmasi, material, dan energi didasarkan pada memahami dan memanfaatkan prinsip ini — kemana atom "ingin" pergi secara alami.',
@@ -239,12 +233,7 @@ Gas mulia (He, Ne, Ar) tidak pernah bereaksi dengan siapapun karena kulit elektr
         tagline: 'Emas tidak berkarat setelah ribuan tahun karena sudah puas',
         category: 'everyday',
         atoms: ['Au', 'Pt', 'Ag', 'Ir', 'Pd'],
-        desc: `Emas (Au), platinum (Pt), perak (Ag), dan iridium (Ir) disebut "logam mulia" bukan karena mahal — tapi karena konfigurasi elektronnya sangat stabil sehingga nyaris tidak mau bereaksi dengan apapun.
-
-Dibanding besi (Fe) yang "lapar" oksigen dan mudah berkarat, atau natrium (Na) yang meledak saat bertemu air — emas tidak peduli. Ia sudah dalam keadaan yang cukup stabil. Energi yang dibutuhkan untuk memaksa emas bereaksi lebih besar dari energi yang dilepaskan — jadi reaksinya tidak terjadi secara alami.
-
-Besi → Fe₂O₃ (karat) = lebih stabil dari Fe + O₂ → reaksi terjadi spontan
-Emas → tidak ada produk oksida yang lebih stabil → emas tidak berkarat`,
+        desc: 'Emas (Au), platinum (Pt), perak (Ag), dan iridium (Ir) disebut "logam mulia" bukan karena mahal — tapi karena konfigurasi elektronnya sangat stabil sehingga nyaris tidak mau bereaksi dengan apapun. Dibanding besi (Fe) yang "lapar" oksigen dan mudah berkarat, atau natrium (Na) yang meledak di air — emas tidak peduli. Energi yang dibutuhkan untuk memaksa emas bereaksi lebih besar dari energi yang dilepaskan, jadi reaksinya tidak terjadi secara alami.',
         funFact: 'Mahkota dan koin emas yang ditemukan di makam firaun Mesir 3.300 tahun lalu masih berkilap sempurna — karena emas selama itu tidak bereaksi dengan apapun. Sedangkan besi dari era yang sama sudah lama hancur menjadi karat.',
         scale: 'Gigi emas yang dipasang ribuan tahun lalu masih utuh di dalam mulut mumi — sementara tulangnya sudah rapuh. Emas lebih tahan dari tulang.',
         realWorld: 'Kontak listrik di komputer, smartphone, dan peralatan medis sering dilapisi emas tipis (gold plating) karena emas tidak teroksidasi dan tetap konduktif untuk selamanya.',
