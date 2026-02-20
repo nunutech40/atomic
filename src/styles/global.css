@@ -7481,3 +7481,357 @@ body {
   background: rgba(245, 158, 11, 0.08);
   border: 1px solid rgba(245, 158, 11, 0.2);
 }
+
+/* ── NUCLEOSYNTHESIS ANIMATIONS ──────────────────────────────────────────── */
+
+/* Nucleo Hook: star exploding elements */
+.ps-anim-nucleo-hook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+}
+
+.ps-nh-star {
+  font-size: 48px;
+  animation: ps-nh-star-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes ps-nh-star-pulse {
+  from {
+    transform: scale(0.9);
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.4));
+  }
+
+  to {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.9));
+  }
+}
+
+.ps-nh-explode {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ps-nh-element {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: var(--bg-3);
+  color: var(--text-2);
+  animation: ps-nh-eject 2s ease-out infinite;
+  animation-delay: calc(var(--i) * 0.2s);
+}
+
+@keyframes ps-nh-eject {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 0;
+  }
+
+  30% {
+    transform: scale(1.1) translateY(-4px);
+    opacity: 1;
+  }
+
+  60% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.ps-nh-label {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: var(--bg-3);
+}
+
+/* Nucleo BigBang: element origin bar chart */
+.ps-anim-nucleo-bb {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px;
+  width: 100%;
+}
+
+.ps-nb-title {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.ps-nb-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-nb-sym {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 22px;
+  text-align: right;
+}
+
+.ps-nb-bar {
+  flex: 1;
+  height: 12px;
+  background: var(--bg-3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ps-nb-fill {
+  height: 100%;
+  border-radius: 4px;
+  animation: ps-nb-grow 0.8s ease-out both;
+}
+
+@keyframes ps-nb-grow {
+  from {
+    width: 0 !important;
+  }
+}
+
+.ps-nb-origin {
+  font-size: 9px;
+  color: var(--text-3);
+  min-width: 52px;
+}
+
+/* Nucleo Onion: star shell layers */
+.ps-anim-nucleo-onion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  width: 100%;
+}
+
+.ps-no-star {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ps-no-layer {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  background: transparent;
+  animation: ps-no-breathe 3s ease-in-out infinite alternate;
+}
+
+.ps-no-layer:nth-child(1) {
+  animation-delay: 0.0s;
+}
+
+.ps-no-layer:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.ps-no-layer:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.ps-no-layer:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.ps-no-layer:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+.ps-no-layer:nth-child(6) {
+  animation-delay: 1.0s;
+}
+
+@keyframes ps-no-breathe {
+  from {
+    opacity: 0.6;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.ps-no-label {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: var(--bg-3);
+}
+
+/* Nucleo Supernova: shockwave rings + element eject */
+.ps-anim-nucleo-sn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  width: 100%;
+}
+
+.ps-sn-scene {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ps-sn-core {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fbbf24, #b45309);
+  border: 2px solid #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  z-index: 2;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.7);
+  animation: ps-sn-core-collapse 3s ease-in-out infinite;
+}
+
+@keyframes ps-sn-core-collapse {
+
+  0%,
+  70% {
+    transform: scale(1);
+  }
+
+  80% {
+    transform: scale(0.6);
+    box-shadow: 0 0 30px rgba(251, 191, 36, 1);
+  }
+
+  85% {
+    transform: scale(1.5);
+    box-shadow: 0 0 50px rgba(251, 191, 36, 1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ps-sn-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.5);
+  animation: ps-sn-ring-expand 3s ease-out infinite;
+}
+
+.ps-sn-ring.ring1 {
+  width: 40px;
+  height: 40px;
+  animation-delay: 0.0s;
+}
+
+.ps-sn-ring.ring2 {
+  width: 40px;
+  height: 40px;
+  animation-delay: 0.3s;
+}
+
+.ps-sn-ring.ring3 {
+  width: 40px;
+  height: 40px;
+  animation-delay: 0.6s;
+}
+
+@keyframes ps-sn-ring-expand {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+
+  80% {
+    transform: scale(2.5);
+    opacity: 0.1;
+  }
+
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.ps-sn-eject {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-2);
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: var(--bg-3);
+  animation: ps-sn-eject-out 3s ease-out infinite;
+  animation-delay: calc(var(--i) * 0.15s + 0.7s);
+  transform-origin: center;
+}
+
+@keyframes ps-sn-eject-out {
+
+  0%,
+  60% {
+    transform: rotate(calc(var(--i) * 60deg)) translateX(0);
+    opacity: 0;
+  }
+
+  65% {
+    opacity: 1;
+  }
+
+  90% {
+    transform: rotate(calc(var(--i) * 60deg)) translateX(50px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(calc(var(--i) * 60deg)) translateX(50px);
+    opacity: 0;
+  }
+}
+
+.ps-sn-label {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: var(--bg-3);
+}

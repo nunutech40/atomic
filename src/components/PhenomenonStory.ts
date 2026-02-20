@@ -365,6 +365,14 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildAntiPetAnim();
   } else if (animClass === 'anim-anti-asymmetry') {
     atomAnimation = buildAntiAsymmetryAnim();
+  } else if (animClass === 'anim-nucleo-hook') {
+    atomAnimation = buildNucleoHookAnim();
+  } else if (animClass === 'anim-nucleo-bigbang') {
+    atomAnimation = buildNucleoBigBangAnim();
+  } else if (animClass === 'anim-nucleo-onion') {
+    atomAnimation = buildNucleoOnionAnim();
+  } else if (animClass === 'anim-nucleo-supernova') {
+    atomAnimation = buildNucleoSupernovaAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -1277,6 +1285,75 @@ function buildAntiAsymmetryAnim(): string {
         <div class="ps-ax-count">10<sup>9</sup></div>
       </div>
       <div class="ps-ax-result">Anihilasi → hanya "sisa" 1 per miliar yang jadi semua galaksi, bintang, kamu</div>
+    </div>
+  `;
+}
+
+function buildNucleoHookAnim(): string {
+  return `
+    <div class="ps-anim-nucleo-hook">
+      <div class="ps-nh-star">⭐</div>
+      <div class="ps-nh-explode">
+        ${['🟤 Fe', '🟠 C', '🟡 O', '🟢 N', '⬛ Si'].map((el, i) => `<div class="ps-nh-element" style="--i:${i}">${el}</div>`).join('')}
+      </div>
+      <div class="ps-nh-label">Bintang meledak → menyebarkan semua elemen ke angkasa</div>
+    </div>
+  `;
+}
+
+function buildNucleoBigBangAnim(): string {
+  const elements = [
+    { symbol: 'H', name: 'Hidrogen', pct: 94, color: '#60a5fa', origin: 'Big Bang' },
+    { symbol: 'He', name: 'Helium', pct: 60, color: '#a78bfa', origin: 'Big Bang' },
+    { symbol: 'C', name: 'Karbon', pct: 20, color: '#f59e0b', origin: 'Bintang' },
+    { symbol: 'O', name: 'Oksigen', pct: 18, color: '#22c55e', origin: 'Bintang' },
+    { symbol: 'Fe', name: 'Besi', pct: 8, color: '#ef4444', origin: 'Supernova' },
+    { symbol: 'Au', name: 'Emas', pct: 3, color: '#fbbf24', origin: 'Kilonova' },
+  ];
+  return `
+    <div class="ps-anim-nucleo-bb">
+      <div class="ps-nb-title">Asal-usul elemen</div>
+      ${elements.map(e => `
+        <div class="ps-nb-row">
+          <div class="ps-nb-sym" style="color:${e.color}">${e.symbol}</div>
+          <div class="ps-nb-bar"><div class="ps-nb-fill" style="width:${e.pct}%;background:${e.color}"></div></div>
+          <div class="ps-nb-origin">${e.origin}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function buildNucleoOnionAnim(): string {
+  const layers = [
+    { el: 'H', color: '#60a5fa', size: 100 },
+    { el: 'He', color: '#a78bfa', size: 82 },
+    { el: 'C/O', color: '#22c55e', size: 64 },
+    { el: 'Ne/Mg', color: '#f59e0b', size: 48 },
+    { el: 'Si', color: '#f97316', size: 34 },
+    { el: 'Fe', color: '#ef4444', size: 20 },
+  ];
+  return `
+    <div class="ps-anim-nucleo-onion">
+      <div class="ps-no-star">
+        ${layers.map(l => `<div class="ps-no-layer" style="width:${l.size}px;height:${l.size}px;border-color:${l.color};color:${l.color}">${l.el}</div>`).join('')}
+      </div>
+      <div class="ps-no-label">Luar → H · Tengah → Fe · Inti runtuh → supernova</div>
+    </div>
+  `;
+}
+
+function buildNucleoSupernovaAnim(): string {
+  return `
+    <div class="ps-anim-nucleo-sn">
+      <div class="ps-sn-scene">
+        <div class="ps-sn-core">Fe</div>
+        <div class="ps-sn-ring ring1"></div>
+        <div class="ps-sn-ring ring2"></div>
+        <div class="ps-sn-ring ring3"></div>
+        ${['C', 'O', 'N', 'Fe', 'Au', 'Ca'].map((el, i) => `<div class="ps-sn-eject" style="--i:${i}">${el}</div>`).join('')}
+      </div>
+      <div class="ps-sn-label">Kolaps inti (0.1 detik) → shockwave → elemen terlempar ke angkasa</div>
     </div>
   `;
 }

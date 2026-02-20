@@ -36,6 +36,89 @@ export interface PhenomenonStory {
 
 export const phenomenonStories: PhenomenonStory[] = [
 
+    // ── NUKLEOSINTESIS ───────────────────────────────────────────────────────
+    {
+        id: 'nucleosynthesis',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Kamu Terbuat dari Abu Bintang yang Sudah Mati',
+                body: 'Bukan puisi. Bukan metafora. Ini kimia dan fisika yang bisa diverifikasi.<br><br>Setiap atom karbon di dalam tubuh kamu — di DNA, di lemak, di otot — dulunya ada di inti sebuah bintang yang sudah mati sebelum matahari kita lahir. Bintang itu meledak, menyebarkan isinya ke luar angkasa. Awan itu kemudian bergabung, membentuk matahari dan bumi. Dan beberapa miliar tahun kemudian, atom-atom itu menjadi kamu.<br><br>Carl Sagan bilang: "We are made of star stuff." Itu bukan romanticisme — itu hasil perhitungan fisika nuklir.',
+                visual: '⭐',
+                animKey: 'anim-nucleo-hook',
+                highlight: 'Setiap atom C, N, O, Fe di tubuh kamu dulunya di inti bintang · bintang itu mati → kamu lahir',
+            },
+            {
+                type: 'history',
+                title: 'Cecilia Payne: Wanita yang Menemukan Komposisi Bintang (dan Diabaikan 4 Tahun)',
+                body: 'Tahun 1925. Cecilia Payne, mahasiswa PhD di Harvard, menganalisis spektrum cahaya matahari dan menarik kesimpulan mengejutkan: matahari hampir seluruhnya terdiri dari hidrogen dan helium — bukan besi seperti yang selama ini diyakini para ahli.<br><br>Penemuannya benar. Tapi Henry Norris Russell, astronom paling berpengaruh saat itu, bilang temuannya "almost certainly wrong" dan memaksanya menambahkan catatan di disertasinya bahwa hasilnya "mungkin tidak nyata". Empat tahun kemudian, Russell menerbitkan paper yang sampai pada kesimpulan yang sama — dan dapat seluruh kredit.<br><br>Sekarang Payne diakui sebagai penemuan terpenting dalam astrofisika abad 20.',
+                quote: 'Jangan takut mempertanyakan. Alam selalu menang melawan otoritas.',
+                quoteAuthor: 'Cecilia Payne-Gaposchkin',
+                visual: '👩‍🔬',
+                history: [
+                    { year: '1920', event: 'Eddington: bintang menghasilkan energi dari fusi hidrogen — hipotesis pertama', person: 'Arthur Eddington' },
+                    { year: '1925', event: 'Cecilia Payne: matahari 90% hidrogen — diabaikan selama bertahun-tahun', person: 'Cecilia Payne' },
+                    { year: '1939', event: 'Hans Bethe: siklus proton-proton dan CNO — penjelasan lengkap energi bintang. Nobel 1967', person: 'Hans Bethe' },
+                    { year: '1957', event: 'Burbidge, Burbidge, Fowler & Hoyle (B²FH): teori lengkap nukleosintesis bintang', person: 'B²FH paper, 1957' },
+                    { year: '1987', event: 'Supernova SN1987A: pertama kali neutrino dari supernova terdeteksi langsung', person: 'Kamiokande & IMB' },
+                    { year: '2017', event: 'Dua bintang neutron bertabrakan (GW170817) — emas dan perak terbentuk, diobservasi langsung', person: 'LIGO & Virgo' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Big Bang Hanya Bikin Hidrogen dan Helium',
+                body: 'Tiga menit pertama setelah Big Bang, alam semesta cukup panas untuk fusi nuklir. Hasilnya: sekitar 75% hidrogen, 25% helium, sedikit litium. Itu saja. Tidak ada karbon, tidak ada oksigen, tidak ada besi — semua elemen yang membentuk planet dan kehidupan tidak ada sama sekali.<br><br>Lalu bintang pertama lahir dari awan hidrogen, sekitar 200 juta tahun setelah Big Bang. Di dalam inti bintang: suhu dan tekanan ekstrem yang mendorong fusi. Hidrogen → helium. Helium → karbon. Karbon → oksigen. Terus berlanjut naik ke elemen yang lebih berat.',
+                visual: '🌌',
+                animKey: 'anim-nucleo-bigbang',
+                highlight: 'Big Bang: H + He + Li saja · Semua elemen C, O, N, Fe, Au dibuat di dalam bintang',
+            },
+            {
+                type: 'step',
+                title: 'Bintang: Pabrik Elemen yang Terbakar Perlahan',
+                body: 'Bintang seperti matahari membakar hidrogen selama miliaran tahun. Ketika hidrogen habis, inti mengerut dan memanas — mulai membakar helium jadi karbon dan oksigen. Ketika helium habis, karbon terbakar jadi neon, magnesium, silikon. Terus onion-like: lapisan demi lapisan elemen yang makin berat.<br><br>Untuk bintang yang cukup besar (lebih dari 8× massa matahari), proses ini berakhir di besi. Besi adalah dinding terakhir: fusinya tidak menghasilkan energi, malah menyerap. Inti bintang berhenti menghasilkan tekanan untuk melawan gravitasi — dan kolaps dalam sepersekian detik.',
+                visual: '🔥',
+                animKey: 'anim-nucleo-onion',
+                highlight: 'Bintang masif: H→He→C→O→Ne→Mg→Si→Fe · Besi = dinding akhir · Tidak bisa dibakar lebih lanjut',
+            },
+            {
+                type: 'step',
+                title: 'Supernova: Penyebaran Menu Kehidupan',
+                body: 'Saat inti bintang kolaps ke titik singularitas neutron dalam 0.1 detik, energi gravitasi yang dilepaskan — 10⁴⁴ joule — lebih besar dari total energi yang dipancarkan matahari selama 10 miliar tahun hidupnya. Sebagian besar energi ini keluar sebagai neutrino.<br><br>Gelombang kejut yang terbentuk menghancurkan bintang dari dalam — selubung gas dan semua elemen yang telah dibuat selama jutaan tahun terlempar ke angkasa dengan kecepatan ribuan km per detik. Dalam ledakan supernova inilah elemen yang lebih berat dari besi — seperti emas, perak, platinum, yodium — terbentuk melalui proses r-process (rapid neutron capture).',
+                visual: '💫',
+                animKey: 'anim-nucleo-supernova',
+                highlight: 'Supernova: energi 10⁴⁴ J · elemen C, O, Fe terlempar · Au, Ag, Pt dibuat dalam ledakan itu',
+            },
+            {
+                type: 'scale',
+                title: 'Dari Mana Emas di Cincinmu Berasal?',
+                body: 'Besi dan elemen ringan dibuat di supernova bintang tunggal. Tapi emas? Butuh sesuatu yang lebih ekstrem: tabrakan dua bintang neutron — sisa inti dari dua supernova sebelumnya yang akhirnya bergabung.<br><br>Pada 2017, detektor gravitasi LIGO mendeteksi gelombang gravitasi dari tabrakan dua bintang neutron (GW170817). Teleskop di seluruh dunia mengarah ke sana, dan untuk pertama kali dalam sejarah manusia, kita menyaksikan langsung kilonova — ledakan yang menghasilkan emas dalam jumlah yang setara dengan beberapa kali massa bumi. Emas di cincin kamu berasal dari kejadian seperti itu, miliaran tahun lalu.',
+                visual: '💍',
+                highlight: 'Emas tidak dibuat di supernova biasa · Butuh kilonova: tabrakan dua bintang neutron · GW170817, 2017',
+            },
+            {
+                type: 'scale',
+                title: 'Berapa Bintang yang Harus Mati Agar Kamu Lahir?',
+                body: 'Tubuh manusia 65% oksigen, 18% karbon, 10% hidrogen, 3% nitrogen, 1.4% kalsium, 1% fosfor, sisanya trace elements. Semua kecuali hidrogen dibuat di bintang.<br><br>Estimasi kasar: generasi sekitar 3–7 bintang masif harus lahir, hidup, dan meledak sebagai supernova agar awan yang cukup kaya elemen bisa membentuk sistem tata surya kita dan akhirnya makhluk hidup. Matahari kita adalah generasi ke-3 atau ke-4 di galaksi ini. Kamu adalah produk dari ratusan juta tahun nukleosintesis kosmis.',
+                visual: '🌟',
+                highlight: '3–7 generasi bintang mati sebelum kamu lahir · kamu adalah generasi ke-3 galaksi ini',
+            },
+            {
+                type: 'impact',
+                title: 'Warisan: Kita Akhirnya Tahu dari Mana Kita Berasal',
+                body: 'Paper B²FH (Burbidge, Burbidge, Fowler & Hoyle) dari 1957 adalah salah satu paper paling penting dalam sejarah sains. Dalam satu makalah, mereka menjelaskan secara kuantitatif bagaimana semua 92 elemen alami di tabel periodik terbentuk — dari kelimpahan di Big Bang sampai ke r-process di supernova.<br><br>William Fowler mendapat Nobel 1983 untuk ini. Hoyle yang sebenarnya paling berkontribusi pada matematika — tidak dapat, karena sudah meninggal lebih dulu.<br><br>Tapi warisannya melampaui sains: manusia untuk pertama kali bisa menjawab pertanyaan "dari mana kita berasal?" dengan jawaban yang bisa diverifikasi. Bukan mitologi, bukan spekulasi. Fisika nuklir dan astronomilah yang menjawabnya.',
+                visual: '🏆',
+                history: [
+                    { year: '1925', event: 'Cecilia Payne: bintang 90% hidrogen — fondasi astrofisika modern', person: 'Cecilia Payne' },
+                    { year: '1957', event: 'Paper B²FH: teori lengkap nukleosintesis bintang — semua 92 elemen dijelaskan', person: 'Burbidge, Burbidge, Fowler & Hoyle' },
+                    { year: '1983', event: 'Nobel Physics untuk Fowler — nukleosintesis bintang', person: 'William Fowler' },
+                    { year: '1987', event: 'SN1987A: supernova pertama yang bisa diamati neutrino-nya secara langsung', person: 'Kamiokande, Japan' },
+                    { year: '2017', event: 'GW170817: tabrakan bintang neutron diamati — emas terbentuk, gravitational wave detected', person: 'LIGO-Virgo collaboration' },
+                ],
+                highlight: 'Paper B²FH 1957 → 92 elemen dijelaskan → manusia tahu untuk pertama kali dari mana mereka berasal',
+            },
+        ],
+    },
+
     // ── ANTIMATERI ───────────────────────────────────────────────────────────
     {
         id: 'antimatter',
