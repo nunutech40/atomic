@@ -1,6 +1,6 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 1.1  
+**Version:** 1.2  
 **Date:** 2026-02-20  
 **Status:** Phase 1 Complete · Phase 2 & 3 Planned
 
@@ -127,6 +127,11 @@ Jika urutan ini terbalik (langsung ke materi tanpa membangun rasa kagum), user a
 | Kulit elektron (K–Q) | ✅ | Visual pills + 3D orbit |
 | Total elektron summary | ✅ | Jumlah elektron + kulit |
 | Graceful error handling | ✅ | Try/catch AtomScene, fallback UI |
+| **Halaman Fenomena Atom** | ✅ | Route `/phenomena`, komponen PhenomenaList |
+| **6 Kategori Fenomena** | ✅ | Nuklir, Kuantum, Sehari-hari, Kosmik, Kehidupan, Fiksi & Sains |
+| **27 Entri Fenomena** | ✅ | 16 lama + 5 kategori Kehidupan + 6 kategori Fiksi & Sains |
+| **Filter kategori tab** | ✅ | Filter real-time, count per kategori |
+| **Storyteller modal / detail view** | ✅ | Narasi lengkap per fenomena |
 
 ---
 
@@ -277,9 +282,17 @@ Dari review Phase 1, beberapa hal yang bisa ditingkatkan:
 
 - Login/user account
 - Progress tracking & quiz score tersimpan
-- Backend/database/API
+- Backend/database/API (saat ini static SPA)
 - Mobile app native
 - Simulasi reaksi kimia / stoikiometri
+- **Subscription / payment gateway** → butuh backend (lihat catatan di bawah)
+
+> **Catatan Monetisasi (jika direncanakan):**  
+> Karena Atomic saat ini adalah static SPA tanpa database, sistem subscription **tidak dapat diimplementasikan secara aman** di sisi client saja. Opsi yang direkomendasikan:
+> - **Lemon Squeezy / Paddle** — payment gateway dengan built-in license key management (tidak perlu backend sendiri)
+> - **Supabase** — PostgreSQL + Auth + RLS, gratis tier cocok untuk MVP
+> - **Pola rekomendasi:** User bayar → dapat license key → divalidasi via API call ke payment provider → status di localStorage (atau JWT singkat)
+> - **Jangan** simpan status premium hanya di localStorage (mudah dimanipulasi)
 
 ---
 
@@ -291,5 +304,9 @@ Dari review Phase 1, beberapa hal yang bisa ditingkatkan:
 | Animasi 3D berjalan di semua elemen | ✅ done | ✅ |
 | Navigasi prev/next lancar | ✅ done | ✅ |
 | Elemen radioaktif ditandai jelas | ✅ done | ✅ |
+| Halaman Fenomena — 27 fenomena, 6 kategori | ✅ done | ✅ |
+| Kategori Kehidupan (5 fenomena komposisi atom) | ✅ done | ✅ |
+| Kategori Fiksi & Sains (6 fenomena) | ✅ done | ✅ |
+| PhenomenaList komponen + filter tab | ✅ done | ✅ |
 | Phase 2: 10 modul edukasi tersedia | 🗓️ | — |
 | Phase 3: 3 level visualisasi | 🗓️ | — |

@@ -1,6 +1,6 @@
 # TRD — Technical Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table  
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-02-20
 
 ---
@@ -12,27 +12,27 @@ Atomic adalah **Single Page Application (SPA)** client-only. Tidak ada backend, 
 ```
 ┌─────────────────────────────────────────────┐
 │                  Browser                      │
-│  ┌─────────┐  ┌──────────┐  ┌────────────┐  │
+│  ┌─────────┐  ┌──────────┐  ┌──────────┐  │
 │  │  Router  │  │  i18n    │  │   Theme    │  │
 │  │ (hash)   │  │ (ID/EN)  │  │(dark/light)│  │
-│  └────┬─────┘  └──────────┘  └────────────┘  │
+│  └────┬────┘  └──────────┘  └──────────┘  │
 │       │                                       │
-│  ┌────▼─────────────────────┐                │
+│  ┌────▼────────────────────────┐                │
 │  │         Views             │                │
-│  │  ┌─────────┐ ┌─────────┐ │                │
-│  │  │ Home    │ │ Detail  │ │                │
-│  │  │(Table)  │ │(Element)│ │                │
-│  │  └────┬────┘ └────┬────┘ │                │
-│  └───────┼───────────┼───────┘               │
-│          │           │                        │
-│  ┌───────▼───┐  ┌────▼──────────────────┐   │
-│  │ Periodic  │  │  ElementDetail         │   │
-│  │ Table.ts  │  │  + AtomScene (Three.js)│   │
-│  └───────────┘  └───────────────────────┘   │
-│                                               │
+│  │  ┌───────┐ ┌───────┐ ┌─────────┐ │                │
+│  │  │ Home    │ │ Detail  │ │ Phenomena│ │                │
+│  │  │(Table)  │ │(Element)│ │ List/Detail│ │                │
+│  │  └────┬───┘ └────┬───┘ └────┬────┘ │                │
+│  └───────┬─────────┬───────┬───────┘               │
+│          │           │       │                │
+│  ┌───────▼───┐  ┌────▼──────────┐ ┌────▼─────────┐  │
+│  │ Periodic  │  │  ElementDetail  │ │PhenomenaList│  │
+│  │ Table.ts  │  │  + AtomScene   │ │+ Phenomena  │  │
+│  └───────────┘  └────────────────┘ │ Detail.ts  │  │
+│                                    └─────────────┘  │
 │  ┌─────────────────────────────────────────┐ │
 │  │             Data Layer                   │ │
-│  │  elements.ts  categories.ts  i18n/       │ │
+│  │  elements.ts  categories.ts  phenomena.ts │ │
 │  └─────────────────────────────────────────┘ │
 └─────────────────────────────────────────────┘
 ```
@@ -87,9 +87,26 @@ Atomic adalah **Single Page Application (SPA)** client-only. Tidak ada backend, 
 - `Category` interface: `{ id, nameEn, nameId, color, bgColor }`
 - 11 kategori: alkali-metal, alkaline-earth, transition-metal, post-transition, metalloid, nonmetal, halogen, noble-gas, lanthanide, actinide, unknown
 
+#### `data/phenomena.ts`
+- `Phenomenon` interface: `{ id, icon, title, titleEn, tagline, category, atoms, desc, funFact, scale, realWorld }`
+- 27 entri fenomena, dikelompokkan dalam 6 kategori:
+  - `nuclear` (4), `quantum` (3), `everyday` (5), `cosmos` (2), `life` (7), `fiction` (6)
+- `PHENOMENON_CATEGORIES` — map kategori ke label & warna (pink untuk fiction)
+- Semua field `desc` multi-paragraf menggunakan **template literal** (backtick) dengan `\n\n`
+
 ---
 
-### 3.3 Three.js AtomScene
+### 3.3 Components
+
+#### `components/PhenomenaList.ts`
+- Render grid kartu fenomena dari data `phenomena.ts`
+- Filter tab per kategori dengan count badge
+- Search field untuk filter by judul/tagline/desc
+- Click handler untuk navigate ke `/phenomena/:id`
+
+---
+
+### 3.4 Three.js AtomScene
 
 #### Lifecycle
 ```
@@ -118,7 +135,7 @@ new AtomScene(canvas, colorHex)
 
 ---
 
-### 3.4 Periodic Table Grid
+### 3.5 Periodic Table Grid
 
 **Layout:** CSS Grid `18 kolom × 9 baris`
 - Baris 1–7: periode reguler
@@ -139,10 +156,14 @@ main.ts
   → renderNav()              // navbar + search
   → addRoute('/')            // register home route
   → addRoute('/element/:n') // register detail route
+  → addRoute('/phenomena')  // register phenomena list route
+  → addRoute('/phenomena/:id') // register phenomena detail route
   → initRouter()             // resolve current hash
        ↓
   Route '/' → renderPeriodicTable()
   Route '/element/:n' → renderElementDetail(n)
+  Route '/phenomena' → renderPhenomenaList()
+  Route '/phenomena/:id' → renderPhenomenaDetail(id)
        ↓
   ElementDetail init:
     → ResizeObserver starts watching canvasWrap
@@ -192,3 +213,46 @@ main.ts
 ### Pertimbangan Data Akurasi
 - Data dari `periodic-table` npm cukup untuk edukasi umum
 - Untuk data lebih akurat bisa integrate dengan API (e.g., PubChem, NIST)
+
+---
+
+## 8. Catatan Arsitektur — Subscription & Monetisasi
+
+> Ini **tidak diimplementasikan** saat ini. Dicatat untuk referensi jika akan ditambahkan.
+
+Karena Atomic adalah **static SPA** (tidak ada server, tidak ada database), sistem subscription/paywall **tidak bisa dilakukan aman di sisi client saja** — status premium di localStorage bisa dimanipulasi user.
+
+### Opsi yang Direkomendasikan (tanpa backend sendiri):
+
+| Opsi | Kompleksitas | Cocok jika |
+|------|-------------|------------|
+| **Lemon Squeezy** | ⭐ Rendah | Jual license key, validasi via API call read-only |
+| **Paddle** | ⭐⭐ Sedang | Subscription model, webhook ke serverless function |
+| **Supabase (Gratis Tier)** | ⭐⭐ Sedang | Butuh backend ringan: auth + tabel `subscriptions` |
+| **Cloudflare Workers + KV** | ⭐⭐ Sedang | Edge function validasi license, serverless |
+
+### Pola Arsitektur Minimum yang Aman:
+
+```
+User bayar via Lemon Squeezy / Paddle
+         ↓
+  Dapat license key (email)
+         ↓
+  Input key di app → fetch ke Lemon Squeezy API
+         ↓
+  Validasi server-side (bukan client-only)
+         ↓
+  Simpan JWT / status di sessionStorage (bukan localStorage biasa)
+         ↓
+  Konten premium di-unlock selama session
+```
+
+### Yang JANGAN dilakukan:
+- ❌ `if (localStorage.getItem('isPremium') === 'true')` — trivial untuk di-bypass
+- ❌ Hardcode license key di client code — terlihat di source
+- ❌ Sembunyikan konten premium di bundle JS — tetap bisa di-extract
+
+### Rekomendasi untuk Atomic:
+- Mulai dengan **Lemon Squeezy** (tidak perlu backend sama sekali, API key cukup)
+- Konten yang di-lock: detail fenomena lanjutan, modul belajar Phase 2, dll.
+- Gratis tier: semua fenomena dasar, tabel periodik 118 elemen (konten saat ini)
