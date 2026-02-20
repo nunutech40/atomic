@@ -1454,6 +1454,869 @@ export const discoverers: Discoverer[] = [
             { year: 'Warisan', title: 'Racun Tak Terdeteksi', body: 'Talium sulfat pernah digunakan sebagai racun tikus — tidak berbau, tidak berasa, gejala keracunannya lambat muncul (mula-mula rambut rontok, kemudian gangguan saraf, lalu kematian). Graham Young membunuh beberapa korban dengan talium di Inggris (1971). Kini penggunaannya sangat dibatasi. Talium-201 digunakan dalam pencitraan jantung medis.' },
         ],
     },
+
+    // ── Y — Yttrium ───────────────────────────────────────────────────────
+    {
+        sym: 'Y',
+        name: 'Johan Gadolin',
+        born: '1760', died: '1852',
+        nationality: '🇫🇮 Finlandia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Johan_Gadolin.jpg/440px-Johan_Gadolin.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Johan_Gadolin',
+        shortBio: 'Kimiawan Finlandia yang pada 1794 mengidentifikasi oksida baru dalam mineral dari Ytterby, Swedia — tanah liat yang menjadi sumber nama empat elemen: yttrium, ytterbium, erbium, dan terbium.',
+        discoveryStory: [
+            { year: '1787', title: 'Mineral Hitam Berat dari Ytterby', body: 'Letnan Carl Arrhenius menemukan mineral hitam berat yang tidak biasa di tambang feldspar dekat desa Ytterby, kepulauan Swedia. Ia menamakannya "ytterbite" dan mengirimkannya ke para kimiawan untuk dianalisis.' },
+            { year: '1794', title: 'Gadolin Menemukan Oksida Baru', body: 'Johan Gadolin menganalisis ytterbite dan menemukan sekitar 38% oksida baru yang tak dikenal. Ia menyebutnya "yttria". Mineral itu kemudian dihormati dengan namanya — "gadolinit".' },
+            { year: '1828', title: 'Wöhler Mengisolasi Logamnya', body: 'Friedrich Wöhler berhasil mengisolasi yttrium logam murni pada 1828 dengan mereduksi yttrium klorida menggunakan kalium.' },
+            { year: 'Warisan', title: 'Desa Kecil yang Melahirkan 4 Elemen', body: 'Desa Ytterby, dengan populasi kurang dari 1.000 orang, adalah desa yang paling "kaya" nama elemen: yttrium (Y), ytterbium (Yb), erbium (Er), dan terbium (Tb) semua dinamai dari situ. Yttrium aluminium garnet (YAG) digunakan dalam laser medis dan pemotong industri. Yttrium barium tembaga oksida (YBCO) adalah superkonduktor suhu tinggi pertama yang ditemukan.' },
+        ],
+    },
+
+    // ── Zr — Zirconium ────────────────────────────────────────────────────
+    {
+        sym: 'Zr',
+        name: 'Martin Heinrich Klaproth',
+        born: '1743', died: '1817',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Klaproth_Martin_Heinrich.jpg/440px-Klaproth_Martin_Heinrich.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Martin_Heinrich_Klaproth',
+        shortBio: 'Klaproth mengidentifikasi zirkonium dalam mineral zirkon pada 1789 — batu permata yang dikenal sejak ribuan tahun. Nama "zirkon" berasal dari bahasa Arab "zarqun" (merah) atau Persia "zargun" (berwarna emas).',
+        discoveryStory: [
+            { year: '~2000 SM', title: 'Zirkon: Batu Permata Tertua', body: 'Zirkon (ZrSiO₄) adalah salah satu mineral tertua di Bumi — kristal zirkon dari Australia berusia 4,4 miliar tahun, hampir setua Bumi itu sendiri. Manusia telah menghargainya sebagai batu permata sejak zaman kuno.' },
+            { year: '1789', title: 'Klaproth Menganalisisnya', body: 'Martin Klaproth menganalisis mineral zirkon dari Ceylon (Sri Lanka) dan mengidentifikasi oksida baru yang tidak dikenal — "Zirkonerde" (bumi zirkon). Ia tidak bisa mengisolasi logamnya, tapi membuktikan ada elemen baru di dalamnya.' },
+            { year: '1824', title: 'Berzelius Mengisolasi Logamnya', body: 'Jöns Jacob Berzelius berhasil mengisolasi zirkonium logam murni pada 1824 dengan mereduksi kalium zirkonium fluorida menggunakan kalium logam.' },
+            { year: 'Warisan', title: 'Reaktor Nuklir dan Batu Permata Sintetis', body: 'Zirkonium hampir transparan terhadap neutron — menjadikannya material ideal untuk kelongsong batang bahan bakar reaktor nuklir. Hampir 90% zirkonium yang diproduksi digunakan industri nuklir. Zirkonia kubik (ZrO₂) adalah berlian sintetis yang paling populer — dalam gelap bahkan sulit dibedakan dari berlian asli.' },
+        ],
+    },
+
+    // ── Nb — Niobium ──────────────────────────────────────────────────────
+    {
+        sym: 'Nb',
+        name: 'Charles Hatchett',
+        born: '1765', died: '1847',
+        nationality: '🇬🇧 Inggris',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Niobium_crystal_bar_and_1cm3_cube.jpg/440px-Niobium_crystal_bar_and_1cm3_cube.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Charles_Hatchett',
+        shortBio: 'Hatchett menemukan niobium pada 1801 dari mineral kolumbit yang tersimpan di Museum Inggris sejak 1750-an — mineral yang dibawa dari Connecticut, Amerika Serikat. Ia menamakannya "columbium" tapi Eropa menamakannya "niobium".',
+        discoveryStory: [
+            { year: '1753', title: 'Mineral dari Amerika', body: 'Seorang gubernur Massachusetts mengirimkan mineral berat hitam dari Connecticut ke Museum Inggris pada 1750-an. Mineral itu tersimpan selama hampir 50 tahun sebelum ada yang menganalisisnya secara serius.' },
+            { year: '1801', title: 'Hatchett dan Kolumbit', body: 'Charles Hatchett menganalisis mineral museum itu dan menemukan oksida baru yang tidak dikenal. Ia menamainya "columbium" dari Columbia (nama puitis untuk Amerika Serikat) — elemen pertama yang ditemukan di mineral Amerika.' },
+            { year: '1844', title: 'Sengketa Nama: Columbium vs Niobium', body: 'Heinrich Rose di Jerman menganalisis ulang kolumbit dan mengklaim menemukan dua elemen berbeda — niobium dan pelopium. Pelopium kemudian terbukti identik dengan niobium. Eropa menggunakan "niobium" (dari Niobe, putri Tantalus dalam mitologi Yunani, karena niobium selalu bersama tantalum), Amerika menggunakan "columbium". IUPAC menetapkan "niobium" sebagai nama resmi pada 1950.' },
+            { year: 'Warisan', title: 'Baja Super dan Superkonduktor', body: 'Niobium digunakan untuk membuat baja berkekuatan tinggi — ketambahan 0,1% niobium meningkatkan kekuatan baja hingga 30%. Jembatan, rel kereta, dan pipa minyak lepas pantai menggunakan baja niobium. Niobium-titanium adalah superkonduktor paling banyak digunakan di dunia — menggerakkan magnet superkonduktor dalam MRI dan akselerator partikel LHC (CERN).' },
+        ],
+    },
+
+    // ── Mo — Molybdenum ───────────────────────────────────────────────────
+    {
+        sym: 'Mo',
+        name: 'Carl Wilhelm Scheele & Peter Jacob Hjelm',
+        born: '1742 / 1746', died: '1786 / 1813',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Carl_Wilhelm_Scheele.jpg/440px-Carl_Wilhelm_Scheele.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Carl_Wilhelm_Scheele',
+        shortBio: 'Scheele mengidentifikasi molibdenum sebagai elemen baru pada 1778, dan Hjelm mengisolasi logamnya pada 1781. Nama berasal dari bahasa Yunani "molybdos" (timbal) karena mineralnya — molibdenit — sering dikira mineral timbal.',
+        discoveryStory: [
+            { year: '~1000 SM', title: 'Molibdenit: Mineral yang Bingungkan', body: 'Mineral molibdenit (MoS₂) dikenal manusia kuno dan sering dikira galena (bijih timbal) atau bahkan grafit — ketiganya tampak hitam mengkilap dan bisa digunakan untuk menulis. Para alkemis mencoba melebur molibdenit untuk mendapatkan timbal — tapi gagal.' },
+            { year: '1778', title: 'Scheele: Oksida Baru', body: 'Carl Wilhelm Scheele memanaskan molibdenit dengan asam nitrat dan mendapatkan oksida putih yang tidak larut — "asam molibdat". Ia membuktikan ini bukan timbal atau grafit, tapi elemen baru. Scheele adalah salah satu kimiawan paling produktif sepanjang masa — ia mengisolasi atau mengidentifikasi oksigen, nitrogen, klorin, barium, mangan, dan banyak asam organik.' },
+            { year: '1781', title: 'Hjelm Mengisolasi Logamnya', body: 'Peter Hjelm mereduksi asam molibdat dengan arang lignit dalam krusibel tertutup dan mendapatkan logam abu-abu gelap baru. Ia menamai logamnya "molybdenum" dari "molybdos".' },
+            { year: 'Warisan', title: 'Baja Tahan Panas', body: 'Molibdenum memiliki titik leleh 2.623°C — keempat tertinggi dari semua elemen. Baja molibdenum tahan suhu tinggi dan sangat kuat digunakan dalam mesin jet, turbin, dan reaktor nuklir. Molibdenum juga kofaktor enzim nitrogenase — enzim yang memungkinkan bakteri mengubah nitrogen gas menjadi amonia yang bisa diserap tanaman. Tanpa molibdenum di dalam tanah, pertanian akan jauh lebih sulit.' },
+        ],
+    },
+
+    // ── Ru — Ruthenium ────────────────────────────────────────────────────
+    {
+        sym: 'Ru',
+        name: 'Karl Ernst Claus',
+        born: '1796', died: '1864',
+        nationality: '🇷🇺 Rusia (keturunan Jerman)',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Ruthenium_crystals.jpg/440px-Ruthenium_crystals.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Karl_Ernst_Claus',
+        shortBio: 'Kimiawan Rusia-Jerman yang menemukan ruthenium pada 1844 dari residu platinum mentah dari pegunungan Ural — dan menamainya dari "Ruthenia", nama Latin untuk Rusia.',
+        discoveryStory: [
+            { year: '1844', title: 'Residu yang Diabaikan', body: 'Ketika memproses platinum mentah dari Ural, selalu ada residu hitam yang tidak larut yang diabaikan. Karl Ernst Claus di Universitas Kazan memutuskan untuk menganalisis residu ini secara sistematis.' },
+            { year: '1844', title: 'Elemen Keempat dari Platinum', body: 'Claus memisahkan elemen baru dari residu — logam abu-abu yang sangat keras dan tahan korosi, anggota keluarga logam platinum. Ia menamakannya "ruthenium" dari "Ruthenia" (nama Latin untuk Rusia) — menghormati negaranya.' },
+            { year: '1827', title: 'Osann Mendahuluinya?', body: 'Gottfried Osann pada 1827 mengklaim menemukan tiga elemen baru dari residu platinum Ural — "pluranium", "ruthenium", dan "polinium". Tapi hasil Osann tidak bisa direproduksi. Claus yang benar-benar mengisolasi dan mengkarakterisasi ruthenium.' },
+            { year: 'Warisan', title: 'Katalis dan Chip Memori', body: 'Ruthenium digunakan sebagai katalis dalam sintesis amonia (proses Haber-Bosch generasi baru) dan dalam sel bahan bakar. Lapisan tipis ruthenium digunakan dalam hard disk drive generasi terbaru untuk meningkatkan kapasitas penyimpanan. Kompleks ruthenium polipiridil juga digunakan dalam sel surya tersensitisasi pewarna (DSSC).' },
+        ],
+    },
+
+    // ── Os — Osmium ───────────────────────────────────────────────────────
+    {
+        sym: 'Os',
+        name: 'Smithson Tennant',
+        born: '1761', died: '1815',
+        nationality: '🇬🇧 Inggris',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Smithson_Tennant.jpg/440px-Smithson_Tennant.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Smithson_Tennant',
+        shortBio: 'Kimiawan Inggris yang menemukan osmium (dan iridium) pada 1803 dari residu tidak larut platinum — dengan membuktikan bahwa residu hitam yang selama ini dibuang ternyata mengandung dua elemen baru sekaligus.',
+        discoveryStory: [
+            { year: '1803', title: 'Residu Hitam yang Diabaikan', body: 'Ketika platinum dilarutkan dalam aqua regia, selalu tersisa residu hitam yang tidak larut dan selama ini dibuang. Smithson Tennant memutuskan untuk menganalisis residu ini — dan menemukan dua elemen baru sekaligus: osmium dan iridium.' },
+            { year: '1803', title: '"Bau Busuk"', body: 'Tennant menamainya "osmium" dari bahasa Yunani "osme" (bau) — karena osmium tetroksida (OsO₄) yang terbentuk saat osmium teroksidasi memiliki bau yang sangat tajam dan tidak menyenangkan. OsO₄ juga sangat beracun.' },
+            { year: '1815', title: 'Akhir Tragis', body: 'Smithson Tennant meninggal pada 1815 dalam kecelakaan kuda di Prancis, saat jembatan yang dilaluinya ambruk. Ia meninggal sebelum sempat menerima pengakuan penuh atas penemuannya.' },
+            { year: 'Warisan', title: 'Logam Terpadat di Dunia', body: 'Osmium adalah logam dengan densitas paling tinggi: 22,59 g/cm³ — hampir dua kali densitas timbal dan lebih berat dari semua elemen lain. Paduan osmium-iridium sangat keras, tahan aus, digunakan untuk ujung pena ballpoint, pivot instrumen, dan kontak listrik. OsO₄ digunakan dalam biologi sel untuk mewarnai sel hidup sebelum diamati dengan mikroskop elektron.' },
+        ],
+    },
+
+    // ── Ir — Iridium ──────────────────────────────────────────────────────
+    {
+        sym: 'Ir',
+        name: 'Smithson Tennant',
+        born: '1761', died: '1815',
+        nationality: '🇬🇧 Inggris',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Smithson_Tennant.jpg/440px-Smithson_Tennant.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Iridium',
+        shortBio: 'Iridium ditemukan oleh Tennant pada 1803 bersamaan dengan osmium — dari residu platinum yang sama. Namanya dari Iris, dewi pelangi, karena senyawa iridiumnya menampilkan warna yang sangat beragam.',
+        discoveryStory: [
+            { year: '1803', title: 'Dari Residu yang Sama', body: 'Smithson Tennant menemukan iridium bersamaan dengan osmium dari residu tidak larut platinum. Ia memisahkan keduanya dengan pemanasan dan analisis kimia yang teliti.' },
+            { year: '1803', title: 'Dewi Pelangi', body: 'Tennant menamainya "iridium" dari Iris, dewi pelangi Yunani — karena garam-garam iridium menampilkan spektrum warna yang luar biasa kaya, dari merah ke kuning ke biru ke hijau, tergantung kondisinya.' },
+            { year: '1980', title: 'Bukti Kepunahan Dinosaurus', body: 'Pada 1980, Luis dan Walter Alvarez menemukan lapisan iridium tipis tapi signifikan di seluruh batas antara lapisan Kapur dan Paleogen di seluruh dunia — tepat di batas waktu kepunahan massal 66 juta tahun lalu. Karena iridium sangat langka di kerak bumi tapi lebih umum di asteroid, ini menjadi bukti kuat bahwa asteroid raksasa menghantam Bumi dan menyebabkan kepunahan dinosaurus.' },
+            { year: 'Warisan', title: 'Penanda Kepunahan dan Penghubung Listrik', body: 'Iridium adalah logam paling tahan korosi yang diketahui — tidak bereaksi dengan asam manapun kecuali pada suhu tinggi. Kontak listrik iridium mampu bertahan jutaan switch tanpa haus. Bintik pengapian (spark plug) mobil kelas atas menggunakan elektroda iridium. Kapsul iridium juga membungkus bahan bakar nuklir generator listrik pada wahana luar angkasa seperti Cassini dan Voyager.' },
+        ],
+    },
+
+    // ── Re — Rhenium ──────────────────────────────────────────────────────
+    {
+        sym: 'Re',
+        name: 'Ida Noddack, Walter Noddack & Otto Berg',
+        born: '1896 / 1893 / 1873', died: '1978 / 1960 / 1939',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Ida_Noddack.jpg/440px-Ida_Noddack.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Ida_Noddack',
+        shortBio: 'Pasangan Ida dan Walter Noddack bersama Otto Berg menemukan renium pada 1925 — salah satu elemen terakhir yang ditemukan di alam. Ida Noddack juga adalah orang pertama yang menyarankan konsep fisi nuklir, tapi diabaikan selama bertahun-tahun.',
+        discoveryStory: [
+            { year: '1871', title: 'Mendeleev: Dua Slot Kosong', body: 'Mendeleev memprediksi dua elemen di bawah mangan: "eka-mangan" (kemudian teknesium) dan "dwi-mangan" (kemudian renium). Keduanya dicari selama puluhan tahun tanpa hasil.' },
+            { year: '1925', title: 'Noddack dan X-Ray', body: 'Ida dan Walter Noddack, bersama Otto Berg, menganalisis bijih kolumbit dan platinit menggunakan spektroskopi X-ray — teknik baru yang sangat sensitif. Mereka menemukan garis karakteristik elemen baru nomor 75.' },
+            { year: '1925', title: '"Masurium" yang Bermasalah', body: 'Mereka juga mengklaim menemukan elemen 43 ("masurium") dari tanah liat MoS₂ — tapi klaim ini tidak bisa dikonfirmasi orang lain (sekarang kita tahu elemen 43 adalah teknesium radioaktif yang tidak ada di alam dalam jumlah terukur). Renium terbukti nyata; masurium tidak.' },
+            { year: '1934', title: 'Fisi yang Diabaikan', body: 'Ida Noddack pada 1934 menyarankan secara tertulis bahwa neutron yang menghantam uranium mungkin "memecah inti uranium menjadi beberapa fragmen" — pada dasarnya mendeskripsikan fisi nuklir 4 tahun sebelum Hahn dan Strassmann membuktikannya. Saran Noddack diabaikan oleh komunitas ilmiah pada saat itu.' },
+            { year: 'Warisan', title: 'Superloy Jet Engine', body: 'Renium memiliki titik leleh 3.186°C — tertinggi kedua setelah tungsten. Superalloy nikel yang mengandung renium (6%) digunakan dalam bilah turbin mesin jet yang beroperasi di suhu mendekati titik lelehnya. Penerbangan modern tidak mungkin ada dalam bentuknya yang sekarang tanpa renium.' },
+        ],
+    },
+
+    // ── Ta — Tantalum ─────────────────────────────────────────────────────
+    {
+        sym: 'Ta',
+        name: 'Anders Gustaf Ekeberg',
+        born: '1767', died: '1813',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Tantalum_single_crystal_bar_and_1cm3_cube.jpg/440px-Tantalum_single_crystal_bar_and_1cm3_cube.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Anders_Gustaf_Ekeberg',
+        shortBio: 'Ekeberg menemukan tantalum pada 1802 dari mineral tantalit — dan menamainya dari Tantalus dalam mitologi Yunani, karena mineralnya sangat sulit dilarutkan dalam asam (seperti Tantalus yang tidak pernah bisa minum air di bawahnya).',
+        discoveryStory: [
+            { year: '1802', title: 'Mineral yang Tidak Larut', body: 'Anders Ekeberg menganalisis mineral dari Finlandia dan Swedia dan menemukan oksida baru yang sangat sulit dilarutkan dalam asam apapun — bahkan aqua regia. Ia berhasil mengisolasi oksida baru ini setelah perjuangan kimia yang panjang.' },
+            { year: '1802', title: 'Tantalus yang Tersiksa', body: 'Ekeberg menamainya "tantalum" dari Tantalus — tokoh mitologi Yunani yang dihukum berdiri di kolam air yang surut ketika ia mencoba minum, dengan buah yang mundur ketika ia meraih. Mineral tantalum yang menolak melarut dengan asam seperti Tantalus yang tidak bisa menyentuh apa yang ada di depannya.' },
+            { year: '1825', title: 'Berzelius Mengisolasi Logamnya', body: 'Jöns Jacob Berzelius berhasil mengisolasi tantalum logam dengan mereduksi kalium tantalum fluorida menggunakan kalium. Logam putih abu-abu yang sangat tahan korosi.' },
+            { year: 'Warisan', title: 'Di Dalam Setiap Smartphone', body: 'Tantalum kapasitor — komponen elektronik kecil berbasis tantalum — ada di hampir setiap smartphone, laptop, dan elektronik konsumen. Tantalum ideal karena kapasitansi tinggi dalam volume kecil. Bijih tantalit-kolumbit utamanya berasal dari DR Kongo — ketergantungan ini terkait dengan konflik bersenjata ("mineral konflik" atau "darah mineral"). Tantalum juga biokompatibel sempurna, digunakan dalam implan bedah.' },
+        ],
+    },
+
+    // ── La — Lanthanum ────────────────────────────────────────────────────
+    {
+        sym: 'La',
+        name: 'Carl Gustaf Mosander',
+        born: '1797', died: '1858',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Carl_Gustaf_Mosander.jpg/440px-Carl_Gustaf_Mosander.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Carl_Gustaf_Mosander',
+        shortBio: 'Mosander menemukan lantanum pada 1839 dengan memisahkannya dari cerit — dan kemudian dari "lantana" yang ia anggap sebagai elemen tunggal, menemukan bahwa itu sebenarnya campuran beberapa elemen tanah jarang.',
+        discoveryStory: [
+            { year: '1803', title: 'Cerit: Mineral yang Menyimpan Banyak Rahasia', body: 'Berzelius dan Hisinger menemukan elemen baru "cerium" dari mineral cerit pada 1803. Tapi cerit menyimpan lebih banyak rahasia — beberapa dekade kemudian terbukti cerit mengandung sejumlah elemen tanah jarang lain.' },
+            { year: '1839', title: 'Mosander Memisahkan Lantanum', body: 'Carl Mosander, mantan murid Berzelius, menganalisis serium nitrat dan menemukan bahwa itu mengandung dua komponen berbeda. Ia berhasil memisahkan elemen baru yang ia namakan "lanthanum" dari bahasa Yunani "lanthanein" (tersembunyi) — karena ia tersembunyi di dalam serium.' },
+            { year: '1841–1843', title: 'Lebih Banyak Elemen Tersembunyi', body: 'Mosander kemudian memisahkan "didymium" dari lantanum (1841), kemudian "erbium" dan "terbium" dari "ytria" (1843). Didymium kemudian terbukti campuran praseodimium dan neodimium (1885). Elemen tanah jarang ternyata sangat sulit dipisahkan satu sama lain.' },
+            { year: 'Warisan', title: 'NiMH dan Optik', body: 'Lantanum adalah komponen dalam baterai NiMH (nikel-metal hidrida) — tipe baterai yang digunakan dalam kendaraan hybrid seperti Toyota Prius generasi awal. Lensa kamera dan teleskop berkualitas tinggi menggunakan kaca lantanum yang memiliki indeks bias tinggi dan dispersi rendah — menghasilkan gambar yang lebih tajam. Lantanum oksida digunakan sebagai katalis dalam pemurnian minyak bumi.' },
+        ],
+    },
+
+    // ── Ce — Cerium ───────────────────────────────────────────────────────
+    {
+        sym: 'Ce',
+        name: 'Jöns Berzelius & Wilhelm Hisinger',
+        born: '1779 / 1766', died: '1848 / 1852',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/J%C3%B6ns_Jacob_Berzelius_-_h%C3%A4lft.jpg/440px-J%C3%B6ns_Jacob_Berzelius_-_h%C3%A4lft.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Cerium',
+        shortBio: 'Berzelius dan Hisinger menemukan serium pada 1803 dari mineral cerit — elemen pertama lantanida yang ditemukan, dinamai dari asteroid Ceres yang baru ditemukan pada tahun yang sama.',
+        discoveryStory: [
+            { year: '1803', title: 'Asteroid dan Elemen Baru di Tahun yang Sama', body: 'Pada 1803 — tahun yang sama astronom menemukan asteroid Ceres — Berzelius dan Hisinger di Swedia, serta Martin Klaproth di Jerman secara independen, menemukan elemen baru dalam mineral cerit dari Bastnas, Swedia. Keduanya setuju menamainya "cerium" setelah asteroid Ceres.' },
+            { year: '1875', title: 'Dipisahkan dari Lantanum', body: 'Setelah Mosander memisahkan "lantana" dari serium pada 1839, elemen tanah jarang dalam cerit terus dipisahkan satu per satu selama beberapa dekade berikutnya. Serium murni baru bisa diisolasi setelah teknik pemisahan yang canggih dikembangkan.' },
+            { year: 'Warisan', title: 'Korek Api dan Kaca Berwarna', body: 'Batu korek api (batu api) mengandung campuran serium-besi (mischmetal) yang memercikkan api ketika digores. Serium oksida adalah polishing compound terbaik untuk kaca optik — digunakan untuk memoles layar LCD, kaca mobil, dan cermin teleskop. Serium juga membuat kaca tahan UV dan memberikan warna kuning-emas pada kaca.' },
+        ],
+    },
+
+    // ── Pr — Praseodymium ─────────────────────────────────────────────────
+    {
+        sym: 'Pr',
+        name: 'Carl Auer von Welsbach',
+        born: '1858', died: '1929',
+        nationality: '🇦🇹 Austria',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Carl_Auer_von_Welsbach.jpg/440px-Carl_Auer_von_Welsbach.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Carl_Auer_von_Welsbach',
+        shortBio: 'Von Welsbach memisahkan "didymium" (yang dikira elemen tunggal) menjadi dua elemen berbeda pada 1885: praseodimium dan neodimium — menggunakan teknik kristalisasi fraksional yang sangat teliti.',
+        discoveryStory: [
+            { year: '1841', title: 'Didymium: Elemen yang Ternyata Bukan Elemen', body: 'Mosander memisahkan "didymium" dari lantanum pada 1841 — dari bahasa Yunani "didymos" (kembar) karena sifatnya sangat mirip lantanum. Selama 40 tahun lebih, didymium dianggap elemen tersendiri.' },
+            { year: '1885', title: 'Von Welsbach Memisahkannya', body: 'Carl Auer von Welsbach melakukan ratusan kristalisasi fraksional dari garam didymium ammonium nitrat dan berhasil memisahkannya menjadi dua fraksi: hijau-kuning dan merah muda. Dua elemen berbeda!' },
+            { year: '1885', title: '"Hijau-Ganda" dan "Baru-Ganda"', body: 'Ia menamainya "praseodymium" dari "prasios" (hijau) + "didymos" (kembar) — kembar hijau, dan "neodymium" dari "neos" (baru) + "didymos" — kembar baru.' },
+            { year: 'Warisan', title: 'Kacamata Las dan Magnet Terkuat', body: 'Praseodimium memberikan warna hijau pada kaca dan enamel. Kacamata las menggunakan kaca praseodimium untuk menyaring cahaya kuning-oranye terang dari nyala las. Paduan praseodimium-neodimium dalam magnet Nd₂Fe₁₄B adalah magnet permanen terkuat yang diketahui — digunakan di semua motor listrik, hard disk, speaker premium, dan generator turbin angin.' },
+        ],
+    },
+
+    // ── Nd — Neodymium ────────────────────────────────────────────────────
+    {
+        sym: 'Nd',
+        name: 'Carl Auer von Welsbach',
+        born: '1858', died: '1929',
+        nationality: '🇦🇹 Austria',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Carl_Auer_von_Welsbach.jpg/440px-Carl_Auer_von_Welsbach.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Neodymium',
+        shortBio: 'Von Welsbach menemukan neodimium bersamaan dengan praseodimium pada 1885. Neodimium kemudian menjadi bahan utama magnet permanen terkuat yang pernah dibuat — magnet yang menggerakkan revolusi kendaraan listrik.',
+        discoveryStory: [
+            { year: '1885', title: 'Separuh dari Didymium', body: 'Ketika Von Welsbach memisahkan didymium, ia mendapatkan dua fraksi. Fraksi pertama (hijau-kuning) adalah praseodimium, fraksi kedua (merah muda) adalah neodimium — "kembar baru" yang mengandung ion Nd³⁺ berwarna ungu-merah muda yang khas.' },
+            { year: '1913', title: 'Pemurnian Sempurna', body: 'Neodimium murni sulit didapat selama puluhan tahun karena kemiripannya dengan elemen tanah jarang lain. Baru pada 1925 neodimium cukup murni untuk dikarakterisasi secara menyeluruh.' },
+            { year: '1982', title: 'Magnet Nd₂Fe₁₄B', body: 'Pada 1982, Masato Sagawa di Sumitomo Special Metals dan tim lain menemukan bahwa paduan Nd₂Fe₁₄B memiliki energi magnet jauh lebih tinggi dari semua magnet permanen sebelumnya. Ini adalah revolusi.' },
+            { year: 'Warisan', title: 'di Balik Revolusi EV', body: 'Magnet neodimium ada di: motor setiap kendaraan listrik Tesla, BMW, BYD, motor setiap hard disk drive, pengeras suara premium, headphone, MRI (coil gradient), generator turbin angin onshore dan offshore. Satu Tesla Model S menggunakan sekitar 2 kg magnet neodimium. Permintaan neodimium meledak seiring adopsi EV global.' },
+        ],
+    },
+
+    // ── Pm — Promethium ───────────────────────────────────────────────────
+    {
+        sym: 'Pm',
+        name: 'Jacob Marinsky, Lawrence Glendenin & Charles Coryell',
+        born: '1918 / 1918 / 1912', died: '2005 / 2008 / 1971',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Promethium.jpg/440px-Promethium.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Promethium',
+        shortBio: 'Prometium ditemukan pada 1945 di Oak Ridge (Proyek Manhattan) dari produk fisi uranium dalam reaktor nuklir — satu-satunya lantanida yang tidak memiliki isotop stabil dan tidak ada di alam secara berarti.',
+        discoveryStory: [
+            { year: '1902–1940', title: 'Pencarian Selama 40 Tahun', body: 'Elemen nomor 61 adalah "lubang" terakhir dalam lantanida. Berbagai kelompok mengklaim menemukannya di alam: "illinium" (1926), "florentium" (1926), "cyclonium" (1938) — semuanya tidak terbukti. Elemen ini sepertinya tidak ada di alam.' },
+            { year: '1945', title: 'Produk Reaktor Nuklir', body: 'Marinsky, Glendenin, dan Coryell bekerja di Oak Ridge National Laboratory — fasilitas kunci Proyek Manhattan. Mereka menganalisis produk fisi dari reaktor nuklir menggunakan kromatografi ion-penukar baru, dan memisahkan elemen 61 murni.' },
+            { year: '1945', title: 'Dinamai Prometheus', body: 'Mereka menamainya "promethium" dari Prometheus — titan yang mencuri api dari para dewa dan memberikannya kepada manusia — sebagai alegori penggunaan energi nuklir yang kuat dan berbahaya yang memunculkannya.' },
+            { year: 'Warisan', title: 'Sumber Radiasi untuk Ruang Angkasa', body: 'Prometium-147 digunakan dalam baterai nuklir (betavoltaic) untuk satelit dan wahana antariksa yang beroperasi jauh dari matahari. Juga digunakan dalam alat pengukur ketebalan material industri dan sebagai sumber cahaya dalam jam tangan lama. Setiap sampel harus dibuat baru secara buatan — tidak ada di alam dalam jumlah terukur.' },
+        ],
+    },
+
+    // ── Sm — Samarium ─────────────────────────────────────────────────────
+    {
+        sym: 'Sm',
+        name: 'Paul Émile Lecoq de Boisbaudran',
+        born: '1838', died: '1912',
+        nationality: '🇫🇷 Prancis',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Lecoq_de_Boisbaudran.jpg/440px-Lecoq_de_Boisbaudran.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Samarium',
+        shortBio: 'Lecoq de Boisbaudran (yang juga menemukan galium) memisahkan samarium dari mineral samarskit pada 1879 menggunakan spektroskopi. Samarskit sendiri dinamai dari Vasili Samarsky-Bykhovets, pejabat tambang Rusia.',
+        discoveryStory: [
+            { year: '1879', title: 'Dari Mineral Samarskit', body: 'Paul Lecoq menganalisis mineral samarskit dari Ural menggunakan spektroskopi dan menemukan garis-garis baru yang tidak dikenal. Ia memisahkan oksida baru yang ia namai "samarium" dari mineral tempat ia menemukannya.' },
+            { year: '1879', title: 'Elemen Pertama Dinamai dari Orang (Bukan Mitologi)', body: 'Samarium dinamai dari samarskit yang dinamai dari Vasili Samarsky-Bykhovets — menjadikan samarium elemen pertama yang secara tidak langsung dinamai dari orang yang masih hidup. Samarsky secara ironis tidak pernah melakukan penelitian kimia sendiri.' },
+            { year: 'Warisan', title: 'Magnet Samarium-Kobalt', body: 'Magnet samarium-kobalt (SmCo₅ atau Sm₂Co₁₇) adalah magnet permanen terkuat sebelum magnet neodimium ditemukan. Keunggulan SmCo adalah ketahanan suhu tinggi (bekerja hingga 350°C) — digunakan dalam mesin jet, motor turbo, dan lingkungan bersuhu tinggi di mana magnet neodimium gagal. Samarium oksida juga katalis penting dan komponen dalam laser.' },
+        ],
+    },
+
+    // ── Eu — Europium ─────────────────────────────────────────────────────
+    {
+        sym: 'Eu',
+        name: 'Eugène-Anatole Demarçay',
+        born: '1852', died: '1904',
+        nationality: '🇫🇷 Prancis',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Europium.jpg/440px-Europium.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Europium',
+        shortBio: 'Demarçay memisahkan europium dari samarium pada 1901 menggunakan spektroskopi — dan menamainya dari benua Eropa. Europium adalah elemen paling reaktif di antara lantanida — terbakar langsung di udara dingin.',
+        discoveryStory: [
+            { year: '1896', title: 'Kontaminan Samarium', body: 'Saat mempelajari samarium, Demarçay melihat garis spektral yang tidak bisa ia jelaskan. Ia menduga ada elemen lain yang bersembunyi dalam sampel samarium.' },
+            { year: '1901', title: 'Europium', body: 'Setelah bertahun-tahun upaya pemurnian dan kristalisasi fraksional, Demarçay berhasil memisahkan elemen baru. Ia menamakannya "europium" dari Eropa — nama yang sangat sederhana dibanding penamaan latin dan mitologis yang umum.' },
+            { year: 'Warisan', title: 'Merah di Layar TV dan Uang Anti-Palsu', body: 'Europium adalah sumber warna merah dalam layar TV tabung (CRT) dan masih digunakan dalam lampu fluoresen. Tapi yang paling penting: europium digunakan dalam tinta fluoresen anti-pemalsuan pada uang euro (dan banyak mata uang lain). Di bawah sinar UV, tanda europium bersinar oranye-merah — hampir tidak mungkin dipalsukan tanpa elemen langka ini.' },
+        ],
+    },
+
+    // ── Gd — Gadolinium ───────────────────────────────────────────────────
+    {
+        sym: 'Gd',
+        name: 'Jean Charles Galissard de Marignac',
+        born: '1817', died: '1894',
+        nationality: '🇨🇭 Swiss',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Jean_Charles_Galissard_de_Marignac_2.jpg/440px-Jean_Charles_Galissard_de_Marignac_2.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Gadolinium',
+        shortBio: 'Marignac memisahkan gadolinium pada 1880 dari didimia yang ia ketahui mengandung lebih dari satu elemen. Dinamai dari Johan Gadolin — kimiawan Finlandia penemu yttrium — sebagai penghormatan.',
+        discoveryStory: [
+            { year: '1880', title: 'Dua Oksida dalam Satu', body: 'Marignac menganalisis didimia (campuran elemen tanah jarang) dan menemukan bahwa ia mengandung dua komponen berbeda — salah satunya baru. Ia menyebutnya "gadoline" setelah Johan Gadolin.' },
+            { year: '1886', title: 'Lecoq Mengkonfirmasi', body: 'Paul Lecoq memperkuat penemuan Marignac dan mengisolasi gadolinium secara lebih murni, mengkonfirmasi bahwa ini memang elemen tersendiri.' },
+            { year: 'Warisan', title: 'Agen Kontras MRI', body: 'Gadolinium memiliki momen magnetik yang sangat besar — lebih dari elemen lain manapun pada suhu rendah. Ini membuatnya berguna sebagai agen kontras MRI: senyawa kompleks gadolinium disuntikkan sebelum MRI, dan ia membuat jaringan lunak tertentu terlihat lebih jelas dalam hasil scan. Lebih dari 30 juta dosis agen kontras gadolinium digunakan setiap tahun secara global.' },
+        ],
+    },
+
+    // ── Tb — Terbium ──────────────────────────────────────────────────────
+    {
+        sym: 'Tb',
+        name: 'Carl Gustaf Mosander',
+        born: '1797', died: '1858',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Carl_Gustaf_Mosander.jpg/440px-Carl_Gustaf_Mosander.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Terbium',
+        shortBio: 'Mosander memisahkan terbium bersama erbium dari yttria (tanah yttrium) pada 1843 — elemen ketiga yang ia temukan setelah lantanum dan didymium. Dinamai dari Ytterby.',
+        discoveryStory: [
+            { year: '1843', title: 'Tiga Oksida dari Yttria', body: 'Mosander menganalisis yttria (yang semula dikira satu oksida elemen) dengan sangat teliti dan memisahkannya menjadi tiga fraksi: yttria asli (Y), erbium (Er), dan terbium (Tb) — semua dari mineral yang sama dari Ytterby.' },
+            { year: '1843', title: 'Dinamai Ytterby untuk Ketiga Kalinya', body: 'Yttrium (Y dari Ytterby), terbium (Tb dari Ytterby), erbium (Er dari Ytterby) — tiga elemen dari satu desa kecil Swedia dalam satu mineral. Kemudian ytterbium juga ditambahkan dari mineral yang sama.' },
+            { year: 'Warisan', title: 'Hijau Terbanding di Layar', body: 'Terbium menghasilkan fluoresensi hijau yang sangat cerah dan efisien — digunakan dalam lampu fluoresen tiga-warna dan layar hi-fi, menghasilkan warna hijau yang kaya. Terbium juga memiliki sifat magnetostriktif terbesar (mengubah bentuk di medan magnet) — digunakan dalam transduser sonar bawah laut presisi tinggi.' },
+        ],
+    },
+
+    // ── Dy — Dysprosium ───────────────────────────────────────────────────
+    {
+        sym: 'Dy',
+        name: 'Paul Émile Lecoq de Boisbaudran',
+        born: '1838', died: '1912',
+        nationality: '🇫🇷 Prancis',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Lecoq_de_Boisbaudran.jpg/440px-Lecoq_de_Boisbaudran.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Dysprosium',
+        shortBio: 'Lecoq de Boisbaudran memisahkan disprosium dari holmia pada 1886 setelah serangkaian percobaan yang sangat melelahkan — dan menamainya "disprosium" dari bahasa Yunani "dysprositos" (sulit didapat).',
+        discoveryStory: [
+            { year: '1886', title: 'Yang Sangat Sulit Didapat', body: 'Lecoq menganalisis erbiumia dan holmia yang menurutnya mengandung elemen lain. Setelah 32 kali presipitasi yang sangat membosankan dan melelahkan, ia berhasil memisahkan elemen baru.' },
+            { year: '1886', title: '"Sulit Didapat"', body: 'Ia menamainya "dysprosium" dari bahasa Yunani "dysprositos" (sulit didapat, sulit diakses) — sebagai ekspresi kelelahan dan frustrasi atas sulitnya pemisahan yang ia alami.' },
+            { year: 'Warisan', title: 'Magnet EV yang Tahan Panas', body: 'Disprosium ditambahkan ke magnet neodimium untuk meningkatkan ketahanan suhu tinggi — sangat penting untuk motor EV yang memanas saat beroperasi. Beberapa ton disprosium digunakan dalam setiap pabrik magnet EV skala besar. China menguasai hampir 100% produksi disprosium dunia — menciptakan ketergantungan geopolitik yang signifikan.' },
+        ],
+    },
+
+    // ── Ho — Holmium ──────────────────────────────────────────────────────
+    {
+        sym: 'Ho',
+        name: 'Per Teodor Cleve',
+        born: '1840', died: '1905',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Per_Teodor_Cleve.jpg/440px-Per_Teodor_Cleve.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Per_Teodor_Cleve',
+        shortBio: 'Cleve memisahkan holmium (dan tulium) dari erbium pada 1879. Holmium dinamai dari Stockholm (Holmia dalam bahasa Latin), kota tempat ia bekerja.',
+        discoveryStory: [
+            { year: '1879', title: 'Dua dari Erbium', body: 'Per Teodor Cleve menganalisis erbiumia yang ia curigai heterogen. Dengan pemisahan teliti, ia mendapatkan dua fraksi baru: holmium (merah) dan tulium (hijau).' },
+            { year: '1879', title: 'Dari Kota Stockholm', body: 'Cleve menamainya "holmium" dari "Holmia" — nama Latin untuk Stockholm. Ini menjadikan holmium satu dari sedikit elemen yang dinamai dari kota (bukan negara, mineral, atau tokoh mitologi).' },
+            { year: 'Warisan', title: 'Momen Magnetik Terbesar', body: 'Holmium memiliki momen magnetik atom terbesar dari semua elemen — sifat yang dieksploitasi dalam pembuatan kutub magnet sangat kuat untuk MRI dan akselerator partikel. Laser holmium (Ho:YAG) digunakan dalam urologi untuk memecah batu ginjal dan dalam operasi tulang rawan.' },
+        ],
+    },
+
+    // ── Er — Erbium ───────────────────────────────────────────────────────
+    {
+        sym: 'Er',
+        name: 'Carl Gustaf Mosander',
+        born: '1797', died: '1858',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Carl_Gustaf_Mosander.jpg/440px-Carl_Gustaf_Mosander.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Erbium',
+        shortBio: 'Mosander memisahkan erbium dari yttria pada 1843 bersamaan dengan terbium — keduanya dinamai dari Ytterby. Ion erbium menghasilkan warna merah muda dalam kaca dan kristal.',
+        discoveryStory: [
+            { year: '1843', title: 'Dari Yttria Bersama Terbium', body: 'Mosander memisahkan yttria menjadi tiga bagian pada 1843: yttrium, terbium, dan erbium. Ion Er³⁺ memberi warna merah muda pada larutan.' },
+            { year: '1843', title: 'Keempat dari Ytterby', body: 'Erbium adalah elemen keempat yang namanya terinspirasi dari Ytterby — setelah yttrium, terbium, dan (kemudian) ytterbium. Satu desa kecil Swedia yang melampaui semua kota besar dalam kontribusi nama elemen.' },
+            { year: 'Warisan', title: 'Tulang Punggung Internet Global', body: 'Erbium-doped fiber amplifier (EDFA) adalah komponen kritis dalam jaringan serat optik global. Serat kaca yang mengandung sedikit erbium dapat memperkuat sinyal cahaya langsung tanpa mengubahnya ke sinyal listrik — memungkinkan jaringan internet transokeanic berkecepatan tinggi. Tanpa erbium, internet seperti yang kita kenal tidak akan mungkin ada.' },
+        ],
+    },
+
+    // ── Tm — Thulium ──────────────────────────────────────────────────────
+    {
+        sym: 'Tm',
+        name: 'Per Teodor Cleve',
+        born: '1840', died: '1905',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Per_Teodor_Cleve.jpg/440px-Per_Teodor_Cleve.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Thulium',
+        shortBio: 'Cleve memisahkan tulium dari erbium/holmia pada 1879 dan menamainya dari "Thule" — nama mitologis Skandinavia untuk tanah paling utara di ujung dunia.',
+        discoveryStory: [
+            { year: '1879', title: 'Saudara Holmium', body: 'Cleve memisahkan tulium bersamaan dengan holmium dari erbiumia pada 1879. Ion Tm³⁺ memberikan fluoresensi biru-putih yang halus.' },
+            { year: '1879', title: '"Thule": Ujung Dunia', body: 'Thule adalah nama mitologis Skandinavia untuk daratan paling utara di dunia — konsep geografis kuno yang tidak pernah dikonfirmasi. Cleve menamainya demikian karena tulium adalah elemen paling langka di antara lantanida (kecuali prometium yang radioaktif).' },
+            { year: 'Warisan', title: 'Laser Portabel dan Peralatan Medis', body: 'Tulium adalah lantanida paling langka dalam kerak bumi — hanya sekitar 0,5 ppm. Laser tulium (Tm:YAG) menghasilkan emisi inframerah 2 μm yang diserap sangat efisien oleh air — sehingga memotong jaringan lunak dengan sangat akurat tanpa membakar sel di sekitarnya. Digunakan dalam bedah laser minimal invasif, urologi, dan pengobatan kanker.' },
+        ],
+    },
+
+    // ── Yb — Ytterbium ────────────────────────────────────────────────────
+    {
+        sym: 'Yb',
+        name: 'Jean Charles Galissard de Marignac',
+        born: '1817', died: '1894',
+        nationality: '🇨🇭 Swiss',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Jean_Charles_Galissard_de_Marignac_2.jpg/440px-Jean_Charles_Galissard_de_Marignac_2.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Ytterbium',
+        shortBio: 'Marignac memisahkan ytterbia (ytterbium) dari erbia pada 1878 — dan seperti pendahulunya, menamainya dari desa Ytterby, Swedia yang tak ada habisnya menghasilkan elemen baru.',
+        discoveryStory: [
+            { year: '1878', title: 'Ytterby untuk Keempat Kalinya', body: 'Marignac, menganalisis erbia (erbium oksida), menemukan bahwa mengandung dua komponen. Ia memisahkan komponen baru dan menamainya ytterbia — ytterbium — dari Ytterby yang sudah memberikan tiga elemen sebelumnya.' },
+            { year: '1907', title: 'Urbain Memisahkan Lutesium', body: 'George Urbain kemudian menemukan bahwa ytterbia sendiri mengandung dua elemen: ytterbium murni dan lutesium — membuat Ytterby the village secara tidak langsung berkontribusi pada lima elemen total.' },
+            { year: 'Warisan', title: 'Jam Atom Paling Akurat', body: 'Jam optik ytterbium memegang rekor akurasi terbaik — lebih akurat dari jam atom sesium 100 kali lipat. Jam ini hanya akan kehilangan satu detik dalam 10 miliar tahun — lebih lama dari usia alam semesta saat ini. Teknologi ini sedang dikembangkan untuk mendefinisikan ulang satu detik dalam SI units.' },
+        ],
+    },
+
+    // ── Lu — Lutetium ─────────────────────────────────────────────────────
+    {
+        sym: 'Lu',
+        name: 'Georges Urbain',
+        born: '1872', died: '1938',
+        nationality: '🇫🇷 Prancis',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Georges_Urbain.jpg/440px-Georges_Urbain.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Georges_Urbain',
+        shortBio: 'Urbain memisahkan lutesium dari ytterbium pada 1907 — elemen lantanida terakhir yang ditemukan. Dinamai dari "Lutetia", nama Latin untuk Paris.',
+        discoveryStory: [
+            { year: '1907', title: 'Tiga Klaim Bersamaan', body: 'Tiga ilmuwan secara independen mengklaim menemukan elemen ke-71 hampir bersamaan: Georges Urbain (Paris, 1907), Carl Auer von Welsbach (Vienna, 1907), dan Charles James (New Hampshire, 1907). Ketiga kelompok memisahkan elemen dari ytterbia dengan cara yang sama.' },
+            { year: '1907', title: '"Cassiopeia" vs "Lutecium"', body: 'Welsbach menamainya "cassiopeium" (Cp), Urbain menamainya "lutecium" dari nama Latin Paris. Setelah perdebatan bertahun-tahun, Urbain diberi prioritas penemuan dan nama "lutetium" (diubah ejaannya) menjadi resmi pada 1949.' },
+            { year: 'Warisan', title: 'PET Scan dan Terapi Kanker', body: 'Lutetium-177 digunakan dalam pengobatan kanker neuroendokrin — menarget sel tumor dengan presisi tinggi dan merusak DNA-nya dengan emisi beta. Terapi PRRT (peptide receptor radionuclide therapy) dengan Lu-177 telah menunjukkan hasil yang menjanjikan untuk jenis kanker yang sebelumnya tidak bisa diobati. Lutesium oksida digunakan dalam fosfor scintilasi PET scanner.' },
+        ],
+    },
+
+    // ── Ac — Actinium ─────────────────────────────────────────────────────
+    {
+        sym: 'Ac',
+        name: 'André-Louis Debierne',
+        born: '1874', died: '1949',
+        nationality: '🇫🇷 Prancis',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Actinium_sample_%2831481701837%29.png/440px-Actinium_sample_%2831481701837%29.png',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Actinium',
+        shortBio: 'Debierne menemukan aktinium pada 1899 dari residu pitchblende — setahun setelah Curie menemukan polonium dan radium dari mineral yang sama. Aktinium memberi nama seluruh seri aktinida.',
+        discoveryStory: [
+            { year: '1899', title: 'Residu Pitchblende Curie', body: 'André Debierne, asisten Marie Curie di Institut Radium, menganalisis residu pitchblende setelah Curie mengekstrak radium dan polonium. Ia menemukan aktivitas radioaktif baru — elemen baru yang terkait dengan titanium dan torium.' },
+            { year: '1900', title: 'Debuterne atau Giesel?', body: 'Friedrich Giesel secara independen menemukan elemen yang sama pada 1900 dan menamainya "emanium". Setelah analisis panjang, keduanya terbukti elemen identik. Debierne diberi prioritas penemuan.' },
+            { year: '1899', title: 'Dinamai "Sinar"', body: 'Debierne menamainya "actinium" dari bahasa Yunani "aktis" (sinar) — mengacu pada radioaktivitasnya yang kuat. Aktinium memberi nama seluruh seri elemen 89–103 yang disebut "aktinida".' },
+            { year: 'Warisan', title: 'Terapi Kanker Alpha', body: 'Aktinium-225 sedang dikembangkan sebagai agen untuk targeted alpha therapy (TAT) — salah satu pendekatan pengobatan kanker paling menjanjikan. Satu atom Ac-225 dapat menghasilkan 4 partikel alfa sebelum meluruh menjadi bismut stabil, memberikan konsentrasi dosis yang sangat tinggi ke sel kanker.' },
+        ],
+    },
+
+    // ── Th — Thorium ──────────────────────────────────────────────────────
+    {
+        sym: 'Th',
+        name: 'Jöns Jacob Berzelius',
+        born: '1779', died: '1848',
+        nationality: '🇸🇪 Swedia',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/J%C3%B6ns_Jacob_Berzelius_-_h%C3%A4lft.jpg/440px-J%C3%B6ns_Jacob_Berzelius_-_h%C3%A4lft.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Thorium',
+        shortBio: 'Berzelius menemukan torium pada 1829 dari mineral throite — dan menamainya dari Thor, dewa petir Norse. Radioaktivitasnya baru ditemukan oleh Marie Curie pada 1898.',
+        discoveryStory: [
+            { year: '1829', title: 'Mineral Hitam dari Norwegia', body: 'Berzelius menganalisis mineral yang dikirim oleh pendeta Esmark dari Norwegia. Ia mengidentifikasi oksida baru — "Thorerde" (tanah thor). Ia menamainya setelah Thor, dewa Norwegia kuno.' },
+            { year: '1898', title: 'Marie Curie Menemukan Radioaktivitasnya', body: 'Saat menyelidiki radioaktivitas, Marie Curie menemukan bahwa torium juga memancarkan radiasi. Ini adalah penemuan pertama bahwa uranium bukan satu-satunya elemen radioaktif.' },
+            { year: '1900', title: 'Thoron: Gas Radioaktif dari Torium', body: 'Rutherford menemukan bahwa torium memancarkan gas radioaktif. Ia menyebutnya "emanasi torium" (kini dikenal sebagai radon-220 atau thoron).' },
+            { year: 'Warisan', title: 'Reaktor Nuklir Masa Depan', body: 'Torium lebih melimpah dari uranium, menghasilkan lebih sedikit limbah radioaktif, dan tidak bisa langsung digunakan untuk senjata nuklir — membuatnya kandidat bahan bakar reaktor nuklir generasi selanjutnya. India, yang punya cadangan torium terbesar di dunia, sedang mengembangkan reaktor torium. Kelemahan: siklus bahan bakar torium lebih kompleks dan membutuhkan infrastruktur berbeda.' },
+        ],
+    },
+
+    // ── Pa — Protactinium ─────────────────────────────────────────────────
+    {
+        sym: 'Pa',
+        name: 'Otto Hahn & Lise Meitner',
+        born: '1879 / 1878', died: '1968 / 1968',
+        nationality: '🇩🇪 Jerman / 🇦🇹 Austria',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Lise_Meitner_%281878-1968%29%2C_lecturing_at_Catholic_University%2C_Washington%2C_D.C.%2C_1946.jpg/440px-Lise_Meitner_%281878-1968%29%2C_lecturing_at_Catholic_University%2C_Washington%2C_D.C.%2C_1946.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Protactinium',
+        shortBio: 'Hahn dan Meitner menemukan protaktinium pada 1917 — hanya beberapa bulan setelah Fajans dan Göhring menemukan isotop berumur pendek yang sama. Lise Meitner, yang bekerja dengan Hahn selama puluhan tahun, nantinya menemukan fisi nuklir secara teoritis.',
+        discoveryStory: [
+            { year: '1913', title: 'Isotop Berumur Pendek Ditemukan Lebih Dulu', body: 'Kasimir Fajans dan Oswald Göhring menemukan isotop Pa-234 (waktu paruh 1,17 menit) pada 1913 dan menamainya "brevium" (singkat). Tapi isotop ini terlalu singkat untuk menjadi "elemen" yang bermakna.' },
+            { year: '1917', title: 'Hahn dan Meitner: Isotop Berumur Panjang', body: 'Otto Hahn dan Lise Meitner di Berlin menemukan isotop Pa-231 (waktu paruh 32.760 tahun) — bentuk yang stabil cukup untuk mengkarakterisasi elemen baru. Mereka menamainya "protoactinium" karena ia meluruh menjadi actinium.' },
+            { year: '1949', title: 'Disingkat "Protactinium"', body: 'IUPAC menyingkat nama "protoactinium" menjadi "protactinium" pada 1949.' },
+            { year: 'Warisan', title: 'Penanda Waktu Geologis', body: 'Rasio Pa-231 terhadap Th-230 digunakan dalam penanggalan geologis sedimen laut — mirip dengan karbon-14 untuk arkeologi, tapi untuk skala waktu ribuan hingga jutaan tahun. Paleontolog menggunakannya untuk menentukan usia lapisan sedimen dan memahami sirkulasi iklim kuno.' },
+        ],
+    },
+
+    // ── Np — Neptunium ────────────────────────────────────────────────────
+    {
+        sym: 'Np',
+        name: 'Edwin McMillan & Philip Abelson',
+        born: '1907 / 1913', died: '1991 / 2004',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Edwin_McMillan.jpg/440px-Edwin_McMillan.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Neptunium',
+        shortBio: 'McMillan dan Abelson menemukan neptunium pada 1940 di UC Berkeley — elemen transurania pertama yang dibuat manusia, dengan membombardir uranium dengan neutron. Dinamai dari planet Neptunus, setelah uranium yang dinamai Uranus.',
+        discoveryStory: [
+            { year: '1940', title: 'Melampaui Uranium', body: 'Edwin McMillan di UC Berkeley menembakkan neutron ke uranium-238. Ia mengamati isotop radioaktif baru yang bukan uranium dan bukan produk fisi yang diketahui — elemen nomor 93, melampaui uranium sebagai elemen paling berat yang diketahui.' },
+            { year: '1940', title: 'Abelson Mengkonfirmasi', body: 'Philip Abelson bergabung dengan McMillan dan mengkonfirmasi bahwa ini elemen baru melalui analisis kimia yang teliti — membuktikan bahwa elemen baru ini memiliki kimia berbeda dari uranium.' },
+            { year: '1940', title: 'Planet di Luar Uranus', body: 'Karena uranium dinamai dari planet Uranus, dan neptunium adalah elemen "setelah" uranium, mereka menamakannya dari planet berikutnya: Neptunium. Plutonium kemudian menyusul dari Pluto.' },
+            { year: 'Warisan', title: 'Elemen Pertama dari Siklotron', body: 'Neptunium-237 (waktu paruh 2,14 juta tahun) adalah produk sampingan reaktor nuklir. Ia sendiri adalah bahan awal untuk menghasilkan plutonium-238 — sumber panas termal untuk generator listrik wahana antariksa (RTG, seperti yang digunakan dalam Voyager, Cassini, dan rover Mars). McMillan memenangkan Nobel Kimia 1951 atas penemuan ini.' },
+        ],
+    },
+
+    // ── Am — Americium ────────────────────────────────────────────────────
+    {
+        sym: 'Am',
+        name: 'Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso',
+        born: '1912 / 1920 / 1919 / 1915', died: '1999 / 1973 / 2015 / 2004',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Americium',
+        shortBio: 'Seaborg dan timnya membuat americium pada 1944–45 di Chicago Metallurgical Laboratory (Proyek Manhattan) dengan membombardir plutonium dengan neutron. Penemuannya dirahasiakan hingga perang usai.',
+        discoveryStory: [
+            { year: '1944', title: 'Proyek Terclassified', body: 'Glenn Seaborg, Ralph James, Leon Morgan, dan Albert Ghiorso bekerja secara rahasia di University of Chicago dalam konteks Proyek Manhattan. Mereka membombardir plutonium-239 dengan neutron dan menghasilkan elemen baru.' },
+            { year: '1945', title: 'Diungkapkan di Radio', body: 'Setelah perang berakhir, Seaborg mengungkapkan penemuan americium dan curium dalam... siaran radio anak-anak. Ia menjadi tamu di acara "Quiz Kids" pada November 1945 dan menyebutkan dua elemen baru sebelum makalah ilmiahnya diterbitkan.' },
+            { year: '1945', title: 'Dari Amerika, untuk Amerika', body: 'Americium dinamai dari benua Amerika — melengkapi europium (Eropa) dan germanium (Jerman). Americium-241 (Am-241) adalah isotop yang paling terkenal karena memiliki waktu paruh 432 tahun.' },
+            { year: 'Warisan', title: 'Di Detektor Asap Rumahmu', body: 'Am-241 adalah sumber radiasi dalam detektor asap ionisasi — yang ada di sebagian besar rumah, hotel, dan gedung di dunia. Americium memancarkan partikel alfa yang mengionisasi udara dalam ruang kecil. Ketika asap masuk, ionisasi terganggu, alarm berbunyi. Satu detektor asap mengandung sekitar 1 mikrogram Am-241.' },
+        ],
+    },
+
+    // ── Cm — Curium ───────────────────────────────────────────────────────
+    {
+        sym: 'Cm',
+        name: 'Glenn Seaborg, Ralph James & Albert Ghiorso',
+        born: '1912 / 1920 / 1915', died: '1999 / 1973 / 2004',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Curium',
+        shortBio: 'Kurium dibuat pada 1944 di Proyek Manhattan bersamaan dengan americium, dengan membombardir plutonium-239 dengan partikel alfa — dan dinamai untuk menghormati Marie dan Pierre Curie.',
+        discoveryStory: [
+            { year: '1944', title: 'Alpha di atas Plutonium', body: 'Tim Seaborg menembakkan partikel alfa ke plutonium-239 menggunakan siklotron 60 inci di UC Berkeley, menghasilkan curium-242 (waktu paruh 163 hari). Ini terjadi sebelum americium — tapi karena americium lebih mudah dikarakterisasi, americium diumumkan pertama kali.' },
+            { year: '1944', title: 'Untuk Menghormati Curie', body: 'Seaborg menamainya "curium" untuk menghormati Marie dan Pierre Curie — pasangan ilmuwan yang menemukan radioaktivitas. Sangat tepat karena kurium adalah produk dari reaksi inti atom yang intensitasnya ribu kali lebih radioaktif dari radium.' },
+            { year: 'Warisan', title: 'Pemanas Wahana Antariksa', body: 'Curium-244 (waktu paruh 18 tahun) menghasilkan panas sangat tinggi dari peluruhan alfa — digunakan dalam radioisotope thermoelectric generator (RTG) untuk beberapa misi antariksa. Spektrometer sinar-X alfa berbasis curium-244 digunakan di Mars Pathfinder untuk menganalisis komposisi batuan Mars.' },
+        ],
+    },
+
+    // ── Bk — Berkelium ────────────────────────────────────────────────────
+    {
+        sym: 'Bk',
+        name: 'Glenn Seaborg, Stanley Thompson & Albert Ghiorso',
+        born: '1912 / 1912 / 1915', died: '1999 / 1976 / 2004',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Berkelium',
+        shortBio: 'Berkelium dibuat pada 1949 di University of California Berkeley dengan membombardir americium dengan partikel alfa. Dinamai dari kota Berkeley, California — mengikuti pola europium (Eropa) dan americium (Amerika).',
+        discoveryStory: [
+            { year: '1949', title: 'Alpha di atas Americium', body: 'Seaborg, Thompson, dan Ghiorso menembakkan partikel alfa ke americium-241 menggunakan siklotron 60 inci di Berkeley, menghasilkan hanya beberapa mikrogram berkelium-243.' },
+            { year: '1949', title: '"Berkeley" menjadi Elemen', body: 'Mereka menamainya "berkelium" dari Berkeley — kota di California tempat University of California berdiri. Seaborg kemudian berkelakar bahwa ini membuktikan bahwa dunia tidak berakhir di pantai timur Amerika.' },
+            { year: 'Warisan', title: 'Bahan Baku untuk Tennessine', body: 'Dalam jumlah sangat kecil, berkelium digunakan sebagai target untuk membuat elemen superberat — berkelium-249 ditembaki kalsium-48 untuk menghasilkan elemen 117 (tennessine) pada 2010. Proses ini membutuhkan miligraam Bk-249 — yang membutuhkan berbulan-bulan produksi intensif di Oak Ridge.' },
+        ],
+    },
+
+    // ── Cf — Californium ──────────────────────────────────────────────────
+    {
+        sym: 'Cf',
+        name: 'Glenn Seaborg, Stanley Thompson, Kenneth Street & Albert Ghiorso',
+        born: '1912 / 1912 / 1920 / 1915', died: '1999 / 1976 / 2006 / 2004',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Californium',
+        shortBio: 'Californium dibuat pada 1950 di Berkeley dengan membombardir curium-242 dengan partikel alfa — dan dinamai dari negara bagian California tempat ia dibuat.',
+        discoveryStory: [
+            { year: '1950', title: 'Sepuluh Jam Iradiasi', body: 'Tim membutuhkan iradiasi curium-242 dalam waktu sangat lama untuk menghasilkan californium dalam jumlah yang bisa dideteksi — hanya beberapa ribu atom saat pertama kali dibuat.' },
+            { year: '1950', title: 'California', body: 'Dinamai dari negara bagian California — tempat Berkeley berada. Seaborg dan timnya telah membuat tradisi menamakan elemen baru dari tempat mereka bekerja (berkelium dan californium) melanjutkan pola yang dimulai europium dan americium.' },
+            { year: 'Warisan', title: 'Neutron untuk Operasi Reaktor dan Deteksi Mineral', body: 'Californium-252 adalah pemancar neutron terkuat yang tersedia — satu mikrogram Cf-252 memancarkan 170 juta neutron per menit. Digunakan untuk menyalakan reaktor nuklir (neutron awal untuk fisi berantai), mendeteksi bahan peledak di bandara, survey uranium dan emas dari udara, dan terapi neutron kanker (terutama kanker leher rahim). Harganya sekitar $27 juta per gram.' },
+        ],
+    },
+
+    // ── Es — Einsteinium ──────────────────────────────────────────────────
+    {
+        sym: 'Es',
+        name: 'Seaborg, Ghiorso & tim Oak Ridge/Argonne/Los Alamos',
+        born: '—', died: '—',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Einsteinium',
+        shortBio: 'Einsteinium ditemukan pada puing-puing bom hidrogen "Ivy Mike" yang diledakkan pada November 1952 — bersama fermium. Penemuannya dirahasiakan selama tiga tahun. Dinamai untuk menghormati Albert Einstein.',
+        discoveryStory: [
+            { year: '1952', title: 'Di Dalam Abu Bom Hidrogen', body: 'Pada 1 November 1952, AS meledakkan bom hidrogen pertama — "Ivy Mike" di Kepulauan Marshall. Tim ilmuwan mengumpulkan debu dan puing dari area uji dengan pesawat filter. Dalam debu itu ditemukan dua elemen baru yang belum pernah ada sebelumnya: einsteinium dan fermium — produk dari neutron yang menembak uranium berulang kali.' },
+            { year: '1953–1955', title: 'Dua Tahun Dirahasiakan', body: 'Pemerintah AS merahasiakan penemuan ini selama hampir tiga tahun karena berkaitan dengan teknologi senjata nuklir rahasia. Baru pada 1955 publikasi ilmiah mengumumkan einsteinium dan fermium.' },
+            { year: '1955', title: 'Dinamai Einstein', body: 'Dinamai untuk menghormati Albert Einstein — ironi yang mendalam, karena Einstein sendiri menandatangani surat yang mendesak Franklin Roosevelt untuk mengembangkan bom atom (Surat Einstein-Szilard, 1939), tapi kemudian menyesal akan konsekuensinya.' },
+            { year: 'Warisan', title: 'Hanya Beberapa Microgram', body: 'Einsteinium sangat sulit dibuat — hanya gramogram yang pernah ada. Digunakan dalam riset fundamental tentang sifat elemen transurania. Pada 2021, peneliti Stanford berhasil mengkarakterisasi sifat kimia einsteinium untuk pertama kalinya dari hanya 200 nanogram — sampel terkecil yang pernah digunakan untuk studi kimia sistematis.' },
+        ],
+    },
+
+    // ── Fm — Fermium ──────────────────────────────────────────────────────
+    {
+        sym: 'Fm',
+        name: 'Seaborg, Ghiorso & tim multi-laboratorium',
+        born: '—', died: '—',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Fermium',
+        shortBio: 'Fermium ditemukan bersamaan dengan einsteinium dari abu bom hidrogen Ivy Mike pada 1952 — dan dinamai untuk menghormati Enrico Fermi yang membangun reaktor nuklir pertama di dunia.',
+        discoveryStory: [
+            { year: '1952', title: 'Bersama Einsteinium dari Ivy Mike', body: 'Dalam debu bom hidrogen Ivy Mike yang sama, tim ilmuwan juga menemukan fermium-255 — produk dari uranium-238 yang menangkap 17 neutron berurutan dan meluruh melalui beberapa emisi beta. Ini adalah reaksi nuklir yang belum pernah terlihat di laboratorium sebelumnya.' },
+            { year: '1953–1955', title: 'Rahasia Bersama Einsteinium', body: 'Seperti einsteinium, penemuan fermium dirahasiakan selama hampir tiga tahun dan baru diungkapkan pada 1955.' },
+            { year: '1955', title: 'Enrico Fermi', body: 'Dinamai untuk menghormati Enrico Fermi — fisikawan Itali-Amerika yang membangun reaktor nuklir pertama di dunia (Chicago Pile-1, 1942), memenangkan Nobel Fisika 1938, dan memimpin pengembangan teori fisi nuklir.' },
+            { year: 'Warisan', title: 'Batas Alam Semesta Kimia', body: 'Fermium adalah elemen terberat yang bisa diproduksi dalam reaktor nuklir (dengan tangkapan neutron). Elemen di atasnya (101+) harus dibuat dengan cara berbeda — menabrakkan atom ke atom lain menggunakan akselerator partikel. Fermium menandai batas antara "elemen reaktor" dan "elemen akselerator".' },
+        ],
+    },
+
+    // ── Md — Mendelevium ──────────────────────────────────────────────────
+    {
+        sym: 'Md',
+        name: 'Glenn Seaborg, Albert Ghiorso & tim Berkeley',
+        born: '1912 / 1915', died: '1999 / 2004',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Mendelevium',
+        shortBio: 'Mendelevium dibuat pertama kali pada 1955 di Berkeley dengan menabrakkan partikel alfa pada einsteinium — satu atom pada satu waktu. Dinamai menghormati Dmitri Mendeleev, bapak tabel periodik.',
+        discoveryStory: [
+            { year: '1955', title: 'Satu Atom per Eksperimen', body: 'Tim Seaborg menembakkan partikel alfa ke einsteinium-253 (hanya 17 nanogram!) menggunakan siklotron Berkeley. Seluruh eksperimen menghasilkan hanya 17 atom mendelevium terdeteksi — mungkin ini eksperimen paling sensitif dalam sejarah kimia.' },
+            { year: '1955', title: 'Mendeleev yang Visioner', body: 'Seaborg menamainya setelah Dmitri Mendeleev — karena dialah yang memprediksi keberadaan tempat kosong dalam tabel periodik puluhan tahun sebelumnya. Mendelevium sendiri menempati salah satu slot yang dipenuhi menggunakan fisika nuklir, bukan kimia alami.' },
+            { year: 'Warisan', title: 'Uji Konsep Kimia Atom Tunggal', body: 'Mendelevium menandai era baru kimia — kimia atom tunggal. Untuk pertama kalinya, ilmuwan berhasil mengidentifikasi dan mempelajari kimia elemen dalam jumlah atom yang bisa dihitung. Teknik ini kemudian menjadi standar untuk elemen-elemen yang lebih berat.' },
+        ],
+    },
+
+    // ── No — Nobelium ─────────────────────────────────────────────────────
+    {
+        sym: 'No',
+        name: 'Tim Dubna (Soviet) & Tim Berkeley (AS)',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Soviet / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Nobelium',
+        shortBio: 'Penemuan nobelium disengketakan antara Nobel Institute Swedia (1957, tidak dikonfirmasi), Berkeley (1958, kemudian ditarik), dan tim Soviet Dubna (1966) — salah satu sengketa prioritas penemuan elemen paling panjang dalam sejarah.',
+        discoveryStory: [
+            { year: '1957', title: 'Klaim Pertama: Stockholm', body: 'Tim di Nobel Institute Stockholm mengklaim menemukan elemen 102 dari reaksi curium dengan karbon-13, menamainya "nobelium" menghormati Alfred Nobel. Tapi eksperimen mereka tidak bisa direproduksi.' },
+            { year: '1958', title: 'Berkeley Mengklaim, Lalu Menarik', body: 'Tim Berkeley mengklaim menemukan nobelium pada 1958 dari curium + karbon-12, mengkonfirmasi nama nobelium. Tapi eksperimen mereka sendiri juga tidak konsisten dan kemudian ditarik sebagian.' },
+            { year: '1966', title: 'Dubna Membuktikan', body: 'Tim Soviet di Dubna (JINR) pada 1966 menghasilkan dan mengidentifikasi nobelium secara definitif menggunakan curium + karbon. Meskipun begitu, nama "nobelium" tetap dipertahankan meski bukan tim Stockholm yang pertama membuktikannya.' },
+            { year: 'Warisan', title: 'Elemen Nobel', body: 'Nobelium dinamai menghormati Alfred Nobel — penemu dinamit dan pendiri Hadiah Nobel. Ironi: Alfred Nobel sendiri sering tersiksa oleh dampak destruktif dinamitnya. Nobelium hanya dibuat dalam jumlah atom, tidak ada aplikasi praktis, tapi penting untuk memahami batas tabel periodik.' },
+        ],
+    },
+
+    // ── Lr — Lawrencium ───────────────────────────────────────────────────
+    {
+        sym: 'Lr',
+        name: 'Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer',
+        born: '1915 / 1928 / — / —', died: '2004 / — / — / —',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Lawrencium',
+        shortBio: 'Lawrencium dibuat pada 1961 di Berkeley dengan menabrakkan californium dengan boron — elemen aktinida terakhir, dan dinamai menghormati Ernest Lawrence, penemu siklotron yang menggerakkan seluruh seri penemuan elemen transurania.',
+        discoveryStory: [
+            { year: '1961', title: 'Akhir Aktinida', body: 'Ghiorso dan timnya menembakkan ion boron-10 dan boron-11 ke californium (campuran isotop) menggunakan Heavy Ion Linear Accelerator (HILAC) di Berkeley, menghasilkan lawrencium-257 dan -258 — yang terdeteksi dari emisi alfa mereka.' },
+            { year: '1961', title: 'Menghormati Lawrence', body: 'Dinamai dari Ernest Orlando Lawrence — penemu siklotron pada 1930, pemenang Nobel Fisika 1939. Siklotronnya adalah "senjata" yang memungkinkan pembuatan semua elemen transurania di Berkeley. Sangat tepat bahwa elemen terakhir aktinida dinamai dari sang penemu alat itu.' },
+            { year: '1961–1971', title: 'Sengketa dengan Soviet', body: 'Tim Dubna Soviet juga membuat lawrencium secara independen dan mengusulkan nama "rutherfordium" untuk elemen ini. IUPAC akhirnya menetapkan "lawrencium" untuk elemen 103 dan "rutherfordium" untuk elemen 104. Perang Dingin turut mewarnai penamaan elemen di era ini.' },
+            { year: 'Warisan', title: 'Gerbang ke Transaktinida', body: 'Lawrencium adalah elemen aktinida terakhir (nomor 89–103 selesai). Di atasnya dimulai seri transaktinida (elemen 104+) — yang lebih tidak stabil, lebih sulit dibuat, dan semakin menantang prediksi tabel periodik konvensional. Era baru fisika nuklir dimulai dari sini.' },
+        ],
+    },
+
+    // ══════════════════════════════════════════════════════════════════════
+    // ELEMEN SUPERBERAT (TRANSAKTINIDA) — dibuat di akselerator partikel
+    // ══════════════════════════════════════════════════════════════════════
+
+    // ── Rf — Rutherfordium ────────────────────────────────────────────────
+    {
+        sym: 'Rf',
+        name: 'Tim Dubna (Soviet) vs Tim Berkeley (AS)',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Soviet / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Rutherfordium',
+        shortBio: 'Elemen 104 menjadi medan pertempuran utama "Perang Dingin Elemen" — Soviet mengklaim menemukan "kurchatovium" (1964), AS mengklaim "rutherfordium" (1969). Nama rutherfordium akhirnya menang — menghormati Ernest Rutherford, bapak fisika nuklir.',
+        discoveryStory: [
+            { year: '1964', title: 'Kurchatovium (Soviet)', body: 'Tim Dubna JINR di Soviet mengklaim membuat elemen 104 dengan membombardir plutonium-242 dengan neon-22. Mereka menamakannya "kurchatovium" menghormati Igor Kurchatov — ilmuwan utama program atomik Soviet.' },
+            { year: '1969', title: 'Rutherfordium (AS)', body: 'Tim Berkeley memproduksi elemen 104 dari californium + karbon-12 dan mengklaim penemuan independen. Mereka mengusulkan "rutherfordium" menghormati Ernest Rutherford.' },
+            { year: '1997', title: 'IUPAC Memutuskan', body: 'Setelah dekade perdebatan, IUPAC pada 1997 menetapkan "rutherfordium" sebagai nama resmi — kemenangan bagi AS. Soviet tidak menerima keputusan ini dengan mudah.' },
+            { year: 'Warisan', title: 'Bukan Akhir, Tapi Awal', body: 'Rutherfordium adalah elemen pertama di luar aktinida. Eksperimen kimianya (dalam hitungan atom) menunjukkan ia berperilaku seperti prediksi tabel periodik — melegakan para teoritisi yang khawatir efek relativistik akan membalikkan semua prediksi pada elemen sangat berat.' },
+        ],
+    },
+
+    // ── Db — Dubnium ──────────────────────────────────────────────────────
+    {
+        sym: 'Db',
+        name: 'Tim Dubna (Soviet) & Tim Berkeley (AS)',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Soviet / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Dubnium',
+        shortBio: 'Elemen 105 juga diperebutkan Soviet (hahnium) dan AS (joliotium/nielsbohrium) — akhirnya diberi nama "dubnium" menghormati kota Dubna, tempat laboratorium nuklir Soviet JINR berada.',
+        discoveryStory: [
+            { year: '1968', title: 'Dubna dan Berkeley Bersaing Lagi', body: 'Tim Dubna mengklaim menemukan elemen 105 dari americium + neon (1968). Tim Berkeley mengklaim membuat elemen sama dari californium + nitrogen (1970). Sengketa berlanjut selama hampir 30 tahun.' },
+            { year: '1997', title: 'Kompromi: Dubnium', body: 'IUPAC pada 1997 memberikan nama "dubnium" — dari kota Dubna, tempat JINR Rusia berada. Ini adalah kompromi diplomatik: rutherfordium (Rf) untuk AS, dubnium (Db) untuk Soviet/Rusia.' },
+            { year: 'Warisan', title: 'Kimia Elemen Satu-Atom', body: 'Percobaan kimia dubnium dilakukan satu atom per jam atau lebih lambat. Eksperimen menunjukkan dubnium berperilaku seperti niobium dan tantalum sesuai prediksi — tabel periodik masih berlaku di sini!' },
+        ],
+    },
+
+    // ── Sg — Seaborgium ───────────────────────────────────────────────────
+    {
+        sym: 'Sg',
+        name: 'Tim Berkeley (Ghiorso et al.)',
+        born: '—', died: '—',
+        nationality: '🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Seaborgium',
+        shortBio: 'Seaborgium dibuat pada 1974 di Berkeley — satu-satunya elemen yang dinamai dari orang yang masih hidup saat penamaan: Glenn Seaborg (masih hidup hingga 1999). Seaborg sendiri bercanda tentang keistimewaannya ini.',
+        discoveryStory: [
+            { year: '1974', title: 'Californium + Oksigen', body: 'Ghiorso dan tim di Berkeley menembakkan oksigen-18 ke californium-249, menghasilkan seaborgium-263 dengan waktu paruh sekitar 0,9 detik.' },
+            { year: '1994', title: 'Glenn Seaborg yang Masih Hidup', body: 'Ketika IUPAC mulai menyetujui nama resmi, Glenn Seaborg masih hidup (ia meninggal 1999). Menamakan sebuah elemen dari orang yang masih hidup merupakan preseden yang sangat langka.' },
+            { year: '1997', title: 'Disetujui IUPAC', body: 'Meski ada perdebatan tentang apakah pantas menamakan elemen dari orang yang masih hidup, IUPAC akhirnya menyetujui "seaborgium" pada 1997.' },
+            { year: 'Warisan', title: 'Penghormatan Tertinggi', body: 'Seaborg terlibat dalam penemuan atau sintesis 10 elemen — lebih banyak dari siapapun dalam sejarah. Warisannya mencakup americium, curium, berkelium, californium, einsteinium, fermium, mendelevium, nobelium, dan lawrencium — sebuah catatan yang kemungkinan tidak akan pernah terlampaui.' },
+        ],
+    },
+
+    // ── Bh — Bohrium ──────────────────────────────────────────────────────
+    {
+        sym: 'Bh',
+        name: 'Tim GSI Darmstadt',
+        born: '—', died: '—',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Bohrium',
+        shortBio: 'Bohrium dibuat pada 1981 di GSI Darmstadt, Jerman, oleh tim pimpinan Peter Armbruster dan Gottfried Münzenberg — dan dinamai menghormati Niels Bohr, bapak fisika atom kuantum.',
+        discoveryStory: [
+            { year: '1981', title: 'Chromium ke Bismut', body: 'Tim GSI menembakkan ion kromium-54 ke bismut-209 menggunakan UNILAC (Universal Linear Accelerator), menghasilkan hanya 5 atom bohrium-262 yang terdeteksi — setiap atom meluruh dalam hitungan milidetik.' },
+            { year: '1997', title: 'Dinamai Niels Bohr', body: 'Awalnya diusulkan berbagai nama; IUPAC menetapkan "bohrium" menghormati Niels Bohr — fisikawan Denmark yang mengembangkan model atom Bohr dan fondasi mekanika kuantum.' },
+            { year: 'Warisan', title: 'Fisika Inti Ekstrem', body: 'Penelitian elemen superberat seperti bohrium mendorong batas teori fisika nuklir — menguji prediksi tentang "pulau stabilitas", yakni apakah elemen sangat berat dengan konfigurasi proton/neutron tertentu bisa lebih stabil dari elemen tetangganya.' },
+        ],
+    },
+
+    // ── Hs — Hassium ──────────────────────────────────────────────────────
+    {
+        sym: 'Hs',
+        name: 'Tim GSI Darmstadt',
+        born: '—', died: '—',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Hassium',
+        shortBio: 'Hassium dibuat pada 1984 di GSI Darmstadt — dan dinamai dari "Hassia", nama Latin untuk negara bagian Hessen di Jerman, tempat GSI berdiri. Pertama kali berhasil dikonfirmasi sifat kimianya pada 2002.',
+        discoveryStory: [
+            { year: '1984', title: 'Besi ke Timbal', body: 'Tim GSI menembakkan ion besi-58 ke timbal-208, menghasilkan hassium-265. Mereka berhasil membuat beberapa atom saja dalam setiap percobaan panjang.' },
+            { year: '2002', title: 'Kimia Hassium', body: 'Pada 2002, tim di PSI (Swiss) berhasil mempelajari kimia hassium untuk pertama kalinya — membuat hassium tetroksida (HsO₄) yang ternyata berperilaku seperti osmium tetroksida (OsO₄). Tabel periodik terbukti berlaku untuk elemen sangat berat.' },
+            { year: 'Warisan', title: 'Memperluas Tabel Periodik', body: 'Setiap elemen superberat yang dikonfirmasi memperkuat (atau menantang) prediksi efek relativistik pada kimia. Efek relativistik sangat kuat pada elemen berat — elektron bergerak mendekati kecepatan cahaya, mengubah sifat kimia secara dramatis.' },
+        ],
+    },
+
+    // ── Mt — Meitnerium ───────────────────────────────────────────────────
+    {
+        sym: 'Mt',
+        name: 'Tim GSI Darmstadt',
+        born: '—', died: '—',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Lise_Meitner_%281878-1968%29%2C_lecturing_at_Catholic_University%2C_Washington%2C_D.C.%2C_1946.jpg/440px-Lise_Meitner_%281878-1968%29%2C_lecturing_at_Catholic_University%2C_Washington%2C_D.C.%2C_1946.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Meitnerium',
+        shortBio: 'Meitnerium dibuat pada 1982 di GSI Darmstadt — dan dinamai dari Lise Meitner, fisikawan Austria yang menemukan interpretasi teoritis fisi nuklir namun tidak pernah memenangkan Nobel meski sangat pantas menerimanya.',
+        discoveryStory: [
+            { year: '1982', title: 'Besi ke Bismut', body: 'Tim GSI menembakkan ion besi-58 ke bismut-209, menghasilkan meitnerium-266. Penemuan ini memerlukan analisis data yang sangat teliti dari hanya beberapa atom.' },
+            { year: '1997', title: 'Akhirnya Lise Meitner Dihormati', body: 'Lise Meitner adalah orang yang menjelaskan fisi nuklir secara teoritis pada 1938 — tapi Otto Hahn yang mendapat Nobel Kimia 1944, bukan Meitner. Banyak sejarawan sains menganggap ini sebagai salah satu ketidakadilan Nobel terbesar.' },
+            { year: 'Warisan', title: 'Keadilan yang Terlambat', body: 'Penamaan meitnerium adalah pengakuan posthumous atas kontribusi Lise Meitner yang luar biasa. Meitner merupakan salah satu perempuan ilmuwan terhebat abad ke-20 — fisikawan eksperimental dan teoritis yang bekerja di Austria dan Jerman sebelum melarikan diri dari Nazi pada 1938, membawa perhitungannya ke Swedia bersama Otto Frisch.' },
+        ],
+    },
+
+    // ── Ds — Darmstadtium ─────────────────────────────────────────────────
+    {
+        sym: 'Ds',
+        name: 'Tim GSI Darmstadt',
+        born: '—', died: '—',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Darmstadtium',
+        shortBio: 'Darmstadtium dibuat pada 1994 di GSI Darmstadt — dan dinamai dari kota Darmstadt, Jerman, tempat laboratorium penelitian yang menghasilkan banyak elemen superberat.',
+        discoveryStory: [
+            { year: '1994', title: 'Nikel ke Timbal', body: 'Tim GSI menembakkan ion nikel-62 ke timbal-208, menghasilkan darmstadtium-269. Seperti semua elemen superberat, hanya beberapa atom yang terproduksi dalam eksperimen panjang.' },
+            { year: '2003', title: 'Dinamai Darmstadt', body: 'IUPAC menyetujui nama "darmstadtium" pada 2003 — menghormati kota tempat banyak elemen superberat dibuat pertama kali.' },
+            { year: 'Warisan', title: 'Ke Mana Tabel Periodik Berakhir?', body: 'Pertanyaan menarik dalam fisika nuklir adalah "pulau stabilitas" — prediksi bahwa di sekitar elemen 114–126, mungkin ada isotop dengan waktu paruh jauh lebih panjang dari elemen tetangganya. Pencarian ini mendorong pembuatan elemen-elemen semakin berat.' },
+        ],
+    },
+
+    // ── Rg — Roentgenium ──────────────────────────────────────────────────
+    {
+        sym: 'Rg',
+        name: 'Tim GSI Darmstadt',
+        born: '—', died: '—',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Roentgenium',
+        shortBio: 'Roentgenium dibuat pada 1994 di GSI Darmstadt — dan dinamai menghormati Wilhelm Röntgen, penemu sinar-X yang mendapat Nobel Fisika pertama dalam sejarah (1901).',
+        discoveryStory: [
+            { year: '1994', title: 'Nikel-64 ke Bismut-209', body: 'Tim GSI menembakkan nikel-64 ke bismut-209 dan menghasilkan 3 atom roentgenium-272 yang terdeteksi dari rantai peluruhannya.' },
+            { year: '2004', title: 'Dikonfirmasi IUPAC', body: 'Setelah verifikasi oleh berbagai laboratorium, IUPAC mengkonfirmasi penemuan dan nama "roentgenium" pada 2004.' },
+            { year: 'Warisan', title: 'Menghormati Sinar-X', body: 'Wilhelm Röntgen menemukan sinar-X pada 1895 — penemuan yang mengubah kedokteran selamanya. Menamakan elemen darinya menjadi penghormatan abadi untuk kontribusinya. Efek relativistik pada roentgenium diprediksi sangat kuat — sifat kimianya mungkin sangat berbeda dari emas di atasnya dalam tabel periodik.' },
+        ],
+    },
+
+    // ── Cn — Copernicium ──────────────────────────────────────────────────
+    {
+        sym: 'Cn',
+        name: 'Tim GSI Darmstadt',
+        born: '—', died: '—',
+        nationality: '🇩🇪 Jerman',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Copernicium',
+        shortBio: 'Copernicium dibuat pada 1996 di GSI Darmstadt — dan dinamai dari Nicolaus Copernicus, astronom Polandia yang memindahkan Matahari ke pusat tata surya. Mungkin berupa gas pada suhu kamar karena efek relativistik yang ekstrem.',
+        discoveryStory: [
+            { year: '1996', title: 'Seng ke Timbal', body: 'Tim GSI menembakkan ion seng-70 ke timbal-208, menghasilkan copernicium-277. Penemuan ini diverifikasi oleh laboratorium lain sebelum diakui IUPAC.' },
+            { year: '2010', title: 'Dikonfirmasi dan Dinamai', body: 'IUPAC mengkonfirmasi penemuan dan nama "copernicium" pada 2010 — tepat 537 tahun setelah kelahiran Copernicus.' },
+            { year: 'Warisan', title: 'Gas Metalik?', body: 'Prediksi relativistik menunjukkan copernicium mungkin berupa gas pada suhu kamar — bukan logam cair seperti merkuri yang ada di atasnya dalam tabel periodik. Ini sangat tidak biasa untuk logam golongan IIB. Eksperimen konfirmasi sangat sulit dilakukan karena waktu paruh hanya 29 detik.' },
+        ],
+    },
+
+    // ── Nh — Nihonium ─────────────────────────────────────────────────────
+    {
+        sym: 'Nh',
+        name: 'Tim RIKEN Wako, Jepang',
+        born: '—', died: '—',
+        nationality: '🇯🇵 Jepang',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Nihonium',
+        shortBio: 'Nihonium dibuat pada 2004 di RIKEN (Jepang) — elemen superberat pertama yang ditemukan di Asia, setelah 9 tahun eksperimen intensif. Dinamai dari "Nihon" (日本), nama Jepang untuk Jepang.',
+        discoveryStory: [
+            { year: '2004', title: 'Keberhasilan Asia Pertama', body: 'Tim RIKEN pimpinan Kosuke Morita menembakkan seng-70 ke bismut-209, membutuhkan 400 triliun tumbukan selama 9 tahun untuk menghasilkan 3 atom nihonium-278 yang terdeteksi.' },
+            { year: '2015', title: 'Diakui IUPAC', body: 'Setelah verifikasi ketat, IUPAC mengakui RIKEN sebagai penemu dan menerima nama "nihonium" pada 2015 — momen kebanggaan nasional bagi Jepang dalam sains.' },
+            { year: '2016', title: '"Nihon": Negeri Matahari Terbit', body: '"Nihon" (日本) adalah nama Jepang untuk Jepang — secara harfiah "asal matahari". Ini membuat nihonium elemen Asia pertama yang tidak dinamai dari tokoh Eropa atau Amerika.' },
+            { year: 'Warisan', title: 'RIKEN dan Sains Asia', body: 'Penemuan nihonium adalah momen bersejarah bagi sains Asia — membuktikan bahwa laboratorium di luar Eropa dan Amerika bisa bersaing di batas terdepan fisika nuklir. Tim RIKEN menghabiskan 9 tahun tanpa menyerah, sebuah dedikasi yang luar biasa.' },
+        ],
+    },
+
+    // ── Fl — Flerovium ────────────────────────────────────────────────────
+    {
+        sym: 'Fl',
+        name: 'Tim JINR Dubna, Rusia (& LLNL, AS)',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Rusia / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Flerovium',
+        shortBio: 'Flerovium dibuat pada 1999 oleh kolaborasi JINR Dubna (Rusia) dan Livermore (AS) — dan dinamai dari Laboratorium Flerov di Dubna, yang sendiri dinamai dari Georgy Flyorov, fisikawan Soviet.',
+        discoveryStory: [
+            { year: '1999', title: 'Kalsium ke Plutonium', body: 'Tim kolaborasi Dubna-Livermore menembakkan kalsium-48 ke plutonium-244, menghasilkan flerovium-287. Ini menandai teknik baru yang produktif: menggunakan kalsium-48 yang sangat banyak neutron sebagai proyektil.' },
+            { year: '2012', title: 'Dikonfirmasi IUPAC', body: 'IUPAC mengkonfirmasi penemuan dan nama "flerovium" pada 2012.' },
+            { year: 'Warisan', title: 'Di "Pulau Stabilitas"', body: 'Flerovium (Z=114) berada di dekat "pulau stabilitas" yang diprediksi teori — elemen dengan 114 proton dan 184 neutron mungkin lebih stabil. Isotop Fl-289 memiliki waktu paruh sekitar 2,6 detik — sangat lama untuk elemen seberat ini.' },
+        ],
+    },
+
+    // ── Mc — Moscovium ────────────────────────────────────────────────────
+    {
+        sym: 'Mc',
+        name: 'Tim JINR Dubna & LLNL/ORNL',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Rusia / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Moscovium',
+        shortBio: 'Moscovium dibuat pada 2003 oleh kolaborasi Rusia-Amerika, dan dinamai dari Oblast Moskow (Moscow Oblast), tempat JINR Dubna berada.',
+        discoveryStory: [
+            { year: '2003', title: 'Kalsium ke Americium', body: 'Tim kolaborasi menembakkan kalsium-48 ke americium-243 dan menghasilkan moscovium-288. Empat atom terdeteksi dalam eksperimen awal.' },
+            { year: '2016', title: 'Dinamai Moskow', body: 'IUPAC mengkonfirmasi nama "moscovium" pada 2016 — menghormati Oblast Moskow, wilayah di luar Moskow tempat fasilitas JINR berada.' },
+            { year: 'Warisan', title: 'Kolaborasi Musim Dingin-Musim Panas', body: 'Kolaborasi Dubna-Livermore yang menghasilkan moscovium, nihonium, flerovium, livermorium, dan oganesson adalah contoh luar biasa bagaimana Perang Dingin bisa berakhir dengan kolaborasi ilmiah antara mantan rival. Bahan (berkelium, californium) dari AS dikirim ke Rusia; Rusia mengoperasikan akselerator.' },
+        ],
+    },
+
+    // ── Lv — Livermorium ──────────────────────────────────────────────────
+    {
+        sym: 'Lv',
+        name: 'Tim JINR Dubna & Lawrence Livermore National Lab',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Rusia / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Livermorium',
+        shortBio: 'Livermorium dibuat pada 2000 oleh kolaborasi JINR-LLNL — dan dinamai dari Lawrence Livermore National Laboratory di California, mitra Amerika dalam kerja sama dekade-panjang ini.',
+        discoveryStory: [
+            { year: '2000', title: 'Kalsium ke Curium', body: 'Tim menembakkan kalsium-48 ke curium-248, menghasilkan livermorium-293. Kemudian berbagai isotop diproduksi untuk mempelajari peluruhan rantainya.' },
+            { year: '2012', title: 'Dikonfirmasi IUPAC', body: 'Bersamaan dengan flerovium, IUPAC mengkonfirmasi livermorium pada 2012.' },
+            { year: 'Warisan', title: 'Menghormati Mitra Amerika', body: 'Dinamai Lawrence Livermore untuk menghormati kontribusi laboratorium Amerika dalam kolaborasi. Livermorium adalah nama yang mempertahankan keseimbangan geopolitik dalam penamaan elemen — Rusia mendapat Moscovium (Mc), AS mendapat Livermorium (Lv).' },
+        ],
+    },
+
+    // ── Ts — Tennessine ───────────────────────────────────────────────────
+    {
+        sym: 'Ts',
+        name: 'Tim JINR Dubna, ORNL & Vanderbilt',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Rusia / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Glenn_Seaborg_-_c._1964.jpg/440px-Glenn_Seaborg_-_c._1964.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Tennessine',
+        shortBio: 'Tennessine dibuat pada 2010 oleh tim kolaborasi menggunakan berkelium-249 yang diproduksi di Oak Ridge, ditembaki kalsium-48 di Dubna. Dinamai dari negara bagian Tennessee — tempat Oak Ridge National Lab berada.',
+        discoveryStory: [
+            { year: '2010', title: 'Memberikan Bk-249 ke Dubna', body: 'Oak Ridge National Lab menghabiskan 250 hari menghasilkan 22 mg berkelium-249 (nilai ~$1.5 juta) dan mengirimkannya ke Dubna. Tim Dubna menembaki Bk-249 dengan kalsium-48, menghasilkan 6 atom tennessine-293 dan -294.' },
+            { year: '2016', title: 'Tennessee dalam Tabel Periodik', body: 'IUPAC menyetujui nama "tennessine" pada 2016 — menghormati negara bagian Tennessee yang menjadi rumah bagi ORNL (Oak Ridge), Vanderbilt University, dan Universitas Tennessee.' },
+            { year: 'Warisan', title: 'Halogen Terberat', body: 'Tennessine (elemen 117) diperkirakan berada dalam golongan halogen — tapi efek relativistik yang kuat kemungkinan membuatnya berperilaku sangat berbeda dari fluorin atau klorin. Prediksi menunjukkan ia mungkin bersifat "semi-logam" seperti astatin.' },
+        ],
+    },
+
+    // ── Og — Oganesson ────────────────────────────────────────────────────
+    {
+        sym: 'Og',
+        name: 'Tim JINR Dubna & Lawrence Livermore',
+        born: '—', died: '—',
+        nationality: '🇷🇺 Rusia / 🇺🇸 Amerika Serikat',
+        photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Yuri_Oganessian_2.jpg/440px-Yuri_Oganessian_2.jpg',
+        wikiUrl: 'https://en.wikipedia.org/wiki/Oganesson',
+        shortBio: 'Oganesson dibuat pada 2002 di Dubna — elemen terberat yang pernah dibuat (nomor 118), dan satu-satunya elemen yang dinamai dari orang yang masih hidup selain seaborgium: Yuri Oganessian, fisikawan nuklir Rusia yang memimpin riset elemen superberat selama 50 tahun lebih.',
+        discoveryStory: [
+            { year: '2002', title: 'Kalsium ke Californium', body: 'Tim Dubna menembakkan kalsium-48 ke californium-249, menghasilkan hanya 5 atom oganesson-294 dalam berbagai eksperimen. Waktu paruhnya hanya sekitar 0,89 milidetik.' },
+            { year: '2006', title: 'Dikonfirmasi Livermore', body: 'Tim Livermore melakukan eksperimen konfirmasi independen dan menghasilkan atom tambahan, mengkonfirmasi penemuan.' },
+            { year: '2016', title: 'Yuri Oganessian yang Masih Hidup', body: 'IUPAC menyetujui nama "oganesson" pada 2016 menghormati Yuri Oganessian (lahir 1933) yang masih hidup — hanya dua elemen dalam sejarah yang dinamai dari orang yang masih hidup: seaborgium (Glenn Seaborg) dan oganesson (Yuri Oganessian).' },
+            { year: 'Warisan', title: 'Batas Pengetahuan Manusia', body: 'Oganesson adalah elemen terberat yang pernah ada — 294 kali lebih berat dari hidrogen. Secara teori ia adalah gas mulia (golongan 18), tapi efek relativistik yang ekstrem diprediksi membuatnya menjadi padatan pada suhu kamar, bukan gas! Tidak ada yang tahu persis bagaimana sifatnya karena sampelnya terlalu kecil dan terlalu singkat hidupnya untuk diuji secara kimia. Kita berada di batas terdepan pengetahuan manusia.' },
+        ],
+    },
 ];
 
 // Fast lookup by element symbol
