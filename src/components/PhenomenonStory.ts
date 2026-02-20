@@ -357,6 +357,14 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildSuperSlitAnim();
   } else if (animClass === 'anim-super-decoherence') {
     atomAnimation = buildSuperDecoherenceAnim();
+  } else if (animClass === 'anim-anti-hook') {
+    atomAnimation = buildAntiHookAnim();
+  } else if (animClass === 'anim-anti-annihilation') {
+    atomAnimation = buildAntiAnnihilationAnim();
+  } else if (animClass === 'anim-anti-pet') {
+    atomAnimation = buildAntiPetAnim();
+  } else if (animClass === 'anim-anti-asymmetry') {
+    atomAnimation = buildAntiAsymmetryAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -1159,6 +1167,116 @@ function buildSuperDecoherenceAnim(): string {
         </div>
       </div>
       <div class="ps-sd-label">Kucing: 10²³ atom interaksi → dekoherensi instan</div>
+    </div>
+  `;
+}
+
+function buildAntiHookAnim(): string {
+  return `
+    <div class="ps-anim-anti-hook">
+      <div class="ps-ah-scene">
+        <div class="ps-ah-particle matter">
+          <div class="ps-ah-label">e⁻</div>
+          <div class="ps-ah-sublabel">Elektron</div>
+        </div>
+        <div class="ps-ah-center">
+          <div class="ps-ah-explosion">💥</div>
+          <div class="ps-ah-energy">γ + γ</div>
+        </div>
+        <div class="ps-ah-particle antimatter">
+          <div class="ps-ah-label">e⁺</div>
+          <div class="ps-ah-sublabel">Positron</div>
+        </div>
+      </div>
+      <div class="ps-ah-result">100% massa → energi · E = mc² · paling efisien di alam semesta</div>
+    </div>
+  `;
+}
+
+function buildAntiAnnihilationAnim(): string {
+  return `
+    <div class="ps-anim-anti-annihilation">
+      <div class="ps-aa-row">
+        <div class="ps-aa-particle m">
+          <div class="ps-aa-icon">p⁺</div>
+          <div class="ps-aa-name">Proton</div>
+          <div class="ps-aa-charge">muatan +</div>
+        </div>
+        <div class="ps-aa-arrow">&#8660;</div>
+        <div class="ps-aa-particle am">
+          <div class="ps-aa-icon">p̅</div>
+          <div class="ps-aa-name">Antiproton</div>
+          <div class="ps-aa-charge">muatan −</div>
+        </div>
+      </div>
+      <div class="ps-aa-row">
+        <div class="ps-aa-particle m">
+          <div class="ps-aa-icon">e⁻</div>
+          <div class="ps-aa-name">Elektron</div>
+          <div class="ps-aa-charge">muatan −</div>
+        </div>
+        <div class="ps-aa-arrow">&#8660;</div>
+        <div class="ps-aa-particle am">
+          <div class="ps-aa-icon">e⁺</div>
+          <div class="ps-aa-name">Positron</div>
+          <div class="ps-aa-charge">muatan +</div>
+        </div>
+      </div>
+      <div class="ps-aa-note">Massa identik · Muatan berlawanan · Bertemu → musnah 100%</div>
+    </div>
+  `;
+}
+
+function buildAntiPetAnim(): string {
+  return `
+    <div class="ps-anim-anti-pet">
+      <div class="ps-ap-diagram">
+        <div class="ps-ap-body">
+          <div class="ps-ap-body-icon">🫀</div>
+          <div class="ps-ap-spot">
+            <div class="ps-ap-spot-dot"></div>
+            <div class="ps-ap-gamma left">γ→</div>
+            <div class="ps-ap-gamma right">←γ</div>
+          </div>
+        </div>
+        <div class="ps-ap-detectors">
+          <div class="ps-ap-det left-det">📡</div>
+          <div class="ps-ap-det right-det">📡</div>
+        </div>
+      </div>
+      <div class="ps-ap-flow">
+        <span class="ps-ap-step">Suntik positron</span>
+        <span>→</span>
+        <span class="ps-ap-step">Anihilasi di tumor</span>
+        <span>→</span>
+        <span class="ps-ap-step">Dua γ ke detektor</span>
+        <span>→</span>
+        <span class="ps-ap-step">Peta 3D</span>
+      </div>
+    </div>
+  `;
+}
+
+function buildAntiAsymmetryAnim(): string {
+  const total = 10;
+  return `
+    <div class="ps-anim-anti-asym">
+      <div class="ps-ax-title">Setelah Big Bang</div>
+      <div class="ps-ax-row">
+        <div class="ps-ax-label">Materi</div>
+        <div class="ps-ax-bar-wrap">
+          ${Array.from({ length: total + 1 }, (_, i) => `<div class="ps-ax-ball matter" style="--i:${i}"></div>`).join('')}
+        </div>
+        <div class="ps-ax-count">10<sup>9</sup>+1</div>
+      </div>
+      <div class="ps-ax-row">
+        <div class="ps-ax-label">Antimateri</div>
+        <div class="ps-ax-bar-wrap">
+          ${Array.from({ length: total }, (_, i) => `<div class="ps-ax-ball antimatter" style="--i:${i}"></div>`).join('')}
+        </div>
+        <div class="ps-ax-count">10<sup>9</sup></div>
+      </div>
+      <div class="ps-ax-result">Anihilasi → hanya "sisa" 1 per miliar yang jadi semua galaksi, bintang, kamu</div>
     </div>
   `;
 }

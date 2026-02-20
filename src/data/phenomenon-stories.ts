@@ -36,6 +36,89 @@ export interface PhenomenonStory {
 
 export const phenomenonStories: PhenomenonStory[] = [
 
+    // ── ANTIMATERI ───────────────────────────────────────────────────────────
+    {
+        id: 'antimatter',
+        slides: [
+            {
+                type: 'hook',
+                title: '1 Gram Antimateri = Ledakan 43 Kiloton',
+                body: 'Bom nuklir Hiroshima meledak dengan kekuatan sekitar 15 kiloton. Rekam itu di kepala kamu.<br><br>Satu gram antimateri — lebih tipis dari selembar kertas — kalau bertemu dengan satu gram materi biasa, akan melepaskan energi 43 kiloton. Tiga kali lebih kuat dari Hiroshima. Dari dua gram bahan.<br><br>Antimateri bukan fiksi ilmiah. Ia nyata, sudah dibuat di laboratorium CERN sejak 1995. Masalahnya: untuk membuat satu gram antimateri butuh energi sebesar yang dikonsumsi seluruh peradaban manusia selama 300 tahun.',
+                visual: '💥',
+                animKey: 'anim-anti-hook',
+                highlight: '1 gram antimateri + 1 gram materi = 43 kiloton · 3× lebih kuat dari bom Hiroshima · dari 2 gram bahan',
+            },
+            {
+                type: 'history',
+                title: 'Dirac Tidak Sengaja Menemukan Bayangan Alam Semesta',
+                body: 'Tahun 1928. Paul Dirac, fisikawan Inggris yang terkenal pendiam dan sangat presisi, sedang mencoba menggabungkan mekanika kuantum dengan teori relativitas Einstein. Ia menulis persamaan yang menggambarkan perilaku elektron bergerak cepat.<br><br>Persamaannya berhasil — tapi punya dua solusi. Satu untuk elektron biasa. Satu lagi untuk... sesuatu yang massanya sama tapi muatan listriknya berlawanan. Dirac bingung. Awalnya ia pikir itu adalah proton. Tapi hitungannya tidak cocok.<br><br>Empat tahun kemudian, 1932, Carl Anderson sedang mengamati sinar kosmik di California — dan melihat partikel yang identik dengan elektron, tapi belok ke arah yang salah di medan magnet. Positron. Antimateri pertama yang ditemukan. Dirac benar, tanpa bermaksud.',
+                quote: 'Persamaan saya lebih pintar dari saya.',
+                quoteAuthor: 'Paul Dirac, peraih Nobel 1933',
+                visual: '👨‍🔬',
+                history: [
+                    { year: '1928', event: 'Persamaan Dirac: menggabungkan kuantum + relativitas — secara tidak sengaja prediksi antimatter', person: 'Paul Dirac' },
+                    { year: '1932', event: 'Carl Anderson menemukan positron di sinar kosmik — Nobel 1936', person: 'Carl Anderson' },
+                    { year: '1955', event: 'Antiproton pertama dibuat di Bevatron, UC Berkeley', person: 'Segrè & Chamberlain, Nobel 1959' },
+                    { year: '1965', event: 'Antineutron dan inti antideuterium pertama berhasil dibuat', person: 'CERN & Brookhaven' },
+                    { year: '1995', event: 'CERN: antihydrogen pertama — atom antimateri lengkap pertama di dunia', person: 'PS210 experiment, CERN' },
+                    { year: '2010', event: 'ALPHA experiment: antihydrogen ditahan selama 1000 detik — rekor dunia', person: 'ALPHA collaboration, CERN' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Apa Itu Antimateri? Bayangan yang Membunuh',
+                body: 'Setiap partikel materi punya pasangan "anti"-nya. Elektron → positron (muatan +). Proton → antiproton (muatan −). Neutron → antineutron.<br><br>Secara massa dan sifat fisika lainnya, mereka identik. Bedanya cuma muatan listrik yang berlawanan. Tapi satu aturan besi: kalau partikel dan antipartikelnya bertemu, keduanya musnah seketika — 100% massanya berubah jadi energi. Inilah yang disebut anihilasi. Tidak ada ledakan yang lebih efisien dari ini di alam semesta.',
+                visual: '⚡',
+                animKey: 'anim-anti-annihilation',
+                highlight: 'E = mc² · massa 2 gram × c² = energi 43 kiloton · efisiensi 100% — tidak ada proses lain yang mendekati ini',
+            },
+            {
+                type: 'step',
+                title: 'PET Scan: Antimateri di Dalam Rumah Sakit Kamu',
+                body: 'Positron Emission Tomography — alat scan medis yang kemungkinan ada di rumah sakit terdekat kamu — bekerja secara harfiah menggunakan antimateri.<br><br>Pasien disuntik zat radioaktif yang memancarkan positron (antimateri). Saat positron menyentuh elektron di dalam tubuh, keduanya anihilasi dan memancarkan dua foton gamma ke arah yang berlawanan. Detektor di luar tubuh menangkap kedua foton itu dan menentukan posisi anihilasi secara presisi — sehingga dokter bisa melihat aktivitas metabolisme di dalam otak atau tumor secara 3D.',
+                visual: '🏥',
+                animKey: 'anim-anti-pet',
+                highlight: 'PET scan: positron bertemu elektron → anihilasi → dua foton gamma → dipetakan jadi gambar 3D otak',
+            },
+            {
+                type: 'step',
+                title: 'Misteri Terbesar Kosmologi: Kenapa Kita Ada?',
+                body: 'Saat Big Bang, materi dan antimateri seharusnya lahir dalam jumlah yang sama persis. Dan kalau itu terjadi, keduanya akan saling anihilasi — meninggalkan alam semesta yang kosong, hanya berisi radiasi.<br><br>Tapi jelas, kita ada. Galaksi ada. Bintang ada. Artinya: entah bagaimana, ada lebih banyak materi daripada antimateri di awal alam semesta — sekitar 1 per miliar ekstra. Kita semua adalah "sisa" dari ketidakseimbangan kecil itu. Sampai hari ini, fisikawan belum tahu kenapa. Ini salah satu pertanyaan terbuka terbesar dalam sains.',
+                visual: '🌌',
+                animKey: 'anim-anti-asymmetry',
+                highlight: 'Big Bang: materi vs antimateri · Selisih 1:10⁹ → sisa materi itu yang jadi semua galaksi, bintang, dan kamu',
+            },
+            {
+                type: 'scale',
+                title: 'Harga yang Tidak Masuk Akal',
+                body: 'Satu miligram antimateri (0.001 gram) butuh energi sekitar 25 miliar kWh untuk dibuat — senilai lebih dari 2,5 triliun rupiah hanya untuk listriknya. CERN, akselerator partikel terbesar di dunia, menghasilkan sekitar 1–10 nanogram antihydrogen per tahun.<br><br>Pada rate itu, untuk mengumpulkan satu gram antimateri dibutuhkan sekitar 100 juta tahun operasi CERN penuh. Dan penyimpanannya? Antimateri tidak bisa menyentuh wadah biasa — harus disuspensikan di dalam medan magnet dan vakum sempurna.',
+                visual: '🔬',
+                highlight: '1 mg antimateri = Rp 2,5 triliun hanya untuk listrik · CERN produksi ~10 ng/tahun · butuh 100 juta tahun untuk 1 gram',
+            },
+            {
+                type: 'scale',
+                title: 'Propulsi Antimateri: Bintang Terdekat dalam 40 Tahun',
+                body: 'Roket konvensional paling efisien hanya mengkonversi ~1% bahan bakar jadi gerak. Reaktor nuklir: ~0.1% massa jadi energi. Mesin antimateri teoritis: 100% — setiap atom bahan bakar jadi energi murni.<br><br>Sebuah pesawat antimateri hipotetis menuju Alpha Centauri (bintang terdekat, 4.37 tahun cahaya) hanya butuh sekitar 10 miligram antimateri sebagai bahan bakar — dan bisa tiba dalam 40 tahun. NASA dan DARPA sudah punya program riset propulsi antimateri, walau masih sangat awal. Bukan fiksi ilmiah — hanya engineering yang belum dipecahkan.',
+                visual: '🚀',
+                highlight: 'Roket konvensional: 1% efisien · Nuklir: 0.1% massa jadi energi · Antimateri: 100% · Alpha Centauri dalam 40 tahun dengan 10 mg',
+            },
+            {
+                type: 'impact',
+                title: 'Warisan: Dari Persamaan Paling Indah ke Mesin PET',
+                body: 'Persamaan Dirac sering disebut persamaan fisika paling indah yang pernah ditulis — empat komponen yang menggabungkan kuantum, relativitas, dan spin dalam satu baris. Ia tidak mencarinya. Matematika yang menuntunnya ke sana.<br><br>Warisannya nyata dan langsung terasa: lebih dari 40 juta prosedur PET scan dilakukan setiap tahun di seluruh dunia — mendiagnosis kanker, penyakit Parkinson, Alzheimer, dan epilepsi. Antimateri yang dulu terdengar seperti senjata fiksi ilmiah kini menyelamatkan jutaan nyawa per tahun di dalam mesin berwarna putih di rumah sakit.',
+                visual: '🏆',
+                history: [
+                    { year: '1928', event: 'Persamaan Dirac — prediksi antimateri tanpa sengaja', person: 'Paul Dirac' },
+                    { year: '1932', event: 'Positron ditemukan di sinar kosmik — bukti pertama antimateri', person: 'Carl Anderson' },
+                    { year: '1976', event: 'PET scan pertama digunakan di klinik untuk manusia', person: 'Michael Ter-Pogossian' },
+                    { year: '1995', event: 'Antihydrogen pertama di CERN — atom antimateri lengkap', person: 'PS210, CERN' },
+                    { year: '2023', event: 'ALPHA-g: gravitasi antimateri diukur untuk pertama kalinya — jatuh ke bawah seperti materi biasa', person: 'ALPHA collaboration, CERN' },
+                ],
+                highlight: 'Persamaan paling indah dalam fisika → 40 juta prosedur PET scan per tahun → menyelamatkan jutaan nyawa',
+            },
+        ],
+    },
+
     // ── SUPERPOSISI ──────────────────────────────────────────────────────────
     {
         id: 'superposition',
