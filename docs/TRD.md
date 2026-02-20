@@ -216,43 +216,273 @@ main.ts
 
 ---
 
-## 8. Catatan Arsitektur — Subscription & Monetisasi
+## 8. Arsitektur Subscription & Payment (Xendit + Postgres)
 
-> Ini **tidak diimplementasikan** saat ini. Dicatat untuk referensi jika akan ditambahkan.
+> Status: **Planned — belum diimplementasikan.** Dicatat sebagai blueprint wajib sebelum implementasi.
 
-Karena Atomic adalah **static SPA** (tidak ada server, tidak ada database), sistem subscription/paywall **tidak bisa dilakukan aman di sisi client saja** — status premium di localStorage bisa dimanipulasi user.
+### 8.1 Prinsip Keamanan Utama
 
-### Opsi yang Direkomendasikan (tanpa backend sendiri):
+> **Aturan nomor 1: server tidak pernah percaya client.**
 
-| Opsi | Kompleksitas | Cocok jika |
-|------|-------------|------------|
-| **Lemon Squeezy** | ⭐ Rendah | Jual license key, validasi via API call read-only |
-| **Paddle** | ⭐⭐ Sedang | Subscription model, webhook ke serverless function |
-| **Supabase (Gratis Tier)** | ⭐⭐ Sedang | Butuh backend ringan: auth + tabel `subscriptions` |
-| **Cloudflare Workers + KV** | ⭐⭐ Sedang | Edge function validasi license, serverless |
+Semua keputusan akses dibuat di **backend**, bukan di frontend. Frontend hanya menampilkan apa yang diizinkan server.
 
-### Pola Arsitektur Minimum yang Aman:
+- ❌ `if (localStorage.isPremium)` — bisa dimanipulasi siapapun via DevTools
+- ❌ Konten premium di dalam bundle JS — bisa di-extract tanpa login
+- ❌ JWT hanya dicek formatnya tanpa query DB — bisa dipalsukan
+- ✅ Setiap request ke konten/API divalidasi ke Postgres setiap saat
+
+---
+
+### 8.2 User Journey & Flow Lengkap
 
 ```
-User bayar via Lemon Squeezy / Paddle
-         ↓
-  Dapat license key (email)
-         ↓
-  Input key di app → fetch ke Lemon Squeezy API
-         ↓
-  Validasi server-side (bukan client-only)
-         ↓
-  Simpan JWT / status di sessionStorage (bukan localStorage biasa)
-         ↓
-  Konten premium di-unlock selama session
+[1] User buka atomic.com
+         │
+         ▼
+[2] Landing Page (PUBLIK — semua bisa akses)
+    • Deskripsi produk, harga, preview terbatas
+    • Tombol "Daftar & Bayar"
+         │
+         ▼ klik Daftar
+[3] Form Registrasi
+    • Input: nama, email
+    • Backend: INSERT user (is_active=FALSE, pending)
+         │
+         ▼ submit
+[4] Redirect ke Xendit Payment Page
+    • Backend buat invoice via Xendit API
+    • User bayar (QRIS / VA BCA / GoPay / OVO / CC)
+         │
+    ┌────┤ Xendit callback
+    │    │
+    │    ▼ BAYAR SUKSES
+    │ [5] Xendit kirim webhook POST ke backend
+    │    • Backend verifikasi signature Xendit (WAJIB)
+    │    • Backend UPDATE users SET is_active=TRUE
+    │    • Backend INSERT subscriptions (expires_at = +1 tahun)
+    │    • Backend kirim email via Resend:
+    │         Subject: "Akun Atomic kamu aktif!"
+    │         Isi: password sementara + link login
+    │
+    │    ▼ BAYAR GAGAL / EXPIRED
+    │ [5b] Backend UPDATE pending_users SET status='expired'
+    │      Kirim email "Pembayaran gagal, coba lagi"
+    │
+    └──────────────
+         │
+         ▼ user buka email
+[6] User Login
+    • POST /auth/login (email + password)
+    • Backend: query Postgres, verifikasi bcrypt hash
+    • Cek: is_active=TRUE + subscription belum expired
+    • Return: JWT (expires 7 hari) + refresh token
+         │
+         ▼ JWT valid
+[7] App Atomic Dimuat
+    • gate.js cek JWT ke backend SEBELUM load app bundle
+    • Backend validasi JWT + cek DB (tidak hanya decode)
+    • Jika valid → inject <script src="/app.js"> secara dinamis
+    • Jika tidak valid → redirect /login (app.js TIDAK pernah dikirim)
 ```
 
-### Yang JANGAN dilakukan:
-- ❌ `if (localStorage.getItem('isPremium') === 'true')` — trivial untuk di-bypass
-- ❌ Hardcode license key di client code — terlihat di source
-- ❌ Sembunyikan konten premium di bundle JS — tetap bisa di-extract
+---
 
-### Rekomendasi untuk Atomic:
-- Mulai dengan **Lemon Squeezy** (tidak perlu backend sama sekali, API key cukup)
-- Konten yang di-lock: detail fenomena lanjutan, modul belajar Phase 2, dll.
-- Gratis tier: semua fenomena dasar, tabel periodik 118 elemen (konten saat ini)
+### 8.3 Database Schema (Postgres)
+
+```sql
+-- Users
+CREATE TABLE users (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email         TEXT UNIQUE NOT NULL,
+  name          TEXT NOT NULL,
+  password_hash TEXT NOT NULL,          -- bcrypt, saltRounds=12
+  is_active     BOOLEAN DEFAULT FALSE,  -- TRUE hanya setelah bayar
+  created_at    TIMESTAMPTZ DEFAULT now()
+);
+
+-- Subscriptions
+CREATE TABLE subscriptions (
+  id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id           UUID REFERENCES users(id) ON DELETE CASCADE,
+  plan              TEXT NOT NULL DEFAULT 'yearly',  -- 'monthly'|'yearly'
+  xendit_invoice_id TEXT UNIQUE,       -- ID invoice dari Xendit
+  xendit_payment_id TEXT,              -- ID payment dari Xendit webhook
+  amount_paid       INTEGER,           -- dalam rupiah
+  paid_at           TIMESTAMPTZ,
+  expires_at        TIMESTAMPTZ NOT NULL,
+  is_active         BOOLEAN DEFAULT TRUE,
+  created_at        TIMESTAMPTZ DEFAULT now()
+);
+
+-- Refresh Tokens (untuk session management)
+CREATE TABLE refresh_tokens (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id    UUID REFERENCES users(id) ON DELETE CASCADE,
+  token_hash TEXT NOT NULL,             -- hash dari token, bukan raw
+  device_info TEXT,                     -- user agent / device
+  expires_at TIMESTAMPTZ NOT NULL,      -- 30 hari
+  revoked    BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Index penting
+CREATE INDEX idx_subscriptions_user_id ON subscriptions(user_id);
+CREATE INDEX idx_subscriptions_expires ON subscriptions(expires_at);
+CREATE INDEX idx_refresh_tokens_user   ON refresh_tokens(user_id);
+```
+
+---
+
+### 8.4 Backend API Routes
+
+```
+POST /auth/register          → buat pending user + buat Xendit invoice
+POST /auth/login             → verifikasi email+password, return JWT
+POST /auth/refresh           → tukar refresh token → JWT baru
+POST /auth/logout            → revoke refresh token
+GET  /auth/me                → return user info (butuh JWT valid)
+
+POST /payment/create-invoice → buat Xendit invoice untuk user
+POST /xendit/webhook         → terima callback dari Xendit (HMAC verified)
+
+GET  /app                    → serve index.html HANYA jika JWT valid di cookie
+GET  /api/content/:id        → serve konten (butuh JWT valid + subscription aktif)
+```
+
+---
+
+### 8.5 Xendit Webhook — Titik Kritis Keamanan
+
+Webhook dari Xendit adalah bagian yang paling kritis. **Jika tidak diverifikasi, attacker bisa kirim request palsu dan aktifkan akun gratis.**
+
+```typescript
+// Wajib: verifikasi X-Callback-Token dari Xendit
+app.post('/xendit/webhook', (req, res) => {
+  const callbackToken = req.headers['x-callback-token'];
+
+  // Tolak jika token tidak cocok dengan yang ada di ENV
+  if (callbackToken !== process.env.XENDIT_WEBHOOK_TOKEN) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { status, external_id, id } = req.body;
+
+  if (status === 'PAID') {
+    // Aktifkan user berdasarkan external_id (= user_id kita)
+    await db.users.update({ is_active: true }, { where: { id: external_id } });
+    await db.subscriptions.create({ user_id: external_id, xendit_payment_id: id, ... });
+    await sendActivationEmail(external_id);  // kirim password ke email
+  }
+
+  res.status(200).send('OK');  // Xendit butuh 200 atau akan retry
+});
+```
+
+---
+
+### 8.6 JWT & Session Security
+
+```
+JWT Payload:
+{
+  sub: "user-uuid",
+  email: "user@example.com",
+  exp: <7 hari dari sekarang>,
+  iat: <issued at>
+}
+
+JWT disimpan: httpOnly cookie (BUKAN localStorage)
+  → httpOnly = tidak bisa dibaca JavaScript sama sekali
+  → Secure = hanya HTTPS
+  → SameSite=Strict = tidak bisa dikirim dari domain lain (anti-CSRF)
+```
+
+**Validasi JWT di setiap request:**
+```typescript
+const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.jwt;  // dari httpOnly cookie
+  if (!token) return res.status(401).redirect('/login');
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    // WAJIB: query DB, jangan hanya decode JWT
+    const sub = await db.subscriptions.findOne({
+      where: { user_id: payload.sub, is_active: true },
+    });
+
+    // Cek expired
+    if (!sub || sub.expires_at < new Date()) {
+      return res.status(403).redirect('/login?reason=expired');
+    }
+
+    req.user = payload;
+    next();
+  } catch {
+    return res.status(401).redirect('/login');
+  }
+};
+```
+
+---
+
+### 8.7 Proteksi Bundle App (Gate Layer)
+
+Ini yang memastikan bundle `app.js` **tidak bisa diakses tanpa login**:
+
+```
+                   Request ke atomic.com/app
+                             │
+               ┌──────────▼──────────┐
+               │  Backend middleware       │
+               │  cek httpOnly JWT cookie  │
+               └────┬───────────┬──────┘
+                    │ Valid          │ Tidak valid
+                    ▼                ▼
+             Serve app HTML     Redirect /login
+             + inject app.js    (app.js TIDAK dikirim)
+```
+
+```typescript
+// Server route — bukan static file server biasa
+app.get('/app', authMiddleware, (req, res) => {
+  // authMiddleware sudah cek JWT + DB subscription
+  // Baru di sini HTML app dikirim ke browser
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+// Bundle assets juga diproteksi
+app.use('/assets', authMiddleware, express.static('../dist/assets'));
+```
+
+> **Implikasi penting:** Atomic tidak bisa lagi di-deploy sebagai pure static (Netlify/Vercel drop folder). Butuh server Node.js (Hono / Express) atau setidaknya Cloudflare Workers.
+
+---
+
+### 8.8 Anti-Abuse Tambahan
+
+| Ancaman | Mitigasi |
+|---|---|
+| Brute force login | Rate limiting: max 5 attempt/menit per IP (pakai `express-rate-limit`) |
+| Sharing akun | Max 2 active session per user_id (cek `refresh_tokens` count) |
+| Fake webhook Xendit | Verifikasi `X-Callback-Token` header (hardcoded secret di ENV) |
+| JWT kadaluarsa dipakai | `exp` field di JWT + selalu query DB |
+| Refund lalu tetap pakai | Xendit refund webhook → set `subscriptions.is_active = FALSE` |
+| Inspect network untuk curi token | JWT di httpOnly cookie, tidak bisa dibaca JS |
+| CORS bypass | Whitelist origin hanya `atomic.com` di backend |
+
+---
+
+### 8.9 Tech Stack Backend
+
+| Komponen | Teknologi |
+|---|---|
+| Runtime | Node.js 20+ |
+| Framework | **Hono** (ringan, bisa Cloudflare Workers) atau Express |
+| Database ORM | **Drizzle ORM** + Postgres (type-safe, ringan) |
+| Auth | `jsonwebtoken` + `bcryptjs` |
+| Email | **Resend** (developer-friendly, murah) |
+| Payment | **Xendit** (QRIS, VA, GoPay, OVO, CC — lokal Indonesia) |
+| Hosting backend | Railway / Render / VPS (butuh persistent server) |
+| Hosting DB | **Supabase** Postgres (gratis tier cukup untuk awal) |
+
