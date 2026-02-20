@@ -333,6 +333,14 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildCriticalMassAnim();
   } else if (animClass === 'anim-control-rods') {
     atomAnimation = buildControlRodsAnim();
+  } else if (animClass === 'anim-photo-hook') {
+    atomAnimation = buildPhotoHookAnim();
+  } else if (animClass === 'anim-photo-paradox') {
+    atomAnimation = buildPhotoParadoxAnim();
+  } else if (animClass === 'anim-photo-foton') {
+    atomAnimation = buildPhotoFotonAnim();
+  } else if (animClass === 'anim-photo-threshold') {
+    atomAnimation = buildPhotoThresholdAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -780,6 +788,92 @@ function buildHalfLifeAnim(): string {
         </div>
       </div>
       <div class="ps-hl-note">Ra-226: T½ = 1.600 tahun → buku Curie masih radioaktif hingga tahun ~3600</div>
+    </div>
+  `;
+}
+
+function buildPhotoHookAnim(): string {
+  return `
+    <div class="ps-anim-photo-hook">
+      <div class="ps-ph-bulb">
+        <div class="ps-ph-bulb-icon">💡</div>
+        <div class="ps-ph-glow"></div>
+        ${Array.from({ length: 8 }, (_, i) => `<div class="ps-ph-ray" style="--a:${i * 45}deg;--d:${i * 100}ms"></div>`).join('')}
+      </div>
+      <div class="ps-ph-label">Efek Fotolistrik · E = h×f</div>
+    </div>
+  `;
+}
+
+function buildPhotoParadoxAnim(): string {
+  return `
+    <div class="ps-anim-photo-paradox">
+      <div class="ps-pp-pair">
+        <div class="ps-pp-case pp-red">
+          <div class="ps-pp-light">🔴 Cahaya Merah (terang)</div>
+          <div class="ps-pp-beam beam-red">
+            ${Array.from({ length: 5 }, () => `<div class="ps-pp-photon ph-red">λ</div>`).join('')}
+          </div>
+          <div class="ps-pp-metal">Fe</div>
+          <div class="ps-pp-result pp-fail">✗ Tidak ada elektron</div>
+        </div>
+        <div class="ps-pp-case pp-violet">
+          <div class="ps-pp-light">🟣 Cahaya Ungu (redup)</div>
+          <div class="ps-pp-beam beam-violet">
+            <div class="ps-pp-photon ph-violet">λ</div>
+          </div>
+          <div class="ps-pp-metal">Fe</div>
+          <div class="ps-pp-result pp-success">✓ Elektron terlepas!</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildPhotoFotonAnim(): string {
+  return `
+    <div class="ps-anim-photo-foton">
+      <div class="ps-pf-equation">
+        <div class="ps-pf-foton">
+          <div class="ps-pf-wave">🌟</div>
+          <div class="ps-pf-label">Foton\nE = h×f</div>
+        </div>
+        <div class="ps-pf-arrow">→</div>
+        <div class="ps-pf-metal">
+          <div class="ps-pf-lattice">
+            ${Array.from({ length: 4 }, (_, i) => `<div class="ps-pf-atom pf-a${i}"></div>`).join('')}
+          </div>
+          <div class="ps-pf-electron pf-out">⚪ e⁻</div>
+        </div>
+        <div class="ps-pf-energy">+ Energi kinetik</div>
+      </div>
+      <div class="ps-pf-formula">E_foton = Φ (fungsi kerja) + E_kinetic</div>
+    </div>
+  `;
+}
+
+function buildPhotoThresholdAnim(): string {
+  const metals = [
+    { name: 'Cs', ev: 2.1, color: '#fbbf24', bar: 25 },
+    { name: 'Na', ev: 2.3, color: '#f97316', bar: 28 },
+    { name: 'Al', ev: 4.1, color: '#94a3b8', bar: 50 },
+    { name: 'Pt', ev: 5.65, color: '#e2e8f0', bar: 70 },
+  ];
+  return `
+    <div class="ps-anim-photo-threshold">
+      <div class="ps-pt-title">Fungsi Kerja (eV) — Energi minimum untuk melepas elektron</div>
+      <div class="ps-pt-bars">
+        ${metals.map(m => `
+          <div class="ps-pt-row">
+            <div class="ps-pt-name" style="color:${m.color}">${m.name}</div>
+            <div class="ps-pt-bar">
+              <div class="ps-pt-fill" style="width:${m.bar}%;background:${m.color}"></div>
+            </div>
+            <div class="ps-pt-val">${m.ev} eV</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="ps-pt-note">Foton ungu (2.8 eV) bisa melepas Cs dan Na · tidak bisa Pt</div>
     </div>
   `;
 }

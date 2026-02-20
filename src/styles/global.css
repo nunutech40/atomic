@@ -5718,3 +5718,436 @@ body {
 .ps-rl-dot.red {
   background: #ef4444;
 }
+
+/* ── PHOTOELECTRIC EFFECT ANIMATIONS ─────────────────────────────────────── */
+
+/* Photo Hook: glowing light bulb with rays */
+.ps-anim-photo-hook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  width: 100%;
+}
+
+.ps-ph-bulb {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ps-ph-bulb-icon {
+  font-size: 56px;
+  position: relative;
+  z-index: 2;
+  animation: ps-ph-pulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes ps-ph-pulse {
+  from {
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4));
+    transform: scale(1);
+  }
+
+  to {
+    filter: drop-shadow(0 0 40px rgba(251, 191, 36, 1)) drop-shadow(0 0 60px rgba(245, 158, 11, 0.6));
+    transform: scale(1.08);
+  }
+}
+
+.ps-ph-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%);
+  animation: ps-ph-glow-pulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes ps-ph-glow-pulse {
+  from {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+.ps-ph-ray {
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.8), transparent);
+  transform-origin: 0 50%;
+  transform: rotate(var(--a));
+  left: 50%;
+  top: 50%;
+  animation: ps-ph-ray-pulse 1.5s ease-in-out infinite alternate;
+  animation-delay: var(--d);
+}
+
+@keyframes ps-ph-ray-pulse {
+  from {
+    opacity: 0.2;
+    transform: rotate(var(--a)) scaleX(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(var(--a)) scaleX(1.2);
+  }
+}
+
+.ps-ph-label {
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Photo Paradox: red vs violet beam comparison */
+.ps-anim-photo-paradox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  width: 100%;
+}
+
+.ps-pp-pair {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.ps-pp-case {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1.5px solid;
+}
+
+.ps-pp-case.pp-red {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.ps-pp-case.pp-violet {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(139, 92, 246, 0.08);
+  animation: ps-pp-violet-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes ps-pp-violet-pulse {
+  from {
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+  }
+
+  to {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+  }
+}
+
+.ps-pp-light {
+  font-size: 10px;
+  color: var(--text-2);
+  text-align: center;
+  font-weight: 600;
+}
+
+.ps-pp-beam {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  height: 24px;
+  align-items: center;
+}
+
+.ps-pp-photon {
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ps-pp-travel 1.2s linear infinite;
+  animation-delay: calc(var(--i, 0) * 0.2s);
+}
+
+.ph-red {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.ph-violet {
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.6);
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
+}
+
+@keyframes ps-pp-travel {
+  from {
+    transform: translateX(-8px);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: translateX(8px);
+    opacity: 1;
+  }
+}
+
+.ps-pp-metal {
+  width: 40px;
+  height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #475569, #334155);
+  border: 1px solid #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.ps-pp-result {
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.pp-fail {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.pp-success {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* Photo Foton: photon → electron collision */
+.ps-anim-photo-foton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+}
+
+.ps-pf-equation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.ps-pf-foton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  animation: ps-pf-approach 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes ps-pf-approach {
+  from {
+    transform: translateX(-8px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.ps-pf-wave {
+  font-size: 36px;
+  filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.8));
+  animation: ps-pf-wave-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes ps-pf-wave-pulse {
+  from {
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+  }
+
+  to {
+    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 1));
+  }
+}
+
+.ps-pf-label {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  white-space: pre-line;
+}
+
+.ps-pf-arrow {
+  font-size: 24px;
+  color: var(--text-3);
+}
+
+.ps-pf-metal {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #334155, #1e293b);
+  border: 2px solid #475569;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ps-pf-lattice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.ps-pf-atom {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #64748b, #334155);
+  border: 1px solid #475569;
+}
+
+.ps-pf-electron {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 700;
+  color: #60a5fa;
+  animation: ps-pf-eject 2s ease-in-out infinite;
+}
+
+.pf-out {
+  top: -20px;
+  right: -20px;
+  animation: ps-pf-eject 1.8s ease-in-out infinite;
+}
+
+@keyframes ps-pf-eject {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(20px, -20px);
+    opacity: 0;
+  }
+}
+
+.ps-pf-energy {
+  font-size: 11px;
+  color: #22c55e;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ps-pf-formula {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--bg-3);
+  font-family: monospace;
+}
+
+/* Photo Threshold: work function bar chart */
+.ps-anim-photo-threshold {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  width: 100%;
+}
+
+.ps-pt-title {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+}
+
+.ps-pt-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ps-pt-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-pt-name {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: right;
+}
+
+.ps-pt-bar {
+  flex: 1;
+  height: 14px;
+  background: var(--bg-3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ps-pt-fill {
+  height: 100%;
+  border-radius: 4px;
+  animation: ps-pt-grow 1.2s ease-out both;
+}
+
+@keyframes ps-pt-grow {
+  from {
+    width: 0 !important;
+  }
+}
+
+.ps-pt-val {
+  font-size: 11px;
+  color: var(--text-3);
+  min-width: 36px;
+}
+
+.ps-pt-note {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 6px;
+  border-radius: 6px;
+  background: var(--bg-3);
+}

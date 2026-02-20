@@ -36,9 +36,92 @@ export interface PhenomenonStory {
 
 export const phenomenonStories: PhenomenonStory[] = [
 
+    // ── EFEK FOTOLISTRIK ──────────────────────────────────────────────────────
+    {
+        id: 'photoelectric',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Nobel Einstein 1921: Bukan untuk E=mc², Tapi untuk Ini',
+                body: 'Ketika Komite Nobel mengumumkan pemenang tahun 1921, dunia mengira Einstein akan menang untuk Relativitas — teori yang sudah mengubah pemahaman manusia tentang ruang dan waktu. Mereka salah. Relativitas dianggap terlalu spekulatif, terlalu revolusioner, terlalu berisiko untuk salah. Sebaliknya, Nobel diberikan untuk fenomena yang terlihat sepele: cahaya menembak elektron keluar dari logam. Einstein menang Noble bukan karena teori terbesarnya — tapi karena ia membuktikan cahaya adalah partikel.',
+                visual: '💡',
+                animKey: 'anim-photo-hook',
+                highlight: 'Nobel Fisika 1921: Efek Fotolistrik · Relativitas: terlalu kontroversial untuk Nobel',
+            },
+            {
+                type: 'history',
+                title: 'Tahun 1905: Satu Pria, Lima Revolusi',
+                body: 'Bayangkan: seorang pria 26 tahun, bekerja sebagai pemeriksa paten kelas tiga di Bern, Swiss. Tidak punya koneksi akademik. Tidak punya laboratorium. Hanya otak dan waktu luang di kantor yang membosankan. Dalam satu tahun — 1905 — Albert Einstein mempublikasikan LIMA paper ilmiah, masing-masing cukup untuk memenangkan Nobel Prize. Gerakan Brownian. Relativitas khusus. E=mc². Teori foton cahaya. Dan efek fotolistrik. Tahun 1905 dikenal sebagai "Annus Mirabilis" — Tahun Keajaiban Einstein.',
+                quote: 'Bagaimana seorang pria bisa menyelamatkan waktu untuk berpikir tentang fisika sambil bekerja 8 jam sehari? Dari perspektif saya, tidak ada. Tapi saya bekerja hanya 6 jam.',
+                quoteAuthor: 'Albert Einstein, tentang pekerjaannya di kantor paten',
+                visual: '📝',
+                history: [
+                    { year: '1887', event: 'Hertz menemukan efek fotolistrik secara tidak sengaja — logam terpapar UV menghasilkan percikan listrik aneh', person: 'Heinrich Hertz' },
+                    { year: '1900', event: 'Planck: energi cahaya tidak kontinu — bergerak dalam paket diskret (kuanta). Ia sendiri tidak percaya implikasinya.', person: 'Max Planck' },
+                    { year: '1905', event: 'Einstein: cahaya bukan gelombang murni — ia terdiri dari foton dengan energi E=hf. Ini menjelaskan efek fotolistrik.', person: 'Albert Einstein' },
+                    { year: '1916', event: 'Millikan membuktikan formula Einstein secara eksperimen — awalnya ia sendiri mencoba membuktikan Einstein salah', person: 'Robert Millikan' },
+                    { year: '1921', event: 'Nobel Prize Fisika untuk Einstein — bukan Relativitas. Relativitas masih terlalu kontroversial bagi komite.', person: 'Komite Nobel' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Misteri: Kenapa Intensitas Tidak Penting?',
+                body: 'Sebelum Einstein, fisikawan mengira: semakin terang cahaya → semakin banyak energi → semakin mudah elektron terlepas dari logam. Logis, kan?<br><br>Percobaan Philipp Lenard menghancurkan logika itu. Ia menyinari logam dengan cahaya redup berwarna ungu — elektron langsung terlepas. Lalu ia menyinari dengan cahaya merah yang sangat terang — tidak ada elektron yang keluar. Tidak ada. Sama sekali. Apapun yang dilakukan, cahaya merah tidak bisa melepas elektron. Tapi cahaya ungu yang redup sekalipun, langsung berhasil.',
+                visual: '🔴',
+                animKey: 'anim-photo-paradox',
+                highlight: 'Cahaya merah terang + logam = tidak ada elektron · Cahaya ungu redup + logam = elektron langsung terlepas',
+            },
+            {
+                type: 'step',
+                title: 'Jawaban Einstein: Cahaya adalah Partikel (Foton)',
+                body: 'Einstein mengambil ide kuantum Planck dan mendorongnya le langkah lebih jauh: cahaya tidak hanya bergerak dalam paket — cahaya ADALAH paket. Setiap paket disebut foton. Energi satu foton = h × f (frekuensi). Satu foton memukul satu elektron — seperti bola billiard. Jika energi foton cukup besar (frekuensi tinggi = cahaya biru/ungu), elektron terlepas. Jika tidak cukup (frekuensi rendah = cahaya merah), tidak ada yang terjadi — tidak peduli berapa banyak foton datang.<br><br>Intensitas hanya menentukan JUMLAH foton, bukan energi per foton. Banyak foton lemah tetap tidak bisa melepas satu elektron yang butuh energi lebih besar.',
+                visual: '☀️',
+                animKey: 'anim-photo-foton',
+                highlight: 'E = h × f · h = konstantan Planck (6.626×10⁻³⁴ J·s) · f = frekuensi cahaya',
+            },
+            {
+                type: 'step',
+                title: 'Threshold: Setiap Logam Punya Pintu Sendiri',
+                body: 'Setiap logam punya "fungsi kerja" (work function) — energi minimum yang dibutuhkan untuk melepas satu elektron. Cesium: 2.1 eV (bisa dilepas cahaya tampak). Natrium: 2.3 eV. Platinum: 5.65 eV (butuh cahaya UV keras). Ini seperti pintu dengan kunci yang berbeda — hanya foton dengan frekuensi yang tepat (energi ≥ fungsi kerja) yang bisa membuka pintunya.',
+                visual: '🔑',
+                animKey: 'anim-photo-threshold',
+                highlight: 'Cesium: f minimum = 508 THz · Natrium: 555 THz · Platinum: 1.37 PHz (perlu UV)',
+            },
+            {
+                type: 'scale',
+                title: 'Skala yang Tidak Terbayangkan',
+                body: 'Satu foton cahaya tampak (~600 nm) membawa energi sekitar 2 eV — atau 3.2 × 10⁻¹⁹ Joule. Untuk perbandingan: mengangkat selembar kertas 1 mm butuh energi ~1 mikro-Joule. Satu foton = 0.0000000000003 dari itu.<br><br>Tapi ketika foton itu tepat mengenai satu elektron dengan energi yang cukup — ia memberikan seluruh energinya secara instan. Tidak ada batasan. Tidak ada pemanasan. Tidak ada waktu tunda. Elektron langsung terlempar keluar dalam kurang dari 10⁻¹⁵ detik.',
+                visual: '⚡',
+                highlight: 'Waktu tunda: < 10 femtodetik (10⁻¹⁵ s) · Tidak ada "pemanasan bertahap" — transfer energi instan',
+            },
+            {
+                type: 'scale',
+                title: 'Paradoks: Cahaya adalah Gelombang DAN Partikel',
+                body: 'Einstein tidak mengatakan gelombang itu salah. Cahaya ADALAH gelombang (interferensi, difraksi — semua bukti eksperimennya nyata). Tapi cahaya JUGA adalah partikel (foton). Dua hal yang seharusnya mustahil secara bersamaan — keduanya benar.<br><br>Ini yang disebut wave-particle duality — dan ini yang melahirkan mekanika kuantum. Niels Bohr kemudian memperluas ide ini: tidak hanya cahaya, tapi elektron, proton, bahkan atom-atom kecil juga punya dualitas ini. Dunia subatomik tidak bermain dengan aturan logika sehari-hari.',
+                visual: '🌊',
+                highlight: 'Cahaya = gelombang (double-slit experiment) DAN partikel (efek fotolistrik) — keduanya nyata, keduanya benar',
+            },
+            {
+                type: 'impact',
+                title: 'Warisan: Dari Kantor Paten ke Setiap Smartphone',
+                body: 'Ide Einstein di kantor paten Bern 1905 kini hidup di seluruh penjuru teknologi modern. Panel surya: foton matahari memukul elektron dalam silikon → arus listrik yang menyalakan rumah. Kamera digital sensor CCD/CMOS: foton memicu elektron di setiap piksel → foto. Night-vision goggles militer: foton IR melepas elektron yang diperkuat. Detektor UV di mesin ATM untuk mendeteksi uang palsu.<br><br>Efek fotolistrik bukan teori abstrak — ia ada di tanganmu, di sakumu, di atap rumahmu.',
+                visual: '📱',
+                history: [
+                    { year: '1921', event: 'Nobel Prize — pengakuan resmi bahwa cahaya adalah foton', person: 'Albert Einstein' },
+                    { year: '1954', event: 'Bell Labs: sel surya silikon pertama dengan efisiensi 6%', person: 'Bell Labs' },
+                    { year: '1969', event: 'CCD sensor: kamera digital pertama berbasis efek fotolistrik', person: 'Boyle & Smith, Bell Labs' },
+                    { year: '1977', event: 'Panel surya pertama digunakan untuk menyalakan rumah', person: 'Pionir solar energy' },
+                    { year: '2024', event: 'Solar panel global: 1.6 TW kapasitas terpasang · Efisiensi terbaik: 47.6%', person: 'NREL' },
+                ],
+                highlight: 'Satu ide di kantor paten → panel surya 1.6 TW · kamera digital · sensor smartphone',
+            },
+        ],
+    },
+
     // ── REAKSI BERANTAI ───────────────────────────────────────────────────────
     {
         id: 'chain-reaction',
+
         slides: [
             {
                 type: 'hook',
