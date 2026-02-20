@@ -16,6 +16,6 @@ export default {
     categories: {
         'alkali-metal': 'Logam Alkali', 'alkaline-earth': 'Logam Alkali Tanah', 'transition-metal': 'Logam Transisi',
         'post-transition': 'Logam Pasca-Transisi', 'metalloid': 'Metaloid', 'nonmetal': 'Nonlogam Reaktif',
-        'halogen': 'Halogen', 'noble-gas': 'Gas Mulia', 'lanthanide': 'Lantanida', 'actinide': 'Aktinida', 'unknown': 'Belum Diketahui',
+        'halogen': 'Halogen', 'noble-gas': 'Gas Mulia', 'lanthanide': 'Lantanida', 'actinide': 'Aktinida', 'unknown': 'Sifat Belum Diketahui',
     },
 };

@@ -59,7 +59,7 @@ export const molecules: Molecule[] = [
         bonds: [{ a: 0, b: 1, type: 'single' }],
         category: 'gas', shape: 'Linear', bondType: 'Kovalen nonpolar',
         desc: 'Gas tak berwarna, tak berbau, paling ringan di alam semesta. Bahan bakar masa depan — saat dibakar hanya menghasilkan air.',
-        funFact: 'Seluruh matahari pada dasarnya adalah reaktor fusi H₂ raksasa yang membakar 600 juta ton hidrogen setiap detik.',
+        funFact: 'Matahari pada dasarnya adalah reaktor fusi hidrogen raksasa yang membakar 600 juta ton hidrogen setiap detik.',
     },
     {
         formula: 'O₂', name: 'Oxygen', nameId: 'Gas Oksigen',
@@ -229,7 +229,7 @@ export const molecules: Molecule[] = [
         ],
         category: 'acid', shape: 'Planar', bondType: 'Kovalen polar',
         desc: 'Asam yang dipakai untuk membuat pupuk dan bahan peledak. Menyentuh kulit akan meninggalkan noda kuning (xantoprotein).',
-        funFact: 'HNO₃ adalah bahan dasar dinamit (nitrogliserol) dan TNT — bahan peledak yang ironisnya ditemukan oleh Alfred Nobel, pendiri Hadiah Nobel Perdamaian.',
+        funFact: 'HNO₃ adalah bahan dasar dinamit (nitrogliserin) dan TNT — bahan peledak yang ironisnya ditemukan oleh Alfred Nobel, pendiri Hadiah Nobel Perdamaian.',
     },
 
     // ── BASES ─────────────────────────────────────────────────────────────
@@ -316,7 +316,7 @@ export const molecules: Molecule[] = [
         bonds: [{ a: 0, b: 1, type: 'double' }, { a: 0, b: 2, type: 'double' }],
         category: 'oxide', shape: 'Bengkok — 119°', bondType: 'Kovalen polar',
         desc: 'Gas berbau belerang dari gunung berapi dan pembakaran bahan bakar fosil. Penyebab utama hujan asam.',
-        funFact: 'SO₂ juga dipakai sebagai pengawet makanan (E220) — anggur dan buah kering sering ditreatment dengan SO₂ untuk mencegah oksidasi.',
+        funFact: 'SO₂ juga dipakai sebagai pengawet makanan (E220) — anggur dan buah kering sering diawetkan dengan SO₂ untuk mencegah oksidasi dan pertumbuhan jamur.',
     },
     {
         formula: 'NO₂', name: 'Nitrogen Dioxide', nameId: 'Nitrogen Dioksida',
@@ -332,7 +332,7 @@ export const molecules: Molecule[] = [
         funFact: 'Langit kemerahan di kota-kota berpolusi sering disebabkan oleh NO₂ — gas ini menyerap cahaya biru dan memantulkan merah-oranye.',
     },
     {
-        formula: 'N₂O', name: 'Nitrous Oxide', nameId: 'Dinitrogen Oksida',
+        formula: 'N₂O', name: 'Nitrous Oxide', nameId: 'Dinitrogen Monoksida',
         composition: { N: 2, O: 1 },
         atoms: [
             { sym: 'N', pos: [-1.12, 0, 0] },
@@ -385,7 +385,7 @@ export const molecules: Molecule[] = [
         bonds: [{ a: 0, b: 1, type: 'single' }, { a: 1, b: 2, type: 'triple' }, { a: 2, b: 3, type: 'single' }],
         category: 'organic', shape: 'Linear', bondType: 'Kovalen (C≡C triple)',
         desc: 'Bahan bakar las oxyacetylene yang membakar pada 3500°C — cukup panas untuk memotong baja.',
-        funFact: 'Asetilena adalah senyawa organik paling sederhana dengan ikatan rangkap tiga karbon. Bintang-bintang tertentu mengandung asetilena di atmosfernya.',
+        funFact: 'Asetilena adalah alkuna paling sederhana — senyawa organik dengan ikatan rangkap tiga antar karbon. Bintang-bintang tertentu mengandung asetilena di atmosfernya.',
     },
     {
         formula: 'C₂H₄', name: 'Ethylene', nameId: 'Etilena',

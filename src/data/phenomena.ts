@@ -44,7 +44,7 @@ export const phenomena: Phenomenon[] = [
         desc: 'Kebalikan dari fisi — dua inti atom ringan (hidrogen) bergabung menjadi satu inti yang lebih berat (helium) sambil melepaskan energi JAUH lebih besar dari fisi. Ini yang terjadi di inti matahari setiap detik, dalam tekanan dan panas yang tidak terbayangkan.',
         funFact: 'Matahari membakar 600 juta ton hidrogen setiap detik melalui fusi nuklir. Tapi karena E=mc², hanya 4 juta ton yang hilang sebagai energi — yang cukup untuk menerangi seluruh tata surya.',
         scale: 'Fusi 1 kg hidrogen menghasilkan energi setara dengan membakar 10 juta kg bahan bakar minyak.',
-        realWorld: 'ITER di Prancis sedang membangun reaktor fusi terbesar yang pernah ada — mimpi energi bersih dan nyaris tak terbatas untuk manusia.',
+        realWorld: 'ITER di Prancis adalah proyek reaktor fusi terbesar yang pernah dibangun manusia — kolaborasi 35 negara yang bertujuan membuktikan energi fusi komersial.',
     },
     {
         id: 'radioactivity',
@@ -68,7 +68,7 @@ export const phenomena: Phenomenon[] = [
         category: 'nuclear',
         atoms: ['U', 'Pu'],
         desc: 'Ketika satu atom uranium pecah (fisi), ia melepaskan 2-3 neutron. Setiap neutron membelah atom lain, yang kembali melepaskan lebih banyak neutron. Dalam hitungan mikro-detik, reaksi ini berlipat ganda secara eksponensial hingga seluruh bahan bakar bereaksi sekaligus.',
-        funFact: 'Bom atom membutuhkan "massa kritis" — jumlah minimum uranium/plutonium agar reaksi berantai tidak berhenti sendiri. Di bawah massa kritis, neutron banyak yang kabur sebelum mengenai atom. Di atasnyas — ledakan.',
+        funFact: 'Bom atom membutuhkan "massa kritis" — jumlah minimum uranium/plutonium agar reaksi berantai tidak berhenti sendiri. Di bawah massa kritis, neutron banyak yang kabur sebelum mengenai atom. Di atasnya — ledakan.',
         scale: 'Jika kamu melipat selembar kertas 42 kali, tebalnya akan mencapai bulan. Prinsip yang sama dengan reaksi berantai — eksponensial selalu luar biasa.',
         realWorld: 'Reaktor nuklir adalah mesin reaksi berantai yang dikontrol — batang penyerap neutron memperlambat reaksi agar tidak meledak.',
     },
