@@ -275,10 +275,10 @@ export const phenomenonStories: PhenomenonStory[] = [
                 body: 'Fisi nuklir adalah pisau bermata dua terbesar dalam sejarah manusia. Di satu sisi: bom atom yang membunuh 200.000 orang dan mengakhiri Perang Dunia II, perlombaan senjata nuklir Perang Dingin, dan ancaman kehancuran total. Di sisi lain: pembangkit listrik tenaga nuklir yang menghasilkan 10% listrik dunia tanpa CO₂, medicine nuklir yang menyelamatkan jutaan nyawa, dan pemahaman mendalam tentang materi.',
                 visual: '🌏',
                 history: [
-                    { year: '1954', event: 'PLTN pertama dunia beroperasi di Obninsk, Uni Soviet' },
-                    { year: '1986', event: 'Bencana Chernobyl — peringatan keras tentang keselamatan nuklir' },
-                    { year: '2011', event: 'Fukushima Daiichi — gempa bumi merusak reaktor di Jepang' },
-                    { year: 'Sekarang', event: '440 reaktor nuklir beroperasi di 30 negara, menghasilkan ~10% listrik global' },
+                    { year: '1954', event: 'PLTN pertama dunia beroperasi di Obninsk, Uni Soviet', person: 'Soviet Union' },
+                    { year: '1986', event: 'Bencana Chernobyl — peringatan keras tentang keselamatan nuklir', person: 'Operator RBMK-1000' },
+                    { year: '2011', event: 'Fukushima Daiichi — gempa bumi merusak reaktor di Jepang', person: 'TEPCO' },
+                    { year: 'Sekarang', event: '440 reaktor nuklir beroperasi di 30 negara, menghasilkan ~10% listrik global', person: 'IAEA' },
                 ],
                 highlight: 'Saat ini: 440 reaktor nuklir aktif · 10% listrik global · nol emisi CO₂',
             },
@@ -411,7 +411,7 @@ export const phenomenonStories: PhenomenonStory[] = [
                 ],
             },
             {
-                type: 'step',
+                type: 'scale',
                 title: 'Mengapa Fusi Jauh Lebih Kuat dari Fisi?',
                 body: 'Dalam fisi, kita memecah inti besar menjadi kecil. Dalam fusi, kita menggabungkan inti kecil menjadi lebih besar. Fusi melepaskan energi 3-4× lebih besar per kilogram bahan bakar dibanding fisi — karena "energi ikat" yang dilepaskan jauh lebih besar. Dan bahan bakarnya? Hidrogen (deuterium + tritium) — isotop yang bisa diekstrak dari air laut.',
                 visual: '⚡',
