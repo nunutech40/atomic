@@ -1,0 +1,386 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// PHENOMENON STORY DATA
+// Slide-by-slide storytelling for each atomic phenomenon
+// Each story = array of "slides" rendered in PhenomenonStory component
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type SlideType =
+    | 'hook'       // full-screen dramatic opening
+    | 'history'    // historical narrative with person/date
+    | 'step'       // animated process step
+    | 'scale'      // mind-blowing scale comparison
+    | 'impact';    // real-world impact & legacy
+
+export interface HistoryEntry {
+    year: string;
+    event: string;
+    person?: string;
+}
+
+export interface StorySlide {
+    type: SlideType;
+    title: string;
+    body: string;           // main narrative text
+    animKey?: string;       // CSS animation class to show
+    history?: HistoryEntry[];
+    quote?: string;
+    quoteAuthor?: string;
+    visual?: string;        // emoji / icon for visual
+    highlight?: string;     // callout box text
+}
+
+export interface PhenomenonStory {
+    id: string;
+    slides: StorySlide[];
+}
+
+export const phenomenonStories: PhenomenonStory[] = [
+
+    // ── FISI NUKLIR ──────────────────────────────────────────────────────────
+    {
+        id: 'fission',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Satu Atom. Satu Kota. Hancur.',
+                body: 'Pada 6 Agustus 1945, pukul 08:15 pagi, sebuah bom dijatuhkan di atas Hiroshima. Energi yang dilepaskan setara dengan 15.000 ton TNT — namun bahan bakarnya hanya satu kilogram uranium yang benar-benar bereaksi. Semua itu bermula dari satu proses: sebuah neutron menghantam inti atom. Inilah fisi nuklir.',
+                visual: '💥',
+                animKey: 'anim-fission-hook',
+                highlight: '64 kg uranium · hanya ~1 kg bereaksi · setara 15.000 ton TNT',
+            },
+            {
+                type: 'history',
+                title: 'Penemuan yang Mengubah Segalanya',
+                body: 'Segalanya dimulai dari laboratorium di Berlin pada malam hari di bulan Desember 1938. Otto Hahn dan Fritz Strassmann sedang membombardir uranium dengan neutron — mengira mereka akan membuat unsur baru yang lebih berat. Yang mereka temukan justru sebaliknya: uranium pecah menjadi barium yang jauh lebih ringan. Mereka tidak percaya. Mereka menelepon bekas rekan kerja mereka, Lise Meitner — seorang fisikawan perempuan Yahudi yang sudah melarikan diri dari Nazi Jerman ke Swedia.',
+                quote: 'Kami telah menemukan sesuatu yang mengerikan. Aku tidak mau mempublikasikannya.',
+                quoteAuthor: 'Otto Hahn, setelah menyadari implikasi militer fisi nuklir',
+                visual: '👩‍🔬',
+                history: [
+                    { year: '1905', event: 'Einstein menerbitkan E=mc² — energi dan massa bisa saling bertukar', person: 'Albert Einstein' },
+                    { year: '1932', event: 'James Chadwick menemukan neutron — peluru yang akan memicu fisi', person: 'James Chadwick' },
+                    { year: '1938', event: 'Hahn & Strassmann membelah atom uranium pertama kali di Berlin', person: 'Otto Hahn & Fritz Strassmann' },
+                    { year: '1939', event: 'Lise Meitner dan keponakan Otto Frisch menjelaskan fisi secara matematis', person: 'Lise Meitner' },
+                    { year: '1942', event: 'Enrico Fermi membangun reaktor nuklir pertama di bawah tribun stadion Chicago', person: 'Enrico Fermi' },
+                    { year: '1945', event: 'Trinity Test — ledakan nuklir pertama di New Mexico. Lalu Hiroshima & Nagasaki.', person: 'Manhattan Project' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Step 1: Satu Neutron Menghantam',
+                body: 'Inti atom uranium-235 sangat besar dan gembung — 92 proton dan 143 neutron berdesakan di dalam ruang yang luar biasa kecil. Ketika sebuah neutron bebas mendekat dengan kecepatan yang tepat (neutron lambat, atau "termal"), ia diserap oleh inti uranium.',
+                visual: '⚛️',
+                animKey: 'anim-fission-step1',
+                highlight: 'U-235 + n → U-236* (sangat tidak stabil)',
+            },
+            {
+                type: 'step',
+                title: 'Step 2: Inti Bergetar dan Pecah',
+                body: 'U-236 yang terbentuk sangat tidak stabil — seperti tetesan air yang terlalu besar yang bergetar sampai pecah. Dalam waktu kurang dari satu triliun detik, inti itu memanjang seperti elips, lalu kutub-kutubnya saling tolak karena muatan positif proton, dan PECAH menjadi dua inti yang lebih kecil.',
+                visual: '🎯',
+                animKey: 'anim-fission-step2',
+                highlight: 'U-236* → Kr-92 + Ba-141 + 3 neutron + energi (~200 MeV)',
+            },
+            {
+                type: 'step',
+                title: 'Step 3: Reaksi Berantai Dimulai',
+                body: 'Inilah kuncinya: setiap satu atom uranium yang pecah melepaskan 2 atau 3 neutron baru. Jika neutron-neutron itu mengenai atom uranium lain — masing-masing memecah atom baru, melepaskan lebih banyak neutron lagi. Dalam sepersejuta detik: 1 → 2 → 4 → 8 → ... → 2⁸⁰ reaksi. Itu bom atom.',
+                visual: '⛓️',
+                animKey: 'anim-chain',
+                highlight: 'Dalam ~1 mikro-detik: 1 kg uranium → melepaskan energi sekian megajoule dalam 80 generasi pembelahan',
+            },
+            {
+                type: 'step',
+                title: 'Step 4: E = mc² Bekerja',
+                body: 'Mengapa ada energi yang dilepaskan? Karena massa Kr-92 + Ba-141 + 3 neutron LEBIH KECIL dari massa U-235 + 1 neutron. "Massa yang hilang" itu (sekitar 0.1% dari total massa) berubah menjadi energi murni sesuai rumus Einstein: E = mc². Dengan c = 300 juta m/s, bahkan massa yang sangat kecil menghasilkan energi yang luar biasa.',
+                visual: '⚡',
+                animKey: 'anim-emc2',
+                highlight: 'Massa "hilang" × c² = Energi kinetik + panas + radiasi gamma',
+            },
+            {
+                type: 'scale',
+                title: 'Skala yang Membuat Kepala Pusing',
+                body: 'Bayangkan kamu memegang satu koin logam. Di dalam satu gram logam, ada sekitar 10²² (sepuluh ribu triliun triliun) atom. Bom Hiroshima hanya "membakar" sekitar 1 kg uranium yang bereaksi — tapi setiap atom yang pecah melepaskan 50 juta kali lebih banyak energi dari satu reaksi kimia biasa (seperti membakar batu bara). Inilah perbedaan reaksi nuklir vs kimia.',
+                visual: '📏',
+                highlight: '1 kg uranium yang bereaksi ≈ membakar 3 juta ton batu bara',
+            },
+            {
+                type: 'impact',
+                title: 'Warisan Fisi Nuklir',
+                body: 'Fisi nuklir adalah pisau bermata dua terbesar dalam sejarah manusia. Di satu sisi: bom atom yang membunuh 200.000 orang dan mengakhiri Perang Dunia II, perlombaan senjata nuklir Perang Dingin, dan ancaman kehancuran total. Di sisi lain: pembangkit listrik tenaga nuklir yang menghasilkan 10% listrik dunia tanpa CO₂, medicine nuklir yang menyelamatkan jutaan nyawa, dan pemahaman mendalam tentang materi.',
+                visual: '🌏',
+                history: [
+                    { year: '1954', event: 'PLTN pertama dunia beroperasi di Obninsk, Uni Soviet' },
+                    { year: '1986', event: 'Bencana Chernobyl — peringatan keras tentang keselamatan nuklir' },
+                    { year: '2011', event: 'Fukushima Daiichi — gempa bumi merusak reaktor di Jepang' },
+                    { year: 'Sekarang', event: '440 reaktor nuklir beroperasi di 30 negara, menghasilkan ~10% listrik global' },
+                ],
+                highlight: 'Saat ini: 440 reaktor nuklir aktif · 10% listrik global · nol emisi CO₂',
+            },
+        ],
+    },
+
+    // ── NUKLEOSINTESIS BINTANG ──────────────────────────────────────────────────
+    {
+        id: 'nucleosynthesis',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Kamu Terbuat dari Bintang yang Sudah Mati',
+                body: 'Atom besi di dalam darahmu. Atom kalsium di tulangmu. Atom oksigen yang kamu hirup setiap detik. Semuanya tidak pernah ada saat alam semesta lahir. Mereka diciptakan di dalam perut bintang raksasa miliaran tahun lalu — lalu dilemparkan ke seluruh galaksi saat bintang itu meledak. Kamu adalah abu dari bintang yang sudah mati.',
+                visual: '⭐',
+                animKey: 'anim-stardust',
+                highlight: 'Hidrogen dan helium → Big Bang · Semua yang lebih berat → Bintang',
+            },
+            {
+                type: 'history',
+                title: 'Bagaimana Kita Tahu Ini?',
+                body: 'Pada tahun 1957, empat ilmuwan menerbitkan sebuah makalah yang dikenal hanya dengan inisial penulisnya: "B²FH" (Burbidge, Burbidge, Fowler, dan Hoyle). Makalah itu berjudul "Sintesis Unsur-unsur di Bintang" dan menjelaskan secara matematis bagaimana setiap unsur di tabel periodik terbentuk di dalam bintang. Ini adalah salah satu makalah ilmiah paling berpengaruh sepanjang sejarah.',
+                quote: 'Kita semua adalah abu dari bintang. Nitrogen di DNA kita, kalsium di gigi kita, besi di darah kita, karbon di pai apel kita — dibuat di bagian dalam bintang yang runtuh. Kita terbuat dari materi bintang.',
+                quoteAuthor: 'Carl Sagan, Cosmos (1980)',
+                visual: '🔭',
+                history: [
+                    { year: '1920', event: 'Arthur Eddington mengusulkan bahwa matahari ditenagai oleh fusi hidrogen menjadi helium', person: 'Arthur Eddington' },
+                    { year: '1939', event: 'Hans Bethe menghitung siklus reaksi fusi di bintang secara detail — meraih Nobel 1967', person: 'Hans Bethe' },
+                    { year: '1957', event: 'Makalah B²FH — blueprint lengkap bagaimana semua unsur tercipta di bintang', person: 'Burbidge, Burbidge, Fowler & Hoyle' },
+                    { year: '2017', event: 'LIGO mendeteksi tabrakan dua bintang neutron — konfirmasi visual bahwa emas dan platinum lahir dari kilonova', person: 'LIGO/Virgo Collaboration' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Step 1: Lahir dari Big Bang — Hanya H dan He',
+                body: 'Big Bang 13,8 miliar tahun lalu hanya menghasilkan dua unsur: hidrogen (75%) dan helium (25%), plus jejak litium yang sangat kecil. Tidak ada karbon, tidak ada oksigen, tidak ada besi. Alam semesta awal sangat sederhana — dan sangat membosankan. Seluruh keragaman kimia yang ada hari ini belum ada.',
+                visual: '🌌',
+                animKey: 'anim-bigbang',
+                highlight: 'Big Bang → H (75%) + He (24%) + Li (<1%) · Tidak ada yang lain',
+            },
+            {
+                type: 'step',
+                title: 'Step 2: Bintang Menyalakan Diri',
+                body: 'Gravitasi menarik awan hidrogen semakin rapat sampai pusat awan itu mencapai suhu 10 juta Kelvin. Di sinilah fusi proton-proton dimulai: 4 inti hidrogen bergabung menjadi 1 inti helium. "Massa yang hilang" terkonversi menjadi cahaya dan panas — sinar matahari. Matahari kita membakar 600 juta ton hidrogen per detik melalui fusi ini.',
+                visual: '☀️',
+                animKey: 'anim-stellar-fusion',
+                highlight: '4 H → He + energi (0.7% massa hilang = 4 × 10²⁶ Watt)',
+            },
+            {
+                type: 'step',
+                title: 'Step 3: Bintang Raksasa Membuat Karbon & Oksigen',
+                body: 'Ketika bintang kehabisan hidrogen di intinya, ia menyusut dan memanas lagi — sampai 100 juta Kelvin. Cukup panas untuk bintang baru: fusi helium menjadi karbon (triple-alpha process: 3 He → C). Lalu karbon + helium → oksigen. Inilah asal mula semua karbon di tubuhmu dan oksigen yang kamu hirup.',
+                visual: '💚',
+                animKey: 'anim-carbon-fusion',
+                highlight: 'Triple-alpha: ³He → C-12 · C-12 + He → O-16',
+            },
+            {
+                type: 'step',
+                title: 'Step 4: Bintang Masif Menempa Tabel Periodik',
+                body: 'Bintang yang 8× lebih masif dari matahari terus memanas dan membakar lapisan demi lapisan: karbon → neon → oksigen → silikon → besi. Setiap lapisan baru membutuhkan suhu lebih tinggi. Besi adalah akhir jalan — fusi besi tidak menghasilkan energi, malah menyerapnya. Ketika inti menjadi besi murni, bintang mati.',
+                visual: '🔥',
+                animKey: 'anim-onion-layers',
+                highlight: 'H → He → C → Ne → O → Si → Fe (akhir jalan fusi)',
+            },
+            {
+                type: 'step',
+                title: 'Step 5: Supernova — Ledakan Terbesar di Alam Semesta',
+                body: 'Inti besi yang tidak bisa lagi terbakar runtuh dalam sepersepuluh detik — dimampatkan dari ukuran Bumi menjadi bola neutron seukuran kota. Energi runtuhnya dahsyat menghasilkan ledakan supernova yang lebih terang dari satu miliar matahari. Ledakan ini melontarkan semua unsur yang pernah dibuat bintang itu ke seluruh penjuru galaksi.',
+                visual: '💥',
+                animKey: 'anim-supernova',
+                highlight: 'Supernova menghasilkan semua unsur dari He sampai Fe — lalu menyebarkannya',
+            },
+            {
+                type: 'step',
+                title: 'Step 6: Emas Lahir dari Tabrakan Bintang Neutron',
+                body: 'Ternyata ada yang tidak bisa dibuat supernova biasa: emas (Au), platinum (Pt), dan unsur-unsur berat lainnya. Mereka hanya bisa terbentuk dalam kondisi yang jauh lebih ekstrem: tabrakan dua bintang neutron (kilonova). Pada 2017, teleskop LIGO mendeteksi gelombang gravitasi dari kilonova — dan spektroskopnya menunjukkan emas dalam jumlah massa setara Planet Jupiter.',
+                visual: '🥇',
+                animKey: 'anim-kilonova',
+                highlight: 'Kilonova 2017: menghasilkan > 200 massa Bumi emas & platinum',
+            },
+            {
+                type: 'scale',
+                title: 'Kamu adalah 13,8 Miliar Tahun Sejarah',
+                body: 'Setiap atom di dalam tubuhmu punya kisah perjalanan yang luar biasa. Hidrogen di air dalam tubuhmu — lahir detik-detik setelah Big Bang, 13,8 miliar tahun lalu. Karbon di DNA-mu — ditempa di inti bintang yang sudah mati sebelum matahari terbentuk. Besi di sel darah merahmu — mungkin lahir dari supernova yang meledak 5 miliar tahun lalu, melemparkan materinya ke awan nebula yang kemudian membentuk matahari dan bumi.',
+                visual: '🌠',
+                highlight: 'Tubuhmu = 10²⁸ atom · dari berjuta bintang berbeda · selama miliaran tahun',
+            },
+            {
+                type: 'impact',
+                title: 'Kita Semua Satu Keluarga dengan Bintang',
+                body: 'Nukleosintesis bukan hanya fakta ilmiah — ia mengubah cara kita memandang diri sendiri. Kita bukan terpisah dari alam semesta. Kita adalah bagian darinya — secara harfiah, sampai ke atom terkecil di tubuh kita. Batas antara "kita" dan "langit" lebur. Spektroskop di observatorium bisa membaca tabel periodik dari cahaya bintang yang berjarak ribuan tahun cahaya — dan hasilnya sama dengan yang ada di laboratorium bumi.',
+                visual: '🌌',
+                history: [
+                    { year: '4,6 miliar tahun lalu', event: 'Nebula bintang-bintang mati runtuh menjadi matahari dan tata surya kita' },
+                    { year: '3,8 miliar tahun lalu', event: 'Kehidupan pertama di Bumi — atom-atom bintang mulai bereplikasi' },
+                    { year: 'Hari ini', event: 'Tubuhmu terus meminjam atom dari lingkungan dan mengembalikannya — daur kosmik tak henti' },
+                ],
+                highlight: '"Kita semua adalah cara alam semesta mengenal dirinya sendiri." — Carl Sagan',
+            },
+        ],
+    },
+
+    // ── FUSI NUKLIR ──────────────────────────────────────────────────────────
+    {
+        id: 'fusion',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Mimpi 100 Tahun Manusia: Membotol Matahari',
+                body: 'Matahari membakar 600 juta ton hidrogen setiap detik. Ia sudah melakukan ini selama 4,6 miliar tahun — dan masih punya cukup bahan bakar untuk 5 miliar tahun lagi. Jika kita bisa meniru proses ini di Bumi, kita mendapatkan energi tanpa habis, tanpa bahan bakar yang akan kehabisan, tanpa emisi CO₂. Inilah mimpi terbesar fisika modern — dan kita sudah mengejarnya selama 100 tahun.',
+                visual: '☀️',
+                animKey: 'anim-fusion-hook',
+                highlight: '1 kg hidrogen fusi = energi dari 10.000.000 kg bensin',
+            },
+            {
+                type: 'history',
+                title: '100 Tahun Mengejar Matahari',
+                body: 'Perjalanan dari "matahari bekerja dengan cara apa?" hingga "mari kita buat matahari buatan" memakan hampir satu abad — dan kita belum sampai. Setiap dekade membawa kemajuan besar, setiap dekade pula menghadirkan rintangan baru yang tidak terduga.',
+                quote: 'Fusi nuklir selalu 30 tahun lagi dari sekarang — selalu.',
+                quoteAuthor: 'Lelucon lama di kalangan fisikawan, yang kini mulai tidak berlaku',
+                visual: '🌅',
+                history: [
+                    { year: '1920', event: 'Arthur Eddington pertama mengusulkan matahari ditenagai oleh fusi hidrogen — diejek para koleganya', person: 'Arthur Eddington' },
+                    { year: '1939', event: 'Hans Bethe menghitung siklus proton-proton secara lengkap. Ia meraih Nobel 28 tahun kemudian', person: 'Hans Bethe' },
+                    { year: '1952', event: 'Bom hidrogen pertama meledak — fusi yang tidak terkontrol, sama sekali bukan yang diinginkan', person: 'Manhattan Project' },
+                    { year: '1958', event: 'Uni Soviet memperkenalkan desain Tokamak (Toroidal Chamber Magnetic) kepada dunia', person: 'Sakharov & Tamm' },
+                    { year: '1997', event: 'JET (Joint European Torus) mencetak rekor: 16 MW energi fusi — tapi membutuhkan 24 MW untuk beroperasi', person: 'JET Collaboration' },
+                    { year: '2022', event: 'NIF (National Ignition Facility) pertama kali menghasilkan lebih banyak energi dari yang dimasukkan — ignition!', person: 'Lawrence Livermore NIF' },
+                    { year: '2025+', event: 'ITER di Prancis: 35 negara, €20 miliar, ditargetkan menghasilkan 500 MW dari 50 MW input', person: 'ITER Organization' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Mengapa Fusi Jauh Lebih Kuat dari Fisi?',
+                body: 'Dalam fisi, kita memecah inti besar menjadi kecil. Dalam fusi, kita menggabungkan inti kecil menjadi lebih besar. Fusi melepaskan energi 3-4× lebih besar per kilogram bahan bakar dibanding fisi — karena "energi ikat" yang dilepaskan jauh lebih besar. Dan bahan bakarnya? Hidrogen (deuterium + tritium) — isotop yang bisa diekstrak dari air laut.',
+                visual: '⚡',
+                animKey: 'anim-fusion-compare',
+                highlight: 'Fusi D-T: 339 MJ/gram · Fisi U-235: 82 MJ/gram · Bensin: 0.046 MJ/gram',
+            },
+            {
+                type: 'step',
+                title: 'Step 1: Proton-Proton Chain — Cara Matahari Membakar',
+                body: 'Di inti matahari (suhu 15 juta Kelvin, tekanan 250 miliar atmosfer), proton bertabrakan dengan kecepatan gila-gilaan. Satu dari 100 triliun tabrakan berhasil — karena quantum tunneling. Proton menembus halangan elektromagnetik, bergabung menjadi deuterium, lalu helium-3, lalu helium-4. Setiap langkah melepaskan energi.',
+                visual: '🌞',
+                animKey: 'anim-proton-chain',
+                highlight: '4 Hidrogen → 1 Helium + 26.73 MeV energi + 2 neutrino',
+            },
+            {
+                type: 'step',
+                title: 'Step 2: D-T Fusion — Cara Manusia Mencoba',
+                body: 'Proton-proton chain terlalu lambat untuk reaktor manusia. Ilmuwan memilih reaksi yang lebih mudah: Deuterium + Tritium → Helium-4 + Neutron. Masalahnya: untuk memaksa dua nukleus berfusi, kita harus memanaskan plasma hingga 100-150 juta derajat — 10× lebih panas dari inti matahari. Kenapa lebih panas? Karena matahari menggunakan gravitasi kolosal untuk mengkompensasi, sementara kita hanya punya magnet.',
+                visual: '🔥',
+                animKey: 'anim-dt-fusion',
+                highlight: 'D + T → He-4 (3.5 MeV) + n (14.1 MeV) · Total: 17.6 MeV per reaksi',
+            },
+            {
+                type: 'step',
+                title: 'Step 3: Mengurung Matahari dengan Magnet',
+                body: 'Masalah terbesar fusi: plasma 150 juta derajat harus tidak menyentuh dinding apa pun — karena tidak ada material yang tahan. Solusi: magnet superkonduktor yang sangat kuat membentuk medan magnet dalam bentuk donat (toroid). Plasma berputar di dalam jalur medan magnet tanpa menyentuh dinding. Inilah Tokamak — dan membuatnya stabil selama cukup lama adalah tantangan terbesar engineering abad ini.',
+                visual: '🍩',
+                animKey: 'anim-tokamak',
+                highlight: 'Tokamak: plasma 150 juta°C · medan magnet 13 Tesla · kekosongan lebih sempurna dari luar angkasa',
+            },
+            {
+                type: 'scale',
+                title: 'Jika Fusi Berhasil: Dunia yang Berbeda',
+                body: 'Deuterium bisa diekstrak dari air laut — dan ada jutaan ton di lautan. Tritium bisa dihasilkan dari litium yang melimpah. Satu liter air laut mengandung deuterium yang, jika difusikan, setara dengan energi dari 300 liter bensin. Limbahnya? Helium — gas inert yang tidak berbahaya. Tidak ada emisi karbon, tidak ada limbah radioaktif jangka panjang, tidak ada risiko meltdown (fusi berhenti sendiri jika terganggu, tidak bisa runaway).',
+                visual: '🌊',
+                highlight: '1 liter air laut ≈ 300 liter bensin (jika difusikan) · limbah: hanya Helium',
+            },
+            {
+                type: 'impact',
+                title: 'Ini Bukan Mimpi Lagi',
+                body: 'Desember 2022: National Ignition Facility di California pertama kali mencapai "ignition" — input 2.05 MJ laser, output 3.15 MJ energi fusi. Lebih banyak energi keluar dari yang masuk. Ini adalah tonggak sejarah yang sama besarnya dengan Wright Brothers pertama terbang. Kita baru di awal, tapi physics bekerja.<br><br>ITER di Prancis, yang dibangun oleh 35 negara termasuk China, AS, Eropa, dan Rusia bersama-sama, ditargetkan beroperasi 2035 dengan output 10× dari input. Private fusion companies (Commonwealth Fusion, Helion, TAE) berlomba mencapai commercial fusion sebelum 2040.<br><br>Mimpi 100 tahun itu sedang menjadi kenyataan.',
+                visual: '🚀',
+                history: [
+                    { year: '2022', event: 'NIF mencapai ignition — pertama dalam sejarah: energi keluar > energi masuk (laser)', person: 'National Ignition Facility, USA' },
+                    { year: '2025', event: 'ITER mulai uji plasma pertama — puncak kolaborasi ilmiah terbesar dalam sejarah', person: 'ITER, France' },
+                    { year: '2035+', event: 'Target: ITER mencapai Q=10 (500 MW dari 50 MW input)', person: '35 Negara Kolaborasi' },
+                    { year: '2040s?', event: 'First commercial fusion power plant?', person: 'Generasi kita' },
+                ],
+                highlight: '"Fusi selalu 30 tahun lagi" — tapi tahun 2022 physics untuk pertama kali membuktikannya bukan mimpi',
+            },
+        ],
+    },
+
+    // ── RADIOAKTIVITAS ──────────────────────────────────────────────────────────
+    {
+        id: 'radioactivity',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Buku Catatannya Masih Mematikan — 90 Tahun Setelah Ia Mati',
+                body: 'Di Paris, tersimpan buku catatan seorang ilmuwan. Jika kamu ingin membacanya, kamu harus menandatangani surat pernyataan risiko. Kamu harus memakai pakaian pelindung khusus. Buku itu disimpan dalam kotak berlapis timbal. Karena buku itu — dan pemiliknya — masih radioaktif. Pemiliknya bernama Marie Curie. Ia meninggal karena zat yang ia temukan sendiri.',
+                visual: '☢️',
+                animKey: 'anim-radioactivity-hook',
+                highlight: 'Buku catatan Marie Curie masih radioaktif · disimpan dalam kotak timbal · diakses dengan hazmat suit',
+            },
+            {
+                type: 'history',
+                title: 'Wanita yang Lebih Bersinar dari Radiumnya',
+                body: 'Maria Sklodowska lahir di Warsawa, Polandia — di bawah penjajahan Rusia yang melarang perempuan mengakses universitas. Ia menyelundupkan ilmu dengan belajar di "Universitas Terbang" ilegal. Pada 1891, ia kabur ke Paris dan menjadi wanita pertama yang lulus dari Sorbonne. Ia bertemu Pierre Curie, menikah, dan bersama-sama mereka mengubah fisika dan kimia selamanya — dari gudang bocor yang tidak berpemanas, dengan tangan telanjang memegang material yang perlahan membunuhnya.',
+                quote: 'Dalam ilmu, kita harus tertarik pada hal-hal, bukan pada orang-orang.',
+                quoteAuthor: 'Marie Curie',
+                visual: '👩‍🔬',
+                history: [
+                    { year: '1896', event: 'Henri Becquerel menemukan uranium memancarkan radiasi misterius — ia menyebutnya "Becquerel rays"', person: 'Henri Becquerel' },
+                    { year: '1898', event: 'Marie & Pierre Curie menemukan Polonium (dinamai dari Polandia, tanah air Marie)', person: 'Marie & Pierre Curie' },
+                    { year: '1898', event: 'Curie menemukan Radium — zat yang 1 juta kali lebih radioaktif dari uranium', person: 'Marie & Pierre Curie' },
+                    { year: '1903', event: 'Marie Curie menjadi wanita pertama yang memenangkan Nobel Prize (Fisika)', person: 'Marie Curie' },
+                    { year: '1906', event: 'Pierre Curie terbunuh oleh kereta kuda di Paris — Marie melanjutkan sendirian', person: 'Pierre Curie' },
+                    { year: '1911', event: 'Marie Curie memenangkan Nobel Prize KEDUA (Kimia) — satu-satunya orang yang menang di dua bidang berbeda', person: 'Marie Curie' },
+                    { year: '1934', event: 'Marie Curie meninggal akibat aplastic anemia — penyakit darah yang disebabkan paparan radiasi puluhan tahun', person: 'Marie Curie' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Apa Itu Radioaktivitas?',
+                body: 'Beberapa inti atom terlalu gemuk — terlalu banyak proton dan neutron yang berdesakan. Gaya nuklir kuat memegang mereka bersama, tapi gaya tolak elektromagnetik antar proton mencoba memisahkan. Inti yang tidak stabil secara spontan "membuang" bagian dari dirinya untuk mencapai konfigurasi yang lebih stabil. Inilah peluruhan radioaktif — atom yang membuang partikel atau energi untuk menjadi lebih tenang.',
+                visual: '⚛️',
+                animKey: 'anim-decay-types',
+                highlight: 'Ketidakstabilan inti → peluruhan spontan → atom baru + radiasi',
+            },
+            {
+                type: 'step',
+                title: 'Tiga Jenis Radiasi: α, β, γ',
+                body: '<b>Alfa (α):</b> Inti atom memuntahkan 2 proton + 2 neutron (inti helium). Partikel besar, lambat — bisa dihentikan selembar kertas, tapi jika masuk ke tubuh, efeknya dahsyat.\n\n<b>Beta (β):</b> Neutron berubah menjadi proton dengan memancarkan elektron (β⁻). Lebih ringan dan lebih penetratif dari alfa, bisa dihentikan lempengan aluminium.\n\n<b>Gamma (γ):</b> Energi murni — gelombang elektromagnetik berenergi tinggi. Tidak ada massa. Menembus segalanya kecuali timbal tebal atau beton. Yang dipakai untuk terapi kanker.',
+                visual: '🎯',
+                animKey: 'anim-radiation-types',
+                highlight: 'α: dihentikan kertas · β: dihentikan aluminium · γ: perlu timbal tebal',
+            },
+            {
+                type: 'step',
+                title: 'Waktu Paruh — Jam Atom yang Paling Akurat',
+                body: 'Kamu tidak bisa tahu kapan tepat satu atom akan meluruh. Tapi kamu bisa tahu: setelah 1 waktu-paruh, tepat separuh atom dalam sampel akan telah meluruh. Ini probabilitas kuantum yang deterministik di skala besar. Carbon-14: waktu paruh 5.730 tahun (digunakan untuk carbon dating). Polonium-210: 138 hari. Uranium-238: 4,47 miliar tahun. Radium-226: 1.600 tahun — masih radioaktif di buku catatan Marie Curie.',
+                visual: '⏰',
+                animKey: 'anim-half-life',
+                highlight: 'Ra-226 waktu paruh: 1.600 tahun · buku Curie masih akan radioaktif di tahun 3600',
+            },
+            {
+                type: 'step',
+                title: 'Tragedi yang Tidak Mereka Sadari',
+                body: 'Marie dan Pierre Curie bekerja di shed (gudang) yang bocor dan tidak berpemanas. Mereka memegang radium dengan tangan telanjang. Marie menyimpan tabung radium di saku bajunya. Mereka sering tidur di lab. Radium memancarkan cahaya kebiruan indah di kegelapan — mereka menyebutnya "cahaya cantik".<br><br>Mereka tidak tahu. Radiasi tidak terlihat, tidak tercium, tidak terasa. Tubuh mereka perlahan dihancurkan. Pierre sering mengeluh tangannya sakit. Marie terus-menerus mual dan lelah. Bertahun-tahun kemudian, dokter baru mengerti apa yang terjadi.',
+                visual: '💙',
+                animKey: 'anim-radium-glow',
+                highlight: '"Cahaya cantik" radium di kegelapan = radiasi yang perlahan menghancurkan DNA mereka',
+            },
+            {
+                type: 'scale',
+                title: 'Warisan Radioaktivitas: Teror dan Kedokteran',
+                body: 'Radioaktivitas adalah pedang bermata dua. Di satu sisi: Chernobyl (1986), Hiroshima, Nagasaki, Fukushima (2011) — bencana yang mengubah cara kita berpikir tentang energi dan senjata. Di sisi lain: terapi radiasi untuk kanker, PET scan yang bisa melihat metabolisme otak secara real-time, carbon dating yang membuka sejarah arkeologi, iradiasi makanan yang memperpanjang umur simpan tanpa bahan kimia.<br><br>Carbon-14 yang radioaktif memungkinkan kita menentukan usia benda yang berumur hingga 50.000 tahun dengan akurasi luar biasa.',
+                visual: '⚖️',
+                highlight: 'Hal yang sama yang membunuh Marie Curie kini menyelamatkan jutaan pasien kanker setiap tahun',
+            },
+            {
+                type: 'impact',
+                title: 'Buku Catatan yang Akan Terus Bersinar',
+                body: 'Marie Curie meninggal 4 Juli 1934. Penyebab: aplastic anemia — sumsum tulang belakangnya hancur akibat paparan radiasi selama puluhan tahun. Ia adalah korban penemuannya sendiri.<br><br>Tapi warisannya abadi: ia menjadi wanita pertama yang memenangkan Nobel, satu-satunya orang yang memenangkan Nobel di dua bidang ilmu yang berbeda, pendiri Institute Curie di Paris yang sampai hari ini meneliti kanker, dan inspirasi bagi generasi ilmuwan perempuan dunia.<br><br>Buku catatannya, yang tersimpan dalam kotak timbal di Perpustakaan Nasional Prancis, akan terus memancarkan radiasi dari Ra-226 selama 1.500 tahun lagi — sinar kecil Marie Curie yang tidak akan padam sampai tahun 3400.',
+                visual: '📖',
+                history: [
+                    { year: '1898', event: 'Penemuan Polonium dan Radium — fondasi fisika nuklir modern', person: 'Marie & Pierre Curie' },
+                    { year: '1903', event: 'Nobel Prize Fisika — wanita pertama dalam sejarah', person: 'Marie Curie' },
+                    { year: '1911', event: 'Nobel Prize Kimia — satu-satunya peraih Nobel ganda di bidang berbeda', person: 'Marie Curie' },
+                    { year: 'Hari ini', event: 'Buku catatan Marie Curie di Paris — masih radioaktif, masih dalam kotak timbal, masih bersinar', person: 'Warisan Marie Curie' },
+                ],
+                highlight: 'Nobel Fisika 1903 + Nobel Kimia 1911 · Satu-satunya peraih Nobel ganda lintas bidang · Buku catatan masih radioaktif hingga tahun ~3400',
+            },
+
+        ],
+    },
+];

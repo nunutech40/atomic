@@ -15,6 +15,7 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
       <div class="nav-links">
         <a class="nav-link" id="nav-tabel" href="#/">🔬 Tabel</a>
         <a class="nav-link" id="nav-molekul" href="#/molecule">⚗️ Molekul</a>
+        <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ Fenomena</a>
       </div>
       <button class="nav-btn" id="lang-btn">${getLang() === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'}</button>
       <button class="nav-btn" id="theme-btn">${getTheme() === 'dark' ? '☀️' : '🌙'}</button>

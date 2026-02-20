@@ -5,6 +5,7 @@ import { renderNav } from './components/Nav';
 import { renderPeriodicTable } from './components/PeriodicTable';
 import { renderElementDetail } from './components/ElementDetail';
 import { renderMoleculeBuilder, renderPhenomena } from './components/MoleculeBuilder';
+import { renderPhenomenonStory } from './components/PhenomenonStory';
 
 
 initTheme();
@@ -55,6 +56,12 @@ addRoute('/phenomena', () => {
     main.innerHTML = '';
     renderPhenomena(main);
     setCleanup(() => { });
+});
+
+addRoute('/phenomena/:id', (params) => {
+    main.innerHTML = '';
+    const cleanup = renderPhenomenonStory(main, params?.id ?? '');
+    setCleanup(cleanup);
 });
 
 

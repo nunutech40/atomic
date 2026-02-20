@@ -1,6 +1,7 @@
 import type { Molecule } from '../data/molecules';
 import { molecules, matchMolecule, CATEGORY_LABELS } from '../data/molecules';
 import { phenomena, PHENOMENON_CATEGORIES } from '../data/phenomena';
+import { phenomenonStories } from '../data/phenomenon-stories';
 import { MoleculeScene } from '../three/moleculeScene';
 import { navigate } from '../core/router';
 
@@ -387,11 +388,13 @@ export function renderPhenomena(container: HTMLElement): void {
     <div class="ph-grid" id="ph-grid">
       ${phenomena.map(p => {
     const cat = PHENOMENON_CATEGORIES[p.category];
+    const hasStory = phenomenonStories.some(s => s.id === p.id);
     return `
-        <div class="ph-card" data-cat="${p.category}">
+        <div class="ph-card ${hasStory ? 'ph-card--has-story' : ''}" data-cat="${p.category}" data-id="${p.id}" role="button" tabindex="0">
           <div class="ph-card-top">
             <span class="ph-icon">${p.icon}</span>
             <span class="ph-cat-badge" style="color:${cat.color};background:${cat.bg}">${cat.label}</span>
+            ${hasStory ? `<span class="ph-story-badge">📖 Cerita</span>` : ''}
           </div>
           <div class="ph-title">${p.title}</div>
           <div class="ph-tagline">${p.tagline}</div>
@@ -415,6 +418,11 @@ export function renderPhenomena(container: HTMLElement): void {
             </div>
           </div>
           ${p.atoms.length ? `<div class="ph-atoms">${p.atoms.map(a => `<span class="ph-atom-tag">${a}</span>`).join('')}</div>` : ''}
+          ${hasStory ? `
+          <button class="ph-story-btn" data-story-id="${p.id}">
+            <span>📖</span> Baca Cerita Lengkap
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
+          </button>` : ''}
         </div>`;
   }).join('')}
     </div>
@@ -436,6 +444,16 @@ export function renderPhenomena(container: HTMLElement): void {
     gridEl.querySelectorAll<HTMLElement>('.ph-card').forEach(card => {
       card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
     });
+  });
+
+  // Story mode navigation
+  gridEl.addEventListener('click', e => {
+    const storyBtn = (e.target as HTMLElement).closest('[data-story-id]') as HTMLElement | null;
+    if (storyBtn) {
+      e.stopPropagation();
+      navigate('/phenomena/' + storyBtn.dataset.storyId);
+      return;
+    }
   });
 }
 
