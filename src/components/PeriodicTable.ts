@@ -4,7 +4,6 @@ import { navigate } from '../core/router';
 import { t } from '../core/i18n';
 
 // Grid layout: [atomicNumber] = [row, col] (1-indexed, 18-col grid)
-// Lanthanides row 8, Actinides row 9 (displayed separately)
 const GRID_POS: Record<number, [number, number]> = {
     1: [1, 1], 2: [1, 18],
     3: [2, 1], 4: [2, 2], 5: [2, 13], 6: [2, 14], 7: [2, 15], 8: [2, 16], 9: [2, 17], 10: [2, 18],
@@ -23,14 +22,86 @@ export function renderPeriodicTable(container: HTMLElement) {
     container.innerHTML = '';
     let activeFilter: string | null = null;
 
+    // ── HOME HUB ─────────────────────────────────────────────────────────
+    const hub = document.createElement('div');
+    hub.className = 'home-hub animate-in';
+
+    hub.innerHTML = `
+        <div class="home-hero">
+            <div class="home-hero-particles" aria-hidden="true">
+                ${Array.from({ length: 18 }, () => `
+                    <div class="particle" style="
+                        left:${Math.random() * 100}%;
+                        top:${Math.random() * 100}%;
+                        width:${2 + Math.random() * 3}px;
+                        height:${2 + Math.random() * 3}px;
+                        animation-delay:${Math.random() * 4}s;
+                        animation-duration:${3 + Math.random() * 4}s;
+                    "></div>`).join('')}
+            </div>
+            <h1 class="home-title">⚛ Atomic</h1>
+            <p class="home-subtitle">Eksplorasi kimia yang nyata — visual, interaktif, dari pertama</p>
+            <div class="home-stats">
+                <span class="home-stat"><strong>118</strong> Elemen</span>
+                <span class="home-stat-sep">·</span>
+                <span class="home-stat"><strong>3D</strong> Visualisasi</span>
+                <span class="home-stat-sep">·</span>
+                <span class="home-stat"><strong>2</strong> Bahasa</span>
+            </div>
+        </div>
+
+        <div class="home-tools">
+            <div class="tool-card tool-card--active" id="tool-table">
+                <div class="tool-card-glow"></div>
+                <div class="tool-card-icon">🔬</div>
+                <div class="tool-card-title">Tabel Periodik</div>
+                <div class="tool-card-desc">118 elemen dengan 3D atom visualizer. Filter kategori, search, dan jelajahi detail setiap unsur.</div>
+                <div class="tool-card-badge">Aktif</div>
+            </div>
+            <div class="tool-card" id="tool-molecule">
+                <div class="tool-card-glow"></div>
+                <div class="tool-card-icon">⚗️</div>
+                <div class="tool-card-title">Bangun Molekul</div>
+                <div class="tool-card-desc">Gabungkan atom-atom menjadi molekul. H₂O, CO₂, NaCl — lihat visualisasi 3D hasil bonding-nya.</div>
+                <div class="tool-card-badge tool-card-badge--new">Baru</div>
+            </div>
+            <div class="tool-card tool-card--soon" id="tool-learn">
+                <div class="tool-card-glow"></div>
+                <div class="tool-card-icon">📚</div>
+                <div class="tool-card-title">Belajar Kimia</div>
+                <div class="tool-card-desc">Kurikulum 16 modul dari nol — metode first principles. Dari "apa itu atom?" sampai orbital kuantum.</div>
+                <div class="tool-card-badge tool-card-badge--soon">Segera</div>
+            </div>
+            <div class="tool-card tool-card--soon" id="tool-lab">
+                <div class="tool-card-glow"></div>
+                <div class="tool-card-icon">🧪</div>
+                <div class="tool-card-title">Lab Virtual</div>
+                <div class="tool-card-desc">Simulasikan reaksi kimia tanpa bahan berbahaya. Eksplorasi, campur, amati hasilnya.</div>
+                <div class="tool-card-badge tool-card-badge--soon">Segera</div>
+            </div>
+        </div>
+
+        <div class="home-section-title">
+            <span>Tabel Periodik</span>
+            <span class="home-section-count">118 elemen</span>
+        </div>
+    `;
+
+    container.appendChild(hub);
+
+    // Tool card click events
+    hub.querySelector('#tool-molecule')!.addEventListener('click', () => navigate('/molecule'));
+    hub.querySelector('#tool-table')!.addEventListener('click', () => {
+        document.querySelector('.periodic-table-wrapper')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ── PERIODIC TABLE ────────────────────────────────────────────────────
     const wrapper = document.createElement('div');
     wrapper.className = 'periodic-table-wrapper';
 
-    // Build 9-row x 18-col grid
     const ROWS = 9;
     const COLS = 18;
     const grid: (number | null)[][] = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
-
     elements.forEach(el => {
         const pos = GRID_POS[el.n];
         if (pos) grid[pos[0] - 1][pos[1] - 1] = el.n;
@@ -53,9 +124,7 @@ export function renderPeriodicTable(container: HTMLElement) {
             const cell = document.createElement('div');
 
             if (atomicNum === null) {
-                // special placeholders
                 if (ri === 5 && ci === 2) {
-                    // La placeholder
                     cell.className = 'element-cell';
                     cell.style.cssText = 'border-style:dashed;opacity:0.4;cursor:default;';
                     cell.innerHTML = `<span class="num">57-71</span><span class="sym" style="font-size:10px">La-Lu</span>`;
@@ -82,15 +151,14 @@ export function renderPeriodicTable(container: HTMLElement) {
             cell.dataset.cat = el.cat;
             const massVal = Array.isArray(el.mass) ? (el.mass as number[])[0] : el.mass;
             cell.innerHTML = `
-        <span class="num">${el.n}</span>
-        <span class="sym" style="color:${color}">${el.sym}</span>
-        <span class="name">${el.name}</span>
-        <span class="mass">${typeof massVal === 'string' ? parseFloat(massVal).toFixed(2) : Number(massVal).toFixed(2)}</span>
-      `;
+                <span class="num">${el.n}</span>
+                <span class="sym" style="color:${color}">${el.sym}</span>
+                <span class="name">${el.name}</span>
+                <span class="mass">${typeof massVal === 'string' ? parseFloat(massVal).toFixed(2) : Number(massVal).toFixed(2)}</span>
+            `;
 
             elMap[el.n] = cell;
 
-            // Tooltip events
             cell.addEventListener('mouseenter', (e) => {
                 const m = e as MouseEvent;
                 tooltip.querySelector('.t-sym')!.textContent = el.sym;

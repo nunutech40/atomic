@@ -53,9 +53,63 @@ Atomic dibuat untuk menjawab kebutuhan alat belajar kimia yang interaktif, visua
 
 ---
 
-### Phase 2 — Edukasi Pemula (🗓️ Planned — Next)
+---
+
+### 🧪 Molecule Builder (🗓️ Planned — Prioritas Tinggi)
+
+> **Konsep:** Halaman baru `/molecule` di mana user bisa **drag & drop atom** untuk membentuk molekul. Jika kombinasi atom yang dipilih cocok dengan molekul nyata, sistem otomatis menampilkan nama, info, dan visualisasi 3D molekulnya.
+
+**Fitur Detail:**
+| Fitur | Deskripsi |
+|-------|-----------|
+| Atom picker | Search atau pilih atom dari tabel periodik mini |
+| Mixing area | Chips atom yang bisa ditambah/dikurangi (H×2, O×1, dst) |
+| Auto-detect | Cocokkan komposisi dengan ~40 molekul yang dikenal |
+| Hasil valid | Tampilkan nama, rumus, kategori, deskripsi molekul |
+| Hasil tidak dikenal | Tampilkan "Kombinasi tidak dikenal" + tetap izinkan eksplorasi |
+| 3D Molecule Scene | Visualisasi Three.js: atom (sphere berwarna CPK) + bond (silinder) |
+| Info molekul | Shape, jenis ikatan, sifat fisik, fun fact |
+| Contoh cepat | Tombol shortcut: "Coba Air", "Coba CO₂", "Coba Garam" |
+
+**Contoh molekul yang dikenali:** H₂O, CO₂, O₂, N₂, NH₃, CH₄, NaCl, HCl, H₂O₂, C₂H₅OH, CO, H₂SO₄, NaOH, O₃, C₂H₂, CaCO₃, NO₂, SO₂, Fe₂O₃, dan ~20 lainnya.
+
+**Route:** `/molecule`  
+**File baru yang dibutuhkan:**
+- `src/data/molecules.ts` — database ~40 molekul + 3D posisi atom
+- `src/three/moleculeScene.ts` — Three.js renderer untuk molekul
+- `src/components/MoleculeBuilder.ts` — UI builder
+
+---
+
+### 🏠 Home Page Redesign (🗓️ Planned)
+
+> **Konsep:** Halaman utama tidak lagi hanya tabel periodik. Ada **hub navigasi** di atas dengan card ke semua tool yang tersedia.
+
+**Layout yang direncanakan:**
+```
+┌─────────────────────────────────────────────┐
+│  HERO: "Atomic — Jelajahi Kimia"            │
+│  subtitle + animasi partikel                 │
+├─────────────────────────────────────────────┤
+│  TOOL CARDS (3 kolom):                       │
+│  [🔬 Tabel Periodik]  [⚗️ Bangun Molekul]   │
+│  [📚 Belajar Kimia]   [🧪 Lab Virtual*]     │
+│  * = coming soon                             │
+├─────────────────────────────────────────────┤
+│  TABEL PERIODIK (tetap ada di bawah)        │
+└─────────────────────────────────────────────┘
+```
+
+**File yang dimodifikasi:**
+- `src/components/PeriodicTable.ts` — tambahkan hub section di atas tabel
+- `src/styles/global.css` — CSS untuk hero, tool cards
+
+---
+
+### Phase 2 — Edukasi Pemula (🗓️ Planned)
 
 > **Konsep:** Sebelum masuk ke tabel periodik yang kompleks, pemula perlu membangun fondasi. Setiap topik = modul mandiri dengan animasi + narasi + cek pemahaman.
+> Lihat detail lengkap kurikulum di: [`docs/CURRICULUM.md`](./CURRICULUM.md)
 
 **Analisis Pre-requisite — Apa yang dibutuhkan pemula:**
 
