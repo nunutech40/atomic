@@ -36,6 +36,89 @@ export interface PhenomenonStory {
 
 export const phenomenonStories: PhenomenonStory[] = [
 
+    // ── TEROWONGAN KUANTUM ───────────────────────────────────────────────────
+    {
+        id: 'quantum-tunneling',
+        slides: [
+            {
+                type: 'hook',
+                title: 'Alam Semesta Curang: Partikel Menembus Dinding yang Mustahil',
+                body: 'Lempar bola tenis ke tembok beton. Bola itu akan mental balik — selamanya, sekeras apapun lemparan kamu. Begitulah hukum fisika yang kita kenal.<br><br>Tapi di dunia partikel, ada yang lebih aneh: elektron bisa tiba-tiba muncul di sisi lain tembok — tanpa pernah benar-benar melewatinya. Tanpa energi yang cukup. Seperti sulap, tapi bukan sulap.<br><br>Ini namanya terowongan kuantum. Dan tanpa fenomena ini: matahari tidak akan bisa menyala, dan HP di tangan kamu tidak akan pernah ada.',
+                visual: '🕳️',
+                animKey: 'anim-tunnel-hook',
+                highlight: 'Terowongan kuantum: partikel "menembus" dinding yang mustahil — terjadi tiap saat di inti matahari dan di chip HP kamu',
+            },
+            {
+                type: 'history',
+                title: 'Gamow, 1928: Kenapa Matahari Bisa Menyala?',
+                body: 'George Gamow, fisikawan muda berusia 24 tahun, punya masalah besar. Hitungannya bilang: proton di inti matahari punya energi yang jauh terlalu kecil untuk saling mendekat dan bergabung. Ada tembok energi (gaya tolak listrik antar proton) setinggi 550 keV. Tapi proton rata-rata cuma punya 1.3 keV. Secara fisika klasik — tidak mungkin.<br><br>Tapi jelas, matahari bersinar. Gamow lalu mencoba jawaban yang tidak wajar: dan ketika ia hitung dengan mekanika kuantum yang baru lahir — semuanya cocok. Partikel bisa "bocor" menembus tembok tanpa harus melompatinya.',
+                quote: 'Mekanika kuantum bukan hanya aneh — ia benar. Dan itu yang paling menakutkan.',
+                quoteAuthor: 'George Gamow',
+                visual: '👨‍🔬',
+                history: [
+                    { year: '1900', event: 'Planck: energi bergerak dalam kuanta — lahirnya mekanika kuantum', person: 'Max Planck' },
+                    { year: '1926', event: 'Schrödinger menulis persamaan gelombang — partikel adalah gelombang probabilitas', person: 'Erwin Schrödinger' },
+                    { year: '1928', event: 'Gamow menjelaskan peluruhan alfa via tunneling — terobosan pertama terowongan kuantum', person: 'George Gamow' },
+                    { year: '1928', event: 'Fowler & Nordheim: tunneling menjelaskan emisi elektron dari logam di medan listrik kuat', person: 'Fowler & Nordheim' },
+                    { year: '1981', event: 'Binning & Rohrer membuat STM (Scanning Tunneling Microscope) — pertama melihat atom individual. Nobel 1986.', person: 'Binning & Rohrer, IBM' },
+                    { year: '2022', event: 'Transistor 2nm: elektron tunnel melalui lapisan silikon hanya beberapa atom tebalnya', person: 'TSMC & Samsung' },
+                ],
+            },
+            {
+                type: 'step',
+                title: 'Partikel Bukan Bola — Ia Kabut Peluang',
+                body: 'Kunci dari semuanya ada di sini: partikel kuantum bukan bola keras kecil seperti kelereng. Ia lebih mirip kabut yang menyebar di ruang. Kabut ini disebut fungsi gelombang — ia menggambarkan di mana partikel kemungkinan berada.<br><br>Saat kabut ini menabrak dinding, sebagian besar memantul balik. Tapi sebagian kecil meresap masuk ke dalam dinding — makin ke dalam, kabutnya makin tipis, tapi tidak pernah benar-benar nol. Kalau dindingnya cukup tipis, sisa kabut itu masih terlacak di sisi satunya. Artinya: ada kemungkinan kecil partikel ditemukan di sana — dan kemungkinan itu nyata.',
+                visual: '〰️',
+                animKey: 'anim-tunnel-wave',
+                highlight: 'Peluang tembus ∝ e^(-2κd) · makin tebal dinding → peluang makin kecil secara eksponensial',
+            },
+            {
+                type: 'step',
+                title: 'Satu Atom Lebih Tipis → Peluang Naik 10 Kali Lipat',
+                body: 'Ini bagian yang bikin kepala muter: peluang tembus turun sangat cepat seiring dinding makin tebal. Tambah satu Ångström (lebar satu atom hidrogen) — peluangnya bisa jatuh 10 kali lipat. Begitu pula sebaliknya: tipiskan satu atom — peluang naik 10 kali.<br><br>Inilah yang membuat Scanning Tunneling Microscope (STM) begitu akurat. Ujung jarumnya tinggal beberapa atom dari permukaan — arus yang mengalir lewat terowongan kuantum sangat sensitif terhadap jarak. Geser 0.1 nm saja, arus berubah drastis. Lebih presisi dari cahaya manapun.',
+                visual: '📡',
+                animKey: 'anim-tunnel-thickness',
+                highlight: 'Tipis 1Å → peluang naik 10× · Dasar kerja STM dan flash memory di SSD kamu',
+            },
+            {
+                type: 'step',
+                title: 'Kalau Tidak Ada Terowongan Ini, Matahari Sudah Mati',
+                body: 'Di inti matahari, suhunya 15 juta derajat Kelvin. Panas banget? Iya. Tapi energi rata-rata tiap proton dari suhu itu cuma sekitar 1.3 keV — jauh di bawah tembok Coulomb 550 keV yang harus dilewati agar dua proton bisa berfusi.<br><br>Secara klasik: sudah pasti tidak bakal terjadi. Tapi karena terowongan kuantum, dari sekian banyak tabrakan, sesekali ada satu pasang proton yang berhasil tembus. Kecil sekali peluangnya — tapi di matahari ada sekitar 10⁵⁷ proton yang terus-terusan bergerak. Jumlah besar × peluang kecil = matahari bersinar 4,6 miliar tahun.',
+                visual: '☀️',
+                animKey: 'anim-tunnel-sun',
+                highlight: '1 dari 10²⁸ pasang proton berhasil tiap detik · tapi 10⁵⁷ proton di matahari → cukup hasilkan 3.8×10²⁶ W',
+            },
+            {
+                type: 'scale',
+                title: 'Angka yang Tidak Bisa Dibayangkan',
+                body: 'Ångström (Å) adalah satuan yang digunakan untuk mengukur penghalang tunneling. 1 Å = 0.0000000001 meter. Diameter atom hidrogen ~1 Å. Penghalang tunneling dalam transistor modern: 2–3 nm = 20–30 Å.<br><br>Di transistor 2nm (yang dipakai di chip Apple M4 dan AMD Zen 5), lapisan isolator antara gate dan channel hanya beberapa atom tebalnya. Elektron secara reguler tunnel melewatinya — ini yang menyebabkan "leakage current" di chip modern. Semakin kecil transistor, semakin susah menghentikan tunneling yang tidak diinginkan.',
+                visual: '💻',
+                highlight: 'Transistor 2nm: ~10 atom lebar · 100 miliar transistor di satu chip M4 · tunneling leakage jadi masalah engineering terbesar',
+            },
+            {
+                type: 'scale',
+                title: 'Paradoks: Mustahil tapi Nyata — dan Kita Bergantung Padanya',
+                body: 'Tunneling adalah bukti bahwa alam semesta di level terkecilnya bermain dengan aturan yang sama sekali berbeda dari dunia sehari-hari. Tidak ada analogi yang benar-benar tepat. Tidak ada cara untuk "merasakan" seperti apa.<br><br>Namun kita tidak hanya tahu tentangnya — kita bergantung padanya. Setiap flash memory (SSD, USB drive) bekerja dengan menyimpan dan menghapus data menggunakan tunneling. Setiap MRI medis bergantung pada tunneling elektron di superkonduktor. Enzim dalam tubuhmu menggunakan tunneling proton untuk mempercepat reaksi kimia biologis.',
+                visual: '🧬',
+                highlight: 'Flash memory · MRI · enzim biologi · solar fusion · semua bergantung pada tunneling yang "mustahil secara klasik"',
+            },
+            {
+                type: 'impact',
+                title: 'Warisan: Melihat Atom dengan Jarum Ajaib',
+                body: 'Pada 1981, Gerd Binnig dan Heinrich Rohrer di IBM Zurich membuat alat yang menggunakan tunneling langsung: Scanning Tunneling Microscope. Ujung jarum logam yang sangat tajam (idealnya satu atom di ujungnya) digerakkan melintasi permukaan — arus tunneling yang mengalir sensitif terhadap jarak hingga resolusi sub-atom.<br><br>Untuk pertama kalinya dalam sejarah, manusia bisa melihat — bukan mengira-ngira, tapi benar-benar memetakan — posisi atom individual di permukaan. Binnig dan Rohrer memenangkan Nobel Prize Fisika 1986. STM kemudian menjadi ayah dari seluruh keluarga scanning probe microscopy yang merevolusi nanoteknologi.',
+                visual: '🔬',
+                history: [
+                    { year: '1928', event: 'Gamow: tunneling menjelaskan peluruhan radioaktif alfa — teori pertama', person: 'George Gamow' },
+                    { year: '1957', event: 'Leo Esaki membuat dioda tunnel — Nobel 1973. Pertama kali tunneling di perangkat elektronik', person: 'Leo Esaki' },
+                    { year: '1981', event: 'STM (Scanning Tunneling Microscope) dibuat — melihat atom individual untuk pertama kalinya', person: 'Binnig & Rohrer, IBM' },
+                    { year: '1990', event: 'IBM: 35 atom xenon disusun membentuk logo "IBM" dengan STM — manipulasi atom pertama', person: 'Don Eigler, IBM' },
+                    { year: '2024', event: 'Transistor 2nm di chip modern — tunneling menjadi tantangan engineering terbesar semikonduktor', person: 'TSMC, Samsung, Intel' },
+                ],
+                highlight: 'Dari teori Gamow 1928 → STM Nobel 1986 → transistor 2nm hari ini — semua satu garis lurus tunneling',
+            },
+        ],
+    },
+
     // ── EFEK FOTOLISTRIK ──────────────────────────────────────────────────────
     {
         id: 'photoelectric',

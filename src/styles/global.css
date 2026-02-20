@@ -6151,3 +6151,512 @@ body {
   border-radius: 6px;
   background: var(--bg-3);
 }
+
+/* ── QUANTUM TUNNELING ANIMATIONS ────────────────────────────────────────── */
+
+/* Tunnel Hook: particle bouncing then appearing on other side */
+.ps-anim-tunnel-hook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  width: 100%;
+}
+
+.ps-th-scene {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.ps-th-particle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8);
+  border: 2px solid #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 0 14px rgba(96, 165, 250, 0.6);
+  animation: ps-th-approach 2.4s ease-in-out infinite;
+}
+
+@keyframes ps-th-approach {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  40% {
+    transform: translateX(30px);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  51% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  52% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.ps-th-wall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 0 8px;
+}
+
+.ps-th-wall-label {
+  font-size: 9px;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.ps-th-wall-body {
+  width: 20px;
+  height: 60px;
+  background: linear-gradient(180deg, #475569, #1e293b);
+  border: 1px solid #64748b;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ps-th-wall-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 6px,
+      rgba(255, 255, 255, 0.05) 6px,
+      rgba(255, 255, 255, 0.05) 7px);
+}
+
+.ps-th-other-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ps-th-ghost {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(96, 165, 250, 0.3), rgba(29, 78, 216, 0.15));
+  border: 2px dashed #60a5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #60a5fa;
+  animation: ps-th-ghost-appear 2.4s ease-in-out infinite;
+}
+
+@keyframes ps-th-ghost-appear {
+  0% {
+    opacity: 0.15;
+    box-shadow: none;
+  }
+
+  50% {
+    opacity: 0.15;
+  }
+
+  55% {
+    opacity: 1;
+    box-shadow: 0 0 16px rgba(96, 165, 250, 0.8);
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.15;
+    box-shadow: none;
+  }
+}
+
+.ps-th-emerge-label {
+  font-size: 9px;
+  color: #60a5fa;
+  font-weight: 600;
+  animation: ps-th-ghost-appear 2.4s ease-in-out infinite;
+}
+
+.ps-th-label {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* Tunnel Wave: wave function decay through barrier */
+.ps-anim-tunnel-wave {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  width: 100%;
+}
+
+.ps-tw-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  width: 100%;
+  height: 70px;
+  justify-content: center;
+}
+
+.ps-tw-region {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  flex-direction: column;
+}
+
+.ps-tw-region.tw-left {
+  align-items: flex-end;
+}
+
+.ps-tw-region.tw-right {
+  align-items: flex-start;
+}
+
+.ps-tw-label {
+  font-size: 9px;
+  color: var(--text-3);
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.ps-tw-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 55px;
+}
+
+.ps-tw-bar {
+  width: 8px;
+  border-radius: 3px 3px 0 0;
+  background: #3b82f6;
+  animation: ps-tw-pulse 1.2s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * 0.15s);
+  height: 40px;
+}
+
+.ps-tw-bar:nth-child(odd) {
+  height: 38px;
+}
+
+.ps-tw-bar:nth-child(even) {
+  height: 50px;
+}
+
+.ps-tw-bar.tw-small {
+  background: rgba(59, 130, 246, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+}
+
+.ps-tw-bar.tw-small:nth-child(odd) {
+  height: 14px;
+}
+
+.ps-tw-bar.tw-small:nth-child(even) {
+  height: 20px;
+}
+
+@keyframes ps-tw-pulse {
+  from {
+    opacity: 0.7;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.ps-tw-barrier {
+  width: 22px;
+  height: 55px;
+  background: linear-gradient(180deg, #7c3aed, #4c1d95);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin: 0 4px;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+
+.ps-tw-bar-label {
+  font-size: 11px;
+  color: white;
+  font-weight: 700;
+}
+
+.ps-tw-bar-sub {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ps-tw-formula {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  font-family: monospace;
+  padding: 5px 10px;
+  background: var(--bg-3);
+  border-radius: 6px;
+}
+
+/* Tunnel Thickness: bar chart */
+.ps-anim-tunnel-thick {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  width: 100%;
+}
+
+.ps-tt-title {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  font-weight: 600;
+}
+
+.ps-tt-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ps-tt-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-tt-d {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: right;
+}
+
+.ps-tt-bar {
+  flex: 1;
+  height: 14px;
+  background: var(--bg-3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ps-tt-fill {
+  height: 100%;
+  border-radius: 4px;
+  animation: ps-tt-grow 1s ease-out both;
+}
+
+@keyframes ps-tt-grow {
+  from {
+    width: 0 !important;
+  }
+}
+
+.ps-tt-prob {
+  font-size: 11px;
+  color: var(--text-3);
+  min-width: 36px;
+  font-family: monospace;
+}
+
+.ps-tt-note {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: var(--bg-3);
+}
+
+/* Tunnel Sun: Coulomb barrier diagram */
+.ps-anim-tunnel-sun {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+  align-items: center;
+}
+
+.ps-ts-diagram {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.ps-ts-proton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ps-ts-p-label {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f59e0b, #b45309);
+  border: 2px solid #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.ps-ts-proton.p1 .ps-ts-p-label {
+  animation: ps-ts-p1-move 3s ease-in-out infinite;
+}
+
+.ps-ts-proton.p2 .ps-ts-p-label {
+  animation: ps-ts-p2-glow 3s ease-in-out infinite;
+}
+
+@keyframes ps-ts-p1-move {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(8px);
+  }
+
+  55% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes ps-ts-p2-glow {
+
+  0%,
+  40% {
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+  }
+
+  60%,
+  80% {
+    box-shadow: 0 0 24px rgba(245, 158, 11, 1), 0 0 40px rgba(251, 191, 36, 0.6);
+  }
+
+  100% {
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+  }
+}
+
+.ps-ts-p-energy {
+  font-size: 9px;
+  color: var(--text-3);
+  text-align: center;
+}
+
+.ps-ts-barrier-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.ps-ts-barrier-peak {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  gap: 2px;
+}
+
+.ps-ts-peak-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.ps-ts-peak-label {
+  font-size: 9px;
+  color: var(--text-3);
+}
+
+.ps-ts-tunnel-arrow {
+  font-size: 10px;
+  color: #22c55e;
+  font-weight: 700;
+  animation: ps-ts-arrow-blink 3s ease-in-out infinite;
+}
+
+@keyframes ps-ts-arrow-blink {
+
+  0%,
+  40% {
+    opacity: 0.2;
+  }
+
+  55%,
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.ps-ts-result {
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--bg-3);
+  font-family: monospace;
+}

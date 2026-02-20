@@ -341,6 +341,14 @@ function buildStepSlide(slide: StorySlide, idx: number): string {
     atomAnimation = buildPhotoFotonAnim();
   } else if (animClass === 'anim-photo-threshold') {
     atomAnimation = buildPhotoThresholdAnim();
+  } else if (animClass === 'anim-tunnel-hook') {
+    atomAnimation = buildTunnelHookAnim();
+  } else if (animClass === 'anim-tunnel-wave') {
+    atomAnimation = buildTunnelWaveAnim();
+  } else if (animClass === 'anim-tunnel-thickness') {
+    atomAnimation = buildTunnelThicknessAnim();
+  } else if (animClass === 'anim-tunnel-sun') {
+    atomAnimation = buildTunnelSunAnim();
   } else {
     atomAnimation = `<div class="ps-step-visual-default">${slide.visual ?? '⚛️'}</div>`;
   }
@@ -958,3 +966,98 @@ function buildRadiumGlowAnim(): string {
   `;
 }
 
+function buildTunnelHookAnim(): string {
+  return `
+    <div class="ps-anim-tunnel-hook">
+      <div class="ps-th-scene">
+        <div class="ps-th-particle">e⁻</div>
+        <div class="ps-th-wall">
+          <div class="ps-th-wall-label">Penghalang</div>
+          <div class="ps-th-wall-body"></div>
+        </div>
+        <div class="ps-th-other-side">
+          <div class="ps-th-ghost">e⁻</div>
+          <div class="ps-th-emerge-label">Muncul di sini!</div>
+        </div>
+      </div>
+      <div class="ps-th-label">Klasik: mustahil · Kuantum: bisa, tapi kecil peluangnya ✓</div>
+    </div>
+  `;
+}
+
+function buildTunnelWaveAnim(): string {
+  return `
+    <div class="ps-anim-tunnel-wave">
+      <div class="ps-tw-container">
+        <div class="ps-tw-region tw-left">
+          <div class="ps-tw-label">Gelombang masuk</div>
+          <div class="ps-tw-wave tw-incoming">
+            ${Array.from({ length: 6 }, (_, i) => `<div class="ps-tw-bar" style="--i:${i}"></div>`).join('')}
+          </div>
+        </div>
+        <div class="ps-tw-barrier">
+          <div class="ps-tw-bar-label">Φ</div>
+          <div class="ps-tw-bar-sub">V−E</div>
+        </div>
+        <div class="ps-tw-region tw-right">
+          <div class="ps-tw-label">Bocor (lemah)</div>
+          <div class="ps-tw-wave tw-transmitted">
+            ${Array.from({ length: 4 }, (_, i) => `<div class="ps-tw-bar tw-small" style="--i:${i}"></div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="ps-tw-formula">ψ(x) = A·e^(−κx) di dalam penghalang</div>
+    </div>
+  `;
+}
+
+function buildTunnelThicknessAnim(): string {
+  const barriers = [
+    { d: '1 Å', prob: '10⁻¹', bar: 85, color: '#22c55e' },
+    { d: '2 Å', prob: '10⁻²', bar: 55, color: '#f59e0b' },
+    { d: '3 Å', prob: '10⁻³', bar: 30, color: '#ef4444' },
+    { d: '5 Å', prob: '10⁻⁵', bar: 10, color: '#7c3aed' },
+  ];
+  return `
+    <div class="ps-anim-tunnel-thick">
+      <div class="ps-tt-title">Peluang Tembus vs Ketebalan Dinding</div>
+      <div class="ps-tt-bars">
+        ${barriers.map(b => `
+          <div class="ps-tt-row">
+            <div class="ps-tt-d" style="color:${b.color}">${b.d}</div>
+            <div class="ps-tt-bar">
+              <div class="ps-tt-fill" style="width:${b.bar}%;background:${b.color}"></div>
+            </div>
+            <div class="ps-tt-prob">${b.prob}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="ps-tt-note">Tambah 1Å tebal → peluang turun 10 kali</div>
+    </div>
+  `;
+}
+
+function buildTunnelSunAnim(): string {
+  return `
+    <div class="ps-anim-tunnel-sun">
+      <div class="ps-ts-diagram">
+        <div class="ps-ts-proton p1">
+          <div class="ps-ts-p-label">p⁺</div>
+          <div class="ps-ts-p-energy">1.3 keV</div>
+        </div>
+        <div class="ps-ts-barrier-wrap">
+          <div class="ps-ts-barrier-peak">
+            <span class="ps-ts-peak-val">550 keV</span>
+            <span class="ps-ts-peak-label">Tembok Coulomb</span>
+          </div>
+          <div class="ps-ts-tunnel-arrow">⇢ tembus lewat terowongan!</div>
+        </div>
+        <div class="ps-ts-proton p2">
+          <div class="ps-ts-p-label">p⁺</div>
+          <div class="ps-ts-p-energy">berfusi!</div>
+        </div>
+      </div>
+      <div class="ps-ts-result">☀️ 10⁵⁷ proton × peluang kecil = cukup → 3.8×10²⁶ W</div>
+    </div>
+  `;
+}
