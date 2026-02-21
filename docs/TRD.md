@@ -1,8 +1,8 @@
 # TRD — Technical Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table  
-**Version:** 2.0  
+**Version:** 2.1  
 **Date:** 2026-02-21  
-**Status:** Sync dengan PRD v2.0
+**Status:** Sync dengan PRD v2.1
 
 ---
 
@@ -90,7 +90,7 @@ Atomic adalah **Single Page Application (SPA)** client-only. Tidak ada backend, 
 | `data/discoverers.ts` | Data penemu per elemen: foto, bio, Wikipedia | ~250KB |
 | `data/origins.ts` | Asal usul kosmik per elemen (nukleosintesis) | ~75KB |
 | `data/phenomena.ts` | 27 fenomena, 6 kategori | ~44KB |
-| `data/phenomenon-stories.ts` | Narasi lengkap per fenomena | ~110KB |
+| `data/phenomenon-stories.ts` | Narasi lengkap 27 fenomena (semua kategori) | **~210KB** |
 | `data/molecules.ts` | Galeri molekul 3D (atom coords, bonds, desc) | ~35KB |
 
 #### Interface Utama
@@ -145,7 +145,7 @@ interface Molecule {
 | `Explore.ts` | `/explore` | How-to-read banner + Tabel Periodik + Galeri Molekul 3D |
 | `ElementDetail.ts` | `/element/:n` | 3D atom, data, Card Penemu, Card Asal Kosmik, Related |
 | `DiscovererStory.ts` | `/discoverer/:sym` | Kisah penemu per elemen |
-| `MoleculeBuilder.ts` | `/molecule` | 3D molecule builder, mode bebas |
+| `MoleculeBuilder.ts` | `/molecule` | 3D molecule builder, mode bebas, **Chemistry Deduction Engine** |
 | `PhenomenaList.ts` | `/phenomena` | Grid 27 fenomena, filter kategori, search |
 | `PhenomenaStory.ts` | `/phenomena/:id` | Storyteller slide per fenomena |
 | `AtomHistory.ts` | `/atom-history` | 22 slide cinematic sejarah atom |
@@ -190,6 +190,95 @@ new AtomScene(canvas, colorHex)
 - Baris 9: Aktinida (Ac–Lr), row 9 col 4–17
 
 **Posisi elemen** hardcoded di `GRID_POS` Map `{n: [row, col]}`
+
+---
+
+### 3.6 Phenomena Story System
+
+#### Interface
+
+```typescript
+type SlideType = 'hook' | 'history' | 'step' | 'scale' | 'impact';
+
+interface HistoryEntry {
+  year: string;
+  event: string;
+  person: string;
+}
+
+interface StorySlide {
+  type: SlideType;
+  title: string;
+  body: string;           // HTML string (boleh <br>, <b>, <i>)
+  visual: string;         // emoji representasi
+  animKey?: string;       // kunci animasi CSS
+  highlight?: string;     // satu baris ringkasan · dipisah interpunct
+  quote?: string;         // kutipan ilmuwan
+  quoteAuthor?: string;
+  history?: HistoryEntry[]; // timeline kronologis
+}
+
+interface PhenomenonStory {
+  id: string;             // match dengan phenomena.ts id
+  slides: StorySlide[];
+}
+```
+
+#### Cakupan Konten (27 Fenomena, 6 Kategori)
+
+| Kategori | ID | Jumlah Story |
+|----------|----|--------------|
+| `nuclear` | nucleosynthesis, antimatter, fission, fusion, chain-reaction, radioactivity | 6 |
+| `quantum` | superposition, quantum-tunneling, photoelectric | 3 |
+| `everyday` | combustion, rusting, crystal-structure, stability-principle, noble-metals | 5 |
+| `cosmos` | nucleosynthesis (cosmos variant) | — |
+| `life` | photosynthesis, dna-atoms, human-atoms, plant-atoms, earth-atoms, sun-atoms, atom-journey | 7 |
+| `fiction` | palladium-arc, vibranium, kryptonite, unobtanium, adamantium, dilithium | 6 |
+
+#### Slide Type Guide
+
+| Type | Fungsi | Karakteristik |
+|------|--------|---------------|
+| `hook` | Pembukaan dramatis | Fakta kontra-intuitif atau drama historis |
+| `history` | Kisah manusia di balik penemuan | Quote ilmuwan + timeline + drama personal |
+| `step` | Penjelasan mekanisme sains | Breakdown proses, analogi, data spesifik |
+| `scale` | Perbandingan skala / analogi | Angka kosmik → skala manusia |
+| `impact` | Dampak & relevansi hari ini | Dunia nyata, teknologi, "verdict" |
+
+#### Storytelling Style Guide (Zack Snyder + Nolan)
+
+Lihat detail di: `docs/PRD.md Section 1.6`
+
+Ringkasan teknis untuk penulis konten:
+- Setiap story harus punya **minimal 5 slide**
+- Slide pertama (`hook`) harus memiliki `highlight` yang kompak
+- Slide `history` harus punya entry `history[]` dengan ≥2 entri kronologis
+- `body` HTML dirender langsung — boleh `<b>`, `<br>`, `<i>`, tapi tidak `<script>`
+- `highlight` menggunakan format: `Fakta A · Fakta B · Fakta C`
+
+#### Chemistry Deduction Engine (MoleculeBuilder.ts)
+
+Fitur tambahan untuk mode bebas Kimia Lab:
+
+```typescript
+type DeductionLevel = 'danger' | 'warning' | 'interesting' | 'awesome' | 'curious';
+
+interface Deduction {
+  icon: string;
+  level: DeductionLevel;
+  id: string;    // teks Bahasa Indonesia
+  en: string;    // teks Bahasa Inggris
+}
+
+// Rule categories:
+// - DANGER: logam berat toksik (Pb, Hg, Cd, As, Tl, Cr)
+// - WARNING: halogen kuat, alkali + air, senyawa asam kuat
+// - INTERESTING: kovalen vs ionik (electronegativity diff)
+// - AWESOME: reaksi energetik, logam + nonlogam alkali
+// - CURIOUS: gas mulia, kombinasi tidak umum
+```
+
+Output dirender sebagai kartu berwarna di panel kanan MoleculeBuilder, per level severity.
 
 ---
 
@@ -296,167 +385,143 @@ interface ElementPhenomena {
 
 ---
 
-## 8. Arsitektur Subscription & Payment (Xendit + Postgres)
+## 8. Backend & Subscription Architecture
 
-> Status: **Planned — belum diimplementasikan.** Dicatat sebagai blueprint untuk saat backend diperlukan.
+> **Status: PLANNED** \u2014 Belum diimplementasikan. Detail lengkap: [`docs/BACKEND_PLAN.md`](./BACKEND_PLAN.md)
+>
+> Section ini adalah ringkasan teknis. Untuk skema DB lengkap, API routes, dan security checklist, lihat `BACKEND_PLAN.md`.
 
-### 8.1 Prinsip Keamanan Utama
+### 8.1 Platform Architecture
+
+**SAINS bukan hanya Atomic.** Backend satu, banyak produk.
+
+```
+┌───────────────────────────────────────────────────────────────┐
+│  FRONTEND (Static \u2014 per produk, deploy terpisah)              │
+│  sains.id/atomic · sains.id/energi · sains.id/biologi        │
+│  sains.id/pricing/* · sains.id/admin                         │
+└───────────────────────────────┬───────────────────────────────┘
+                                 │ HTTPS
+                 ┌───────────────▼───────────────┐
+                 │     api.sains.id               │
+                 │     Node.js 22 + Hono          │
+                 │     Railway                    │
+                 └───────────────┬───────────────┘
+                                 │
+              ┌──────────────────┼──────────────────┐
+              │                  │                  │
+    ┌─────────▼──────┐  ┌───────▼───────┐  ┌──────▼──────┐
+    │  Supabase      │  │  Xendit       │  │  Resend     │
+    │  Postgres      │  │  Payment      │  │  Email      │
+    └────────────────┘  └───────────────┘  └────────────┘
+```
+
+Setiap produk di frontend hanya mengirimkan header `X-Product: atomic` ke setiap request. Backend dan DB satu, dibedakan oleh `product_id` di tabel.
+
+### 8.2 Tipe User & Session
+
+| Tipe | Lifetime | Session Aktif | Login Limit |
+|------|---------|---------------|-------------|
+| `guest` | 48 jam | 1 | Maks 3x login |
+| `subscriber` | Sesuai plan | 1 | Unlimited |
+| `admin` | Selamanya | 2 | Unlimited |
+
+**Single session rule:** Login baru → session lama di-revoke otomatis + catat di `anomaly_logs`.
+
+**Guest user:** Tidak self-register. Admin generate token via dashboard → bagikan link → user masukkan email/HP (untuk rekap) → dapat akses 24 jam per session.
+
+### 8.3 Token Architecture
+
+```
+Access Token (JWT, httpOnly cookie, exp: 1 jam):
+  Payload: { sub, email, product, type, exp, iat }
+
+Refresh Token (opaque hash, httpOnly cookie, exp: 30 hari):
+  Disimpan di DB sebagai bcrypt hash
+  Field: user_id, device_fingerprint, ip, user_agent, expires_at
+```
+
+Prinsip kunci:
+- JWT **tidak** di localStorage. Selalu httpOnly cookie.
+- RT disimpan sebagai **hash**, bukan plaintext.
+- Setiap request butuh validasi ke DB (`sessions` + `subscriptions.expires_at`).
+
+### 8.4 Pricing \u2014 3 Segmen × 4 Durasi per Produk
+
+```
+                Bulanan  3-Bulan  6-Bulan  Tahunan
+segment=global   150rb    400rb    700rb   1.200rb
+segment=student   25rb     65rb    110rb     180rb
+segment=parent    89rb    239rb    399rb     699rb
+```
+
+Harga disimpan di tabel `pricing_plans` \u2014 dapat diubah admin tanpa deploy ulang. Tiga landing page terpisah dengan copywriting per segmen, semua checkout ke Xendit yang sama.
+
+### 8.5 Anomaly Detection \u2014 Anti Multi-User Sharing
+
+Score-based system. Events yang meningkatkan skor:
+
+| Event | Poin |
+|-------|------|
+| Session displaced (login baru) | +5 |
+| IP berubah < 1 jam | +8 |
+| Negara berbeda dalam 24 jam | +15 |
+| > 3 displaced dalam 7 hari | +20 |
+
+Threshold: `≥25` \u2192 warning email \u2192 `≥50` \u2192 auto-lock. Admin dapat override dari dashboard.
+
+### 8.6 Core Database Tables
+
+```
+products           \u2014 'atomic', 'energi', 'biologi', ...
+pricing_plans      \u2014 segment × durasi × harga (bisa update tanpa deploy)
+users              \u2014 subscriber + admin
+guest_tokens       \u2014 token guest, max_logins, expires_at
+subscriptions      \u2014 per user, per product, per plan
+sessions           \u2014 refresh tokens + device_fp + ip logging
+anomaly_logs       \u2014 event scoring per user
+access_logs        \u2014 audit trail semua request terauth
+```
+
+Full schema: lihat `docs/BACKEND_PLAN.md` Section 6.
+
+### 8.7 Security Principles
 
 > **Aturan nomor 1: server tidak pernah percaya client.**
 
-Semua keputusan akses dibuat di **backend**, bukan di frontend. Frontend hanya menampilkan apa yang diizinkan server.
+- ❌ `if (localStorage.isPremium)` \u2014 bisa dimanipulasi DevTools
+- ❌ Konten premium di bundle JS \u2014 bisa di-extract tanpa login
+- ✅ Setiap request divalidasi ke DB: session aktif + subscription belum expired
+- ✅ Xendit webhook: selalu verifikasi `X-Callback-Token` header
+- ✅ Rate limiting: login max 5/menit per IP, register max 3/jam per IP
+- ✅ Cookie: `httpOnly` + `Secure` + `SameSite=Strict`
 
-- ❌ `if (localStorage.isPremium)` — bisa dimanipulasi siapapun via DevTools
-- ❌ Konten premium di dalam bundle JS — bisa di-extract tanpa login
-- ❌ JWT hanya dicek formatnya tanpa query DB — bisa dipalsukan
-- ✅ Setiap request ke konten/API divalidasi ke Postgres setiap saat
-
-### 8.2 User Journey & Flow
-
-```
-[1] User buka atomic.com
-         │
-         ▼
-[2] Landing Page (PUBLIK)
-    • Deskripsi produk, harga, preview terbatas
-    • Tombol "Daftar & Bayar"
-         │
-         ▼ klik Daftar
-[3] Form Registrasi → Backend INSERT user (is_active=FALSE)
-         │
-         ▼ submit
-[4] Redirect ke Xendit Payment Page
-    • Backend buat invoice via Xendit API
-    • User bayar (QRIS / VA BCA / GoPay / OVO / CC)
-         │
-    ┌────┤ Xendit callback
-    │    │
-    │    ▼ BAYAR SUKSES
-    │ [5] Xendit kirim webhook POST ke backend
-    │    • Backend verifikasi X-Callback-Token (WAJIB)
-    │    • Backend UPDATE users SET is_active=TRUE
-    │    • Backend INSERT subscriptions (expires_at = +1 tahun)
-    │    • Backend kirim email via Resend (password sementara)
-    │
-    │    ▼ BAYAR GAGAL / EXPIRED
-    │ [5b] UPDATE pending_users SET status='expired'
-    │      Kirim email "Pembayaran gagal, coba lagi"
-    └──────────────
-         │
-         ▼
-[6] User Login → POST /auth/login → JWT (httpOnly cookie, 7 hari)
-         │
-         ▼
-[7] gate.js cek JWT ke backend SEBELUM load app bundle
-    • Valid → inject <script src="/app.js">
-    • Tidak valid → redirect /login (app.js TIDAK dikirim)
-```
-
-### 8.3 Database Schema (Postgres)
-
-```sql
-CREATE TABLE users (
-  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email         TEXT UNIQUE NOT NULL,
-  name          TEXT NOT NULL,
-  password_hash TEXT NOT NULL,          -- bcrypt, saltRounds=12
-  is_active     BOOLEAN DEFAULT FALSE,
-  created_at    TIMESTAMPTZ DEFAULT now()
-);
-
-CREATE TABLE subscriptions (
-  id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id           UUID REFERENCES users(id) ON DELETE CASCADE,
-  plan              TEXT NOT NULL DEFAULT 'yearly',
-  xendit_invoice_id TEXT UNIQUE,
-  xendit_payment_id TEXT,
-  amount_paid       INTEGER,            -- dalam rupiah
-  paid_at           TIMESTAMPTZ,
-  expires_at        TIMESTAMPTZ NOT NULL,
-  is_active         BOOLEAN DEFAULT TRUE,
-  created_at        TIMESTAMPTZ DEFAULT now()
-);
-
-CREATE TABLE refresh_tokens (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id     UUID REFERENCES users(id) ON DELETE CASCADE,
-  token_hash  TEXT NOT NULL,
-  device_info TEXT,
-  expires_at  TIMESTAMPTZ NOT NULL,    -- 30 hari
-  revoked     BOOLEAN DEFAULT FALSE,
-  created_at  TIMESTAMPTZ DEFAULT now()
-);
-
-CREATE INDEX idx_subscriptions_user_id ON subscriptions(user_id);
-CREATE INDEX idx_subscriptions_expires ON subscriptions(expires_at);
-CREATE INDEX idx_refresh_tokens_user   ON refresh_tokens(user_id);
-```
-
-### 8.4 Backend API Routes
+### 8.8 Implementasi \u2014 Fase Backend
 
 ```
-POST /auth/register          → buat pending user + Xendit invoice
-POST /auth/login             → verifikasi email+password, return JWT
-POST /auth/refresh           → tukar refresh token → JWT baru
-POST /auth/logout            → revoke refresh token
-GET  /auth/me                → return user info (butuh JWT valid)
-
-POST /payment/create-invoice → buat Xendit invoice untuk user
-POST /xendit/webhook         → terima callback dari Xendit (HMAC verified)
-
-GET  /app                    → serve index.html HANYA jika JWT valid
-GET  /api/content/:id        → serve konten (butuh JWT + subscription aktif)
+Phase BE-1: Foundation    \u2192 Hono + Drizzle + Auth + Single session rule
+Phase BE-2: Subscription  \u2192 Pricing plans + Xendit + Access check endpoint
+Phase BE-3: Guest + Security \u2192 Guest token flow + Anomaly engine + IP logging
+Phase BE-4: Multi-Product + Admin \u2192 Products CRUD + Admin dashboard
+Phase BE-5: Hardening     \u2192 Rate limit + audit + monitoring
 ```
 
-### 8.5 Xendit Webhook — Titik Kritis
-
-```typescript
-app.post('/xendit/webhook', (req, res) => {
-  const callbackToken = req.headers['x-callback-token'];
-  if (callbackToken !== process.env.XENDIT_WEBHOOK_TOKEN) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  const { status, external_id, id } = req.body;
-  if (status === 'PAID') {
-    await db.users.update({ is_active: true }, { where: { id: external_id } });
-    await db.subscriptions.create({ user_id: external_id, xendit_payment_id: id });
-    await sendActivationEmail(external_id);
-  }
-  res.status(200).send('OK');
-});
-```
-
-### 8.6 JWT & Session Security
-
-```
-JWT Payload: { sub: "uuid", email, exp: +7hari, iat }
-Disimpan: httpOnly cookie (BUKAN localStorage)
-  → httpOnly = tidak bisa dibaca JS
-  → Secure = hanya HTTPS
-  → SameSite=Strict = anti-CSRF
-```
-
-### 8.7 Anti-Abuse
-
-| Ancaman | Mitigasi |
-|---------|---------|
-| Brute force login | Rate limiting: max 5 attempt/menit per IP |
-| Sharing akun | Max 2 active session per user_id |
-| Fake webhook Xendit | Verifikasi `X-Callback-Token` header |
-| JWT kadaluarsa dipakai | `exp` field + selalu query DB |
-| Refund lalu tetap pakai | Xendit refund webhook → `is_active = FALSE` |
-
-### 8.8 Tech Stack Backend (Saat Diperlukan)
+### 8.9 Tech Stack Backend
 
 | Komponen | Teknologi |
 |----------|-----------|
-| Runtime | Node.js 20+ |
-| Framework | **Hono** (ringan, Cloudflare Workers-ready) |
+| Runtime | **Node.js 22** |
+| Framework | **Hono** (TypeScript-first, Cloudflare-ready) |
 | Database ORM | **Drizzle ORM** + Postgres |
 | Auth | `jsonwebtoken` + `bcryptjs` |
 | Email | **Resend** |
-| Payment | **Xendit** (QRIS, VA, GoPay, OVO, CC) |
-| Hosting backend | Railway / Render / VPS |
+| Payment | **Xendit** (QRIS, VA BCA, OVO, GoPay, CC) |
+| Geolocation | ip-api.com (free) atau MaxMind GeoIP2 |
+| Logging | **Pino** (JSON structured) |
+| Validation | **Zod** |
+| Hosting BE | **Railway** |
 | Hosting DB | **Supabase** Postgres |
 
-> **Implikasi:** Jika backend diimplementasikan, Atomic tidak bisa lagi di-deploy sebagai pure static (Netlify/Vercel). Butuh server Node.js atau Cloudflare Workers.
+> **Implikasi deploy:** Dengan backend, Atomic tidak lagi pure static. Frontend tetap di Vercel/Netlify. Backend di Railway. Cookie cross-origin butuh konfigurasi CORS dengan `credentials: true`.
+
+

@@ -6,6 +6,8 @@ import { t, getLang } from '../core/i18n';
 import { navigate } from '../core/router';
 import { getDiscoverer } from '../data/discoverers';
 import { getOrigin } from '../data/origins';
+import { getAbundance } from '../data/elementAbundance';
+import { getTopPhenomenaForElement, PHENOMENON_CATEGORIES } from '../data/elementPhenomena';
 
 
 export function renderElementDetail(container: HTMLElement, n: number) {
@@ -264,6 +266,92 @@ export function renderElementDetail(container: HTMLElement, n: number) {
 
         originSec.appendChild(originCard);
         right.appendChild(originSec);
+    }
+
+    // ── Abundance Card ────────────────────────────────────────────────────
+    const abundance = getAbundance(el.sym);
+    if (abundance) {
+        const abSec = document.createElement('div');
+        abSec.style.marginTop = '20px';
+        abSec.innerHTML = `<div class="section-title">${isEN ? '🌍 Where Is It Found?' : '🌍 Di Mana Ditemukan?'}</div>`;
+
+        const abCard = document.createElement('div');
+        abCard.className = 'abundance-card';
+        abCard.innerHTML = `
+            <div class="abundance-grid">
+                <div class="abundance-section">
+                    <div class="abundance-section-label">🪨 ${isEN ? 'Earth Crust' : 'Kerak Bumi'}</div>
+                    <div class="abundance-section-value">${abundance.earthCrust}</div>
+                </div>
+                <div class="abundance-section">
+                    <div class="abundance-section-label">✨ ${isEN ? 'Universe' : 'Alam Semesta'}</div>
+                    <div class="abundance-section-value">${abundance.universeAbundance}</div>
+                </div>
+            </div>
+            <div class="abundance-cosmic">
+                <div class="abundance-cosmic-label">🌌 ${isEN ? 'Cosmic Origin' : 'Asal Kosmik'}</div>
+                <div class="abundance-cosmic-text">${abundance.cosmicOrigin}</div>
+            </div>
+            ${abundance.earthSources.length ? `
+            <div class="abundance-sources">
+                <div class="abundance-sources-label">⛏ ${isEN ? 'Main Sources' : 'Sumber Utama'}</div>
+                <div class="abundance-chips">
+                    ${abundance.earthSources.map(s => `<span class="abundance-chip mineral-chip">${s}</span>`).join('')}
+                </div>
+            </div>
+            ` : ''}
+            ${abundance.worldLocations.length ? `
+            <div class="abundance-sources">
+                <div class="abundance-sources-label">📍 ${isEN ? 'Main Producers' : 'Penghasil Utama'}</div>
+                <div class="abundance-chips">
+                    ${abundance.worldLocations.map(loc => `<span class="abundance-chip location-chip">${loc}</span>`).join('')}
+                </div>
+            </div>
+            ` : ''}
+            ${abundance.naturalForms.length ? `
+            <div class="abundance-sources">
+                <div class="abundance-sources-label">🔮 ${isEN ? 'Natural Forms' : 'Bentuk Alami'}</div>
+                <div class="abundance-chips">
+                    ${abundance.naturalForms.map(f => `<span class="abundance-chip form-chip">${f}</span>`).join('')}
+                </div>
+            </div>
+            ` : ''}
+        `;
+        abSec.appendChild(abCard);
+        right.appendChild(abSec);
+    }
+
+    // ── Related Phenomena Card ────────────────────────────────────────────
+    const relatedPhenomena = getTopPhenomenaForElement(el.sym);
+    if (relatedPhenomena.length > 0) {
+        const phSec = document.createElement('div');
+        phSec.style.marginTop = '20px';
+        phSec.innerHTML = `<div class="section-title">${isEN ? '⚡ Related Phenomena' : '⚡ Fenomena Terkait'}</div>`;
+
+        const phGrid = document.createElement('div');
+        phGrid.className = 'elem-ph-grid';
+
+        relatedPhenomena.forEach(ph => {
+            const catStyle = PHENOMENON_CATEGORIES[ph.category];
+            const chip = document.createElement('button');
+            chip.className = 'elem-ph-chip';
+            chip.setAttribute('data-ph-id', ph.id);
+            chip.style.setProperty('--ph-color', catStyle.color);
+            chip.style.setProperty('--ph-bg', catStyle.bg);
+            chip.innerHTML = `
+                <div class="elem-ph-chip-icon">${ph.icon}</div>
+                <div class="elem-ph-chip-body">
+                    <div class="elem-ph-chip-title">${isEN ? ph.titleEn : ph.title}</div>
+                    <div class="elem-ph-chip-cat" style="color:${catStyle.color}">${catStyle.label}</div>
+                </div>
+                <div class="elem-ph-chip-arrow">→</div>
+            `;
+            chip.addEventListener('click', () => navigate(`/phenomena/${ph.id}`));
+            phGrid.appendChild(chip);
+        });
+
+        phSec.appendChild(phGrid);
+        right.appendChild(phSec);
     }
 
     // Description

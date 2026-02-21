@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 2.0  
+**Version:** 2.2  
 **Date:** 2026-02-21  
-**Status:** Phase 1 ✅ SELESAI · Next: Kimia Lab Rebuild (Mode Tantangan)
+**Status:** Phase 1 ✅ SELESAI · Phenomena Stories ✅ SELESAI · Next: Kimia Lab + Backend Plan
 
 ---
 
@@ -32,6 +32,41 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 | **Wow Eksistensial** | "Setiap atom di tubuhmu pernah berada di dalam bintang." | Mengubah cara pandang tentang diri dan alam semesta |
 
 **Atomic mengejar Wow Eksistensial.** Visual hanyalah kendaraan — isinya adalah kisah yang menggetarkan.
+
+---
+
+## 1.6 Panduan Gaya Story Telling — Zack Snyder + Christopher Nolan
+
+> **Referensi direktorial:** Semua narasi dalam Atomic mengikuti pendekatan sinematik dua sutradara ini secara bersamaan.
+
+### 🎬 Filosofi Gabungan
+
+| Elemen | Zack Snyder Style | Christopher Nolan Style |
+|--------|-------------------|-------------------------|
+| **Tone** | Epik, berat, kontra-intuitif | Intelektual, berlapis, dense information |
+| **Pembukaan** | Hook visual yang dramatis dan mengejutkan | Fakta yang membalik asumsi umum |
+| **Protagonis** | Manusia di tengah kekuatan kosmik | Individu yang mengubah cara pandang dunia |
+| **Tempo** | Slow-burn yang membangun | Plot twist & revelation berlapis |
+| **Stakes** | "Ini lebih besar dari kamu" | "Ini cara kerja realitas yang sebenarnya" |
+| **Akhir** | Resonansi emosional yang melekat | Pertanyaan yang terus mengusik pikiran |
+
+### 📝 Aturan Penulisan
+
+1. **Hook = harus mengejutkan atau membalik asumsi** — Jangan mulai dengan definisi. Mulai dengan drama (*"Tahun 1925. Cecilia Payne diberitahu bahwa temuannya yang benar 'hampir pasti salah.'"*)
+2. **Manusia dulu, sains kemudian** — Setiap fenomena dimulai dari manusianya: ketakutan, ambisi, kekeliruan, atau keberaniannya
+3. **Stakes selalu kosmik** — Bahkan fakta kecil dihubungkan ke implikasi yang menggetarkan (*"4 gram besi di tubuhmu lebih penting dari 18 kg karbonmu"*)
+4. **Kalimat pendek seperti puisi** — Paragraf dipotong di tempat yang tidak terduga. Satu kalimat bisa satu paragraf.
+5. **Data sebagai punchline** — Angka bukan untuk mengisi teks, tapi untuk menjatuhkan rahang (*"Seluruh antimateri yang pernah dibuat manusia tidak cukup untuk merebus secangkir teh."*)
+6. **Sejarah adalah thriller** — Ilmuwan yang diabaikan, dihukum mati, ditipu, atau ditemukan secara tidak sengaja — ini adalah plot twist nyata
+7. **Selalu tutup dengan pertanyaan atau ironi yang mengusik** — Bukan kesimpulan yang neat, tapi sesuatu yang membuat pembaca berpikir semalaman
+
+### 🎯 Contoh Penerapan
+
+```
+Snyder: "Di makam Tutankhamun yang dibuka 3.300 tahun kemudian, mahkota emas masih berkilap sempurna."
+Nolan:  "Bukan keajaiban — efek relativistik membuat elektron emas bergerak mendekati kecepatan cahaya."
+Gabungan: Hook dramatis → mekanisme sains yang mengejutkan → ironi kosmik
+```
 
 ---
 
@@ -96,6 +131,8 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 | **Explore** — banner cara baca tabel + tabel periodik + galeri molekul 3D | ✅ |
 | **Sejarah Atom** — 22 slide cinematic, 6 babak (Democritus → Schrödinger) | ✅ |
 | **Fenomena Atom** — 27 fenomena, 6 kategori, filter + storyteller slide | ✅ |
+| **Phenomena Stories** — narasi lengkap semua 27 fenomena (nuclear, quantum, everyday, cosmos, life, fiction) | ✅ |
+| **Kimia Lab: Chemistry Deduction Engine** — deduksi kimiawi atom bebas, rule-based engine, warna severity | ✅ |
 | **Discoverer Story** — kisah penemu per elemen, route `/discoverer/:sym` | ✅ |
 | **Kimia Lab (MoleculeBuilder)** — mode bebas, 3D builder | ✅ |
 | **Dark/Light theme** — persisted localStorage | ✅ |
@@ -166,7 +203,72 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 
 ---
 
-## 7. Non-Functional Requirements
+## 7. Backend & Subscription Plan
+
+> **Detail lengkap:** [`docs/BACKEND_PLAN.md`](./BACKEND_PLAN.md)
+
+### 7.1 Konsep Utama
+
+**SAINS adalah platform multi-produk.** Atomic adalah produk pertama. Backend dan database dipakai bersama untuk semua produk (Energi, Biologi, dll) — hanya dibedakan oleh `product_id`.
+
+```
+sains.id/atomic   → Produk 1 (existing)
+sains.id/energi   → Produk 2 (masa depan)
+                         ↕
+                  api.sains.id (satu backend)
+                  Supabase Postgres (satu DB)
+```
+
+### 7.2 Tipe User
+
+| Tipe | Cara Dapat | Lifetime | Session |
+|------|-----------|---------|---------|
+| `guest` | Di-generate admin, dibagikan via link | 48 jam, max 3x login | 1 aktif |
+| `subscriber` | Register + bayar Xendit | Sesuai plan | 1 aktif |
+| `admin` | Seeded di DB | Selamanya | 2 aktif |
+
+**Guest:** tidak self-register. Admin generate token → user akses via link → masukkan email/HP untuk rekap → dapat session 24 jam — setelah 3x login atau 48 jam, mati otomatis.
+
+**Single session rule:** Login baru otomatis revoke session lama. Satu akun = satu device aktif.
+
+### 7.3 Pricing — 3 Segmen × 4 Durasi
+
+| Durasi | `global` | `student` | `parent` |
+|--------|----------|-----------|----------|
+| Bulanan | 150rb | 25rb | 89rb |
+| 3 Bulan | 400rb | 65rb | 239rb |
+| 6 Bulan | 700rb | 110rb | 399rb |
+| Tahunan | 1.2jt | 180rb | 699rb |
+
+3 landing page berbeda per segmen (tone dan copywriting disesuaikan). Harga disimpan di DB — bisa diubah tanpa deploy.
+
+### 7.4 Anti-Sharing — Anomaly Detection
+
+Score-based system per akun:
+
+| Event | Poin |
+|-------|------|
+| Session displaced (login baru dorong logout lama) | +5 |
+| IP berubah dalam <1 jam | +8 |
+| Negara berbeda dalam 24 jam | +15 |
+| >3 session displaced dalam 7 hari | +20 |
+
+Threshold: `score ≥ 25` → warning email → `score ≥ 50` → auto-lock.
+
+### 7.5 Tech Stack Backend
+
+```
+Runtime:  Node.js 22 + Hono framework
+Database: Supabase Postgres + Drizzle ORM
+Auth:     JWT (httpOnly cookie) + bcrypt
+Email:    Resend
+Payment:  Xendit (QRIS, VA, GoPay, OVO, CC)
+Hosting:  Railway (backend) + Supabase (DB)
+```
+
+---
+
+## 8. Non-Functional Requirements
 
 | Aspek | Target | Status |
 |-------|--------|--------|
@@ -179,14 +281,14 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 
 ---
 
-## 8. Out of Scope (v1.x)
+## 8. Out of Scope (v1.x tanpa backend)
 
-- Login/user account
+- Login/user account *(akan ada di backend plan)*
 - Progress tracking & quiz score tersimpan
-- Backend/database/API (saat ini static SPA)
+- ~~Backend/database/API (saat ini static SPA)~~ *(lihat BACKEND_PLAN.md)*
 - Mobile app native
 - Simulasi reaksi kimia / stoikiometri
-- Subscription/payment gateway (butuh backend — lihat TRD Section 8)
+- ~~Subscription/payment gateway~~ *(lihat BACKEND_PLAN.md)*
 
 ---
 
@@ -202,6 +304,8 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 | Card Penemu — semua elemen ada data | ✅ | ✅ |
 | Card Asal Usul Kosmik — semua 118 elemen | ✅ | ✅ |
 | Halaman Fenomena — 27 fenomena, 6 kategori | ✅ | ✅ |
+| **Phenomena Stories** — semua 27 stories lengkap (life + fiction) | ✅ | ✅ |
+| **Chemistry Deduction Engine** — Kimia Lab free mode deduksi kimia | ✅ | ✅ |
 | Sejarah Atom — 22 slide cinematic | ✅ | ✅ |
 | Bilingual EN/ID — semua komponen | ✅ | ✅ |
 | Dashboard rebuild — scroll-driven, 5 chapter | ✅ | ✅ |

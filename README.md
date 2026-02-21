@@ -1,6 +1,8 @@
 # ⚛️ Atomic — Interactive 3D Periodic Table
 
 > Jelajahi 118 unsur kimia dengan visualisasi 3D interaktif, kisah penemu, asal usul kosmik, fenomena atom, dan galeri molekul. Dibangun untuk pelajar, mahasiswa, dan siapa saja yang ingin memahami sains dengan cara yang menggerakkan hati.
+>
+> **Storytelling style: Zack Snyder + Christopher Nolan** — setiap cerita dimulai dari drama manusia, diakhiri dengan ironi kosmik yang mengusik pikiran.
 
 ---
 
@@ -31,6 +33,7 @@
 - **Bilingual** — Bahasa Indonesia & English, toggle real-time
 - **Dark / Light Mode** — persisted ke localStorage
 - **Kimia Lab** — molecule builder 3D mode bebas
+- **Chemistry Deduction Engine** — deduksi kimia rule-based per kombinasi atom (bahaya, peringatan, menarik)
 
 ---
 
@@ -121,6 +124,8 @@ Lihat [PRD.md](docs/PRD.md) untuk detail lengkap.
 | Status | Item |
 |--------|------|
 | ✅ Done | Phase 1 — Core (tabel, detail, fenomena, sejarah, explore, dashboard) |
+| ✅ Done | **Phenomena Stories** — 27 story narasi lengkap (Kehidupan + Fiksi & Sains) |
+| ✅ Done | **Chemistry Deduction Engine** — Kimia Lab free mode |
 | 🔨 Next | **Kimia Lab — Mode Tantangan** (challenge system, hint, feedback) |
 | 🗓️ Planned | Card "Keberadaan di Alam" per elemen |
 | 🗓️ Planned | Card "Fenomena Terkait" per elemen |
@@ -133,5 +138,7 @@ Lihat [PRD.md](docs/PRD.md) untuk detail lengkap.
 
 - [PRD — Product Requirements](docs/PRD.md)
 - [TRD — Technical Requirements](docs/TRD.md)
+- [Backend & Subscription Plan](docs/BACKEND_PLAN.md)
+- [Phenomena Stories — Dokumentasi Konten](docs/PHENOMENA_STORIES.md)
 - [CURRICULUM — Kurikulum Phase 2](docs/CURRICULUM.md)
 - [Element Detail Roadmap](.agent/workflows/element-detail-roadmap.md)

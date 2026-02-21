@@ -1533,6 +1533,187 @@ body {
   color: var(--text-3);
 }
 
+
+/* ── Abundance Card ───────────────────────────────────────────────────── */
+.abundance-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.abundance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.abundance-section {
+  padding: 12px 14px;
+}
+
+.abundance-section:first-child {
+  border-right: 1px solid var(--border);
+}
+
+.abundance-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+
+.abundance-section-value {
+  font-size: 12px;
+  color: var(--text-1);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.abundance-cosmic {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(108, 99, 255, 0.04);
+}
+
+.abundance-cosmic-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.abundance-cosmic-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.abundance-sources {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.abundance-sources:last-child {
+  border-bottom: none;
+}
+
+.abundance-sources-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.abundance-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.abundance-chip {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mineral-chip {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.location-chip {
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.form-chip {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* ── Related Phenomena Card ───────────────────────────────────────────── */
+.elem-ph-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.elem-ph-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--ph-color, var(--border));
+  background: var(--ph-bg, var(--bg-2));
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+  width: 100%;
+  outline: none;
+}
+
+.elem-ph-chip:hover {
+  transform: translateX(2px);
+  border-color: var(--ph-color);
+  filter: brightness(1.05);
+}
+
+.elem-ph-chip-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.elem-ph-chip-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.elem-ph-chip-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.3;
+}
+
+.elem-ph-chip-cat {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 2px;
+  opacity: 0.85;
+}
+
+.elem-ph-chip-arrow {
+  font-size: 16px;
+  color: var(--ph-color, var(--text-3));
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.elem-ph-chip:hover .elem-ph-chip-arrow {
+  opacity: 1;
+}
+
 /* Radioactive badge */
 .radioactive-badge {
   margin-top: 14px;
@@ -1544,6 +1725,7 @@ body {
   font-size: 12px;
   line-height: 1.5;
 }
+
 
 /* Search results */
 .search-results {
@@ -3678,18 +3860,19 @@ body {
 .ps-hook {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-  padding: 40px;
-  min-height: 100%;
+  overflow: visible;
+  padding: 60px 40px 80px;
+  min-height: unset;
 }
 
 .ps-hook-bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .ps-hook-particle {
@@ -3757,6 +3940,7 @@ body {
   z-index: 2;
   max-width: 680px;
   text-align: center;
+  margin: 0 auto;
 }
 
 .ps-hook-visual {
@@ -3849,7 +4033,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  min-height: 100%;
+  min-height: unset;
 }
 
 .ps-history-left {
@@ -3993,7 +4177,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  min-height: 100%;
+  min-height: unset;
 }
 
 .ps-step-left {
@@ -4069,7 +4253,7 @@ body {
   padding: 48px 60px;
   text-align: center;
   gap: 20px;
-  min-height: 100%;
+  min-height: unset;
 }
 
 .ps-scale-visual {
@@ -4112,7 +4296,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  min-height: 100%;
+  min-height: unset;
 }
 
 .ps-impact-left {
@@ -12672,6 +12856,7 @@ body {
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -13121,10 +13306,11 @@ body {
   gap: 10px;
   overflow-y: auto;
   padding: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 24px;
   width: 340px;
   min-width: 300px;
   flex-shrink: 0;
+  scroll-padding-bottom: 24px;
 }
 
 .mb-right--challenge {
@@ -13191,7 +13377,8 @@ body {
 .mb-ch-actions {
   display: flex;
   gap: 8px;
-  margin-top: auto;
+  margin-top: 4px;
+  padding-bottom: 8px;
 }
 
 .mb-combine-btn--challenge {
