@@ -13,7 +13,8 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
         <input type="text" id="search-input" placeholder="${t('nav.search')}" autocomplete="off" />
       </div>
       <div class="nav-links">
-        <a class="nav-link" id="nav-tabel" href="#/">🔬 Tabel</a>
+        <a class="nav-link" id="nav-home" href="#/">🏠 Beranda</a>
+        <a class="nav-link" id="nav-tabel" href="#/explore">🔬 Tabel</a>
         <a class="nav-link" id="nav-kimia-lab" href="#/molecule">⚗️ Kimia Lab</a>
         <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ Fenomena</a>
       </div>

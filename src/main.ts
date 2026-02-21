@@ -2,6 +2,7 @@ import './styles/global.css';
 import { initTheme } from './core/theme';
 import { initRouter, addRoute, setCleanup } from './core/router';
 import { renderNav } from './components/Nav';
+import { renderDashboard } from './components/Dashboard';
 import { renderPeriodicTable } from './components/PeriodicTable';
 import { renderElementDetail } from './components/ElementDetail';
 import { renderMoleculeBuilder } from './components/MoleculeBuilder';
@@ -32,8 +33,20 @@ renderNav(navContainer, () => { }, rerender);
 addRoute('/', () => {
     if (tableCleanup) { tableCleanup(); tableCleanup = null; }
     main.innerHTML = '';
+    const cleanup = renderDashboard(main);
+    setCleanup(cleanup);
+});
+
+addRoute('/explore', () => {
+    if (tableCleanup) { tableCleanup(); tableCleanup = null; }
+    main.innerHTML = '';
     tableCleanup = renderPeriodicTable(main) || null;
     setCleanup(() => { if (tableCleanup) { tableCleanup(); tableCleanup = null; } });
+});
+
+addRoute('/atom-history', () => {
+    main.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:var(--text-2);font-size:1.2rem;">⏳ Halaman Sejarah Atom — Segera Hadir</div>';
+    setCleanup(() => { });
 });
 
 addRoute('/element/:n', (params) => {
