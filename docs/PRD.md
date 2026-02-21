@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 1.2  
-**Date:** 2026-02-20  
-**Status:** Phase 1 Complete · Phase 2 & 3 Planned
+**Version:** 1.3  
+**Date:** 2026-02-21  
+**Status:** Phase 1 Complete · Dashboard Rebuild In Progress · Phase 2 & 3 Planned
 
 ---
 
@@ -137,56 +137,133 @@ Jika urutan ini terbalik (langsung ke materi tanpa membangun rasa kagum), user a
 
 ---
 
-### 🧪 Molecule Builder (🗓️ Planned — Prioritas Tinggi)
+## 🆕 Backlog — Sprint Aktif (2026-02-21)
 
-> **Konsep:** Halaman baru `/molecule` di mana user bisa **drag & drop atom** untuk membentuk molekul. Jika kombinasi atom yang dipilih cocok dengan molekul nyata, sistem otomatis menampilkan nama, info, dan visualisasi 3D molekulnya.
-
-**Fitur Detail:**
-| Fitur | Deskripsi |
-|-------|-----------|
-| Atom picker | Search atau pilih atom dari tabel periodik mini |
-| Mixing area | Chips atom yang bisa ditambah/dikurangi (H×2, O×1, dst) |
-| Auto-detect | Cocokkan komposisi dengan ~40 molekul yang dikenal |
-| Hasil valid | Tampilkan nama, rumus, kategori, deskripsi molekul |
-| Hasil tidak dikenal | Tampilkan "Kombinasi tidak dikenal" + tetap izinkan eksplorasi |
-| 3D Molecule Scene | Visualisasi Three.js: atom (sphere berwarna CPK) + bond (silinder) |
-| Info molekul | Shape, jenis ikatan, sifat fisik, fun fact |
-| Contoh cepat | Tombol shortcut: "Coba Air", "Coba CO₂", "Coba Garam" |
-
-**Contoh molekul yang dikenali:** H₂O, CO₂, O₂, N₂, NH₃, CH₄, NaCl, HCl, H₂O₂, C₂H₅OH, CO, H₂SO₄, NaOH, O₃, C₂H₂, CaCO₃, NO₂, SO₂, Fe₂O₃, dan ~20 lainnya.
-
-**Route:** `/molecule`  
-**File baru yang dibutuhkan:**
-- `src/data/molecules.ts` — database ~40 molekul + 3D posisi atom
-- `src/three/moleculeScene.ts` — Three.js renderer untuk molekul
-- `src/components/MoleculeBuilder.ts` — UI builder
+> Semua item di bawah ini sudah disetujui dan akan dikerjakan berurutan.
 
 ---
 
-### 🏠 Home Page Redesign (🗓️ Planned)
+### 🏠 A. Beranda Rebuild — "First Principle Experience" (🔨 In Progress)
 
-> **Konsep:** Halaman utama tidak lagi hanya tabel periodik. Ada **hub navigasi** di atas dengan card ke semua tool yang tersedia.
+> **Konsep:** Dashboard bukan lagi tabel periodik. Ini adalah **scrolling landing page cinematic** yang mengajarkan atom dari first principle, bottom-up, dan membuat orang yang baru masuk langsung **"WAUW"**.
+>
+> Patokan: Feynman (atomic hypothesis) + Sagan (koneksi personal) + neal.fun (scroll-driven perspektif baru).
 
-**Layout yang direncanakan:**
-```
-┌─────────────────────────────────────────────┐
-│  HERO: "Atomic — Jelajahi Kimia"            │
-│  subtitle + animasi partikel                 │
-├─────────────────────────────────────────────┤
-│  TOOL CARDS (3 kolom):                       │
-│  [🔬 Tabel Periodik]  [⚗️ Bangun Molekul]   │
-│  [📚 Belajar Kimia]   [🧪 Lab Virtual*]     │
-│  * = coming soon                             │
-├─────────────────────────────────────────────┤
-│  TABEL PERIODIK (tetap ada di bawah)        │
-└─────────────────────────────────────────────┘
-```
+**Struktur halaman (scroll-driven, 5 chapter):**
 
-**File yang dimodifikasi:**
-- `src/components/PeriodicTable.ts` — tambahkan hub section di atas tabel
-- `src/styles/global.css` — CSS untuk hero, tool cards
+| # | Chapter | Isi | Visual |
+|---|---------|-----|--------|
+| 0 | **HERO** | Atom 3D berputar gede, full screen | Three.js atom rotating |
+|   |  | *"Ini satu atom Carbon. Tubuhmu tersusun dari 7 oktilion seperti ini."* | Text fade-in dramatis |
+| 1 | **Sekecil apa?** | Scale comparison scroll-driven | Slider: rambut → sel → bakteri → atom |
+|   |  | *"1 rambut = 1 juta atom berjajar"* | |
+| 2 | **Apa isinya?** | Klik bongkar atom: nukleus → proton+neutron+elektron | Interaktif CSS/3D |
+|   |  | *"99.9999999% atom adalah ruang kosong"* | |
+| 3 | **Apa yang membuatmu, kamu?** | Ganti jumlah proton → elemen berubah live | Proton counter interactive |
+|   |  | *"1 proton membedakan besi dari kobalt"* | |
+| 4 | **Dari mana asalnya?** | Big Bang → stellar fusion → neutron star collision | Chain animasi |
+|   |  | *"Atom emas di cincinmu lahir dari tabrakan bintang neutron"* | |
+|   |  | **CTA: ["Lihat perjalanan penemuannya →"]** → membuka `/atom-history` | Tombol ke History page |
+| 5 | **CTA Final** | Jelajahi 118 Elemen · Bangun Molekul | Button cards |
+
+**File yang dibutuhkan:**
+- `src/components/Dashboard.ts` — komponen baru (replace PeriodicTable sebagai home)
+- `src/styles/global.css` — tambah section scroll-driven styles
+- Update router di `src/main.ts`
+
+**Aturan penting:**
+- History page **TIDAK** ada di top nav — hanya accessible dari section 4 dashboard
+- CTA history = tombol inline di section "Dari mana asalnya"
 
 ---
+
+### 📜 B. Sejarah Atom — Cinematic History Page (🗓️ Setelah Dashboard)
+
+> **Konsep:** Bukan timeline membosankan. **Setiap era = satu babak film** dengan gaya storytelling Nolan/Snyder — opening dramatis, konflik, twist, dan reveal.
+
+**Route:** `/atom-history` (tidak di top nav, hanya accessible dari Beranda section 4)
+
+**Struktur — 6 Babak:**
+
+| Babak | Tokoh | Era | Twist/Konflik | Visual Model |
+|-------|-------|-----|---------------|---------------|
+| **Prolog** | — | — | *"2400 tahun debat tentang sesuatu yang tak terlihat."* | Hitam total, text fade |
+| **I** | Democritus | 430 SM | Aristoteles menolak → ide terkubur 2000 tahun | Partikel solid CSS |
+| **II** | Dalton | 1803 | Ilmu akhirnya bicara. Dalton buta warna — ironisnya… | Billiard ball model |
+| **III** | Thomson | 1897 | Atom bisa dibagi. "Plum pudding" — tapi muridnya sendiri yang menghancurkannya | Plum pudding CSS |
+| **IV** | Rutherford | 1911 | Gold foil experiment. Semua salah. Atom adalah ruang kosong. | Alpha particle bounce anim |
+| **V** | Bohr | 1913 | Elektron melompat-lompat. Berhasil untuk hidrogen — tapi gagal di atom lain | Planetary orbit 2D anim |
+| **VI** | Schrödinger + Heisenberg | 1926 | *"Kamu tidak bisa tahu di mana elektron. Ini bukan ketidaktahuan — ini realitas."* | Probability cloud canvas |
+| **Epilog** | — | Kini | Atom masih menyimpan misteri | CTA → Jelajahi 118 Elemen |
+
+**Gaya visual Nolan/Snyder:**
+- Warna per chapter: desaturated, high contrast, hampir monokrom
+- Opening quote di layar hitam total sebelum reveal visual
+- Progress bar timeline horizontal di atas (00:00 → sekarang)
+- Transisi antar chapter: fade to black → chapter berikutnya
+- Setiap chapter punya **konflik** — bukan sekadar "ditemukan oleh X"
+- Back button → kembali ke Beranda
+
+**File yang dibutuhkan:**
+- `src/components/AtomHistory.ts` — komponen baru
+- Update router di `src/main.ts`
+
+---
+
+### 🔬 C. Eksplorasi Rebuild — Tabel + Molekul Terkenal (🗓️ Setelah History)
+
+> **Konsep:** Tab "Eksplorasi" memuat tabel periodik DAN galeri molekul terkenal dalam satu halaman.
+
+**Route:** `/explore` (rename dari `/` yang sebelumnya tabel)
+
+**Struktur:**
+```
+┌──────────────────────────────────────────────┐
+│  BANNER: "Cara membaca tabel periodik"        │
+│  (group, period, color legend explained)      │
+├──────────────────────────────────────────────┤
+│  TABEL PERIODIK 118 elemen (existing)        │
+├──────────────────────────────────────────────┤
+│  ── DIVIDER ──                                │
+│  "Dari atom ke molekul" (penjelasan singkat)  │
+├──────────────────────────────────────────────┤
+│  MOLEKUL TERKENAL — Grid cards               │
+│  H₂O, CO₂, O₂, NaCl, CH₄, DNA, C₆H₁₂O₆    │
+│  Etanol, Aspirin, Kafein, Ozon, dll          │
+│  Click → detail + 3D render di sidebar       │
+└──────────────────────────────────────────────┘
+```
+
+**Molekul yang harus ada:** H₂O, CO₂, O₂, N₂, NaCl, CH₄, NH₃, C₂H₅OH, O₃, H₂O₂, C₆H₁₂O₆ (gula), C₈H₁₀N₄O₂ (kafein), Aspirin (C₉H₈O₄)
+
+---
+
+### ⚗️ D. Kimia Lab Standalone (🗓️ Setelah Eksplorasi)
+
+> **Konsep:** Pisah dari tabel. Fokus pure pada pengalaman "seperti anak kimia belajar" — interaktif, langsung dipraktekkan, soal-soal gabung atom.
+
+**Route:** `/molecule` (tetap, sudah ada)
+
+**Penambahan fitur:**
+- Tambah lebih banyak molekul ke database (termasuk organik kompleks)
+- Mode "Tantangan": dikasih nama molekul → user harus merakit sendiri
+- Penjelasan lebih dalam per molekul (use, bahaya, fun fact)
+- Hint system (untuk mode tantangan)
+
+---
+
+### 📡 E. Fenomena (✅ Sudah Oke — Hold)
+
+> Fenomena sudah berjalan baik. Tidak ada perubahan yang diprioritaskan saat ini.
+
+---
+
+### 🧪 F. Molecule Builder — Status Sekarang (✅ Selesai Phase 1)
+
+> Fitur sudah berjalan: pilih atom, gabungkan, lihat 3D, info molekul. Penambahan molekul dan mode tantangan masuk ke item D di atas.
+
+---
+
 
 ### Phase 2 — Edukasi Pemula (🗓️ Planned)
 
