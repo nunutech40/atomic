@@ -9661,719 +9661,875 @@ body {
   .dash-cta-cards { grid-template-columns: 1fr; }
 }
 
+
 /* ═══════════════════════════════════════════════════════════════════════
-   ATOM HISTORY — Cinematic Timeline Styles
-   Gaya: Nolan/Snyder — desaturated, high-contrast, dark-first
+   ATOM HISTORY v2 — Cinematic Slide Deck
+   Full-screen slides, prev/next nav, chapter dots
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* ── Root layout ── */
-.ah-root {
+/* ── Root ── */
+.ah-root2 {
   position: relative;
-  min-height: 100vh;
-  background: #050508;
-  color: #e0e0e8;
+  height: 100vh;
+  background: #060609;
+  color: #e0e0ea;
   font-family: 'Inter', 'Segoe UI', sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Back button ── */
-.ah-back-btn {
+.ah-back2 {
+  position: fixed;
+  top: 68px;
+  left: 20px;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+  backdrop-filter: blur(12px);
+}
+.ah-back2:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+/* ── Chapter dots (top center) ── */
+.ah-chapter-dots {
   position: fixed;
   top: 72px;
-  left: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(6,6,9,0.7);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 999px;
+  backdrop-filter: blur(16px);
+}
+.ah-cdot {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.ah-cdot:hover { transform: scale(1.3); }
+.ah-cdot-inner {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  transition: all 0.3s;
+}
+.ah-cdot.visited .ah-cdot-inner {
+  background: rgba(255,255,255,0.35);
+}
+.ah-cdot.active .ah-cdot-inner {
+  background: var(--sc, #7c73ff);
+  box-shadow: 0 0 8px var(--sc, #7c73ff);
+  width: 9px; height: 9px;
+}
+
+/* ── Chapter label ── */
+.ah-chapter-display {
+  position: fixed;
+  top: 72px;
+  right: 20px;
   z-index: 200;
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.7);
-  padding: 8px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
-  transition: all 0.2s;
-  backdrop-filter: blur(10px);
-}
-.ah-back-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
-.ah-back-arrow { font-size: 1rem; }
-
-/* ── Opening overlay ── */
-.ah-opening {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: opacity 0.8s ease;
-}
-.ah-opening.ah-opening-out { opacity: 0; pointer-events: none; }
-
-.ah-opening-text {
-  max-width: 680px;
-  padding: 0 32px;
-  animation: ah-open-fade 1.2s ease both;
-}
-@keyframes ah-open-fade { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform:none; } }
-
-.ah-open-line1 {
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 24px;
 }
-.ah-open-line2 {
-  font-size: clamp(1.4rem, 3.5vw, 2rem);
-  font-weight: 300;
-  line-height: 1.5;
-  color: rgba(255,255,255,0.9);
-  margin-bottom: 48px;
-}
+.ah-chapter-sep { opacity: 0.4; }
 
-.ah-open-start {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: rgba(255,255,255,0.8);
-  padding: 14px 36px;
-  border-radius: 999px;
-  font-size: 1rem;
-  cursor: pointer;
-  letter-spacing: 0.1em;
-  transition: all 0.3s;
+/* ── Slide viewport ── */
+.ah-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
-.ah-open-start:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); color:#fff; }
-
-/* ── Timeline bar ── */
-.ah-timeline-bar {
-  position: fixed;
-  top: 56px;
-  left: 0; right: 0;
-  z-index: 100;
-  background: rgba(5,5,8,0.85);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 12px 0;
-}
-.ah-timeline-track {
+.ah-slides-track {
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Individual slide ── */
+.ah-slide {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 80px;
+  padding: 120px 48px 100px;
+  transform: translateX(0);
+  opacity: 1;
 }
 
-.ah-tl-node {
+/* Radial bg tint per slide */
+.ah-slide-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 60% 50%, var(--sc, #7c73ff)0a, transparent 65%);
+  pointer-events: none;
+  transition: background 0.5s;
+}
+
+.ah-slide-inner {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex: 1;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 0;
-  transition: all 0.3s;
-}
-.ah-tl-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.15);
-  border: 2px solid rgba(255,255,255,0.2);
-  transition: all 0.3s;
-  display: block;
-}
-.ah-tl-label {
-  font-size: 0.62rem;
-  color: rgba(255,255,255,0.3);
-  white-space: nowrap;
-  transition: color 0.3s;
-  letter-spacing: 0.05em;
-}
-.ah-tl-node.active .ah-tl-dot {
-  background: var(--ch-color, #7c73ff);
-  border-color: var(--ch-color, #7c73ff);
-  box-shadow: 0 0 8px var(--ch-color, #7c73ff);
-}
-.ah-tl-node.active .ah-tl-label { color: rgba(255,255,255,0.75); }
-
-.ah-tl-progress {
-  position: absolute;
-  left: 80px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 2px;
-  background: linear-gradient(to right, #7c73ff, var(--ch-color, #7c73ff));
-  width: 0%;
-  transition: width 0.6s ease;
-  z-index: 1;
-  border-radius: 2px;
-}
-
-/* ── Chapters container ── */
-.ah-chapters {
-  padding-top: 110px; /* clear timeline + nav */
-}
-
-/* ── Chapter section ── */
-.ah-chapter {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  padding: 80px 0;
-  overflow: hidden;
-}
-
-/* Gradient bg tinted by chapter color */
-.ah-chapter::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, var(--ch-color, #7c73ff)08, transparent 70%);
-  pointer-events: none;
-}
-
-.ah-chapter-inner {
-  position: relative;
-  z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 420px;
   gap: 80px;
   align-items: center;
-  max-width: 1100px;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 48px;
 }
-.ah-chapter-inner.ah-invert { direction: rtl; }
-.ah-chapter-inner.ah-invert > * { direction: ltr; }
 
-/* ── Text side ── */
-.ah-era-tag {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ch-color, #7c73ff);
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-.ah-protagonist {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  color: rgba(255,255,255,0.4);
+/* Slide counter */
+.ah-slide-counter {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
   letter-spacing: 0.1em;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-.ah-chapter-title {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 800;
-  line-height: 1.1;
-  color: #fff;
-  margin: 0 0 20px;
-  letter-spacing: -0.02em;
-}
-.ah-subtitle {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 24px;
-  letter-spacing: 0.05em;
 }
 
-.ah-conflict {
+/* ── Text area ── */
+.ah-slide-chapter-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ah-chapter-roman {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  justify-content: center;
+  width: 28px; height: 28px;
   border-radius: 6px;
-  padding: 6px 14px;
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 28px;
+  background: var(--sc, #7c73ff)22;
+  border: 1px solid var(--sc, #7c73ff)44;
+  color: var(--sc, #7c73ff);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
-.ah-conflict-icon { font-size: 0.9rem; opacity: 0.7; }
-
-.ah-body {
-  font-size: clamp(0.9rem, 1.3vw, 1rem);
-  line-height: 1.8;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 28px;
-}
-.ah-body p { margin: 0 0 16px; }
-.ah-body p:last-child { margin-bottom: 0; }
-
-/* ── Twist box ── */
-.ah-twist {
-  background: linear-gradient(135deg, var(--ch-color, #7c73ff)14, transparent);
-  border: 1px solid var(--ch-color, #7c73ff)44;
-  border-radius: 12px;
-  padding: 20px 24px;
-  margin-bottom: 28px;
-}
-.ah-twist-label {
+.ah-chapter-name {
   font-size: 0.72rem;
+  color: var(--sc, #7c73ff);
+  font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--ch-color, #7c73ff);
-  margin-bottom: 10px;
-  font-weight: 700;
 }
-.ah-twist-body {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.75);
-  font-style: italic;
+.ah-chapter-dot { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+.ah-slide-year {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
 }
-
-/* ── Quote ── */
-.ah-quote {
-  margin: 0;
-  padding: 20px 24px;
-  border-left: 3px solid var(--ch-color, #7c73ff);
-  background: rgba(255,255,255,0.03);
-  border-radius: 0 10px 10px 0;
-}
-.ah-quote-text {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.65);
-  font-style: italic;
-  margin-bottom: 8px;
-}
-.ah-quote-author {
+.ah-slide-protagonist {
   font-size: 0.8rem;
-  color: var(--ch-color, #7c73ff);
-  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.38);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.ah-slide-eyebrow {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 12px;
 }
 
-/* ── Model stage ── */
-.ah-model-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ah-model-stage {
-  width: 340px;
-  height: 340px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ah-slide-title {
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
 }
 
-/* ── Chapter divider ── */
-.ah-chapter-divider {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 80px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.12), transparent);
+.ah-slide-body {
+  font-size: clamp(0.85rem, 1.1vw, 0.98rem);
+  line-height: 1.85;
+  color: rgba(255,255,255,0.58);
+  margin-bottom: 24px;
 }
+.ah-slide-body p { margin: 0 0 14px; }
+.ah-slide-body p:last-child { margin-bottom: 0; }
+.ah-slide-body strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+.ah-slide-body em { color: rgba(255,255,255,0.75); font-style: italic; }
 
-/* ══════════════════════════════════════════
-   ATOM MODELS — per chapter
-   ══════════════════════════════════════════ */
-
-/* ── Prolog model ── */
-.amodel-prolog {
-  position: relative;
-  width: 280px;
-  height: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.amodel-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(160,160,176,0.2);
-  animation: ah-ring-pulse 3s ease-in-out infinite;
-}
-.amodel-ring.r1 { width: 100px; height: 100px; animation-delay: 0s; }
-.amodel-ring.r2 { width: 180px; height: 180px; animation-delay: 0.8s; }
-.amodel-ring.r3 { width: 260px; height: 260px; animation-delay: 1.6s; }
-@keyframes ah-ring-pulse {
-  0%, 100% { opacity: 0.15; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.05); }
-}
-.amodel-prolog-text {
-  font-size: 5rem;
-  color: rgba(160,160,176,0.35);
-  font-weight: 100;
-  animation: ah-q-flicker 4s ease-in-out infinite;
-}
-@keyframes ah-q-flicker {
-  0%, 100% { opacity: 0.35; } 45% { opacity: 0.6; } 50% { opacity: 0.2; } 55% { opacity: 0.6; }
-}
-
-/* ── Solid / Democritus ── */
-.amodel-solid {
-  width: 180px; height: 180px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 60px currentColor;
-  animation: ah-solid-bob 4s ease-in-out infinite;
-}
-@keyframes ah-solid-bob {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-12px) scale(1.03); }
-}
-.amodel-solid-label {
-  color: rgba(0,0,0,0.6);
-  font-size: 1.1rem;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
-
-/* ── Billiard / Dalton ── */
-.amodel-billiard {
+/* Custom list */
+.ah-list {
+  list-style: none;
+  padding: 0; margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 14px;
+}
+.ah-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.62);
+}
+.ah-list li strong { color: rgba(255,255,255,0.88); }
+.ah-list-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: var(--sc, #7c73ff)18;
+  border: 1px solid var(--sc, #7c73ff)33;
+  color: var(--sc, #7c73ff);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* Compare table */
+.ah-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
-.amodel-billiard-ball {
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset -20px -20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(112,144,192,0.3);
-  animation: ah-solid-bob 3.5s ease-in-out infinite;
+.ah-compare-col {
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  padding: 18px;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
 }
-.amodel-billiard-stripe {
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.08);
-  clip-path: ellipse(80% 20% at 50% 50%);
+.ah-compare-col.correct { border: 1px solid rgba(64,200,120,0.25); }
+.ah-compare-col.wrong { border: 1px solid rgba(255,100,80,0.2); }
+.ah-compare-header {
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
-.amodel-billiard-label {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.1em;
+.ah-compare-col.correct .ah-compare-header { color: #40c878; }
+.ah-compare-col.wrong .ah-compare-header { color: #ff6450; }
+.ah-compare-col ul { margin: 0; padding: 0 0 0 16px; }
+.ah-compare-col ul li { margin-bottom: 6px; }
+.ah-compare-col ul li em { color: rgba(255,255,255,0.7); font-style: italic; }
+
+/* Highlight box */
+.ah-slide-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--sc, #7c73ff)0c;
+  border: 1px solid var(--sc, #7c73ff)30;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-top: 8px;
+}
+.ah-hl-bar {
+  flex-shrink: 0;
+  width: 3px;
+  background: var(--sc, #7c73ff);
+  border-radius: 3px;
+  align-self: stretch;
+  min-height: 40px;
+}
+.ah-hl-text {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.72);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.ah-hl-label {
+  font-size: 0.72rem;
+  color: var(--sc, #7c73ff);
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-/* ── Plum pudding / Thomson ── */
-.amodel-plum {
+/* ── Navigation buttons ── */
+.ah-nav-btns {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(6,6,9,0.75);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  padding: 10px 20px;
+  backdrop-filter: blur(16px);
+}
+.ah-nav-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.ah-nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.14); color: #fff; }
+.ah-nav-btn:disabled { opacity: 0.25; cursor: default; }
+.ah-nav-btn svg { width: 16px; height: 16px; }
+
+.ah-nav-progress {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
+  min-width: 160px;
+}
+.ah-nav-track {
+  width: 100%;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.ah-nav-fill {
+  height: 100%;
+  background: linear-gradient(to right, #7c73ff, #a090ff);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+.ah-nav-nums {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.08em;
+}
+.ah-nav-sep { opacity: 0.4; }
+
+/* ═══════════════════════════════════════════════════════
+   ATOM MODELS v2
+   ═══════════════════════════════════════════════════════ */
+
+.amod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  height: 380px;
+}
+.amod-solid-caption {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ─ Prolog ─ */
+.amod-prolog {
+  position: relative;
+  width: 280px; height: 280px;
+}
+.amod-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(136,136,170,0.2);
+  transform: translate(-50%,-50%);
+  animation: amod-ring-pulse 3.5s ease-in-out infinite;
+}
+.amod-ring.r1 { width: 80px; height: 80px; }
+.amod-ring.r2 { width: 160px; height: 160px; animation-delay: 0.9s; }
+.amod-ring.r3 { width: 250px; height: 250px; animation-delay: 1.8s; }
+@keyframes amod-ring-pulse {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.38; }
+}
+.amod-qmark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 5rem;
+  font-weight: 100;
+  color: rgba(136,136,170,0.3);
+  animation: amod-qflicker 5s ease-in-out infinite;
+}
+@keyframes amod-qflicker {
+  0%,100%{opacity:.3} 48%{opacity:.15} 50%{opacity:.5} 52%{opacity:.15}
+}
+
+/* ─ Solid Sphere (Democritus) ─ */
+.amod-solid {
   gap: 16px;
 }
-.amodel-plum-cloud {
+.amod-solid-sphere {
   position: relative;
   width: 200px; height: 200px;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, rgba(160,96,192,0.3), rgba(160,96,192,0.06));
-  border: 1px solid rgba(160,96,192,0.25);
+  background: radial-gradient(circle at 35% 30%, var(--mc, #c8a040)ff, var(--mc, #c8a040)88, var(--mc,#c8a040)22);
+  box-shadow: 0 0 60px var(--mc, #c8a040)44, inset -20px -20px 40px rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: amod-bob 4s ease-in-out infinite;
+  flex-shrink: 0;
 }
-.amodel-plum-e {
+@keyframes amod-bob {
+  0%,100%{ transform: translateY(0) scale(1); }
+  50%{ transform: translateY(-10px) scale(1.02); }
+}
+.amod-solid-shine {
   position: absolute;
-  font-size: 0.7rem;
-  color: #c090ff;
-  font-weight: 700;
-  --angle: calc(var(--i) * 30deg);
-  --r: 75px;
-  left: calc(50% + cos(var(--angle)) * var(--r) - 12px);
-  top:  calc(50% + sin(var(--angle)) * var(--r) - 10px);
-  animation: ah-plum-drift 5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.4s);
+  top: 18%;
+  left: 20%;
+  width: 35%;
+  height: 30%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent);
 }
-@keyframes ah-plum-drift {
-  0%, 100% { transform: translate(0,0); opacity:0.6; }
-  50% { transform: translate(4px,-4px); opacity:1; }
-}
-.amodel-plum-label {
-  font-size: 2rem;
-  color: rgba(160,96,192,0.8);
-  font-weight: 300;
-}
-.amodel-plum-caption {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.amod-solid-label {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: rgba(0,0,0,0.7);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  z-index: 1;
 }
 
-/* ── Rutherford gold foil ── */
-.amodel-rutherford {
+/* ─ Aristotle 4 elements ─ */
+.amod-aristotle {
+  gap: 16px;
+}
+.amod-elements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.amod-el {
+  width: 80px; height: 80px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 4px;
+  font-size: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  animation: amod-el-pulse 4s ease-in-out infinite;
 }
-.amodel-rfield {
+.amod-el span { font-size: 0.65rem; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+.amod-el.fire { background: rgba(220,80,30,0.2); animation-delay: 0s; }
+.amod-el.air { background: rgba(100,160,230,0.2); animation-delay: 0.5s; }
+.amod-el.water { background: rgba(40,130,200,0.2); animation-delay: 1s; }
+.amod-el.earth { background: rgba(120,90,50,0.2); animation-delay: 1.5s; }
+@keyframes amod-el-pulse {
+  0%,100%{ transform: translateY(0); opacity:0.8; }
+  50%{ transform: translateY(-4px); opacity:1; }
+}
+
+/* ─ Billiard (Dalton) ─ */
+.amod-billiard-wrap { gap: 16px; }
+.amod-billiard-ball {
   position: relative;
-  width: 240px; height: 240px;
+  width: 190px; height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--mc,#6090d0)ff, var(--mc,#6090d0)66, var(--mc,#6090d0)11);
+  box-shadow: 0 0 50px var(--mc,#6090d0)33, inset -20px -20px 40px rgba(0,0,0,0.4);
+  overflow: hidden;
+  flex-shrink: 0;
+  animation: amod-bob 3.5s ease-in-out infinite;
+}
+.amod-billiard-gloss {
+  position: absolute;
+  top: 15%; left: 18%;
+  width: 38%; height: 32%;
+  border-radius: 50%;
+  background: radial-gradient(rgba(255,255,255,0.35), transparent);
+}
+.amod-billiard-band {
+  position: absolute;
+  top: 50%; left: -10%;
+  width: 120%; height: 22%;
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-50%) rotate(-15deg);
+}
+
+/* ─ Cathode ray tube ─ */
+.amod-cathode {
+  align-items: center;
+  gap: 20px;
+}
+.amod-tube {
+  position: relative;
+  width: 320px; height: 60px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.4);
+  overflow: hidden;
+}
+.amod-beam {
+  position: absolute;
+  left: 52px; right: 52px;
+  height: 3px;
+  background: linear-gradient(to right, transparent, rgba(148,96,224,0.8) 50%, transparent);
+  animation: amod-beam-glow 1.5s ease-in-out infinite;
+}
+@keyframes amod-beam-glow {
+  0%,100%{ opacity:0.6; box-shadow: none; }
+  50%{ opacity:1; box-shadow: 0 0 12px rgba(148,96,224,0.8); }
+}
+.amod-electron-particles {
+  position: relative;
+  width: 320px; height: 40px;
+}
+.amod-beam-e {
+  position: absolute;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #c090ff;
+  animation: amod-beam-travel 2s linear infinite;
+  animation-delay: calc(var(--i) * 0.4s);
+  opacity: 0;
+  top: 6px;
+}
+@keyframes amod-beam-travel {
+  0%{ left: 0; opacity: 0; }
+  20%{ opacity: 1; }
+  80%{ opacity: 1; }
+  100%{ left: 90%; opacity: 0; }
+}
+
+/* ─ Plum pudding ─ */
+.amod-plum-wrap { gap: 16px; }
+.amod-plum-sphere {
+  position: relative;
+  width: 210px; height: 210px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--mc,#9060c0)40, var(--mc,#9060c0)15, transparent);
+  border: 1px solid var(--mc,#9060c0)40;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.amodel-rnucleus {
-  width: 36px; height: 36px;
+.amod-plum-e {
+  position: absolute;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #c090ff;
+  left: calc(50% + var(--px,0) * 1px);
+  top:  calc(50% + var(--py,0) * 1px);
+  animation: amod-plum-drift 4s ease-in-out infinite;
+  animation-delay: calc(var(--i,0) * 0.35s);
+}
+@keyframes amod-plum-drift {
+  0%,100%{ transform: translate(0,0); opacity:0.7; }
+  50%{ transform: translate(4px,-5px); opacity:1; }
+}
+.amod-plum-plus {
+  font-size: 0.9rem;
+  color: rgba(160,96,192,0.5);
+  text-align: center;
+  line-height: 1.4;
+  z-index: 1;
+}
+
+/* ─ Rutherford gold foil ─ */
+.amod-rutherford-wrap { gap: 14px; }
+.amod-foil-label {
+  font-size: 0.7rem;
+  color: rgba(255,215,0,0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.amod-rfield {
+  position: relative;
+  width: 280px; height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.amod-foil-line {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(255,215,0,0.4), transparent);
+  transform: translateX(-50%);
+}
+.amod-rnucleus {
+  position: relative;
+  z-index: 2;
+  width: 42px; height: 42px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffd700, #b8860b);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  flex-direction: column;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: rgba(0,0,0,0.8);
-  z-index: 2;
-  box-shadow: 0 0 20px rgba(255,215,0,0.5);
+  color: rgba(0,0,0,0.7);
+  box-shadow: 0 0 24px rgba(255,215,0,0.5);
 }
-.amodel-alpha {
+.amod-rnucleus small { font-size: 0.55rem; opacity: 0.7; }
+.amod-alpha-particle {
   position: absolute;
-  width: 8px; height: 8px;
+  width: 9px; height: 9px;
   border-radius: 50%;
-  background: #e07040;
-  box-shadow: 0 0 8px #e0704088;
-  animation: ah-alpha linear infinite;
-  animation-duration: calc(2s + var(--i) * 0.3s);
-  animation-delay: calc(var(--i) * -0.4s);
-  --path-x: calc(cos(var(--i) * 45deg) * 100px);
-  --path-y: calc(sin(var(--i) * 45deg) * 100px);
+  background: var(--mc, #e06030);
+  box-shadow: 0 0 8px var(--mc,#e06030)88;
+  animation-duration: calc(2.2s + var(--i,0) * 0.25s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--i,0) * -0.5s);
 }
-/* Most alphas go through; some bounce back */
-.amodel-alpha:nth-child(1) { animation-name: ah-alpha-bounce; }
-.amodel-alpha:nth-child(5) { animation-name: ah-alpha-bounce2; }
+/* Most go through */
+.amod-alpha-particle:not(.bounce) { animation-name: amod-alpha-pass; }
+/* Some bounce */
+.amod-alpha-particle.bounce { animation-name: amod-alpha-bounce; }
+@keyframes amod-alpha-pass {
+  0%   { left: 5%;  top: calc(30% + var(--i,0) * 8%); opacity:1; }
+  49%  { left: 50%; }
+  50%  { left: 50%; opacity:0.8; }
+  100% { left: 90%; top: calc(30% + var(--i,0) * 8%); opacity:0; }
+}
+@keyframes amod-alpha-bounce {
+  0%  { left: 5%;  top: 48%; opacity:1; }
+  45% { left: 47%; top: 48%; opacity:1; }
+  55% { left: 38%; top: 38%; opacity:1; }
+  100%{ left: 5%;  top: 22%; opacity:0; }
+}
 
-@keyframes ah-alpha {
-  0%   { transform: translate(calc(-1 * var(--path-x)), calc(-1 * var(--path-y))); opacity:1; }
-  50%  { transform: translate(10px, 10px); opacity:0.6; }
-  100% { transform: translate(var(--path-x), var(--path-y)); opacity:0; }
+/* ─ Nuclear model (Rutherford conclusion) ─ */
+.amod-nuclear {
+  align-items: center;
+  gap: 24px;
 }
-@keyframes ah-alpha-bounce {
-  0%   { transform: translate(-100px, 0); opacity:1; }
-  40%  { transform: translate(-20px, 0); opacity:1; }
-  50%  { transform: translate(-25px, 0); opacity:1; }
-  100% { transform: translate(-120px, -30px); opacity:0; }
+.amod-nuc-scale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
-@keyframes ah-alpha-bounce2 {
-  0%   { transform: translate(-80px, -60px); opacity:1; }
-  45%  { transform: translate(-18px, -14px); opacity:1; }
-  100% { transform: translate(-100px, -90px); opacity:0; }
+.amod-nuc-atom {
+  position: relative;
+  width: 200px; height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.amodel-rutherford-caption {
-  font-size: 0.78rem;
+.amod-nuc-orbit {
+  position: absolute;
+  width: 192px; height: 192px;
+  border-radius: 50%;
+  border: 1px dashed rgba(224,96,48,0.3);
+}
+.amod-nuc-nucleus {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff8050, #c04020);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 0 16px rgba(224,96,48,0.7);
+  z-index: 2;
+}
+.amod-nuc-e {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #a0b8ff;
+  font-weight: 700;
+  animation: amod-orbit-e 3s linear infinite;
+  transform-origin: 0 96px;
+}
+@keyframes amod-orbit-e {
+  from { transform: rotate(0deg) translateX(-50%); }
+  to   { transform: rotate(360deg) translateX(-50%); }
+}
+.amod-nuc-arrow {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+.amod-nuc-caption {
+  font-size: 0.7rem;
   color: rgba(255,255,255,0.3);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  text-align: center;
+  max-width: 220px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
 }
 
-/* ── Bohr model ── */
-.amodel-bohr {
+/* ─ Bohr orbits ─ */
+.amod-bohr-wrap { position: relative; gap: 16px; }
+.amod-bohr {
+  position: relative;
+  width: 260px; height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.amod-bohr-nuc {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #60d090, #20805030);
+  border: 2px solid rgba(64,160,128,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(64,255,160,0.9);
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(64,160,128,0.5);
+}
+.amod-borbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(64,160,128,0.25);
+}
+.amod-borbit.o1 { width: 90px;  height: 90px; }
+.amod-borbit.o2 { width: 150px; height: 150px; }
+.amod-borbit.o3 { width: 220px; height: 220px; }
+.amod-be1, .amod-be2, .amod-be3 {
+  position: absolute;
+  top: -6px; left: calc(50% - 6px);
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #80c0ff;
+  box-shadow: 0 0 10px #80c0ffaa;
+  font-size: 0;
+}
+.amod-be1 { animation: amod-e-orbit 2.5s linear infinite; transform-origin: 6px calc(45px + 6px); }
+.amod-be2 { animation: amod-e-orbit 4s linear infinite;   transform-origin: 6px calc(75px + 6px); }
+.amod-be3 { animation: amod-e-orbit 6s linear infinite;   transform-origin: 6px calc(110px + 6px); }
+@keyframes amod-e-orbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.amod-photon {
+  position: absolute;
+  top: 10px; right: 0;
+  font-size: 0.8rem;
+  color: #ffd700;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  animation: amod-photon-fly 3s ease-in-out infinite;
+  opacity: 0;
+}
+@keyframes amod-photon-fly {
+  0%{ opacity:0; transform: translate(0,0); }
+  30%{ opacity:1; }
+  70%{ opacity:0.7; transform: translate(-30px, 30px); }
+  100%{ opacity:0; transform: translate(-60px, 60px); }
+}
+
+/* ─ Quantum cloud ─ */
+.amod-quantum-wrap { gap: 16px; }
+.amod-qcanvas {
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(32,24,80,0.3), transparent);
+  display: block;
+}
+
+/* ─ Epilog ─ */
+.amod-epilog-wrap {
   position: relative;
   width: 280px; height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
-.amodel-bohr-nucleus {
-  width: 40px; height: 40px;
+.amod-epilog-core {
+  width: 24px; height: 24px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #60e080, #208040);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
-  z-index: 2;
-  box-shadow: 0 0 16px rgba(64,160,128,0.5);
-}
-.amodel-bohr-orbit {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(64,160,128,0.3);
-  animation: none;
-}
-.amodel-bohr-orbit.o1 { width: 100px; height: 100px; }
-.amodel-bohr-orbit.o2 { width: 160px; height: 160px; }
-.amodel-bohr-orbit.o3 { width: 230px; height: 230px; }
-.amodel-bohr-e {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: #a0c0ff;
-  box-shadow: 0 0 8px #a0c0ff;
-  font-size: 0; /* hide text */
-  animation: ah-orbit-e 3s linear infinite;
-}
-.amodel-bohr-orbit.o2 .amodel-bohr-e { animation-duration: 4.5s; }
-.amodel-bohr-orbit.o3 .amodel-bohr-e { animation-duration: 6.5s; }
-@keyframes ah-orbit-e {
-  from { transform: translateX(-50%) rotate(0deg) translateY(-50%) rotate(0deg); }
-  to   { transform: translateX(-50%) rotate(360deg) translateY(-50%) rotate(-360deg); }
-}
-/* Orbit animation via transform-origin trick */
-.amodel-bohr-orbit.o1 { animation: ah-bohr-orbit1 3s linear infinite; }
-.amodel-bohr-orbit.o2 { animation: ah-bohr-orbit2 4.5s linear infinite; }
-.amodel-bohr-orbit.o3 { animation: ah-bohr-orbit3 6.5s linear infinite; }
-@keyframes ah-bohr-orbit1 { to { --dummy:0; } } /* no-op, electron uses CSS trick below */
-
-/* Simpler electron orbit using position on orbit */
-.amodel-bohr-orbit { position: absolute; }
-.amodel-bohr-e {
-  width: 10px; height: 10px;
-  top: -5px; left: calc(50% - 5px);
-  transform-origin: 50% calc(50px + 5px);
-  animation: ah-e-orbit 3s linear infinite;
-}
-.amodel-bohr-orbit.o2 .amodel-bohr-e { transform-origin: 50% calc(80px + 5px); animation-duration: 4.5s; }
-.amodel-bohr-orbit.o3 .amodel-bohr-e { transform-origin: 50% calc(115px + 5px); animation-duration: 6.5s; }
-@keyframes ah-e-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* ── Quantum canvas ── */
-.amodel-quantum-canvas {
-  width: 300px; height: 300px;
-  border-radius: 50%;
-  background: transparent;
-}
-
-/* ── Epilog ── */
-.amodel-epilog {
-  position: relative;
-  width: 260px; height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.amodel-epilog-core {
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  background: #7c73ff;
-  box-shadow: 0 0 30px #7c73ff;
+  background: var(--mc, #7c73ff);
+  box-shadow: 0 0 30px var(--mc, #7c73ff);
   z-index: 2;
 }
-.amodel-epilog-wave {
+.amod-ewave {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(124,115,255,0.3);
-  animation: ah-epilog-expand 3s ease-out infinite;
+  border: 1px solid var(--mc, #7c73ff)44;
+  animation: amod-ewave-expand 4s ease-out infinite;
+  animation-delay: calc(var(--i,0) * 1s);
 }
-.amodel-epilog-wave.w1 { width: 80px; height: 80px; animation-delay: 0s; }
-.amodel-epilog-wave.w2 { width: 150px; height: 150px; animation-delay: 0.8s; }
-.amodel-epilog-wave.w3 { width: 240px; height: 240px; animation-delay: 1.6s; }
-@keyframes ah-epilog-expand {
-  0% { opacity: 0.6; transform: scale(0.8); }
-  100% { opacity: 0; transform: scale(1.2); }
+.amod-ewave:nth-child(2) { width: 70px;  height: 70px; }
+.amod-ewave:nth-child(3) { width: 130px; height: 130px; }
+.amod-ewave:nth-child(4) { width: 200px; height: 200px; }
+.amod-ewave:nth-child(5) { width: 270px; height: 270px; }
+@keyframes amod-ewave-expand {
+  0%  { opacity: 0.7; transform: scale(0.9); }
+  100%{ opacity: 0;   transform: scale(1.15); }
 }
-.amodel-epilog-text {
+.amod-epilog-q {
   position: absolute;
   font-size: 5rem;
-  color: rgba(124,115,255,0.18);
+  color: rgba(124,115,255, 0.12);
   font-weight: 100;
-  animation: ah-q-flicker 5s ease-in-out infinite;
+  animation: amod-qflicker 6s ease-in-out infinite;
 }
-
-/* ── Prolog/Epilog special chapter styling ── */
-#ch-prolog .ah-chapter-inner,
-#ch-epilog .ah-chapter-inner {
-  grid-template-columns: 1fr;
-  text-align: center;
-  justify-items: center;
-  max-width: 720px;
-  gap: 48px;
-}
-#ch-prolog .ah-model-stage,
-#ch-epilog .ah-model-stage {
-  width: 260px; height: 260px;
-}
-#ch-prolog .ah-chapter-title,
-#ch-epilog .ah-chapter-title {
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  font-weight: 900;
-}
-#ch-prolog .ah-body,
-#ch-epilog .ah-body { font-size: 1.05rem; }
-
-/* ── Final CTA ── */
-.ah-final-cta {
-  min-height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 48px;
-}
-.ah-final-inner {
-  text-align: center;
-  max-width: 600px;
-}
-.ah-final-title {
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 20px;
-  line-height: 1.2;
-}
-.ah-final-sub {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,0.45);
-  margin-bottom: 48px;
-  line-height: 1.6;
-}
-.ah-final-btns {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.ah-final-btn {
-  padding: 14px 32px;
-  border-radius: 999px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: none;
-}
-.ah-final-btn.primary {
-  background: linear-gradient(135deg, #7c73ff, #5c4fff);
-  color: #fff;
-  box-shadow: 0 4px 24px rgba(124,115,255,0.4);
-}
-.ah-final-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,115,255,0.6); }
-.ah-final-btn.secondary {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.7);
-}
-.ah-final-btn.secondary:hover { background: rgba(255,255,255,0.1); color:#fff; }
 
 /* ── Responsive ── */
-@media (max-width: 768px) {
-  .ah-chapter-inner {
+@media (max-width: 900px) {
+  .ah-slide-inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    grid-template-rows: auto auto;
+    gap: 32px;
     padding: 0 24px;
+    overflow-y: auto;
   }
-  .ah-chapter-inner.ah-invert { direction: ltr; }
-  .ah-model-stage { width: 220px; height: 220px; }
-  .ah-chapter-title { font-size: clamp(1.6rem, 5vw, 2.4rem); }
-  .ah-timeline-bar { top: 52px; }
-  .ah-tl-label { display: none; }
-  .ah-back-btn { top: 60px; font-size: 0.78rem; padding: 6px 12px; }
-  .ah-timeline-track { padding: 0 40px; gap: 0; }
+  .ah-slide-model { display: none; }
+  .ah-slide-title { font-size: clamp(1.3rem, 4vw, 1.9rem); }
+  .ah-chapter-display { display: none; }
+  .ah-chapter-dots { max-width: calc(100vw - 200px); overflow: hidden; }
+  .ah-compare { grid-template-columns: 1fr; }
+  .ah-nav-progress { min-width: 100px; }
 }
