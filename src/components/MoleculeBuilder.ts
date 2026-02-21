@@ -111,6 +111,228 @@ const ATOM_INFO: Record<string, { no: number; mass: string; groupId: string; gro
   Pb: { no: 82, mass: '207.2', groupId: 'Logam Pasca-transisi', groupEn: 'Post-transition' },
 };
 
+// ─── Chemistry Deduction Engine ───────────────────────────────────────────────
+// Deduces likely properties of an unknown atom combination using periodic table
+// rules: electronegativity trends, group membership, known hazard patterns, etc.
+
+type DeductionLevel = 'danger' | 'warning' | 'interesting' | 'awesome' | 'curious';
+interface Deduction { icon: string; level: DeductionLevel; id: string; en: string; }
+
+// Atom classification helpers
+const ALKALI = new Set(['Li', 'Na', 'K', 'Rb', 'Cs']);
+const ALK_EARTH = new Set(['Be', 'Mg', 'Ca', 'Sr', 'Ba']);
+const TRANSITION = new Set(['Fe', 'Cu', 'Zn', 'Ni', 'Co', 'Mn', 'Cr', 'V', 'Ti', 'Ag', 'Au', 'Pt', 'Pd', 'Hg']);
+const HEAVY_TOXIC = new Set(['Pb', 'Hg', 'Cd', 'As', 'Tl']);
+const HALOGEN = new Set(['F', 'Cl', 'Br', 'I']);
+const NONMETAL = new Set(['H', 'C', 'N', 'O', 'P', 'S', 'Se']);
+const METALLOID = new Set(['Si', 'Ge', 'As', 'Sb', 'Te']); void METALLOID;
+const NOBLE_METAL = new Set(['Au', 'Ag', 'Pt', 'Pd']);
+
+// Electronegativity (Pauling scale, approximate)
+const EN: Record<string, number> = {
+  H: 2.20, C: 2.55, N: 3.04, O: 3.44, F: 3.98,
+  Na: 0.93, K: 0.82, Ca: 1.00, Mg: 1.31, Al: 1.61,
+  Fe: 1.83, Cu: 1.90, Zn: 1.65, Si: 1.90, P: 2.19,
+  S: 2.58, Cl: 3.16, Pb: 2.33, Hg: 2.00, Ag: 1.93,
+  Au: 2.54, Ca2: 1.00,
+};
+
+function deduceFreeExperiment(sel: Record<string, number>, _isEN: boolean): Deduction[] {
+  const syms = Object.keys(sel);
+  const totalAtoms = Object.values(sel).reduce((a, b) => a + b, 0);
+  const has = (s: string) => s in sel;
+  const count = (s: string) => sel[s] ?? 0;
+  const results: Deduction[] = [];
+
+  const metals = syms.filter(s => TRANSITION.has(s) || ALKALI.has(s) || ALK_EARTH.has(s));
+  const nonmetals = syms.filter(s => NONMETAL.has(s));
+  const halogens = syms.filter(s => HALOGEN.has(s));
+
+  // ── DANGER rules ────────────────────────────────────────────────────────
+  if (syms.some(s => HEAVY_TOXIC.has(s))) {
+    const tox = syms.filter(s => HEAVY_TOXIC.has(s)).join(', ');
+    results.push({
+      icon: '☠️', level: 'danger',
+      id: `Mengandung logam berat (${tox}) — hampir semua senyawanya sangat beracun bagi sistem saraf & ginjal manusia.`,
+      en: `Contains heavy metal (${tox}) — most compounds are highly toxic to the nervous system & kidneys.`,
+    });
+  }
+
+  if (has('F')) {
+    results.push({
+      icon: '⚡', level: 'danger',
+      id: 'Fluor adalah unsur paling elektronegatif — senyawanya cenderung sangat korosif dan bereaksi agresif dengan hampir segalanya.',
+      en: 'Fluorine is the most electronegative element — its compounds tend to be highly corrosive and aggressively reactive.',
+    });
+  }
+
+  if (ALKALI.has(syms[0] ?? '') && count(syms[0]) >= 1 && syms.length === 1) {
+    results.push({
+      icon: '💥', level: 'danger',
+      id: `Logam alkali murni seperti ${syms[0]} bereaksi keras dengan air — kontak air bisa memicu ledakan.`,
+      en: `Pure alkali metal like ${syms[0]} reacts violently with water — contact can trigger an explosion.`,
+    });
+  }
+
+  // ── WARNING rules ────────────────────────────────────────────────────────
+  const nCount = count('N');
+  if (nCount >= 3) {
+    results.push({
+      icon: '💣', level: 'warning',
+      id: `${nCount} atom nitrogen dalam satu molekul — rasio N tinggi adalah ciri khas senyawa energetik seperti TNT atau nitrogliserin. Berpotensi eksplosif jika ditambah oksigen.`,
+      en: `${nCount} nitrogen atoms in one molecule — high N ratio is the hallmark of energetic compounds like TNT or nitroglycerin. Potentially explosive if oxygen is added.`,
+    });
+  }
+
+  if (has('K') && (has('O') || has('Cl'))) {
+    results.push({
+      icon: '🔥', level: 'warning',
+      id: 'Kalium + Oksigen/Klor → kandidat oksidator kuat (seperti KClO₃). Senyawa ini bisa memicu kebakaran jika terkena bahan organik.',
+      en: 'Potassium + Oxygen/Chlorine → candidate strong oxidizer (like KClO₃). Such compounds can ignite organic materials.',
+    });
+  }
+
+  if (has('S') && has('H') && !has('O')) {
+    results.push({
+      icon: '🤢', level: 'warning',
+      id: 'Pola H-S menyerupai hidrogen sulfida (H₂S) — gas berbau telur busuk yang beracun meski dalam konsentrasi rendah.',
+      en: 'H-S pattern resembles hydrogen sulfide (H₂S) — rotten-egg-smelling gas that is toxic even at low concentrations.',
+    });
+  }
+
+  // ── INTERESTING rules ─────────────────────────────────────────────────────
+  const isOrganic = has('C') && has('H');
+  if (isOrganic) {
+    const withO = has('O');
+    const withN = has('N');
+    if (withO && withN) {
+      results.push({
+        icon: '💊', level: 'interesting',
+        id: 'C + H + O + N → pola senyawa organik kompleks. Kemungkinan besar masuk keluarga alkaloid, asam amino, atau obat-obatan.',
+        en: 'C + H + O + N → complex organic compound pattern. Likely in the alkaloid, amino acid, or pharmaceutical family.',
+      });
+    } else if (withO) {
+      results.push({
+        icon: '🍬', level: 'interesting',
+        id: 'C + H + O → wilayah senyawa organik berbasis oksigen. Bisa jadi alkohol, gula, eter, atau lemak tergantung rasio atomnya.',
+        en: 'C + H + O → oxygen-based organic territory. Could be alcohol, sugar, ether, or fat depending on the atomic ratio.',
+      });
+    } else {
+      results.push({
+        icon: '⛽', level: 'interesting',
+        id: 'C + H tanpa O → hidrokarbon murni. Kemungkinan bahan bakar (seperti metana, propana) atau polimer plastik.',
+        en: 'C + H without O → pure hydrocarbon. Could be a fuel (like methane, propane) or a plastic polymer.',
+      });
+    }
+  }
+
+  if (has('Si') && has('O')) {
+    results.push({
+      icon: '🪨', level: 'interesting',
+      id: 'Si + O → pola silikat — keluarga mineral paling melimpah di kerak Bumi. Bisa membentuk pasir, kaca, keramik, atau semikonduktor.',
+      en: 'Si + O → silicate pattern — the most abundant mineral family in Earth\'s crust. Could form sand, glass, ceramics, or semiconductors.',
+    });
+  }
+
+  const enValues = syms.map(s => EN[s]).filter(Boolean);
+  if (enValues.length >= 2) {
+    const enMax = Math.max(...enValues);
+    const enMin = Math.min(...enValues);
+    const enDiff = enMax - enMin;
+    if (enDiff > 1.7 && metals.length > 0 && nonmetals.length > 0) {
+      results.push({
+        icon: '🧲', level: 'interesting',
+        id: `Perbedaan elektronegativitas besar (Δ≈${enDiff.toFixed(1)}) antara logam dan nonlogam → kemungkinan besar ikatan ionik. Senyawa ini bisa jadi garam kristal stabil atau padatan yang larut dalam air.`,
+        en: `Large electronegativity difference (Δ≈${enDiff.toFixed(1)}) between metal and nonmetal → likely ionic bonding. This could form a stable crystalline salt or water-soluble solid.`,
+      });
+    } else if (enDiff < 0.5 && nonmetals.length >= 2) {
+      results.push({
+        icon: '🤝', level: 'interesting',
+        id: `Elektronegativitas hampir setara (Δ≈${enDiff.toFixed(1)}) → prediksi ikatan kovalen nonpolar. Senyawa ini cenderung berbentuk gas atau cairan yang tidak larut dalam air.`,
+        en: `Nearly equal electronegativity (Δ≈${enDiff.toFixed(1)}) → predicted nonpolar covalent bond. This compound tends to be a gas or water-insoluble liquid.`,
+      });
+    }
+  }
+
+  if (halogens.length > 0 && nonmetals.some(s => !HALOGEN.has(s))) {
+    const hal = halogens.join('+');
+    results.push({
+      icon: '🧪', level: 'interesting',
+      id: `Halogen (${hal}) cenderung menarik elektron kuat — senyawanya kemungkinan sangat polar dan bisa berfungsi sebagai antiseptik, pelarut, atau bahan industri.`,
+      en: `Halogen (${hal}) aggressively pulls electrons — the compound is likely highly polar and could function as an antiseptic, solvent, or industrial chemical.`,
+    });
+  }
+
+  if (has('Ca') && has('P') && has('O')) {
+    results.push({
+      icon: '🦴', level: 'interesting',
+      id: 'Ca + P + O → sangat mirip hidroksiapatit — mineral utama penyusun tulang dan gigi manusia!',
+      en: 'Ca + P + O → very similar to hydroxyapatite — the primary mineral in human bones and teeth!',
+    });
+  }
+
+  // ── AWESOME rules ─────────────────────────────────────────────────────────
+  if (syms.some(s => NOBLE_METAL.has(s))) {
+    const noble = syms.filter(s => NOBLE_METAL.has(s)).join(', ');
+    results.push({
+      icon: '✨', level: 'awesome',
+      id: `Mengandung logam mulia (${noble}) — sangat tahan korosi. Senyawa ini punya nilai tinggi dan kemungkinan besar stabil secara kimiawi dalam jangka panjang.`,
+      en: `Contains noble metal (${noble}) — highly corrosion-resistant. This compound has high value and is likely chemically stable long-term.`,
+    });
+  }
+
+  if (metals.length >= 2 && nonmetals.length === 0) {
+    const alloy = metals.join(' + ');
+    results.push({
+      icon: '🔩', level: 'awesome',
+      id: `${alloy} — kombinasi logam-logam menghasilkan paduan (alloy)! Alloy biasanya lebih kuat, tahan korosi, atau konduktif daripada logam aslinya. Perunggu (Cu+Sn), baja (Fe+C), monel (Ni+Cu) adalah contohnya.`,
+      en: `${alloy} — metal-metal combination produces an alloy! Alloys are typically stronger, more corrosion-resistant, or more conductive than the base metals. Bronze (Cu+Sn), steel (Fe+C), monel (Ni+Cu) are examples.`,
+    });
+  }
+
+  if (syms.length === 1 && count(syms[0]) >= 2) {
+    results.push({
+      icon: '💎', level: 'awesome',
+      id: `Hanya satu jenis atom dalam jumlah besar → kemungkinan alotrop elementar seperti berlian & grafit (C), ozon (O₃), atau logam kristal. Sifatnya bisa sangat berbeda dari atom tunggalnya!`,
+      en: `Only one atom type in large quantity → possible elemental allotrope like diamond & graphite (C), ozone (O₃), or crystalline metal. Properties can be wildly different from the single atom!`,
+    });
+  }
+
+  if (syms.some(s => TRANSITION.has(s)) && has('O') && !isOrganic) {
+    results.push({
+      icon: '🌈', level: 'awesome',
+      id: 'Logam transisi + Oksigen → senyawa ini hampir pasti berwarna! Logam transisi membentuk senyawa yang berwarna-warni karena elektron d yang dapat menyerap cahaya.',
+      en: 'Transition metal + Oxygen → this compound is almost certainly colored! Transition metals form vivid compounds because d-electrons can absorb visible light.',
+    });
+  }
+
+  // ── CURIOUS rules ─────────────────────────────────────────────────────────
+  if (totalAtoms > 12) {
+    results.push({
+      icon: '🔬', level: 'curious',
+      id: `${totalAtoms} atom total — molekul yang cukup besar. Kandidat untuk polimer, biomolekul, atau material dengan struktur kristal kompleks.`,
+      en: `${totalAtoms} atoms total — quite a large molecule. Candidate for a polymer, biomolecule, or material with complex crystal structure.`,
+    });
+  }
+
+  if (has('Fe') && has('Cu')) {
+    results.push({
+      icon: '⚡', level: 'curious',
+      id: 'Fe + Cu — dalam metalurgi, keduanya tidak bercampur sempurna (immiscible alloy). Kombinasi ini menarik untuk lapisan anti-korosi atau studi difusi logam.',
+      en: 'Fe + Cu — in metallurgy, these are mostly immiscible. This combination is interesting for anti-corrosion coatings or metal diffusion studies.',
+    });
+  }
+
+  if (results.length === 0) {
+    results.push({
+      icon: '🤔', level: 'curious',
+      id: 'Kombinasi ini belum punya pola yang kami kenali — tapi itu justru menarik! Ilmuwan sering menemukan senyawa baru yang tak terduga.',
+      en: 'This combination doesn\'t match any known pattern — but that\'s what makes it interesting! Scientists often discover unexpected new compounds.',
+    });
+  }
+
+  return results;
+}
 
 // ─── Main export ──────────────────────────────────────────────────────────────
 export function renderMoleculeBuilder(container: HTMLElement): () => void {
@@ -204,6 +426,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
                 </div>
                 <div class="mb-fe-info">
                   <div class="mb-fe-atoms" id="mb-fe-atoms"></div>
+                  <div class="mb-fe-deductions" id="mb-fe-deductions"></div>
                   <div class="mb-nf-sub" id="mb-nf-sub"></div>
                 </div>
               </div>
@@ -331,6 +554,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
   const molInfoEl = container.querySelector('#mb-mol-info')! as HTMLElement;
   const nfSubEl = container.querySelector('#mb-nf-sub')! as HTMLElement;
   const feAtomsEl = container.querySelector('#mb-fe-atoms')! as HTMLElement;
+  const feDeductionsEl = container.querySelector('#mb-fe-deductions')! as HTMLElement;
   const feCanvasWrap = container.querySelector('#mb-fe-canvas-wrap')! as HTMLElement;
   let freeExperimentScene: MoleculeScene | null = null;
 
@@ -499,6 +723,28 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
           </div>
         </div>`;
     }).join('');
+
+    // ── Chemistry deductions ──
+    const deductions = deduceFreeExperiment(selection, isEN);
+    const DEDUCTION_COLORS: Record<DeductionLevel, { bg: string; border: string; label: string; labelEn: string }> = {
+      danger: { bg: 'rgba(239,68,68,0.10)', border: 'rgba(239,68,68,0.4)', label: 'BERBAHAYA', labelEn: 'DANGER' },
+      warning: { bg: 'rgba(251,146,60,0.10)', border: 'rgba(251,146,60,0.4)', label: 'PERINGATAN', labelEn: 'WARNING' },
+      awesome: { bg: 'rgba(168,85,247,0.10)', border: 'rgba(168,85,247,0.4)', label: 'LUAR BIASA', labelEn: 'AWESOME' },
+      interesting: { bg: 'rgba(99,102,241,0.10)', border: 'rgba(99,102,241,0.4)', label: 'MENARIK', labelEn: 'INTERESTING' },
+      curious: { bg: 'rgba(100,116,139,0.10)', border: 'rgba(100,116,139,0.4)', label: 'PENASARAN', labelEn: 'CURIOUS' },
+    };
+    feDeductionsEl.innerHTML = `
+      <div class="mb-fe-ded-label">${isEN ? '🔭 Chemical Deductions' : '🔭 Dugaan Kimiawi'}</div>
+      ${deductions.map((d, idx) => {
+      const col = DEDUCTION_COLORS[d.level];
+      return `<div class="mb-fe-ded-card" style="background:${col.bg};border-color:${col.border};animation-delay:${idx * 0.07}s">
+          <div class="mb-fe-ded-top">
+            <span class="mb-fe-ded-icon">${d.icon}</span>
+            <span class="mb-fe-ded-badge" style="color:${col.border}">${isEN ? col.labelEn : col.label}</span>
+          </div>
+          <p class="mb-fe-ded-text">${isEN ? d.en : d.id}</p>
+        </div>`;
+    }).join('')}`;
 
     // ── Molecule suggestions ──
     const suggestions = molecules
