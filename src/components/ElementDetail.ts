@@ -298,6 +298,51 @@ export function renderElementDetail(container: HTMLElement, n: number) {
         right.appendChild(warning);
     }
 
+    // ── Related Elements ─────────────────────────────────────────────────
+    const isLantAct = (n: number) => (n >= 57 && n <= 71) || (n >= 89 && n <= 103);
+    const elIsLantAct = isLantAct(el.n);
+
+    const sameGroup = el.group <= 18 && !elIsLantAct
+        ? elements.filter(e => e.n !== el.n && e.group === el.group && !isLantAct(e.n)).slice(0, 6)
+        : elIsLantAct
+            ? elements.filter(e => e.n !== el.n && isLantAct(e.n) && e.period === el.period).slice(0, 6)
+            : [];
+    const samePeriod = elements.filter(e => e.n !== el.n && e.period === el.period && !isLantAct(e.n)).slice(0, 7);
+
+    if (sameGroup.length > 0 || samePeriod.length > 0) {
+        const relSec = document.createElement('div');
+        relSec.style.marginTop = '20px';
+
+        const renderGroup = (label: string, icon: string, list: typeof sameGroup) => {
+            if (!list.length) return '';
+            return `
+                <div class="related-group-label">${icon} ${label}</div>
+                <div class="related-chips">
+                    ${list.map(re => {
+                const rc = categories[re.cat];
+                return `<button class="related-chip" data-n="${re.n}"
+                            style="--chip-color:${rc?.color || '#868e96'};--chip-bg:${rc?.bgColor || 'rgba(134,142,150,0.1)'}">
+                            <span class="related-chip-sym">${re.sym}</span>
+                            <span class="related-chip-num">${re.n}</span>
+                        </button>`;
+            }).join('')}
+                </div>`;
+        };
+
+        relSec.innerHTML = `
+            <div class="section-title">Elemen Terkait</div>
+            ${renderGroup('Golongan sama', '↕', sameGroup)}
+            ${renderGroup('Periode sama', '↔', samePeriod)}
+        `;
+
+        relSec.addEventListener('click', e => {
+            const btn = (e.target as HTMLElement).closest('[data-n]') as HTMLElement | null;
+            if (btn) navigate(`/element/${btn.dataset.n}`);
+        });
+
+        right.appendChild(relSec);
+    }
+
     view.appendChild(right);
 
     // ── Init 3D — ResizeObserver waits for real layout dimensions ─────────

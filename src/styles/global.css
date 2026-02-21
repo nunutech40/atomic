@@ -1080,6 +1080,60 @@ body {
   line-height: 1.65;
 }
 
+/* Related Elements */
+.related-group-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin: 10px 0 6px;
+}
+
+.related-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.related-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--chip-color, var(--border));
+  background: var(--chip-bg, var(--surface));
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  min-width: 44px;
+}
+
+.related-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--chip-color, transparent)33;
+}
+
+.related-chip-sym {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--chip-color, var(--text-1));
+}
+
+.related-chip-num {
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+/* Keyboard focus ring for periodic table cells */
+.element-cell:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--cell-color, var(--accent)), 0 0 12px var(--cell-color, var(--accent))66;
+  z-index: 2;
+  transform: scale(1.08);
+}
+
 .electron-config-display {
   font-family: var(--font-mono);
   font-size: 14px;

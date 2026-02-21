@@ -489,6 +489,8 @@ export function renderPeriodicTable(container: HTMLElement) {
                 <span class="mass">${typeof massVal === 'string' ? parseFloat(massVal).toFixed(2) : Number(massVal).toFixed(2)}</span>
             `;
       elMap[el.n] = cell;
+      cell.setAttribute('tabindex', '0');
+      cell.setAttribute('aria-label', `${el.n} ${el.name} ${el.sym}`);
 
       cell.addEventListener('mouseenter', (e) => {
         const m = e as MouseEvent;
@@ -513,6 +515,54 @@ export function renderPeriodicTable(container: HTMLElement) {
   }
 
   wrapper.appendChild(table);
+
+  // ── Keyboard navigation ───────────────────────────────────────────────
+  // Build reverse map: atomicNum → [row, col] (0-indexed)
+  const posMap: Record<number, [number, number]> = {};
+  Object.entries(GRID_POS).forEach(([n, [r, c]]) => {
+    posMap[Number(n)] = [r - 1, c - 1];
+  });
+
+  table.addEventListener('keydown', (e) => {
+    const focused = document.activeElement as HTMLElement;
+    const nStr = focused?.dataset?.n;
+    if (!nStr) return;
+
+    const currentN = Number(nStr);
+    const [row, col] = posMap[currentN] ?? [-1, -1];
+    if (row < 0) return;
+
+    let dr = 0, dc = 0;
+    if (e.key === 'ArrowUp') { dr = -1; }
+    else if (e.key === 'ArrowDown') { dr = 1; }
+    else if (e.key === 'ArrowLeft') { dc = -1; }
+    else if (e.key === 'ArrowRight') { dc = 1; }
+    else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navigate(`/element/${currentN}`);
+      return;
+    } else return;
+
+    e.preventDefault();
+
+    // Walk in direction until we find a filled cell (skip gaps)
+    let nr = row + dr, nc = col + dc;
+    while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+      const found = Object.entries(posMap).find(([, [r, c]]) => r === nr && c === nc);
+      if (found) {
+        const targetN = Number(found[0]);
+        const targetCell = elMap[targetN];
+        if (targetCell) {
+          targetCell.focus();
+          targetCell.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+        return;
+      }
+      nr += dr;
+      nc += dc;
+    }
+  });
+
   container.appendChild(wrapper);
 
   const legend = document.createElement('div');
