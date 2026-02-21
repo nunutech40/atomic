@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 1.4  
+**Version:** 2.0  
 **Date:** 2026-02-21  
-**Status:** Phase 1 Complete · Bilingual Complete · Dashboard Complete · Next: Explore Rebuild + Kimia Lab
+**Status:** Phase 1 ✅ SELESAI · Next: Kimia Lab Rebuild (Mode Tantangan)
 
 ---
 
@@ -46,127 +46,102 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 
 ---
 
-## 3. Scope & Feature Matrix
-
-### ✅ Phase 1 — Core Periodic Table (Selesai)
-
-| Feature | Status | Catatan |
-|---------|--------|---------|
-| Tabel periodik 118 elemen | ✅ | Grid 18 kolom, posisi akurat |
-| Kode warna per kategori | ✅ | 11 kategori + legend filter |
-| Tooltip hover | ✅ | Nama, simbol, massa |
-| Live search | ✅ | By nama, simbol, nomor atom |
-| Halaman detail unsur | ✅ | Data fisika & kimia lengkap |
-| 3D atom visualizer (Model Bohr) | ✅ | Three.js, orbit elektron animasi |
-| Drag to rotate + scroll to zoom | ✅ | Mouse & touch support |
-| Prev/Next navigasi antar elemen | ✅ | Arrow nav di detail page |
-| Label model atom | ✅ | Badge "⚛ Model Bohr" + hint |
-| Badge elemen radioaktif | ✅ | Warning ☢ untuk elemen sintetis |
-| Dark/Light theme | ✅ | Persisted ke localStorage |
-| Konfigurasi elektron | ✅ | Semua 118 elemen |
-| Kulit elektron (K–Q) | ✅ | Visual pills + 3D orbit |
-| Total elektron summary | ✅ | Jumlah elektron + kulit |
-| Graceful error handling | ✅ | Try/catch AtomScene, fallback UI |
-| `nameId` (nama Indonesia) | ✅ | Semua 118 elemen |
-| `desc` & `funFact` per elemen | ✅ | Semua 118 elemen |
-| Keyboard navigation | ✅ | ArrowLeft/Right di detail page |
-| Related elements section | ✅ | "Satu golongan" / "Satu periode" |
-| **Halaman Fenomena Atom** | ✅ | Route `/phenomena`, komponen PhenomenaList |
-| **27 Fenomena, 6 Kategori** | ✅ | Nuklir, Kuantum, Sehari-hari, Kosmik, Kehidupan, Fiksi & Sains |
-| **Filter kategori tab** | ✅ | Filter real-time, count per kategori |
-| **Storyteller slide per fenomena** | ✅ | Narasi lengkap, animasi CSS per fenomena |
-| **Dashboard** — first principle, 5 chapter, bilingual | ✅ | Scroll-driven, Three.js hero, bilingual |
-| **Sejarah Atom (AtomHistory)** | ✅ | Route `/atom-history`, 22 slide cinematic deck |
-| **6 Babak sejarah atom** | ✅ | Democritus → Dalton → Thomson → Rutherford → Bohr → Schrödinger |
-| **Discoverer Story** | ✅ | Kisah penemu per elemen, route `/discoverer/:sym` |
-| **Bilingual ID/EN** | ✅ | Toggle real-time, semua komponen bilingual |
-
----
-
-## 4. Arsitektur Navigasi Saat Ini
+## 3. Arsitektur Navigasi
 
 ```
-/ (Dashboard)          → halaman utama
-/explore               → tabel periodik + molekul
-/element/:n            → detail elemen
-/discoverer/:sym       → kisah penemu
+/ (Dashboard)          → halaman utama, scroll-driven, 5 chapter
+/explore               → tabel periodik + galeri molekul
+/element/:n            → detail elemen (3D, data, penemu, asal kosmik)
+/discoverer/:sym       → kisah penemu elemen
 /molecule              → kimia lab (molecule builder)
-/phenomena             → daftar fenomena
+/phenomena             → daftar 27 fenomena atom
 /phenomena/:id         → story per fenomena
-/atom-history          → sejarah atom (dari dashboard section 4)
+/atom-history          → sejarah atom, 22 slide cinematic
 ```
 
 **Nav bar:** Dashboard · Explore · Kimia Lab · Fenomena
 
 ---
 
-## 5. Backlog Sprint Aktif
+## 4. ✅ Phase 1 — SELESAI
 
-> Urutan prioritas sudah disetujui. Kerjakan berurutan dari A ke D.
+Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 
----
+### 4.1 Core Periodic Table & Element Detail
 
-### 🔬 A. Explore Rebuild — Tabel + Molekul (🔨 Prioritas 1)
+| Feature | Status |
+|---------|--------|
+| Tabel periodik 118 elemen (grid 18 kolom) | ✅ |
+| Kode warna per kategori (11 kategori + legend) | ✅ |
+| Live search (nama, simbol, nomor atom) | ✅ |
+| Filter kategori per golongan | ✅ |
+| Halaman detail elemen — data fisika & kimia lengkap | ✅ |
+| 3D atom visualizer — Model Bohr (Three.js) | ✅ |
+| Drag to rotate + scroll to zoom (mouse & touch) | ✅ |
+| Prev/Next navigasi antar elemen | ✅ |
+| Keyboard navigation (ArrowLeft/Right) | ✅ |
+| Konfigurasi elektron + kulit elektron visual | ✅ |
+| Badge elemen radioaktif (☢) | ✅ |
+| Related elements — golongan & periode sama | ✅ |
+| `nameId` (nama Indonesia) semua 118 elemen | ✅ |
+| `desc` & `funFact` semua 118 elemen | ✅ |
+| **Card Penemu** — foto, bio, link Wikipedia | ✅ |
+| **Card Asal Usul Kosmik** — nukleosintesis bintang per elemen | ✅ |
 
-> **Konsep:** Halaman `/explore` memuat tabel periodik **DAN** galeri molekul terkenal dalam satu halaman yang continuous. Di atas ada penjelasan cara baca tabel, di bawah ada seksi molekul dengan penjelasan.
+### 4.2 Halaman & Fitur Lain
 
-**Status Dashboard (sudah selesai):** Scroll-driven landing page 5 chapter — Hero (3D atom full screen) → Scale slider → Bongkar atom → Proton counter → Asal usul atom → CTA final. Semua bilingual.
-
-> **Konsep:** Halaman `/explore` memuat tabel periodik **DAN** galeri molekul terkenal dalam satu halaman yang continuous. Di atas ada penjelasan cara baca tabel, di bawah ada seksi molekul dengan penjelasan.
-
-**Struktur:**
-
-```
-┌──────────────────────────────────────────────┐
-│  BANNER: Cara Membaca Tabel Periodik          │
-│  (group, period, warna, cara baca explained) │
-├──────────────────────────────────────────────┤
-│  TABEL PERIODIK 118 elemen (existing)        │
-├──────────────────────────────────────────────┤
-│  ── DIVIDER ──                               │
-│  Penjelasan: "Dari Atom ke Molekul"          │
-│  (cara atom bergabung bbentuk molekul)       │
-├──────────────────────────────────────────────┤
-│  MOLEKUL TERKENAL — Grid cards               │
-│  H₂O, CO₂, O₂, N₂, NaCl, CH₄, NH₃         │
-│  C₂H₅OH (etanol), O₃, H₂O₂                 │
-│  C₆H₁₂O₆ (glukosa), C₈H₁₀N₄O₂ (kafein)   │
-│  Aspirin (C₉H₈O₄), DNA, dll                 │
-│  Click → detail + 3D render (modal/sidebar) │
-└──────────────────────────────────────────────┘
-```
-
-**File:** `src/components/PeriodicTable.ts` (update), `src/data/molecules.ts` (tambah molekul)
-
----
-
-### ⚗️ C. Kimia Lab Rebuild — "Seperti Anak Kimia" (🗓️ Setelah Explore)
-
-> **Konsep:** Dipisah dari tabel. Fokus murni pada pengalaman belajar kimia seperti di buku — ada soal-soal menggabungkan atom, tapi dilakukan secara interaktif dan bisa langsung dipraktekkan.
-
-**Fitur target:**
-- Pilih atom dari palette → drag/klik untuk combine → lihat hasilnya dalam 3D
-- **Mode Tantangan:** Dikasih nama molekul (mis. "Air") → user harus merakit H₂O sendiri
-- **Mode Bebas:** Coba-coba kombinasi apapun (existing MoleculeBuilder)
-- Hint system untuk mode tantangan
-- Penjelasan lebih dalam per molekul (kegunaan, bahaya, fun fact)
-- Tambah molekul organik kompleks ke database
-
-**Route:** `/molecule` (sudah ada, perlu upgrade)  
-**File:** `src/components/MoleculeBuilder.ts`, `src/data/molecules.ts`
+| Feature | Status |
+|---------|--------|
+| **Dashboard** — scroll-driven, 5 chapter, Three.js hero, bilingual | ✅ |
+| **Explore** — banner cara baca tabel + tabel periodik + galeri molekul 3D | ✅ |
+| **Sejarah Atom** — 22 slide cinematic, 6 babak (Democritus → Schrödinger) | ✅ |
+| **Fenomena Atom** — 27 fenomena, 6 kategori, filter + storyteller slide | ✅ |
+| **Discoverer Story** — kisah penemu per elemen, route `/discoverer/:sym` | ✅ |
+| **Kimia Lab (MoleculeBuilder)** — mode bebas, 3D builder | ✅ |
+| **Dark/Light theme** — persisted localStorage | ✅ |
+| **Bilingual ID/EN** — toggle real-time, semua komponen | ✅ |
 
 ---
 
-### 📡 D. Fenomena (✅ Hold — Sudah Oke)
+## 5. 🔨 Sprint Aktif — Kimia Lab Rebuild (Mode Tantangan)
 
-> Fenomena sudah berjalan baik dengan 27 fenomena dan 6 kategori. Tidak ada perubahan yang diprioritaskan saat ini.
+> **Status:** Next up. Dikerjakan setelah Explore selesai ✅
+
+**Konsep:** Upgrade `/molecule` dari mode bebas menjadi pengalaman belajar seperti di buku kimia — ada soal, ada tantangan, ada feedback.
+
+### Fitur Target
+
+| Fitur | Detail | Prioritas |
+|-------|--------|-----------|
+| **Mode Tantangan** | Dikasih nama molekul → user harus merakit sendiri | 🔥 P0 |
+| **Hint System** | Petunjuk bertahap jika user stuck | P1 |
+| **Feedback Visual** | Tanda ✅/❌ real-time saat merakit | P1 |
+| **Mode Bebas** | Existing MoleculeBuilder — tetap ada | P2 |
+| **Penjelasan Molekul** | Kegunaan, bahaya, fun fact lebih dalam | P2 |
+| **Molekul Organik Kompleks** | Tambah ke `molecules.ts` | P2 |
+
+**File yang diubah:**
+- `src/components/MoleculeBuilder.ts` — tambah mode tantangan
+- `src/data/molecules.ts` — tambah molekul, tambah challenge data
+
+**Route:** `/molecule` (existing, upgrade)
 
 ---
 
-## 6. Phase 2 — Edukasi Pemula (🗓️ Planned)
+## 6. 🗓️ Backlog — Dikerjakan Setelah Kimia Lab
 
-> 10 modul edukasi di route `/learn` → `/learn/:slug`.  
-> Lihat detail lengkap di: [`docs/CURRICULUM.md`](./CURRICULUM.md)
+### 6.1 Element Detail — Card Lanjutan
+
+> Lihat detail di: `.agent/workflows/element-detail-roadmap.md`
+
+| Fitur | Detail | File |
+|-------|--------|------|
+| **Card "Keberadaan di Alam"** | Kelimpahan di kerak bumi, alam semesta, sumber mineral, peta negara penghasil | `src/data/elementAbundance.ts` (baru) |
+| **Card "Fenomena Terkait"** | Link ke phenomena yang relevan per elemen | `src/data/elementPhenomena.ts` (baru) |
+
+### 6.2 Phase 2 — Modul Edukasi Pemula
+
+> Route: `/learn` → `/learn/:slug`. Detail kurikulum: [`docs/CURRICULUM.md`](./CURRICULUM.md)
 
 | # | Topik | Animasi |
 |---|-------|---------|
@@ -181,9 +156,7 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 | 9 | Sifat Periodik Dasar | Heatmap visual |
 | 10 | Ikatan Kimia Intro | Animasi 2 atom berbagi elektron |
 
----
-
-## 7. Phase 3 — Multi-Level Atom Visualizer (🗓️ Planned)
+### 6.3 Phase 3 — Multi-Level Atom Visualizer
 
 | Level | Model | Deskripsi | Status |
 |-------|-------|-----------|--------|
@@ -193,7 +166,7 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 
 ---
 
-## 8. Non-Functional Requirements
+## 7. Non-Functional Requirements
 
 | Aspek | Target | Status |
 |-------|--------|--------|
@@ -206,18 +179,18 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 
 ---
 
-## 9. Out of Scope (v1.x)
+## 8. Out of Scope (v1.x)
 
 - Login/user account
 - Progress tracking & quiz score tersimpan
 - Backend/database/API (saat ini static SPA)
 - Mobile app native
 - Simulasi reaksi kimia / stoikiometri
-- Subscription/payment gateway (butuh backend)
+- Subscription/payment gateway (butuh backend — lihat TRD Section 8)
 
 ---
 
-## 10. Success Metrics
+## 9. Success Metrics
 
 | Metrik | Target | Status |
 |--------|--------|--------|
@@ -226,11 +199,15 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 | Navigasi prev/next lancar | ✅ | ✅ |
 | Elemen radioaktif ditandai jelas | ✅ | ✅ |
 | nameId, desc, funFact semua 118 elemen | ✅ | ✅ |
+| Card Penemu — semua elemen ada data | ✅ | ✅ |
+| Card Asal Usul Kosmik — semua 118 elemen | ✅ | ✅ |
 | Halaman Fenomena — 27 fenomena, 6 kategori | ✅ | ✅ |
 | Sejarah Atom — 22 slide cinematic | ✅ | ✅ |
 | Bilingual EN/ID — semua komponen | ✅ | ✅ |
-| Dashboard rebuild — first principle | ✅ | ✅ |
-| Explore rebuild — tabel + molekul | 🗓️ | — |
+| Dashboard rebuild — scroll-driven, 5 chapter | ✅ | ✅ |
+| Explore — tabel + galeri molekul 3D | ✅ | ✅ |
 | Kimia Lab — mode tantangan | 🗓️ | — |
+| Card Keberadaan di Alam | 🗓️ | — |
+| Card Fenomena Terkait | 🗓️ | — |
 | Phase 2: 10 modul edukasi | 🗓️ | — |
 | Phase 3: 3 level visualisasi | 🗓️ | — |

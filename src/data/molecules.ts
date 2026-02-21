@@ -593,3 +593,313 @@ export const CATEGORY_LABELS: Record<string, string> = {
     gas: 'Gas',
     material: 'Material / Struktur',
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CHALLENGE SYSTEM
+// ─────────────────────────────────────────────────────────────────────────────
+export type ChallengeDifficulty = 'easy' | 'medium' | 'hard';
+
+export interface Challenge {
+    id: string;
+    targetFormula: string;             // key to match with molecules array
+    difficulty: ChallengeDifficulty;
+    emoji: string;
+    context: string;                   // real-world hook (ID)
+    contextEn: string;                 // real-world hook (EN)
+    hints: string[];                   // bertahap (ID), unlock per wrong attempt
+    hintsEn: string[];                 // bertahap (EN)
+    availableAtoms: string[];          // atom yang bisa dipilih (subset dari palette)
+}
+
+export const CHALLENGES: Challenge[] = [
+    // ── EASY ──────────────────────────────────────────────────────────────
+    {
+        id: 'ch-h2o',
+        targetFormula: 'H₂O',
+        difficulty: 'easy',
+        emoji: '💧',
+        context: 'Zat ini menutupi 71% permukaan Bumi dan menyusun 60% tubuhmu. Hampir setiap reaksi kimia makhluk hidup terjadi di dalamnya.',
+        contextEn: 'This substance covers 71% of Earth\'s surface and makes up 60% of your body. Nearly every chemical reaction in living things happens inside it.',
+        hints: [
+            'Mulai dari atom paling ringan di alam semesta.',
+            'Molekul ini terdiri dari 2 jenis atom saja.',
+            'Rumusnya: dua H, satu O.',
+        ],
+        hintsEn: [
+            'Start with the lightest atom in the universe.',
+            'This molecule has only 2 types of atoms.',
+            'Formula: two H, one O.',
+        ],
+        availableAtoms: ['H', 'O', 'N', 'C'],
+    },
+    {
+        id: 'ch-co2',
+        targetFormula: 'CO₂',
+        difficulty: 'easy',
+        emoji: '🌿',
+        context: 'Tanaman mengambil gas ini dari udara dan mengubahnya menjadi gula menggunakan sinar matahari. Tanpanya, tidak ada fotosintesis.',
+        contextEn: 'Plants absorb this gas from the air and convert it into sugar using sunlight. Without it, no photosynthesis.',
+        hints: [
+            'Gas ini dihasilkan setiap kali kamu bernapas.',
+            'Terdiri dari karbon dan oksigen.',
+            'Satu karbon diapit dua oksigen.',
+        ],
+        hintsEn: [
+            'This gas is produced every time you breathe out.',
+            'Made of carbon and oxygen.',
+            'One carbon flanked by two oxygens.',
+        ],
+        availableAtoms: ['C', 'O', 'H', 'N'],
+    },
+    {
+        id: 'ch-nacl',
+        targetFormula: 'NaCl',
+        difficulty: 'easy',
+        emoji: '🧂',
+        context: 'Logam yang meledak di air + gas beracun kuning = bumbu masak yang kamu gunakan setiap hari.',
+        contextEn: 'A metal that explodes in water + a toxic yellow gas = the seasoning you use every day.',
+        hints: [
+            'Ini adalah garam dapur.',
+            'Terdiri dari logam alkali dan halogen.',
+            'Natrium + Klorin, masing-masing satu atom.',
+        ],
+        hintsEn: [
+            'This is table salt.',
+            'Made of an alkali metal and a halogen.',
+            'Sodium + Chlorine, one atom each.',
+        ],
+        availableAtoms: ['Na', 'Cl', 'K', 'H', 'O'],
+    },
+    {
+        id: 'ch-o2',
+        targetFormula: 'O₂',
+        difficulty: 'easy',
+        emoji: '🫁',
+        context: 'Setiap sel di tubuhmu membakar molekul ini untuk menghasilkan energi. 21% dari udara yang kamu hirup adalah molekul ini.',
+        contextEn: 'Every cell in your body burns this molecule to produce energy. 21% of the air you breathe is this molecule.',
+        hints: [
+            'Ini adalah gas yang kamu hirup setiap detik.',
+            'Hanya terdiri dari satu jenis atom.',
+            'Dua atom oksigen berikatan rangkap.',
+        ],
+        hintsEn: [
+            'This is the gas you inhale every second.',
+            'Only one type of atom.',
+            'Two oxygen atoms in a double bond.',
+        ],
+        availableAtoms: ['O', 'N', 'H', 'C'],
+    },
+    {
+        id: 'ch-nh3',
+        targetFormula: 'NH₃',
+        difficulty: 'easy',
+        emoji: '🌾',
+        context: 'Tanpa molekul ini, separuh populasi manusia tidak akan bisa diberi makan. Ini bahan baku pupuk nitrogen yang menghidupi 4 miliar orang.',
+        contextEn: 'Without this molecule, half the world\'s population couldn\'t be fed. It\'s the raw material for nitrogen fertilizer that feeds 4 billion people.',
+        hints: [
+            'Bau tajamnya bisa kamu cium di pembersih toilet.',
+            'Satu atom nitrogen dengan beberapa hidrogen.',
+            'Satu N, tiga H — bentuk piramida trigonal.',
+        ],
+        hintsEn: [
+            'You can smell its sharp odor in toilet cleaners.',
+            'One nitrogen atom with several hydrogens.',
+            'One N, three H — trigonal pyramid shape.',
+        ],
+        availableAtoms: ['N', 'H', 'O', 'C'],
+    },
+
+    // ── MEDIUM ────────────────────────────────────────────────────────────
+    {
+        id: 'ch-ch4',
+        targetFormula: 'CH₄',
+        difficulty: 'medium',
+        emoji: '🔥',
+        context: 'Kompor gas di dapurmu menggunakan ini. Gas alam utamanya adalah molekul ini — juga gas rumah kaca 80× lebih kuat dari CO₂.',
+        contextEn: 'Your gas stove uses this. Natural gas is mainly this molecule — also a greenhouse gas 80× more potent than CO₂.',
+        hints: [
+            'Ini adalah hidrokarbon paling sederhana.',
+            'Satu atom karbon di tengah, dikelilingi hidrogen.',
+            'Karbon + 4 hidrogen — bentuk tetrahedral sempurna.',
+        ],
+        hintsEn: [
+            'This is the simplest hydrocarbon.',
+            'One carbon atom in the center, surrounded by hydrogens.',
+            'Carbon + 4 hydrogens — perfect tetrahedral shape.',
+        ],
+        availableAtoms: ['C', 'H', 'O', 'N', 'S'],
+    },
+    {
+        id: 'ch-hcl',
+        targetFormula: 'HCl',
+        difficulty: 'medium',
+        emoji: '🫀',
+        context: 'Lambungmu memproduksi ini setiap hari untuk mencerna makanan. Konsentrasinya cukup tinggi untuk melarutkan silet — tapi lapisan mukosa melindungimu.',
+        contextEn: 'Your stomach produces this every day to digest food. It\'s concentrated enough to dissolve a razor blade — but your mucus lining protects you.',
+        hints: [
+            'Ini adalah asam kuat yang ada di lambung.',
+            'Hanya dua atom, dua jenis element.',
+            'Satu hidrogen + satu klorin.',
+        ],
+        hintsEn: [
+            'This is a strong acid found in your stomach.',
+            'Only two atoms, two types of element.',
+            'One hydrogen + one chlorine.',
+        ],
+        availableAtoms: ['H', 'Cl', 'Na', 'O', 'S'],
+    },
+    {
+        id: 'ch-h2o2',
+        targetFormula: 'H₂O₂',
+        difficulty: 'medium',
+        emoji: '🪲',
+        context: 'Kumbang bombardir menembakkan semprotan 100°C menggunakan reaksi dekomposisi molekul ini. Manusia menggunakannya sebagai pemutih dan antiseptik.',
+        contextEn: 'The bombardier beetle shoots 100°C spray using this molecule\'s decomposition. Humans use it as bleach and antiseptic.',
+        hints: [
+            'Mirip air, tapi punya satu atom oksigen ekstra.',
+            'Dua atom dari dua jenis: H dan O.',
+            'Dua H dan dua O — notasi H₂O₂.',
+        ],
+        hintsEn: [
+            'Like water, but with one extra oxygen atom.',
+            'Two atoms of two types: H and O.',
+            'Two H and two O — notation H₂O₂.',
+        ],
+        availableAtoms: ['H', 'O', 'C', 'N'],
+    },
+    {
+        id: 'ch-o3',
+        targetFormula: 'O₃',
+        difficulty: 'medium',
+        emoji: '🌍',
+        context: 'Di stratosfer, ia adalah pelindung yang menyerap 99% radiasi UV. Di permukaan bumi, ia adalah polutan berbahaya. Molekul yang sama, tempat berbeda.',
+        contextEn: 'In the stratosphere, it\'s a shield absorbing 99% of UV radiation. At ground level, it\'s a dangerous pollutant. Same molecule, different location.',
+        hints: [
+            'Lebih dari sekadar gas biasa — tiga atom dari elemen yang sama.',
+            'Semua atomnya identik, tapi jumlahnya tidak seperti biasanya.',
+            'Tiga atom oksigen — bukan dua!',
+        ],
+        hintsEn: [
+            'More than a regular gas — three atoms of the same element.',
+            'All atoms are identical, just more than usual.',
+            'Three oxygen atoms — not two!',
+        ],
+        availableAtoms: ['O', 'N', 'H', 'C'],
+    },
+    {
+        id: 'ch-co',
+        targetFormula: 'CO',
+        difficulty: 'medium',
+        emoji: '☠️',
+        context: 'Tak berwarna, tak berbau — tapi "silent killer". Ia mengikat hemoglobin 250× lebih kuat dari oksigen, memblokir sel darah merah selamanya.',
+        contextEn: 'Colorless, odorless — but "silent killer". It binds hemoglobin 250× stronger than oxygen, permanently blocking red blood cells.',
+        hints: [
+            'Hanya dua atom, namun berikatan tiga kali (triple bond).',
+            'Karbon monoksida — awalan "mono" berarti satu.',
+            'Satu C + satu O.',
+        ],
+        hintsEn: [
+            'Only two atoms, but triple-bonded.',
+            'Carbon monoxide — "mono" means one.',
+            'One C + one O.',
+        ],
+        availableAtoms: ['C', 'O', 'N', 'H', 'S'],
+    },
+
+    // ── HARD ──────────────────────────────────────────────────────────────
+    {
+        id: 'ch-h2so4',
+        targetFormula: 'H₂SO₄',
+        difficulty: 'hard',
+        emoji: '⚡',
+        context: 'Lebih dari 200 juta ton molekul ini diproduksi per tahun. Ada di aki mobilmu, pupuk, detergen. Indikator kekuatan industri suatu negara.',
+        contextEn: 'Over 200 million tons of this molecule are produced per year. Found in car batteries, fertilizers, detergents. A nation\'s industrial strength indicator.',
+        hints: [
+            'Asam paling banyak diproduksi di dunia.',
+            'Mengandung belerang (S) sebagai atom pusatnya.',
+            'H₂ + S + O₄ — dua hidrogen, satu sulfur, empat oksigen.',
+        ],
+        hintsEn: [
+            'The most produced acid in the world.',
+            'Contains sulfur (S) as its central atom.',
+            'H₂ + S + O₄ — two hydrogens, one sulfur, four oxygens.',
+        ],
+        availableAtoms: ['H', 'S', 'O', 'N', 'C', 'Cl'],
+    },
+    {
+        id: 'ch-naoh',
+        targetFormula: 'NaOH',
+        difficulty: 'hard',
+        emoji: '🥨',
+        context: 'Pretzel cokelat yang renyah itu dicelup ke dalam larutan ini sebelum dipanggang. Juga bahan utama sabun dan pembersih saluran mampet.',
+        contextEn: 'That crispy brown pretzel is dipped in a solution of this before baking. Also the main ingredient in soap and drain cleaners.',
+        hints: [
+            'Ini adalah soda api — basa kuat.',
+            'Mengandung natrium, oksigen, dan hidrogen.',
+            'Na + O + H — tiga atom dari tiga elemen.',
+        ],
+        hintsEn: [
+            'This is caustic soda — a strong base.',
+            'Contains sodium, oxygen, and hydrogen.',
+            'Na + O + H — three atoms from three elements.',
+        ],
+        availableAtoms: ['Na', 'O', 'H', 'K', 'Cl', 'C'],
+    },
+    {
+        id: 'ch-no2',
+        targetFormula: 'NO₂',
+        difficulty: 'hard',
+        emoji: '🏙️',
+        context: 'Warna kemerahan langit di kota-kota berpolusi? Ini pelakunya. Gas cokelat dari knalpot kendaraan yang menyerap cahaya biru.',
+        contextEn: 'That reddish haze over polluted cities? This is the culprit. Brown gas from vehicle exhaust that absorbs blue light.',
+        hints: [
+            'Gas cokelat kemerahan — bukan merah (Fe₂O₃), bukan biru.',
+            'Nitrogen sebagai atom pusat dengan dua oksigen.',
+            'N + dua O — nitrogen dioksida.',
+        ],
+        hintsEn: [
+            'Brownish-red gas — not red iron oxide, not blue.',
+            'Nitrogen as the central atom with two oxygens.',
+            'N + two O — nitrogen dioxide.',
+        ],
+        availableAtoms: ['N', 'O', 'H', 'C', 'S', 'Cl'],
+    },
+    {
+        id: 'ch-caco3',
+        targetFormula: 'CaCO₃',
+        difficulty: 'hard',
+        emoji: '🏛️',
+        context: 'Piramida Giza, Pegunungan Alps, cangkang kerang, tablet obat maag — semuanya mengandung molekul ini. Struktur paling melimpah di kerak bumi.',
+        contextEn: 'The Pyramids of Giza, the Alps, seashells, antacid tablets — all contain this molecule. One of the most abundant structures in Earth\'s crust.',
+        hints: [
+            'Kalsium karbonat — nama kimianya sudah memberi petunjuk.',
+            'Tiga elemen: Ca, C, dan O.',
+            'Ca + C + tiga O — total lima atom.',
+        ],
+        hintsEn: [
+            'Calcium carbonate — the chemical name already gives it away.',
+            'Three elements: Ca, C, and O.',
+            'Ca + C + three O — five atoms total.',
+        ],
+        availableAtoms: ['Ca', 'C', 'O', 'Na', 'Mg', 'H'],
+    },
+    {
+        id: 'ch-n2o',
+        targetFormula: 'N₂O',
+        difficulty: 'hard',
+        emoji: '😂',
+        context: '"Gas tertawa" — dipakai dokter gigi dan mesin balap. Tapi yang tertawa terakhir adalah iklim: gas ini 300× lebih kuat dari CO₂ sebagai gas rumah kaca.',
+        contextEn: '"Laughing gas" — used by dentists and race car engines. But climate gets the last laugh: this gas is 300× more potent than CO₂ as a greenhouse gas.',
+        hints: [
+            'Dua elemen, keduanya ada di atmosfer.',
+            'Nitrogen mendominasi — dua atom nitrogen.',
+            'Dua N + satu O — dinitrogen monoksida.',
+        ],
+        hintsEn: [
+            'Two elements, both found in the atmosphere.',
+            'Nitrogen dominates — two nitrogen atoms.',
+            'Two N + one O — dinitrogen monoxide.',
+        ],
+        availableAtoms: ['N', 'O', 'H', 'C', 'S'],
+    },
+];

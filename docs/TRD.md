@@ -1,7 +1,8 @@
 # TRD — Technical Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table  
-**Version:** 1.1  
-**Date:** 2026-02-20
+**Version:** 2.0  
+**Date:** 2026-02-21  
+**Status:** Sync dengan PRD v2.0
 
 ---
 
@@ -10,45 +11,48 @@
 Atomic adalah **Single Page Application (SPA)** client-only. Tidak ada backend, semua data di-bundle saat build.
 
 ```
-┌─────────────────────────────────────────────┐
-│                  Browser                      │
-│  ┌─────────┐  ┌──────────┐  ┌──────────┐  │
-│  │  Router  │  │  i18n    │  │   Theme    │  │
-│  │ (hash)   │  │ (ID/EN)  │  │(dark/light)│  │
-│  └────┬────┘  └──────────┘  └──────────┘  │
-│       │                                       │
-│  ┌────▼────────────────────────┐                │
-│  │         Views             │                │
-│  │  ┌───────┐ ┌───────┐ ┌─────────┐ │                │
-│  │  │ Home    │ │ Detail  │ │ Phenomena│ │                │
-│  │  │(Table)  │ │(Element)│ │ List/Detail│ │                │
-│  │  └────┬───┘ └────┬───┘ └────┬────┘ │                │
-│  └───────┬─────────┬───────┬───────┘               │
-│          │           │       │                │
-│  ┌───────▼───┐  ┌────▼──────────┐ ┌────▼─────────┐  │
-│  │ Periodic  │  │  ElementDetail  │ │PhenomenaList│  │
-│  │ Table.ts  │  │  + AtomScene   │ │+ Phenomena  │  │
-│  └───────────┘  └────────────────┘ │ Detail.ts  │  │
-│                                    └─────────────┘  │
-│  ┌─────────────────────────────────────────┐ │
-│  │             Data Layer                   │ │
-│  │  elements.ts  categories.ts  phenomena.ts │ │
-│  └─────────────────────────────────────────┘ │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│                        Browser                            │
+│                                                          │
+│  ┌──────────┐   ┌──────────┐   ┌────────────────┐      │
+│  │  Router  │   │   i18n   │   │   Theme        │      │
+│  │  (hash)  │   │ (ID/EN)  │   │ (dark/light)   │      │
+│  └────┬─────┘   └──────────┘   └────────────────┘      │
+│       │                                                   │
+│  ┌────▼──────────────────────────────────────────┐      │
+│  │                     Views                      │      │
+│  │                                                │      │
+│  │  Dashboard  Explore  ElementDetail  Molecules  │      │
+│  │  Phenomena  AtomHistory  DiscovererStory       │      │
+│  └────┬──────────────────────────────────────────┘      │
+│       │                                                   │
+│  ┌────▼──────────────────────────────────────────┐      │
+│  │                  Data Layer                    │      │
+│  │  elements · categories · molecules · phenomena │      │
+│  │  discoverers · origins · element-enrichment    │      │
+│  │  phenomenon-stories                            │      │
+│  └────────────────────────────────────────────────┘     │
+│                                                          │
+│  ┌────────────────────────────────────────────────┐     │
+│  │                  Three.js Layer                │     │
+│  │  atomScene.ts (Bohr Model — orbit elektron)    │     │
+│  │  Explore inline renderer (molecule 3D)         │     │
+│  │  MoleculeBuilder renderer                      │     │
+│  └────────────────────────────────────────────────┘     │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 2. Tech Stack Detail
+## 2. Tech Stack
 
 | Layer | Teknologi | Alasan |
 |-------|-----------|--------|
 | Build | **Vite 7** | HMR cepat, ESM native, zero config |
 | Language | **TypeScript 5** | Type safety, IDE support |
 | 3D | **Three.js 0.183** | WebGL renderer, scene management |
-| Data | **periodic-table** (npm) | Data terstruktur 118 elemen |
 | Routing | Custom hash router | No dependency, SPA hash-based |
-| Styling | Vanilla CSS | Flexibel, no framework overhead |
+| Styling | Vanilla CSS | Fleksibel, no framework overhead |
 | Font | Google Fonts (Inter, JetBrains Mono) | |
 
 ---
@@ -76,37 +80,80 @@ Atomic adalah **Single Page Application (SPA)** client-only. Tidak ada backend, 
 
 ---
 
-### 3.2 Data Layer
+### 3.2 Data Layer (Implemented)
 
-#### `data/elements.ts`
-- `Element` interface dengan semua properti kimia
-- Array 118 elemen, diurutkan berdasarkan nomor atom
-- `mass` field bisa `string | number | number[]` (handled di render)
+| File | Isi | Ukuran |
+|------|-----|--------|
+| `data/elements.ts` | 118 elemen + `nameId`, `desc`, `funFact` | ~44KB |
+| `data/element-enrichment.ts` | Data tambahan per elemen | ~40KB |
+| `data/categories.ts` | 11 kategori: warna, label ID/EN | ~2KB |
+| `data/discoverers.ts` | Data penemu per elemen: foto, bio, Wikipedia | ~250KB |
+| `data/origins.ts` | Asal usul kosmik per elemen (nukleosintesis) | ~75KB |
+| `data/phenomena.ts` | 27 fenomena, 6 kategori | ~44KB |
+| `data/phenomenon-stories.ts` | Narasi lengkap per fenomena | ~110KB |
+| `data/molecules.ts` | Galeri molekul 3D (atom coords, bonds, desc) | ~35KB |
 
-#### `data/categories.ts`
-- `Category` interface: `{ id, nameEn, nameId, color, bgColor }`
-- 11 kategori: alkali-metal, alkaline-earth, transition-metal, post-transition, metalloid, nonmetal, halogen, noble-gas, lanthanide, actinide, unknown
+#### Interface Utama
 
-#### `data/phenomena.ts`
-- `Phenomenon` interface: `{ id, icon, title, titleEn, tagline, category, atoms, desc, funFact, scale, realWorld }`
-- 27 entri fenomena, dikelompokkan dalam 6 kategori:
-  - `nuclear` (4), `quantum` (3), `everyday` (5), `cosmos` (2), `life` (7), `fiction` (6)
-- `PHENOMENON_CATEGORIES` — map kategori ke label & warna (pink untuk fiction)
-- Semua field `desc` multi-paragraf menggunakan **template literal** (backtick) dengan `\n\n`
+```typescript
+// elements.ts
+interface Element {
+  n: number; sym: string; name: string; nameId?: string;
+  mass: string | number | number[];  // array = radioaktif
+  cat: string; period: number; group: number;
+  config: string; phase: string;
+  density: number | null; mp: number | null; bp: number | null;
+  en: number | null; ie: number | null;
+  radius: number | null; year: number | string | null;
+  ox: string | number | null; discovered: string | null;
+  desc?: string; funFact?: string;
+}
+
+// discoverers.ts
+interface Discoverer {
+  sym: string; name: string; nationality: string;
+  born: number; died: number | string;
+  photoUrl: string; bio: string; wikipedia: string;
+}
+
+// origins.ts
+interface ElementOrigin {
+  sym: string; type: OriginType;
+  label: string; icon: string; color: string;
+  tagline: string; story: string;
+}
+
+// molecules.ts
+interface Molecule {
+  formula: string; name: string; nameId: string;
+  category: string; shape: string; bondType: string;
+  composition: Record<string, number>;
+  atoms: { sym: string; pos: [number,number,number] }[];
+  bonds: { a: number; b: number; order: number }[];
+  desc: string; descEn?: string;
+  funFact: string; funFactEn?: string;
+}
+```
 
 ---
 
-### 3.3 Components
+### 3.3 Components (Implemented)
 
-#### `components/PhenomenaList.ts`
-- Render grid kartu fenomena dari data `phenomena.ts`
-- Filter tab per kategori dengan count badge
-- Search field untuk filter by judul/tagline/desc
-- Click handler untuk navigate ke `/phenomena/:id`
+| Component | Route | Deskripsi |
+|-----------|-------|-----------|
+| `Dashboard.ts` | `/` | Scroll-driven landing, 5 chapter, Three.js hero |
+| `Explore.ts` | `/explore` | How-to-read banner + Tabel Periodik + Galeri Molekul 3D |
+| `ElementDetail.ts` | `/element/:n` | 3D atom, data, Card Penemu, Card Asal Kosmik, Related |
+| `DiscovererStory.ts` | `/discoverer/:sym` | Kisah penemu per elemen |
+| `MoleculeBuilder.ts` | `/molecule` | 3D molecule builder, mode bebas |
+| `PhenomenaList.ts` | `/phenomena` | Grid 27 fenomena, filter kategori, search |
+| `PhenomenaStory.ts` | `/phenomena/:id` | Storyteller slide per fenomena |
+| `AtomHistory.ts` | `/atom-history` | 22 slide cinematic sejarah atom |
+| `Nav.ts` | global | Navbar + search dropdown + bilingual toggle |
 
 ---
 
-### 3.4 Three.js AtomScene
+### 3.4 Three.js — AtomScene
 
 #### Lifecycle
 ```
@@ -121,11 +168,11 @@ new AtomScene(canvas, colorHex)
 1. **Nucleus** — `SphereGeometry`, ukuran logaritmik `log(n+1)*0.18`
 2. **Glow** — sphere transparan di sekitar nukleus
 3. **Orbit rings** — `TorusGeometry` per kulit, tilt rotasi berbeda
-4. **Electrons** — `SphereGeometry` kecil, posisi awal evenly distributed, orbit via angle update
+4. **Electrons** — `SphereGeometry` kecil, posisi awal evenly distributed
 
 #### Optimasi
 - Max elektron per kulit ditampilkan: **16** (untuk elemen berat)
-- LOD: sphere elektron pakai segment lebih sedikit (8x8 vs 10x10)
+- LOD: sphere elektron segment lebih sedikit (8×8)
 - `renderer.setPixelRatio(min(dpr, 2))` — limit pixel ratio
 
 #### Drag/Touch Control
@@ -139,12 +186,10 @@ new AtomScene(canvas, colorHex)
 
 **Layout:** CSS Grid `18 kolom × 9 baris`
 - Baris 1–7: periode reguler
-- Baris 8: Lantanida (La–Lu)
-- Baris 9: Aktinida (Ac–Lr)
+- Baris 8: Lantanida (La–Lu), row 8 col 4–17
+- Baris 9: Aktinida (Ac–Lr), row 9 col 4–17
 
 **Posisi elemen** hardcoded di `GRID_POS` Map `{n: [row, col]}`
-
-**Filter kategori:** toggle `dimmed/highlighted` class per sel
 
 ---
 
@@ -152,25 +197,17 @@ new AtomScene(canvas, colorHex)
 
 ```
 main.ts
-  → initTheme()              // set data-theme attribute
-  → renderNav()              // navbar + search
-  → addRoute('/')            // register home route
-  → addRoute('/element/:n') // register detail route
-  → addRoute('/phenomena')  // register phenomena list route
-  → addRoute('/phenomena/:id') // register phenomena detail route
-  → initRouter()             // resolve current hash
-       ↓
-  Route '/' → renderPeriodicTable()
-  Route '/element/:n' → renderElementDetail(n)
-  Route '/phenomena' → renderPhenomenaList()
-  Route '/phenomena/:id' → renderPhenomenaDetail(id)
-       ↓
-  ElementDetail init:
-    → ResizeObserver starts watching canvasWrap
-    → On first resize event with w > 0:
-        → new AtomScene(canvas, color)
-        → scene.build(atomicNumber)
-        → scene.start()
+  → initTheme()                    // set data-theme attribute
+  → renderNav()                    // navbar global
+  → addRoute('/')                  // Dashboard
+  → addRoute('/explore')           // Explore (tabel + molekul)
+  → addRoute('/element/:n')        // Element Detail
+  → addRoute('/discoverer/:sym')   // Discoverer Story
+  → addRoute('/molecule')          // Kimia Lab
+  → addRoute('/phenomena')         // Phenomena List
+  → addRoute('/phenomena/:id')     // Phenomena Detail
+  → addRoute('/atom-history')      // Atom History
+  → initRouter()                   // resolve current hash
 ```
 
 ---
@@ -181,8 +218,9 @@ main.ts
 |---------|--------|
 | `atomicMass` bisa berupa `Array` untuk elemen radioaktif | Handled di `fmtMass()` |
 | Elektron di kulit N/O bisa >32 | Di-cap 16 per kulit untuk visual |
-| Period/Group data untuk Lantanida/Aktinida dari npm package tidak akurat | Field `period` dan `group` dari `GRID_POS` lebih akurat untuk display |
+| Period/Group Lantanida/Aktinida dari npm tidak akurat | `GRID_POS` lebih akurat untuk display |
 | `erasableSyntaxOnly: true` di tsconfig | TypeScript-only lint issue, tidak mempengaruhi runtime |
+| Bundle besar karena data teks | Acceptable untuk SPA edukasi; bisa split nanti |
 
 ---
 
@@ -192,33 +230,75 @@ main.ts
 |--------|--------|--------|
 | Bundle size (JS) | < 500KB | Vite tree-shaking Three.js |
 | First Contentful Paint | < 1.5s | ✅ |
-| 3D frame rate | 60fps | ✅ (cap 2x DPR) |
+| 3D frame rate | 60fps | ✅ (cap 2× DPR) |
 | Memory (heavy element) | < 100MB | ✅ (orbit cap) |
 
 ---
 
-## 7. Future Technical Considerations
+## 7. Backlog Teknis — Dikerjakan Setelah Sprint Aktif
 
-### Phase 2 — Modul Edukasi
-- Setiap topik = modul tersendiri dengan animasi custom
-- Bisa pakai `<canvas>` 2D untuk animasi sederhana (lebih ringan dari Three.js)
-- Router extend dengan `/learn/:topic`
+### 7.1 Kimia Lab — Mode Tantangan (Sprint Aktif)
 
-### Phase 3 — Multi-level Atom Visualizer
-- Level 1 (current): Bohr model — orbit circles
-- Level 2: Orbital representation — lobe geometry (p, d, f orbitals)
+```typescript
+// Tambahan di MoleculeBuilder.ts
+interface Challenge {
+  id: string;
+  targetFormula: string;      // e.g. "H₂O"
+  targetName: string;         // e.g. "Air"
+  hint: string[];             // bertahap, unlock per attempt
+  availableAtoms: string[];   // atom yang bisa dipilih user
+}
+```
+
+- Mode selector: `Bebas | Tantangan`
+- Feedback real-time: warna ✅/❌ per atom yang dipasang
+- Progress bar: `X/Y atom benar`
+- Hint system: unlock setelah N attempt gagal
+
+### 7.2 Element Detail — Card Lanjutan
+
+```typescript
+// src/data/elementAbundance.ts (BARU)
+interface ElementAbundance {
+  sym: string;
+  earthCrust: string;          // e.g. "2.82% kerak bumi"
+  earthSources: string[];      // e.g. ["Hematit", "Magnetit"]
+  worldLocations: string[];    // e.g. ["Australia", "Brasil"]
+  universeAbundance: string;   // e.g. "0.001% alam semesta"
+  solarSystemPercent: string;
+  cosmicOrigin: string;
+  naturalForms: string[];
+}
+
+// src/data/elementPhenomena.ts (BARU)
+interface ElementPhenomena {
+  sym: string;
+  phenomena: {
+    title: string; icon: string; description: string;
+    type: 'natural' | 'industrial' | 'biological' | 'quantum';
+    phenomenonId?: string;  // link ke /phenomena/:id jika ada
+  }[];
+}
+```
+
+### 7.3 Phase 2 — Modul Edukasi
+
+- Router extend: `/learn` → `/learn/:slug`
+- Setiap modul = komponen tersendiri dengan animasi custom
+- Canvas 2D untuk animasi sederhana (lebih ringan dari Three.js)
+- Data: `src/data/curriculum.ts`
+
+### 7.4 Phase 3 — Multi-Level Visualizer
+
+- Level 2: Orbital — `lobe geometry` untuk s/p/d/f orbital
 - Level 3: Probability cloud — particle system / volumetric shader
-- Toggle UI di halaman detail
-
-### Pertimbangan Data Akurasi
-- Data dari `periodic-table` npm cukup untuk edukasi umum
-- Untuk data lebih akurat bisa integrate dengan API (e.g., PubChem, NIST)
+- Toggle UI di halaman detail elemen
 
 ---
 
 ## 8. Arsitektur Subscription & Payment (Xendit + Postgres)
 
-> Status: **Planned — belum diimplementasikan.** Dicatat sebagai blueprint wajib sebelum implementasi.
+> Status: **Planned — belum diimplementasikan.** Dicatat sebagai blueprint untuk saat backend diperlukan.
 
 ### 8.1 Prinsip Keamanan Utama
 
@@ -231,22 +311,18 @@ Semua keputusan akses dibuat di **backend**, bukan di frontend. Frontend hanya m
 - ❌ JWT hanya dicek formatnya tanpa query DB — bisa dipalsukan
 - ✅ Setiap request ke konten/API divalidasi ke Postgres setiap saat
 
----
-
-### 8.2 User Journey & Flow Lengkap
+### 8.2 User Journey & Flow
 
 ```
 [1] User buka atomic.com
          │
          ▼
-[2] Landing Page (PUBLIK — semua bisa akses)
+[2] Landing Page (PUBLIK)
     • Deskripsi produk, harga, preview terbatas
     • Tombol "Daftar & Bayar"
          │
          ▼ klik Daftar
-[3] Form Registrasi
-    • Input: nama, email
-    • Backend: INSERT user (is_active=FALSE, pending)
+[3] Form Registrasi → Backend INSERT user (is_active=FALSE)
          │
          ▼ submit
 [4] Redirect ke Xendit Payment Page
@@ -257,86 +333,69 @@ Semua keputusan akses dibuat di **backend**, bukan di frontend. Frontend hanya m
     │    │
     │    ▼ BAYAR SUKSES
     │ [5] Xendit kirim webhook POST ke backend
-    │    • Backend verifikasi signature Xendit (WAJIB)
+    │    • Backend verifikasi X-Callback-Token (WAJIB)
     │    • Backend UPDATE users SET is_active=TRUE
     │    • Backend INSERT subscriptions (expires_at = +1 tahun)
-    │    • Backend kirim email via Resend:
-    │         Subject: "Akun Atomic kamu aktif!"
-    │         Isi: password sementara + link login
+    │    • Backend kirim email via Resend (password sementara)
     │
     │    ▼ BAYAR GAGAL / EXPIRED
-    │ [5b] Backend UPDATE pending_users SET status='expired'
+    │ [5b] UPDATE pending_users SET status='expired'
     │      Kirim email "Pembayaran gagal, coba lagi"
-    │
     └──────────────
          │
-         ▼ user buka email
-[6] User Login
-    • POST /auth/login (email + password)
-    • Backend: query Postgres, verifikasi bcrypt hash
-    • Cek: is_active=TRUE + subscription belum expired
-    • Return: JWT (expires 7 hari) + refresh token
+         ▼
+[6] User Login → POST /auth/login → JWT (httpOnly cookie, 7 hari)
          │
-         ▼ JWT valid
-[7] App Atomic Dimuat
-    • gate.js cek JWT ke backend SEBELUM load app bundle
-    • Backend validasi JWT + cek DB (tidak hanya decode)
-    • Jika valid → inject <script src="/app.js"> secara dinamis
-    • Jika tidak valid → redirect /login (app.js TIDAK pernah dikirim)
+         ▼
+[7] gate.js cek JWT ke backend SEBELUM load app bundle
+    • Valid → inject <script src="/app.js">
+    • Tidak valid → redirect /login (app.js TIDAK dikirim)
 ```
-
----
 
 ### 8.3 Database Schema (Postgres)
 
 ```sql
--- Users
 CREATE TABLE users (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email         TEXT UNIQUE NOT NULL,
   name          TEXT NOT NULL,
   password_hash TEXT NOT NULL,          -- bcrypt, saltRounds=12
-  is_active     BOOLEAN DEFAULT FALSE,  -- TRUE hanya setelah bayar
+  is_active     BOOLEAN DEFAULT FALSE,
   created_at    TIMESTAMPTZ DEFAULT now()
 );
 
--- Subscriptions
 CREATE TABLE subscriptions (
   id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id           UUID REFERENCES users(id) ON DELETE CASCADE,
-  plan              TEXT NOT NULL DEFAULT 'yearly',  -- 'monthly'|'yearly'
-  xendit_invoice_id TEXT UNIQUE,       -- ID invoice dari Xendit
-  xendit_payment_id TEXT,              -- ID payment dari Xendit webhook
-  amount_paid       INTEGER,           -- dalam rupiah
+  plan              TEXT NOT NULL DEFAULT 'yearly',
+  xendit_invoice_id TEXT UNIQUE,
+  xendit_payment_id TEXT,
+  amount_paid       INTEGER,            -- dalam rupiah
   paid_at           TIMESTAMPTZ,
   expires_at        TIMESTAMPTZ NOT NULL,
   is_active         BOOLEAN DEFAULT TRUE,
   created_at        TIMESTAMPTZ DEFAULT now()
 );
 
--- Refresh Tokens (untuk session management)
 CREATE TABLE refresh_tokens (
-  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id    UUID REFERENCES users(id) ON DELETE CASCADE,
-  token_hash TEXT NOT NULL,             -- hash dari token, bukan raw
-  device_info TEXT,                     -- user agent / device
-  expires_at TIMESTAMPTZ NOT NULL,      -- 30 hari
-  revoked    BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT now()
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id     UUID REFERENCES users(id) ON DELETE CASCADE,
+  token_hash  TEXT NOT NULL,
+  device_info TEXT,
+  expires_at  TIMESTAMPTZ NOT NULL,    -- 30 hari
+  revoked     BOOLEAN DEFAULT FALSE,
+  created_at  TIMESTAMPTZ DEFAULT now()
 );
 
--- Index penting
 CREATE INDEX idx_subscriptions_user_id ON subscriptions(user_id);
 CREATE INDEX idx_subscriptions_expires ON subscriptions(expires_at);
 CREATE INDEX idx_refresh_tokens_user   ON refresh_tokens(user_id);
 ```
 
----
-
 ### 8.4 Backend API Routes
 
 ```
-POST /auth/register          → buat pending user + buat Xendit invoice
+POST /auth/register          → buat pending user + Xendit invoice
 POST /auth/login             → verifikasi email+password, return JWT
 POST /auth/refresh           → tukar refresh token → JWT baru
 POST /auth/logout            → revoke refresh token
@@ -345,144 +404,59 @@ GET  /auth/me                → return user info (butuh JWT valid)
 POST /payment/create-invoice → buat Xendit invoice untuk user
 POST /xendit/webhook         → terima callback dari Xendit (HMAC verified)
 
-GET  /app                    → serve index.html HANYA jika JWT valid di cookie
-GET  /api/content/:id        → serve konten (butuh JWT valid + subscription aktif)
+GET  /app                    → serve index.html HANYA jika JWT valid
+GET  /api/content/:id        → serve konten (butuh JWT + subscription aktif)
 ```
 
----
-
-### 8.5 Xendit Webhook — Titik Kritis Keamanan
-
-Webhook dari Xendit adalah bagian yang paling kritis. **Jika tidak diverifikasi, attacker bisa kirim request palsu dan aktifkan akun gratis.**
+### 8.5 Xendit Webhook — Titik Kritis
 
 ```typescript
-// Wajib: verifikasi X-Callback-Token dari Xendit
 app.post('/xendit/webhook', (req, res) => {
   const callbackToken = req.headers['x-callback-token'];
-
-  // Tolak jika token tidak cocok dengan yang ada di ENV
   if (callbackToken !== process.env.XENDIT_WEBHOOK_TOKEN) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-
   const { status, external_id, id } = req.body;
-
   if (status === 'PAID') {
-    // Aktifkan user berdasarkan external_id (= user_id kita)
     await db.users.update({ is_active: true }, { where: { id: external_id } });
-    await db.subscriptions.create({ user_id: external_id, xendit_payment_id: id, ... });
-    await sendActivationEmail(external_id);  // kirim password ke email
+    await db.subscriptions.create({ user_id: external_id, xendit_payment_id: id });
+    await sendActivationEmail(external_id);
   }
-
-  res.status(200).send('OK');  // Xendit butuh 200 atau akan retry
+  res.status(200).send('OK');
 });
 ```
-
----
 
 ### 8.6 JWT & Session Security
 
 ```
-JWT Payload:
-{
-  sub: "user-uuid",
-  email: "user@example.com",
-  exp: <7 hari dari sekarang>,
-  iat: <issued at>
-}
-
-JWT disimpan: httpOnly cookie (BUKAN localStorage)
-  → httpOnly = tidak bisa dibaca JavaScript sama sekali
+JWT Payload: { sub: "uuid", email, exp: +7hari, iat }
+Disimpan: httpOnly cookie (BUKAN localStorage)
+  → httpOnly = tidak bisa dibaca JS
   → Secure = hanya HTTPS
-  → SameSite=Strict = tidak bisa dikirim dari domain lain (anti-CSRF)
+  → SameSite=Strict = anti-CSRF
 ```
 
-**Validasi JWT di setiap request:**
-```typescript
-const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.jwt;  // dari httpOnly cookie
-  if (!token) return res.status(401).redirect('/login');
-
-  try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-
-    // WAJIB: query DB, jangan hanya decode JWT
-    const sub = await db.subscriptions.findOne({
-      where: { user_id: payload.sub, is_active: true },
-    });
-
-    // Cek expired
-    if (!sub || sub.expires_at < new Date()) {
-      return res.status(403).redirect('/login?reason=expired');
-    }
-
-    req.user = payload;
-    next();
-  } catch {
-    return res.status(401).redirect('/login');
-  }
-};
-```
-
----
-
-### 8.7 Proteksi Bundle App (Gate Layer)
-
-Ini yang memastikan bundle `app.js` **tidak bisa diakses tanpa login**:
-
-```
-                   Request ke atomic.com/app
-                             │
-               ┌──────────▼──────────┐
-               │  Backend middleware       │
-               │  cek httpOnly JWT cookie  │
-               └────┬───────────┬──────┘
-                    │ Valid          │ Tidak valid
-                    ▼                ▼
-             Serve app HTML     Redirect /login
-             + inject app.js    (app.js TIDAK dikirim)
-```
-
-```typescript
-// Server route — bukan static file server biasa
-app.get('/app', authMiddleware, (req, res) => {
-  // authMiddleware sudah cek JWT + DB subscription
-  // Baru di sini HTML app dikirim ke browser
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
-
-// Bundle assets juga diproteksi
-app.use('/assets', authMiddleware, express.static('../dist/assets'));
-```
-
-> **Implikasi penting:** Atomic tidak bisa lagi di-deploy sebagai pure static (Netlify/Vercel drop folder). Butuh server Node.js (Hono / Express) atau setidaknya Cloudflare Workers.
-
----
-
-### 8.8 Anti-Abuse Tambahan
+### 8.7 Anti-Abuse
 
 | Ancaman | Mitigasi |
-|---|---|
-| Brute force login | Rate limiting: max 5 attempt/menit per IP (pakai `express-rate-limit`) |
-| Sharing akun | Max 2 active session per user_id (cek `refresh_tokens` count) |
-| Fake webhook Xendit | Verifikasi `X-Callback-Token` header (hardcoded secret di ENV) |
-| JWT kadaluarsa dipakai | `exp` field di JWT + selalu query DB |
-| Refund lalu tetap pakai | Xendit refund webhook → set `subscriptions.is_active = FALSE` |
-| Inspect network untuk curi token | JWT di httpOnly cookie, tidak bisa dibaca JS |
-| CORS bypass | Whitelist origin hanya `atomic.com` di backend |
+|---------|---------|
+| Brute force login | Rate limiting: max 5 attempt/menit per IP |
+| Sharing akun | Max 2 active session per user_id |
+| Fake webhook Xendit | Verifikasi `X-Callback-Token` header |
+| JWT kadaluarsa dipakai | `exp` field + selalu query DB |
+| Refund lalu tetap pakai | Xendit refund webhook → `is_active = FALSE` |
 
----
-
-### 8.9 Tech Stack Backend
+### 8.8 Tech Stack Backend (Saat Diperlukan)
 
 | Komponen | Teknologi |
-|---|---|
+|----------|-----------|
 | Runtime | Node.js 20+ |
-| Framework | **Hono** (ringan, bisa Cloudflare Workers) atau Express |
-| Database ORM | **Drizzle ORM** + Postgres (type-safe, ringan) |
+| Framework | **Hono** (ringan, Cloudflare Workers-ready) |
+| Database ORM | **Drizzle ORM** + Postgres |
 | Auth | `jsonwebtoken` + `bcryptjs` |
-| Email | **Resend** (developer-friendly, murah) |
-| Payment | **Xendit** (QRIS, VA, GoPay, OVO, CC — lokal Indonesia) |
-| Hosting backend | Railway / Render / VPS (butuh persistent server) |
-| Hosting DB | **Supabase** Postgres (gratis tier cukup untuk awal) |
+| Email | **Resend** |
+| Payment | **Xendit** (QRIS, VA, GoPay, OVO, CC) |
+| Hosting backend | Railway / Render / VPS |
+| Hosting DB | **Supabase** Postgres |
 
+> **Implikasi:** Jika backend diimplementasikan, Atomic tidak bisa lagi di-deploy sebagai pure static (Netlify/Vercel). Butuh server Node.js atau Cloudflare Workers.
