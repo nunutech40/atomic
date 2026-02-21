@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 2.2  
+**Version:** 2.3  
 **Date:** 2026-02-21  
-**Status:** Phase 1 ✅ SELESAI · Phenomena Stories ✅ SELESAI · Next: Kimia Lab + Backend Plan
+**Status:** Phase 1 ✅ SELESAI · Anatomi Atom ✅ SELESAI · Next: Kimia Lab Mode Tantangan
 
 ---
 
@@ -84,17 +84,23 @@ Gabungan: Hook dramatis → mekanisme sains yang mengejutkan → ironi kosmik
 ## 3. Arsitektur Navigasi
 
 ```
-/ (Dashboard)          → halaman utama, scroll-driven, 5 chapter
-/explore               → tabel periodik + galeri molekul
-/element/:n            → detail elemen (3D, data, penemu, asal kosmik)
-/discoverer/:sym       → kisah penemu elemen
-/molecule              → kimia lab (molecule builder)
-/phenomena             → daftar 27 fenomena atom
-/phenomena/:id         → story per fenomena
-/atom-history          → sejarah atom, 22 slide cinematic
+/ (Dashboard)              → halaman utama, scroll-driven, 5 chapter
+/explore                   → tabel periodik + galeri molekul 3D
+/element/:n                → detail elemen (3D, data, penemu, asal kosmik)
+/discoverer/:sym           → kisah penemu elemen
+/molecule                  → kimia lab (molecule builder)
+/phenomena                 → daftar 27 fenomena atom
+/phenomena/:id             → story per fenomena
+/atom-history              → sejarah atom, 22 slide cinematic
+/composition/:subject      → anatomi atom (human | earth | sun | plant | universe)
 ```
 
-**Nav bar:** Dashboard · Explore · Kimia Lab · Fenomena
+**Nav bar:** Dashboard · Tabel · Kimia Lab · Fenomena · **Anatomi**  
+
+**Entry point Anatomi Atom (3 jalur):**
+1. Klik "🧬 Anatomi" di navbar → `/composition/human`
+2. Banner horizontal scroll di halaman Fenomena → `/composition/:subject`
+3. CTA dari story Phenomena yang relevan (human-atoms, earth-atoms, dll)
 
 ---
 
@@ -137,12 +143,36 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 | **Kimia Lab (MoleculeBuilder)** — mode bebas, 3D builder | ✅ |
 | **Dark/Light theme** — persisted localStorage | ✅ |
 | **Bilingual ID/EN** — toggle real-time, semua komponen | ✅ |
+| **Anatomi Atom** — 5 tab subject, shared helpers, entry dari navbar + banner | ✅ |
+
+### 4.3 Anatomi Atom — Detail Implementasi
+
+> Route: `/composition/:subject` · Commit: `5b96a70`
+
+| Subject | Icon | Data File | Konten Utama |
+|---------|------|-----------|---------------|
+| `human` | 🧬 | `humanBody.ts` | 14 elemen, bubble visual, 6 body systems, CTA chips ke elemen detail |
+| `earth` | 🌍 | `earthLayers.ts` | 6 lapisan bumi, ring diagram interaktif (hover highlight), layer cards |
+| `sun` | ☀️ | `sunComposition.ts` | 10 elemen (H 73% · He 25%), 5 solar structure cards (inti→korona) |
+| `plant` | 🌿 | `plantComposition.ts` | 9 elemen (O 65% · C 18%), 4 proses biokimia + persamaan kimia |
+| `universe` | 🌌 | `universeComposition.ts` | 10 elemen (H 73.9%), 5 era kosmos dari Big Bang + timeline bernomor |
+
+**Arsitektur kode:**
+- `renderElementBars()` — animated bar chart, shared semua subject
+- `renderBubbles()` — bubble visual top-4 elemen, shared
+- `renderFunFacts()` — fact card grid, shared
+- `renderHuman/Earth/Sun/Plant/Universe()` — renderer per subject
+
+**Entry points:**
+- Navbar "🧬 Anatomi" → `/composition/human`
+- Banner 5-card horizontal scroll di `/phenomena`
+- Klik tab di halaman composition
 
 ---
 
 ## 5. 🔨 Sprint Aktif — Kimia Lab Rebuild (Mode Tantangan)
 
-> **Status:** Next up. Dikerjakan setelah Explore selesai ✅
+> **Status:** Next up. Dikerjakan setelah Anatomi Atom selesai ✅
 
 **Konsep:** Upgrade `/molecule` dari mode bebas menjadi pengalaman belajar seperti di buku kimia — ada soal, ada tantangan, ada feedback.
 
@@ -310,6 +340,8 @@ Hosting:  Railway (backend) + Supabase (DB)
 | Bilingual EN/ID — semua komponen | ✅ | ✅ |
 | Dashboard rebuild — scroll-driven, 5 chapter | ✅ | ✅ |
 | Explore — tabel + galeri molekul 3D | ✅ | ✅ |
+| **Anatomi Atom** — 5 tab (Human, Earth, Sun, Plant, Universe) | ✅ | ✅ |
+| **Navbar Anatomi** — link + entry dari Phenomena banner 5-card | ✅ | ✅ |
 | Kimia Lab — mode tantangan | 🗓️ | — |
 | Card Keberadaan di Alam | 🗓️ | — |
 | Card Fenomena Terkait | 🗓️ | — |
