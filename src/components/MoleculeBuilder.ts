@@ -88,6 +88,30 @@ const CPK_COLORS_HEX: Record<string, string> = {
   Au: '#FFD123', Hg: '#B8B8D0', Pb: '#575961',
 };
 
+// Atom metadata for freeform experiment info cards
+const ATOM_INFO: Record<string, { no: number; mass: string; groupId: string; groupEn: string }> = {
+  H: { no: 1, mass: '1.008', groupId: 'Nonlogam', groupEn: 'Nonmetal' },
+  C: { no: 6, mass: '12.011', groupId: 'Nonlogam', groupEn: 'Nonmetal' },
+  N: { no: 7, mass: '14.007', groupId: 'Nonlogam', groupEn: 'Nonmetal' },
+  O: { no: 8, mass: '15.999', groupId: 'Nonlogam', groupEn: 'Nonmetal' },
+  Na: { no: 11, mass: '22.990', groupId: 'Logam Alkali', groupEn: 'Alkali Metal' },
+  Mg: { no: 12, mass: '24.305', groupId: 'Logam Alkali Tanah', groupEn: 'Alkaline Earth' },
+  Al: { no: 13, mass: '26.982', groupId: 'Pasca-transisi', groupEn: 'Post-transition' },
+  Si: { no: 14, mass: '28.085', groupId: 'Metaloid', groupEn: 'Metalloid' },
+  P: { no: 15, mass: '30.974', groupId: 'Nonlogam', groupEn: 'Nonmetal' },
+  S: { no: 16, mass: '32.06', groupId: 'Nonlogam', groupEn: 'Nonmetal' },
+  Cl: { no: 17, mass: '35.45', groupId: 'Halogen', groupEn: 'Halogen' },
+  K: { no: 19, mass: '39.098', groupId: 'Logam Alkali', groupEn: 'Alkali Metal' },
+  Ca: { no: 20, mass: '40.078', groupId: 'Logam Alkali Tanah', groupEn: 'Alkaline Earth' },
+  Fe: { no: 26, mass: '55.845', groupId: 'Logam Transisi', groupEn: 'Transition Metal' },
+  Cu: { no: 29, mass: '63.546', groupId: 'Logam Transisi', groupEn: 'Transition Metal' },
+  Zn: { no: 30, mass: '65.38', groupId: 'Logam Transisi', groupEn: 'Transition Metal' },
+  Ag: { no: 47, mass: '107.868', groupId: 'Logam Transisi', groupEn: 'Transition Metal' },
+  Au: { no: 79, mass: '196.967', groupId: 'Logam Transisi', groupEn: 'Transition Metal' },
+  Pb: { no: 82, mass: '207.2', groupId: 'Logam Pasca-transisi', groupEn: 'Post-transition' },
+};
+
+
 // ─── Main export ──────────────────────────────────────────────────────────────
 export function renderMoleculeBuilder(container: HTMLElement): () => void {
   const isEN = getLang() === 'en';
@@ -169,14 +193,22 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
               <div class="mb-mol-info" id="mb-mol-info"></div>
             </div>
             <div class="mb-not-found" id="mb-not-found" hidden>
-              <div class="mb-nf-icon">🔍</div>
-              <div class="mb-nf-title">${isEN ? 'Unknown combination' : 'Kombinasi tidak dikenal'}</div>
-              <div class="mb-nf-sub" id="mb-nf-sub"></div>
-              <div class="mb-nf-tip">${isEN
-      ? 'Try changing the atom count or type, or pick a quick example.'
-      : 'Coba ubah jumlah atau jenis atom, atau pilih salah satu contoh.'
-    }</div>
+              <div class="mb-fe-header">
+                <div class="mb-fe-badge">🧪 ${isEN ? 'Free Experiment' : 'Eksperimen Bebas'}</div>
+                <div class="mb-fe-title">${isEN ? 'Unknown combination — atoms visualised freely' : 'Kombinasi belum dikenal — atom divisualisasikan bebas'}</div>
+              </div>
+              <div class="mb-fe-body">
+                <div class="mb-fe-canvas-wrap" id="mb-fe-canvas-wrap">
+                  <canvas id="mb-fe-canvas"></canvas>
+                  <div class="mb-canvas-hint">${isEN ? 'Drag to rotate · Scroll to zoom' : 'Drag untuk rotasi · Scroll untuk zoom'}</div>
+                </div>
+                <div class="mb-fe-info">
+                  <div class="mb-fe-atoms" id="mb-fe-atoms"></div>
+                  <div class="mb-nf-sub" id="mb-nf-sub"></div>
+                </div>
+              </div>
             </div>
+
           </main>
         </div>
 
@@ -298,6 +330,9 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
   const notFoundEl = container.querySelector('#mb-not-found')! as HTMLElement;
   const molInfoEl = container.querySelector('#mb-mol-info')! as HTMLElement;
   const nfSubEl = container.querySelector('#mb-nf-sub')! as HTMLElement;
+  const feAtomsEl = container.querySelector('#mb-fe-atoms')! as HTMLElement;
+  const feCanvasWrap = container.querySelector('#mb-fe-canvas-wrap')! as HTMLElement;
+  let freeExperimentScene: MoleculeScene | null = null;
 
   // Challenge mode els
   const chList = container.querySelector('#mb-ch-list')! as HTMLElement;
@@ -433,44 +468,81 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
     emptyState.hidden = false; resultEl.hidden = true; notFoundEl.hidden = true;
     destroyScene();
   }
+
   function showNotFound() {
-    const selStr = Object.entries(selection).map(([s, n]) => `${s}${n > 1 ? n : ''}`).join('');
+    emptyState.hidden = true; resultEl.hidden = true; notFoundEl.hidden = false;
     const selKeys = Object.keys(selection);
-    // Suggest molecules that share at least one atom type
+
+    // ── Atom info cards (one per unique atom type) ──
+    feAtomsEl.innerHTML = selKeys.map(sym => {
+      const pal = ALL_PALETTE.find(p => p.sym === sym);
+      const info = ATOM_INFO[sym];
+      const cpk = CPK_COLORS_HEX[sym] ?? '#ff69b4';
+      const count = selection[sym];
+      return `
+        <div class="mb-fe-atom-card">
+          <div class="mb-fe-atom-dot" style="background:${cpk}"></div>
+          <div class="mb-fe-atom-body">
+            <div class="mb-fe-atom-row">
+              <span class="mb-fe-atom-sym" style="color:${cpk}">${sym}</span>
+              <span class="mb-fe-atom-name">${pal ? pal.name : sym}</span>
+              <span class="mb-fe-atom-count">×${count}</span>
+            </div>
+            ${info ? `
+            <div class="mb-fe-atom-meta">
+              <span>No. ${info.no}</span>
+              <span>·</span>
+              <span>${info.mass} u</span>
+              <span>·</span>
+              <span>${isEN ? info.groupEn : info.groupId}</span>
+            </div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+    // ── Molecule suggestions ──
     const suggestions = molecules
       .filter(m => selKeys.some(k => Object.keys(m.composition).includes(k)))
       .slice(0, 3);
-    const sugsHTML = suggestions.length ? `
-      <div class="mb-nf-suggestions">
-        <div class="mb-nf-sug-label">${isEN ? '💡 Try these instead:' : '💡 Mungkin yang kamu cari:'}</div>
-        ${suggestions.map(m => `
-          <button class="mb-nf-sug-btn" data-nf-formula="${m.formula}">
-            <code class="mb-nf-sug-formula">${m.formula}</code>
-            <span class="mb-nf-sug-name">${isEN ? m.name : m.nameId}</span>
-          </button>
-        `).join('')}
-      </div>` : '';
-    nfSubEl.innerHTML = `
-      <span>${isEN
-        ? `No molecule found with: <code>${selStr}</code>`
-        : `Tidak ditemukan molekul dengan: <code>${selStr}</code>`}
-      </span>
-      ${sugsHTML}
-    `;
-    emptyState.hidden = true; resultEl.hidden = true; notFoundEl.hidden = false;
-    destroyScene();
-    // Click on suggestion auto-loads that molecule
-    notFoundEl.querySelectorAll('[data-nf-formula]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const formula = (btn as HTMLElement).dataset.nfFormula!;
-        const mol = molecules.find(m => m.formula === formula);
-        if (!mol) return;
-        selection = { ...mol.composition };
-        updateMixFree();
-        showResult(mol);
+    if (suggestions.length) {
+      nfSubEl.innerHTML = `
+        <div class="mb-nf-suggestions">
+          <div class="mb-nf-sug-label">${isEN ? '💡 Try these instead:' : '💡 Mungkin yang kamu cari:'}</div>
+          ${suggestions.map(m => `
+            <button class="mb-nf-sug-btn" data-nf-formula="${m.formula}">
+              <code class="mb-nf-sug-formula">${m.formula}</code>
+              <span class="mb-nf-sug-name">${isEN ? m.name : m.nameId}</span>
+            </button>
+          `).join('')}
+        </div>`;
+      notFoundEl.querySelectorAll('[data-nf-formula]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const formula = (btn as HTMLElement).dataset.nfFormula!;
+          const mol = molecules.find(m => m.formula === formula);
+          if (!mol) return;
+          selection = { ...mol.composition };
+          updateMixFree();
+          showResult(mol);
+        });
       });
-    });
+    } else {
+      nfSubEl.innerHTML = '';
+    }
+
+    // ── 3D freeform render ──
+    destroyScene();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const canvas = container.querySelector('#mb-fe-canvas') as HTMLCanvasElement;
+      if (!canvas) return;
+      const size = feCanvasWrap.clientWidth || feCanvasWrap.offsetWidth || 320;
+      canvas.width = size; canvas.height = size;
+      freeExperimentScene = new MoleculeScene(canvas);
+      freeExperimentScene.buildFreeform(selection);
+      freeExperimentScene.enableFreeformAnim(true);
+      freeExperimentScene.start();
+    }));
   }
+
   function showResult(mol: Molecule) {
     emptyState.hidden = true; notFoundEl.hidden = true; resultEl.hidden = false;
     molInfoEl.innerHTML = buildInfoHTML(mol);
@@ -488,6 +560,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
   }
   function destroyScene() {
     if (sceneRef) { sceneRef.destroy(); sceneRef = null; }
+    if (freeExperimentScene) { freeExperimentScene.destroy(); freeExperimentScene = null; }
   }
 
   function buildInfoHTML(mol: Molecule): string {

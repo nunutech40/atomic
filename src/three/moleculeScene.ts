@@ -415,11 +415,71 @@ export class MoleculeScene {
         }, { passive: false });
     }
 
+    // ─── Freeform: render arbitrary atom mix as floating spheres ─────────
+    buildFreeform(atomCounts: Record<string, number>) {
+        this.clear();
+        // Expand to flat atom list
+        const flatAtoms: string[] = [];
+        Object.entries(atomCounts).forEach(([sym, count]) => {
+            for (let i = 0; i < count; i++) flatAtoms.push(sym);
+        });
+        const n = flatAtoms.length;
+        if (n === 0) return;
+
+        // Arrange on a sphere surface using golden-angle spiral (Fibonacci sphere)
+        const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+        const radius = Math.max(1.8, n * 0.55);
+
+        flatAtoms.forEach((sym, i) => {
+            const y = 1 - (i / (n - 1 || 1)) * 2;          // -1..1
+            const r = Math.sqrt(Math.max(0, 1 - y * y));
+            const theta = goldenAngle * i;
+            const x = Math.cos(theta) * r * radius;
+            const z = Math.sin(theta) * r * radius;
+            const yScaled = y * radius;
+
+            const color = CPK_COLORS[sym] ?? CPK_COLORS.DEFAULT;
+            const atomR = ATOM_RADII[sym] ?? ATOM_RADII.DEFAULT;
+            const geo = new THREE.SphereGeometry(atomR * 0.85, 24, 24);
+            const mat = new THREE.MeshStandardMaterial({
+                color,
+                roughness: 0.3, metalness: 0.1,
+                emissive: color, emissiveIntensity: 0.12,
+                transparent: true, opacity: 0.92,
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.set(x, yScaled, z);
+            // Store float phase for wave animation
+            mesh.userData['floatPhase'] = (i / n) * Math.PI * 2;
+            mesh.userData['baseY'] = yScaled;
+            this.group.add(mesh);
+            this.objects.push(mesh);
+        });
+
+        this.camera.position.z = radius * 2.4 + 3;
+    }
+
     // ─── Animation loop ──────────────────────────────────────────────────
+    private _freeformMode = false;
+    private _t = 0;
+
+    enableFreeformAnim(enabled: boolean) { this._freeformMode = enabled; }
+
     start() {
         const tick = () => {
             this.animId = requestAnimationFrame(tick);
-            if (!this.isDragging) this.group.rotation.y += 0.004;
+            this._t += 0.012;
+            if (!this.isDragging) this.group.rotation.y += this._freeformMode ? 0.006 : 0.004;
+            // Animate individual atom float in freeform mode
+            if (this._freeformMode) {
+                this.objects.forEach(obj => {
+                    const phase = obj.userData['floatPhase'] as number | undefined;
+                    const baseY = obj.userData['baseY'] as number | undefined;
+                    if (phase !== undefined && baseY !== undefined) {
+                        obj.position.y = baseY + Math.sin(this._t + phase) * 0.18;
+                    }
+                });
+            }
             this.renderer.render(this.scene, this.camera);
         };
         tick();
