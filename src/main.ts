@@ -9,6 +9,7 @@ import { renderMoleculeBuilder } from './components/MoleculeBuilder';
 import { renderPhenomenonStory } from './components/PhenomenonStory';
 import { renderDiscovererStory } from './components/DiscovererStory';
 import { renderPhenomenaList } from './components/PhenomenaList';
+import { renderAtomHistory } from './components/AtomHistory';
 
 
 initTheme();
@@ -45,8 +46,9 @@ addRoute('/explore', () => {
 });
 
 addRoute('/atom-history', () => {
-    main.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:var(--text-2);font-size:1.2rem;">⏳ Halaman Sejarah Atom — Segera Hadir</div>';
-    setCleanup(() => { });
+    main.innerHTML = '';
+    const cleanup = renderAtomHistory(main);
+    setCleanup(cleanup);
 });
 
 addRoute('/element/:n', (params) => {

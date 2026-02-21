@@ -9660,3 +9660,720 @@ body {
   .origin-arrow { transform: rotate(90deg); margin: 0 auto; display: block; text-align: center; }
   .dash-cta-cards { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ATOM HISTORY — Cinematic Timeline Styles
+   Gaya: Nolan/Snyder — desaturated, high-contrast, dark-first
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Root layout ── */
+.ah-root {
+  position: relative;
+  min-height: 100vh;
+  background: #050508;
+  color: #e0e0e8;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Back button ── */
+.ah-back-btn {
+  position: fixed;
+  top: 72px;
+  left: 24px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+.ah-back-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.ah-back-arrow { font-size: 1rem; }
+
+/* ── Opening overlay ── */
+.ah-opening {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: opacity 0.8s ease;
+}
+.ah-opening.ah-opening-out { opacity: 0; pointer-events: none; }
+
+.ah-opening-text {
+  max-width: 680px;
+  padding: 0 32px;
+  animation: ah-open-fade 1.2s ease both;
+}
+@keyframes ah-open-fade { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform:none; } }
+
+.ah-open-line1 {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.ah-open-line2 {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 48px;
+}
+
+.ah-open-start {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.8);
+  padding: 14px 36px;
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 0.3s;
+}
+.ah-open-start:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); color:#fff; }
+
+/* ── Timeline bar ── */
+.ah-timeline-bar {
+  position: fixed;
+  top: 56px;
+  left: 0; right: 0;
+  z-index: 100;
+  background: rgba(5,5,8,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 0;
+}
+.ah-timeline-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+.ah-tl-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: all 0.3s;
+}
+.ah-tl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.2);
+  transition: all 0.3s;
+  display: block;
+}
+.ah-tl-label {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+  transition: color 0.3s;
+  letter-spacing: 0.05em;
+}
+.ah-tl-node.active .ah-tl-dot {
+  background: var(--ch-color, #7c73ff);
+  border-color: var(--ch-color, #7c73ff);
+  box-shadow: 0 0 8px var(--ch-color, #7c73ff);
+}
+.ah-tl-node.active .ah-tl-label { color: rgba(255,255,255,0.75); }
+
+.ah-tl-progress {
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 2px;
+  background: linear-gradient(to right, #7c73ff, var(--ch-color, #7c73ff));
+  width: 0%;
+  transition: width 0.6s ease;
+  z-index: 1;
+  border-radius: 2px;
+}
+
+/* ── Chapters container ── */
+.ah-chapters {
+  padding-top: 110px; /* clear timeline + nav */
+}
+
+/* ── Chapter section ── */
+.ah-chapter {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 80px 0;
+  overflow: hidden;
+}
+
+/* Gradient bg tinted by chapter color */
+.ah-chapter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, var(--ch-color, #7c73ff)08, transparent 70%);
+  pointer-events: none;
+}
+
+.ah-chapter-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+.ah-chapter-inner.ah-invert { direction: rtl; }
+.ah-chapter-inner.ah-invert > * { direction: ltr; }
+
+/* ── Text side ── */
+.ah-era-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ch-color, #7c73ff);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.ah-protagonist {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.ah-chapter-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+.ah-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+}
+
+.ah-conflict {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 28px;
+}
+.ah-conflict-icon { font-size: 0.9rem; opacity: 0.7; }
+
+.ah-body {
+  font-size: clamp(0.9rem, 1.3vw, 1rem);
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 28px;
+}
+.ah-body p { margin: 0 0 16px; }
+.ah-body p:last-child { margin-bottom: 0; }
+
+/* ── Twist box ── */
+.ah-twist {
+  background: linear-gradient(135deg, var(--ch-color, #7c73ff)14, transparent);
+  border: 1px solid var(--ch-color, #7c73ff)44;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+.ah-twist-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ch-color, #7c73ff);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.ah-twist-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+}
+
+/* ── Quote ── */
+.ah-quote {
+  margin: 0;
+  padding: 20px 24px;
+  border-left: 3px solid var(--ch-color, #7c73ff);
+  background: rgba(255,255,255,0.03);
+  border-radius: 0 10px 10px 0;
+}
+.ah-quote-text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+.ah-quote-author {
+  font-size: 0.8rem;
+  color: var(--ch-color, #7c73ff);
+  letter-spacing: 0.05em;
+}
+
+/* ── Model stage ── */
+.ah-model-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ah-model-stage {
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Chapter divider ── */
+.ah-chapter-divider {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.12), transparent);
+}
+
+/* ══════════════════════════════════════════
+   ATOM MODELS — per chapter
+   ══════════════════════════════════════════ */
+
+/* ── Prolog model ── */
+.amodel-prolog {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.amodel-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(160,160,176,0.2);
+  animation: ah-ring-pulse 3s ease-in-out infinite;
+}
+.amodel-ring.r1 { width: 100px; height: 100px; animation-delay: 0s; }
+.amodel-ring.r2 { width: 180px; height: 180px; animation-delay: 0.8s; }
+.amodel-ring.r3 { width: 260px; height: 260px; animation-delay: 1.6s; }
+@keyframes ah-ring-pulse {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.05); }
+}
+.amodel-prolog-text {
+  font-size: 5rem;
+  color: rgba(160,160,176,0.35);
+  font-weight: 100;
+  animation: ah-q-flicker 4s ease-in-out infinite;
+}
+@keyframes ah-q-flicker {
+  0%, 100% { opacity: 0.35; } 45% { opacity: 0.6; } 50% { opacity: 0.2; } 55% { opacity: 0.6; }
+}
+
+/* ── Solid / Democritus ── */
+.amodel-solid {
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 60px currentColor;
+  animation: ah-solid-bob 4s ease-in-out infinite;
+}
+@keyframes ah-solid-bob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-12px) scale(1.03); }
+}
+.amodel-solid-label {
+  color: rgba(0,0,0,0.6);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ── Billiard / Dalton ── */
+.amodel-billiard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.amodel-billiard-ball {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset -20px -20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(112,144,192,0.3);
+  animation: ah-solid-bob 3.5s ease-in-out infinite;
+}
+.amodel-billiard-stripe {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.08);
+  clip-path: ellipse(80% 20% at 50% 50%);
+}
+.amodel-billiard-label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Plum pudding / Thomson ── */
+.amodel-plum {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.amodel-plum-cloud {
+  position: relative;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(160,96,192,0.3), rgba(160,96,192,0.06));
+  border: 1px solid rgba(160,96,192,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.amodel-plum-e {
+  position: absolute;
+  font-size: 0.7rem;
+  color: #c090ff;
+  font-weight: 700;
+  --angle: calc(var(--i) * 30deg);
+  --r: 75px;
+  left: calc(50% + cos(var(--angle)) * var(--r) - 12px);
+  top:  calc(50% + sin(var(--angle)) * var(--r) - 10px);
+  animation: ah-plum-drift 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.4s);
+}
+@keyframes ah-plum-drift {
+  0%, 100% { transform: translate(0,0); opacity:0.6; }
+  50% { transform: translate(4px,-4px); opacity:1; }
+}
+.amodel-plum-label {
+  font-size: 2rem;
+  color: rgba(160,96,192,0.8);
+  font-weight: 300;
+}
+.amodel-plum-caption {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Rutherford gold foil ── */
+.amodel-rutherford {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.amodel-rfield {
+  position: relative;
+  width: 240px; height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.amodel-rnucleus {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffd700, #b8860b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.8);
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+.amodel-alpha {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #e07040;
+  box-shadow: 0 0 8px #e0704088;
+  animation: ah-alpha linear infinite;
+  animation-duration: calc(2s + var(--i) * 0.3s);
+  animation-delay: calc(var(--i) * -0.4s);
+  --path-x: calc(cos(var(--i) * 45deg) * 100px);
+  --path-y: calc(sin(var(--i) * 45deg) * 100px);
+}
+/* Most alphas go through; some bounce back */
+.amodel-alpha:nth-child(1) { animation-name: ah-alpha-bounce; }
+.amodel-alpha:nth-child(5) { animation-name: ah-alpha-bounce2; }
+
+@keyframes ah-alpha {
+  0%   { transform: translate(calc(-1 * var(--path-x)), calc(-1 * var(--path-y))); opacity:1; }
+  50%  { transform: translate(10px, 10px); opacity:0.6; }
+  100% { transform: translate(var(--path-x), var(--path-y)); opacity:0; }
+}
+@keyframes ah-alpha-bounce {
+  0%   { transform: translate(-100px, 0); opacity:1; }
+  40%  { transform: translate(-20px, 0); opacity:1; }
+  50%  { transform: translate(-25px, 0); opacity:1; }
+  100% { transform: translate(-120px, -30px); opacity:0; }
+}
+@keyframes ah-alpha-bounce2 {
+  0%   { transform: translate(-80px, -60px); opacity:1; }
+  45%  { transform: translate(-18px, -14px); opacity:1; }
+  100% { transform: translate(-100px, -90px); opacity:0; }
+}
+.amodel-rutherford-caption {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Bohr model ── */
+.amodel-bohr {
+  position: relative;
+  width: 280px; height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.amodel-bohr-nucleus {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #60e080, #208040);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  z-index: 2;
+  box-shadow: 0 0 16px rgba(64,160,128,0.5);
+}
+.amodel-bohr-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(64,160,128,0.3);
+  animation: none;
+}
+.amodel-bohr-orbit.o1 { width: 100px; height: 100px; }
+.amodel-bohr-orbit.o2 { width: 160px; height: 160px; }
+.amodel-bohr-orbit.o3 { width: 230px; height: 230px; }
+.amodel-bohr-e {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #a0c0ff;
+  box-shadow: 0 0 8px #a0c0ff;
+  font-size: 0; /* hide text */
+  animation: ah-orbit-e 3s linear infinite;
+}
+.amodel-bohr-orbit.o2 .amodel-bohr-e { animation-duration: 4.5s; }
+.amodel-bohr-orbit.o3 .amodel-bohr-e { animation-duration: 6.5s; }
+@keyframes ah-orbit-e {
+  from { transform: translateX(-50%) rotate(0deg) translateY(-50%) rotate(0deg); }
+  to   { transform: translateX(-50%) rotate(360deg) translateY(-50%) rotate(-360deg); }
+}
+/* Orbit animation via transform-origin trick */
+.amodel-bohr-orbit.o1 { animation: ah-bohr-orbit1 3s linear infinite; }
+.amodel-bohr-orbit.o2 { animation: ah-bohr-orbit2 4.5s linear infinite; }
+.amodel-bohr-orbit.o3 { animation: ah-bohr-orbit3 6.5s linear infinite; }
+@keyframes ah-bohr-orbit1 { to { --dummy:0; } } /* no-op, electron uses CSS trick below */
+
+/* Simpler electron orbit using position on orbit */
+.amodel-bohr-orbit { position: absolute; }
+.amodel-bohr-e {
+  width: 10px; height: 10px;
+  top: -5px; left: calc(50% - 5px);
+  transform-origin: 50% calc(50px + 5px);
+  animation: ah-e-orbit 3s linear infinite;
+}
+.amodel-bohr-orbit.o2 .amodel-bohr-e { transform-origin: 50% calc(80px + 5px); animation-duration: 4.5s; }
+.amodel-bohr-orbit.o3 .amodel-bohr-e { transform-origin: 50% calc(115px + 5px); animation-duration: 6.5s; }
+@keyframes ah-e-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ── Quantum canvas ── */
+.amodel-quantum-canvas {
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* ── Epilog ── */
+.amodel-epilog {
+  position: relative;
+  width: 260px; height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.amodel-epilog-core {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #7c73ff;
+  box-shadow: 0 0 30px #7c73ff;
+  z-index: 2;
+}
+.amodel-epilog-wave {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(124,115,255,0.3);
+  animation: ah-epilog-expand 3s ease-out infinite;
+}
+.amodel-epilog-wave.w1 { width: 80px; height: 80px; animation-delay: 0s; }
+.amodel-epilog-wave.w2 { width: 150px; height: 150px; animation-delay: 0.8s; }
+.amodel-epilog-wave.w3 { width: 240px; height: 240px; animation-delay: 1.6s; }
+@keyframes ah-epilog-expand {
+  0% { opacity: 0.6; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+.amodel-epilog-text {
+  position: absolute;
+  font-size: 5rem;
+  color: rgba(124,115,255,0.18);
+  font-weight: 100;
+  animation: ah-q-flicker 5s ease-in-out infinite;
+}
+
+/* ── Prolog/Epilog special chapter styling ── */
+#ch-prolog .ah-chapter-inner,
+#ch-epilog .ah-chapter-inner {
+  grid-template-columns: 1fr;
+  text-align: center;
+  justify-items: center;
+  max-width: 720px;
+  gap: 48px;
+}
+#ch-prolog .ah-model-stage,
+#ch-epilog .ah-model-stage {
+  width: 260px; height: 260px;
+}
+#ch-prolog .ah-chapter-title,
+#ch-epilog .ah-chapter-title {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 900;
+}
+#ch-prolog .ah-body,
+#ch-epilog .ah-body { font-size: 1.05rem; }
+
+/* ── Final CTA ── */
+.ah-final-cta {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 48px;
+}
+.ah-final-inner {
+  text-align: center;
+  max-width: 600px;
+}
+.ah-final-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.ah-final-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+.ah-final-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ah-final-btn {
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+.ah-final-btn.primary {
+  background: linear-gradient(135deg, #7c73ff, #5c4fff);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(124,115,255,0.4);
+}
+.ah-final-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,115,255,0.6); }
+.ah-final-btn.secondary {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+}
+.ah-final-btn.secondary:hover { background: rgba(255,255,255,0.1); color:#fff; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ah-chapter-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 24px;
+  }
+  .ah-chapter-inner.ah-invert { direction: ltr; }
+  .ah-model-stage { width: 220px; height: 220px; }
+  .ah-chapter-title { font-size: clamp(1.6rem, 5vw, 2.4rem); }
+  .ah-timeline-bar { top: 52px; }
+  .ah-tl-label { display: none; }
+  .ah-back-btn { top: 60px; font-size: 0.78rem; padding: 6px 12px; }
+  .ah-timeline-track { padding: 0 40px; gap: 0; }
+}
