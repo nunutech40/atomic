@@ -10,6 +10,7 @@ import { renderPhenomenonStory } from './components/PhenomenonStory';
 import { renderDiscovererStory } from './components/DiscovererStory';
 import { renderPhenomenaList } from './components/PhenomenaList';
 import { renderAtomHistory } from './components/AtomHistory';
+import { renderCompositionPage } from './components/CompositionPage';
 
 
 initTheme();
@@ -80,6 +81,18 @@ addRoute('/phenomena/:id', (params) => {
 addRoute('/discoverer/:sym', (params) => {
     main.innerHTML = '';
     const cleanup = renderDiscovererStory(main, params?.sym ?? '');
+    setCleanup(cleanup);
+});
+
+addRoute('/composition/:subject', (params) => {
+    main.innerHTML = '';
+    const cleanup = renderCompositionPage(main, params?.subject ?? 'human');
+    setCleanup(cleanup);
+});
+
+addRoute('/composition', () => {
+    main.innerHTML = '';
+    const cleanup = renderCompositionPage(main, 'human');
     setCleanup(cleanup);
 });
 

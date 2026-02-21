@@ -81,6 +81,31 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
     </div>
   `;
 
+  // ── Composition CTA (untuk human-atoms & earth-atoms) ───────────────────────
+  const hasCompositionLink = ['human-atoms', 'earth-atoms'].includes(id);
+  const compositionSubject = id === 'human-atoms' ? 'human' : 'earth';
+  const compositionLabel = id === 'human-atoms'
+    ? (isEN ? '🧬 Explore Human Body Composition →' : '🧬 Lihat Anatomi Atom Tubuh Manusia →')
+    : (isEN ? '🌍 Explore Earth Layer by Layer →' : '🌍 Lihat Anatomi Atom Bumi, Lapisan demi Lapisan →');
+
+  if (hasCompositionLink) {
+    const ctaBanner = document.createElement('div');
+    ctaBanner.className = 'ps-composition-cta';
+    ctaBanner.id = 'ps-composition-cta';
+    ctaBanner.innerHTML = `
+      <button class="ps-composition-cta-btn" id="ps-cta-btn">
+        ${compositionLabel}
+      </button>
+    `;
+    ctaBanner.style.display = 'none';
+    // Insert before ps-nav
+    const nav = container.querySelector('.ps-nav') as HTMLElement;
+    nav.parentNode!.insertBefore(ctaBanner, nav);
+    container.querySelector('#ps-cta-btn')!.addEventListener('click', () => {
+      navigate('/composition/' + compositionSubject);
+    });
+  }
+
   const track = container.querySelector('#ps-slide-track') as HTMLElement;
   const prevBtn = container.querySelector('#ps-prev') as HTMLButtonElement;
   const nextBtn = container.querySelector('#ps-next') as HTMLButtonElement;
@@ -163,6 +188,12 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
       ? `<span>\u2713 ${isEN ? 'Done' : 'Selesai'}</span>`
       : `${isEN ? 'Next' : 'Selanjutnya'} <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>`;
     nextBtn.classList.toggle('ps-nav-btn--finish', isLast);
+
+    // Show/hide composition CTA banner
+    if (hasCompositionLink) {
+      const ctaBanner = container.querySelector('#ps-composition-cta') as HTMLElement | null;
+      if (ctaBanner) ctaBanner.style.display = isLast ? 'flex' : 'none';
+    }
   }
 
   // ── Initial state ─────────────────────────────────────────────────────────
