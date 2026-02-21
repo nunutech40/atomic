@@ -48,24 +48,26 @@ export function renderPhenomenaList(container: HTMLElement) {
     // ── FEATURED: ANATOMI ATOM CTA ────────────────────────────────────────
     const anatomiCta = document.createElement('div');
     anatomiCta.className = 'phen-anatomi-cta';
+    const anatomiSubjects = [
+        { id: 'human', icon: '🧬', label: 'Tubuh Manusia', labelEn: 'Human Body', sub: 'O · C · H · N', subEn: 'O · C · H · N' },
+        { id: 'earth', icon: '🌍', label: 'Planet Bumi', labelEn: 'Planet Earth', sub: '6 lapisan · inti hingga atmosfer', subEn: '6 layers · core to atmosphere' },
+        { id: 'sun', icon: '☀️', label: 'Matahari', labelEn: 'The Sun', sub: 'H 73% · He 25% · fusi nuklir', subEn: 'H 73% · He 25% · nuclear fusion' },
+        { id: 'plant', icon: '🌿', label: 'Tumbuhan', labelEn: 'Plants', sub: 'Fotosintesis · Klorofil · Selulosa', subEn: 'Photosynthesis · Chlorophyll' },
+        { id: 'universe', icon: '🌌', label: 'Alam Semesta', labelEn: 'Universe', sub: '13,8 miliar tahun · Big Bang', subEn: '13.8 billion years · Big Bang' },
+    ];
     anatomiCta.innerHTML = `
+        <div class="phen-anatomi-label">${isEN ? '🔬 Atomic Anatomy' : '🔬 Anatomi Atom'}</div>
         <div class="phen-anatomi-cards">
-            <div class="phen-anatomi-card" id="cta-human" data-href="/composition/human">
-                <div class="phen-anatomi-card-icon">🧬</div>
-                <div class="phen-anatomi-card-body">
-                    <div class="phen-anatomi-card-title">${isEN ? 'Human Body' : 'Tubuh Manusia'}</div>
-                    <div class="phen-anatomi-card-sub">${isEN ? 'O · C · H · N and 10 more elements' : 'O · C · H · N dan 10 elemen lainnya'}</div>
+            ${anatomiSubjects.map(s => `
+                <div class="phen-anatomi-card" data-href="/composition/${s.id}">
+                    <div class="phen-anatomi-card-icon">${s.icon}</div>
+                    <div class="phen-anatomi-card-body">
+                        <div class="phen-anatomi-card-title">${isEN ? s.labelEn : s.label}</div>
+                        <div class="phen-anatomi-card-sub">${isEN ? s.subEn : s.sub}</div>
+                    </div>
+                    <div class="phen-anatomi-card-arrow">→</div>
                 </div>
-                <div class="phen-anatomi-card-arrow">→</div>
-            </div>
-            <div class="phen-anatomi-card" id="cta-earth" data-href="/composition/earth">
-                <div class="phen-anatomi-card-icon">🌍</div>
-                <div class="phen-anatomi-card-body">
-                    <div class="phen-anatomi-card-title">${isEN ? 'Planet Earth' : 'Planet Bumi'}</div>
-                    <div class="phen-anatomi-card-sub">${isEN ? '6 layers · from core to atmosphere' : '6 lapisan · dari inti hingga atmosfer'}</div>
-                </div>
-                <div class="phen-anatomi-card-arrow">→</div>
-            </div>
+            `).join('')}
         </div>
     `;
     anatomiCta.addEventListener('click', (e) => {
@@ -75,6 +77,7 @@ export function renderPhenomenaList(container: HTMLElement) {
     page.appendChild(anatomiCta);
 
     // ── CATEGORY FILTER TABS ──────────────────────────────────────────────
+
 
     const tabs = document.createElement('div');
     tabs.className = 'phenomena-tabs';
