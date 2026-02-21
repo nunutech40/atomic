@@ -14801,3 +14801,203 @@ body {
   font-weight: 600;
   font-size: 11px;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ATOM FINALE — Chapter 5 (narrative prose, first principle)
+═══════════════════════════════════════════════════════════ */
+
+.dash-finale {
+  background: var(--bg);
+  padding: 80px 0 100px;
+}
+
+.dash-finale-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Atom symbol at top */
+.dash-finale-nucleus {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 56px;
+  opacity: 0.15;
+  letter-spacing: 0;
+  animation: finale-nucleus-pulse 4s ease-in-out infinite;
+}
+
+@keyframes finale-nucleus-pulse {
+
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.22;
+    transform: scale(1.05);
+  }
+}
+
+/* Prose body */
+.dash-finale-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dash-finale-prose p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+.dash-finale-prose p strong {
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+/* Opening line — large, bold */
+.dash-finale-opening {
+  font-size: clamp(24px, 5vw, 38px) !important;
+  font-weight: 800 !important;
+  color: var(--text-1) !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em;
+}
+
+/* Pause — big quote / revelation moment */
+.dash-finale-pause {
+  font-size: clamp(18px, 3.5vw, 26px);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.4;
+  padding: 28px 32px;
+  border-left: 4px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, var(--bg-2));
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  margin: 8px 0;
+}
+
+/* Branch links — embedded in narrative flow */
+.dash-finale-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 4px 0;
+}
+
+.dash-finale-branch {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.dash-finale-branch:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent) 5%, var(--bg-2));
+  transform: translateX(4px);
+}
+
+.dash-finale-branch-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.dash-finale-branch-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dash-finale-branch-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.dash-finale-branch-text span {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.dash-finale-branch-arrow {
+  font-size: 16px;
+  color: var(--accent);
+  opacity: 0.6;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.dash-finale-branch:hover .dash-finale-branch-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* Closing paragraph */
+.dash-finale-closing {
+  color: var(--text-2) !important;
+  margin-top: 8px;
+}
+
+/* Sagan coda — final line */
+.dash-finale-coda {
+  text-align: center;
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-2);
+  margin-top: 32px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dash-finale-coda span {
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+
+/* Coming-soon branch (Phase 2 items not yet built) */
+.dash-finale-branch--soon {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+}
+
+.dash-finale-branch--soon:hover {
+  transform: none;
+  border-color: var(--border);
+  background: var(--bg-2);
+}
+
+.dash-finale-branch-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--text-3) 15%, var(--bg-3));
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
