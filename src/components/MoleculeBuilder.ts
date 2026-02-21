@@ -4,10 +4,11 @@ import { phenomena, PHENOMENON_CATEGORIES } from '../data/phenomena';
 import { phenomenonStories } from '../data/phenomenon-stories';
 import { MoleculeScene } from '../three/moleculeScene';
 import { navigate } from '../core/router';
+import { getLang } from '../core/i18n';
 
 
 // Atoms palette — most commonly used in chemistry
-const PALETTE = [
+const PALETTE_ID = [
   { sym: 'H', name: 'Hidrogen', color: '#60a5fa' },
   { sym: 'O', name: 'Oksigen', color: '#f87171' },
   { sym: 'C', name: 'Karbon', color: '#6b7280' },
@@ -27,9 +28,29 @@ const PALETTE = [
   { sym: 'Au', name: 'Emas', color: '#fcd34d' },
   { sym: 'Pb', name: 'Timbal', color: '#9ca3af' },
 ];
+const PALETTE_EN = [
+  { sym: 'H', name: 'Hydrogen', color: '#60a5fa' },
+  { sym: 'O', name: 'Oxygen', color: '#f87171' },
+  { sym: 'C', name: 'Carbon', color: '#6b7280' },
+  { sym: 'N', name: 'Nitrogen', color: '#818cf8' },
+  { sym: 'Na', name: 'Sodium', color: '#c084fc' },
+  { sym: 'Cl', name: 'Chlorine', color: '#4ade80' },
+  { sym: 'S', name: 'Sulfur', color: '#facc15' },
+  { sym: 'K', name: 'Potassium', color: '#a78bfa' },
+  { sym: 'Ca', name: 'Calcium', color: '#86efac' },
+  { sym: 'Fe', name: 'Iron', color: '#fb923c' },
+  { sym: 'Cu', name: 'Copper', color: '#f59e0b' },
+  { sym: 'Mg', name: 'Magnesium', color: '#34d399' },
+  { sym: 'P', name: 'Phosphorus', color: '#f97316' },
+  { sym: 'Al', name: 'Aluminium', color: '#d1d5db' },
+  { sym: 'Zn', name: 'Zinc', color: '#93c5fd' },
+  { sym: 'Ag', name: 'Silver', color: '#e2e8f0' },
+  { sym: 'Au', name: 'Gold', color: '#fcd34d' },
+  { sym: 'Pb', name: 'Lead', color: '#9ca3af' },
+];
 
 // Quick-try examples
-const QUICK_EXAMPLES: { label: string; composition: Record<string, number> }[] = [
+const QUICK_EXAMPLES_ID: { label: string; composition: Record<string, number> }[] = [
   { label: '💧 H₂O', composition: { H: 2, O: 1 } as Record<string, number> },
   { label: '🌬 CO₂', composition: { C: 1, O: 2 } as Record<string, number> },
   { label: '🧂 NaCl', composition: { Na: 1, Cl: 1 } as Record<string, number> },
@@ -41,9 +62,24 @@ const QUICK_EXAMPLES: { label: string; composition: Record<string, number> }[] =
   { label: '⚙️ Besi', composition: { Fe: 9 } as Record<string, number> },
   { label: '🍬 Glukosa', composition: { C: 6, H: 12, O: 6 } as Record<string, number> },
 ];
+const QUICK_EXAMPLES_EN: { label: string; composition: Record<string, number> }[] = [
+  { label: '💧 H₂O', composition: { H: 2, O: 1 } as Record<string, number> },
+  { label: '🌬 CO₂', composition: { C: 1, O: 2 } as Record<string, number> },
+  { label: '🧂 NaCl', composition: { Na: 1, Cl: 1 } as Record<string, number> },
+  { label: '⚗️ NH₃', composition: { N: 1, H: 3 } as Record<string, number> },
+  { label: '🔥 CH₄', composition: { C: 1, H: 4 } as Record<string, number> },
+  { label: '🪨 Fe₂O₃', composition: { Fe: 2, O: 3 } as Record<string, number> },
+  { label: '💎 Diamond', composition: { C: 5 } as Record<string, number> },
+  { label: '✏️ Graphite', composition: { C: 6 } as Record<string, number> },
+  { label: '⚙️ Iron', composition: { Fe: 9 } as Record<string, number> },
+  { label: '🍬 Glucose', composition: { C: 6, H: 12, O: 6 } as Record<string, number> },
+];
 
 
 export function renderMoleculeBuilder(container: HTMLElement): () => void {
+  const isEN = getLang() === 'en';
+  const PALETTE = isEN ? PALETTE_EN : PALETTE_ID;
+  const QUICK_EXAMPLES = isEN ? QUICK_EXAMPLES_EN : QUICK_EXAMPLES_ID;
   let selection: Record<string, number> = {};  // current atom selection
   let sceneRef: MoleculeScene | null = null;
 
@@ -54,12 +90,12 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
 
       <!-- TOP BAR -->
       <div class="mb-topbar">
-        <button class="mb-back" id="mb-back">← Kembali</button>
+        <button class="mb-back" id="mb-back">${isEN ? '← Back' : '← Kembali'}</button>
         <div class="mb-topbar-title">
           <span class="mb-topbar-icon">⚗️</span>
-          <span>Bangun Molekul</span>
+          <span>${isEN ? 'Build a Molecule' : 'Bangun Molekul'}</span>
         </div>
-        <div class="mb-topbar-sub">Pilih atom, gabungkan, lihat hasilnya dalam 3D</div>
+        <div class="mb-topbar-sub">${isEN ? 'Select atoms, combine them, see the result in 3D' : 'Pilih atom, gabungkan, lihat hasilnya dalam 3D'}</div>
       </div>
 
       <div class="mb-body">
@@ -68,7 +104,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
         <aside class="mb-left">
 
           <!-- Atom palette -->
-          <div class="mb-section-label">Pilih Atom</div>
+          <div class="mb-section-label">${isEN ? 'Select Atoms' : 'Pilih Atom'}</div>
           <div class="mb-palette" id="mb-palette">
             ${PALETTE.map(a => `
               <button
@@ -84,7 +120,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
           </div>
 
           <!-- Quick examples -->
-          <div class="mb-section-label" style="margin-top:20px">Coba Langsung</div>
+          <div class="mb-section-label" style="margin-top:20px">${isEN ? 'Try These' : 'Coba Langsung'}</div>
           <div class="mb-quick" id="mb-quick">
             ${QUICK_EXAMPLES.map((ex, i) => `
               <button class="mb-quick-btn" data-qi="${i}">${ex.label}</button>
@@ -93,11 +129,11 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
 
           <!-- Current mix -->
           <div class="mb-section-label" style="margin-top:20px">
-            Campuranmu
+            ${isEN ? 'Your Mix' : 'Campuranmu'}
             <button class="mb-reset-btn" id="mb-reset" title="Reset">✕ Reset</button>
           </div>
           <div class="mb-mix" id="mb-mix">
-            <div class="mb-mix-empty" id="mb-mix-empty">Belum ada atom dipilih</div>
+            <div class="mb-mix-empty" id="mb-mix-empty">${isEN ? 'No atoms selected yet' : 'Belum ada atom dipilih'}</div>
           </div>
 
           <!-- Match hint -->
@@ -105,7 +141,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
 
           <!-- Combine button -->
           <button class="mb-combine-btn" id="mb-combine" disabled>
-            🔬 Gabungkan
+            🔬 ${isEN ? 'Combine' : 'Gabungkan'}
           </button>
 
         </aside>
@@ -116,10 +152,11 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
           <!-- Empty state -->
           <div class="mb-empty-state" id="mb-empty-state">
             <div class="mb-empty-icon">⚗️</div>
-            <div class="mb-empty-title">Pilih atom untuk memulai</div>
+            <div class="mb-empty-title">${isEN ? 'Select atoms to get started' : 'Pilih atom untuk memulai'}</div>
             <div class="mb-empty-sub">
-              Tambahkan atom dari panel kiri, lalu klik "Gabungkan"
-              untuk melihat hasilnya dalam 3D.
+              ${isEN
+      ? 'Add atoms from the left panel, then click “Combine” to see the result in 3D.'
+      : 'Tambahkan atom dari panel kiri, lalu klik “Gabungkan” untuk melihat hasilnya dalam 3D.'}
             </div>
           </div>
 
@@ -129,7 +166,7 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
             <!-- 3D Viewer -->
             <div class="mb-canvas-wrap" id="mb-canvas-wrap">
               <canvas id="mb-canvas"></canvas>
-              <div class="mb-canvas-hint">Drag untuk rotasi · Scroll untuk zoom</div>
+              <div class="mb-canvas-hint">${isEN ? 'Drag to rotate · Scroll to zoom' : 'Drag untuk rotasi · Scroll untuk zoom'}</div>
             </div>
 
             <!-- Molecule info -->
@@ -142,9 +179,9 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
           <!-- Not found state -->
           <div class="mb-not-found" id="mb-not-found" hidden>
             <div class="mb-nf-icon">🔍</div>
-            <div class="mb-nf-title">Kombinasi tidak dikenal</div>
+            <div class="mb-nf-title">${isEN ? 'Unknown combination' : 'Kombinasi tidak dikenal'}</div>
             <div class="mb-nf-sub" id="mb-nf-sub"></div>
-            <div class="mb-nf-tip">Coba ubah jumlah atau jenis atom, atau pilih salah satu contoh.</div>
+            <div class="mb-nf-tip">${isEN ? 'Try changing the atom count or type, or pick one of the quick examples.' : 'Coba ubah jumlah atau jenis atom, atau pilih salah satu contoh.'}</div>
           </div>
 
         </main>
@@ -219,7 +256,9 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
     // Real-time match hint
     const match = matchMolecule(selection);
     if (match && keys.length > 0) {
-      hintEl.textContent = `💡 Ini terlihat seperti ${match.nameId} (${match.formula})`;
+      hintEl.textContent = isEN
+        ? `💡 This looks like ${match.name} (${match.formula})`
+        : `💡 Ini terlihat seperti ${match.nameId} (${match.formula})`;
       hintEl.hidden = false;
     } else {
       hintEl.hidden = true;
@@ -276,7 +315,9 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
     const selStr = Object.entries(selection)
       .map(([s, n]) => `${s}${n > 1 ? n : ''}`)
       .join('');
-    nfSubEl.textContent = `Tidak ditemukan molekul dengan komposisi: ${selStr}`;
+    nfSubEl.textContent = isEN
+      ? `No molecule found with composition: ${selStr}`
+      : `Tidak ditemukan molekul dengan komposisi: ${selStr}`;
     emptyState.hidden = true;
     resultEl.hidden = true;
     notFoundEl.hidden = false;
@@ -331,28 +372,28 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
 
         <div class="mb-mol-meta">
             <div class="mb-mol-meta-item">
-                <span class="mb-mol-meta-label">Bentuk</span>
+                <span class="mb-mol-meta-label">${isEN ? 'Shape' : 'Bentuk'}</span>
                 <span>${mol.shape}</span>
             </div>
             <div class="mb-mol-meta-item">
-                <span class="mb-mol-meta-label">Ikatan</span>
+                <span class="mb-mol-meta-label">${isEN ? 'Bond Type' : 'Ikatan'}</span>
                 <span>${mol.bondType}</span>
             </div>
             <div class="mb-mol-meta-item">
-                <span class="mb-mol-meta-label">Komposisi</span>
+                <span class="mb-mol-meta-label">${isEN ? 'Composition' : 'Komposisi'}</span>
                 <span class="mb-comp">${compositionStr}</span>
             </div>
         </div>
 
-        <div class="mb-mol-desc">${mol.desc}</div>
+        <div class="mb-mol-desc">${isEN ? (mol.descEn || mol.desc) : mol.desc}</div>
 
         <div class="mb-mol-funfact">
             <span class="mb-mol-funfact-icon">💡</span>
-            <span>${mol.funFact}</span>
+            <span>${isEN ? (mol.funFactEn || mol.funFact) : mol.funFact}</span>
         </div>
 
         <div class="mb-mol-legend">
-            <div class="mb-mol-legend-title">Legenda Warna (CPK)</div>
+            <div class="mb-mol-legend-title">${isEN ? 'Color Legend (CPK)' : 'Legenda Warna (CPK)'}</div>
             <div class="mb-mol-legend-items">
                 ${[...new Set(mol.atoms.map(a => a.sym))].map(sym => {
       const c = (CPK_COLORS_HEX as Record<string, string>)[sym] ?? '#ff69b4';

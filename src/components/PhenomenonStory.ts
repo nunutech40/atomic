@@ -2,6 +2,7 @@ import { phenomena, PHENOMENON_CATEGORIES } from '../data/phenomena';
 import { phenomenonStories } from '../data/phenomenon-stories';
 import type { StorySlide, HistoryEntry } from '../data/phenomenon-stories';
 import { navigate } from '../core/router';
+import { getLang } from '../core/i18n';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PHENOMENON STORY VIEWER
@@ -9,6 +10,7 @@ import { navigate } from '../core/router';
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function renderPhenomenonStory(container: HTMLElement, id: string): () => void {
+  const isEN = getLang() === 'en';
   const phenomenon = phenomena.find(p => p.id === id);
   const story = phenomenonStories.find(s => s.id === id);
 
@@ -16,8 +18,8 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
     container.innerHTML = `
       <div class="ps-not-found">
         <div class="ps-nf-icon">🔭</div>
-        <div class="ps-nf-title">Fenomena tidak ditemukan</div>
-        <button class="ps-back-btn" id="ps-back">← Kembali ke Fenomena</button>
+        <div class="ps-nf-title">${isEN ? 'Phenomenon not found' : 'Fenomena tidak ditemukan'}</div>
+        <button class="ps-back-btn" id="ps-back">${isEN ? '\u2190 Back to Phenomena' : '\u2190 Kembali ke Fenomena'}</button>
       </div>`;
     container.querySelector('#ps-back')!.addEventListener('click', () => navigate('/phenomena'));
     return () => { };
@@ -35,11 +37,11 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
       <!-- TOP BAR -->
       <div class="ps-topbar">
         <button class="ps-back-btn" id="ps-back">
-          <span>←</span> Fenomena
+          <span>←</span> ${isEN ? 'Phenomena' : 'Fenomena'}
         </button>
         <div class="ps-topbar-center">
           <span class="ps-topbar-icon">${phenomenon.icon}</span>
-          <span class="ps-topbar-title">${phenomenon.title}</span>
+          <span class="ps-topbar-title">${isEN ? phenomenon.titleEn : phenomenon.title}</span>
           <span class="ps-cat-badge" style="color:${cat.color};background:${cat.bg}">${cat.label}</span>
         </div>
         <div class="ps-slide-counter">
@@ -63,7 +65,7 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
       <div class="ps-nav">
         <button class="ps-nav-btn ps-nav-prev" id="ps-prev" disabled>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,18 9,12 15,6"/></svg>
-          Sebelumnya
+          ${isEN ? 'Previous' : 'Sebelumnya'}
         </button>
 
         <div class="ps-dot-nav" id="ps-dot-nav">
@@ -71,7 +73,7 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
         </div>
 
         <button class="ps-nav-btn ps-nav-next" id="ps-next">
-          Selanjutnya
+          ${isEN ? 'Next' : 'Selanjutnya'}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
         </button>
       </div>
@@ -158,8 +160,8 @@ export function renderPhenomenonStory(container: HTMLElement, id: string): () =>
     (prevBtn as HTMLButtonElement).disabled = currentSlide === 0;
     const isLast = currentSlide === slides.length - 1;
     nextBtn.innerHTML = isLast
-      ? `<span>✓ Selesai</span>`
-      : `Selanjutnya <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>`;
+      ? `<span>\u2713 ${isEN ? 'Done' : 'Selesai'}</span>`
+      : `${isEN ? 'Next' : 'Selanjutnya'} <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>`;
     nextBtn.classList.toggle('ps-nav-btn--finish', isLast);
   }
 

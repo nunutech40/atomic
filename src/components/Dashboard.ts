@@ -13,15 +13,15 @@ export function renderDashboard(container: HTMLElement): () => void {
     heroTitle: isEN ? 'Everything<br>is made of this.' : 'Segalanya<br>tersusun dari ini.',
     heroNum: isEN ? '7,000,000,000,000,000,000,000,000,000' : '7.000.000.000.000.000.000.000.000.000',
     heroSub1: isEN ? 'Your body contains' : 'Tubuhmu mengandung',
-    heroSub2: isEN ? 'atoms. Every single one was once part of a star.' : 'atom. Setiap satu pernah menjadi bagian dari bintang.',
+    heroSub2: isEN ? 'atoms — most of them forged in the core of a dying star.' : 'atom — sebagian besar ditempa di inti bintang yang sekarat.',
     heroScroll: isEN ? 'Scroll to explore ↓' : 'Scroll untuk menjelajahi ↓',
 
     ch1Tag: isEN ? 'Chapter 1' : 'Chapter 1',
     ch1Title: isEN ? 'How small is an atom, really?' : 'Sekecil apa, sebenarnya?',
     ch1Sub: isEN ? 'Drag the slider to grasp a scale your brain wasn\'t built to imagine.' : 'Geser slider untuk memahami skala yang tidak bisa dibayangkan akal biasa.',
     ch1Fact: isEN
-      ? 'If an atom were the size of a football field, its <strong>nucleus</strong> would be a <strong>grain of dust at the center</strong>.'
-      : 'Jika sebuah atom sebesar lapangan bola, maka <strong>nukleus</strong>-nya sekecil <strong>butir debu di tengah lapangan</strong> itu.',
+      ? 'If an atom were the size of a football stadium, its <strong>nucleus</strong> would be a <strong>marble at the center</strong> — that is how empty atoms really are.'
+      : 'Jika sebuah atom sebesar stadion bola, maka <strong>inti atomnya</strong> hanya sebesar <strong>kelereng di tengah lapangan</strong> — begitu kosongnya sebuah atom.',
 
     ch2Tag: isEN ? 'Chapter 2' : 'Chapter 2',
     ch2Title: isEN ? 'What\'s actually inside?' : 'Apa yang ada di dalamnya?',
@@ -32,8 +32,8 @@ export function renderDashboard(container: HTMLElement): () => void {
       ? 'Carries <strong>positive charge (+1)</strong>. Lives in the nucleus. Number of protons = <strong>atomic number</strong> = element identity.<br><br><em>1 proton = Hydrogen. 6 protons = Carbon. 79 protons = Gold.</em>'
       : 'Bermuatan <strong>positif (+1)</strong>. Berada di inti atom (nukleus). Jumlah proton = <strong>nomor atom</strong> = identitas elemen.<br><br><em>1 proton = Hidrogen. 6 proton = Karbon. 79 proton = Emas.</em>',
     neutronBody: isEN
-      ? '<strong>Neutral</strong> — no charge. Lives in the nucleus alongside protons. Neutrons are the "glue" keeping protons from repelling each other.<br><br><em>Isotope = same element, different number of neutrons.</em>'
-      : '<strong>Netral</strong> — tidak bermuatan. Berada di inti bersama proton. Neutron adalah "lem" yang menahan proton agar tidak saling tolak menolak.<br><br><em>Isotop = atom yang protonnya sama tapi neutronnya beda.</em>',
+      ? '<strong>Neutral</strong> — no electric charge. Sits in the nucleus alongside protons. Neutrons help stabilize the nucleus: without them, the strong nuclear force cannot effectively hold larger nuclei together.<br><br><em>Isotopes = same element, different neutron count. e.g. Carbon-12 vs Carbon-14.</em>'
+      : '<strong>Netral</strong> — tidak bermuatan listrik. Berada di inti bersama proton. Neutron membantu menstabilkan inti atom: tanpanya, gaya inti kuat tidak dapat menahan inti yang lebih besar.<br><br><em>Isotop = elemen yang sama, jumlah neutron berbeda. Contoh: Karbon-12 vs Karbon-14.</em>',
     electronBody: isEN
       ? 'Carries <strong>negative charge (−1)</strong>. Moves in a cloud around the nucleus. Mass is 1,836× lighter than a proton — nearly zero.<br><br><em>Outer electrons determine how an atom reacts with others.</em>'
       : 'Bermuatan <strong>negatif (−1)</strong>. Bergerak di "awan" di sekitar nukleus. Massanya 1.836× lebih ringan dari proton — hampir nol.<br><br><em>Elektron terluar menentukan bagaimana atom bereaksi dengan atom lain.</em>',
@@ -428,14 +428,23 @@ export function renderDashboard(container: HTMLElement): () => void {
   cleanups.push(() => revealObs.disconnect());
 
   // ─── SCALE SLIDER ─────────────────────────────────────────────────────────
-  const scaleData = [
-    { label: 'Sehelai rambut', size: '~70.000 nm', fact: 'Lebarnya 70.000 nanometer. Bisa terlihat mata telanjang.', color: '#ffd93d', px: 180 },
-    { label: 'Sel darah merah', size: '~8.000 nm', fact: 'Diameter 8.000 nm — masih bisa dilihat dengan mikroskop cahaya.', color: '#ff6b6b', px: 140 },
-    { label: 'Bakteri E. coli', size: '~2.000 nm', fact: 'Panjang 2.000 nm. Butuh mikroskop elektron untuk melihatnya.', color: '#a29bfe', px: 100 },
-    { label: 'Virus', size: '~100 nm', fact: 'Virus corona berdiameter ~100 nm. Jutaan kali lebih kecil dari rambut.', color: '#74b9ff', px: 60 },
-    { label: 'DNA double helix', size: '~2 nm', fact: 'Lebar helix DNA hanya 2 nanometer — 35.000× lebih tipis dari rambut.', color: '#55efc4', px: 28 },
-    { label: 'Atom Karbon', size: '~0.15 nm', fact: '150 pikometer. 1 juta atom Karbon berjajar = lebar rambut manusia.', color: '#7c73ff', px: 12 },
+  const scaleDataID = [
+    { label: 'Sehelai rambut', size: '~70.000 nm', fact: '~70.000 nanometer lebar — hanya bisa terlihat karena ketebalan keseluruhannya.', color: '#ffd93d', px: 180 },
+    { label: 'Sel darah merah', size: '~8.000 nm', fact: 'Diameter 8.000 nm — masih bisa dilihat dengan mikroskop cahaya biasa.', color: '#ff6b6b', px: 140 },
+    { label: 'Bakteri E. coli', size: '~2.000 nm', fact: 'Panjang ~2.000 nm. Butuh mikroskop elektron untuk melihat strukturnya jelas.', color: '#a29bfe', px: 100 },
+    { label: 'Virus (SARS-CoV-2)', size: '~100 nm', fact: 'Diameter ~100 nm — jutaan kali lebih kecil dari sehelai rambut.', color: '#74b9ff', px: 60 },
+    { label: 'Double helix DNA', size: '~2 nm', fact: 'Lebar double helix DNA hanya 2 nm — 35.000× lebih tipis dari rambut.', color: '#55efc4', px: 28 },
+    { label: 'Atom Karbon', size: '~0,15 nm', fact: '150 pikometer. Satu juta atom Karbon berjajar = lebar sehelai rambut manusia.', color: '#7c73ff', px: 12 },
   ];
+  const scaleDataEN = [
+    { label: 'Human hair', size: '~70,000 nm', fact: '~70,000 nanometers wide. Just barely visible to the naked eye as a strand.', color: '#ffd93d', px: 180 },
+    { label: 'Red blood cell', size: '~8,000 nm', fact: '~8,000 nm diameter — still visible under a standard optical microscope.', color: '#ff6b6b', px: 140 },
+    { label: 'E. coli bacterium', size: '~2,000 nm', fact: '~2,000 nm long. Requires an electron microscope to resolve fine structures.', color: '#a29bfe', px: 100 },
+    { label: 'Virus (SARS-CoV-2)', size: '~100 nm', fact: '~100 nm diameter. Millions of times smaller than a strand of hair.', color: '#74b9ff', px: 60 },
+    { label: 'DNA double helix', size: '~2 nm', fact: 'The DNA double helix is just 2 nm wide — 35,000× thinner than a human hair.', color: '#55efc4', px: 28 },
+    { label: 'Carbon atom', size: '~0.15 nm', fact: '150 picometers. One million Carbon atoms in a row = the width of a human hair.', color: '#7c73ff', px: 12 },
+  ];
+  const scaleData = isEN ? scaleDataEN : scaleDataID;
 
   const slider = document.getElementById('scale-slider') as HTMLInputElement;
   const scaleObj = document.getElementById('scale-obj') as HTMLElement;
@@ -485,34 +494,63 @@ export function renderDashboard(container: HTMLElement): () => void {
   });
 
   // ─── PROTON IDENTITY ─────────────────────────────────────────────────────
-  const identityFacts: Record<number, string> = {
-    1: 'Paling ringan di alam semesta. 75% dari semua materi adalah Hidrogen.',
-    2: 'Gas mulia pertama — tidak bereaksi dengan apapun. Suaramu jadi cempreng karena helio.',
-    3: 'Logam paling ringan. Baterai ponselmu mengandung Litium.',
-    4: 'Logam paling kuat per unit massa. Pesawat ruang angkasa pakai Berilium.',
-    5: 'Boron di bola bowling membuatnya kuat. Juga kunci layar HP kamu.',
-    6: 'Fondasi semua kehidupan. Kamu tersusun ~18% dari Karbon.',
-    7: '78% udara yang kamu hirup adalah Nitrogen — tapi kamu tidak bisa menyerapnya langsung.',
-    8: 'Kamu tidak bisa hidup 4 menit tanpa Oksigen.',
-    9: 'Paling reaktif dari semua elemen. Bereaksi dengan hampir segalanya — bahkan kaca.',
-    10: 'Neon di papan reklame. Tidak bereaksi dengan siapapun.',
-    11: 'Natrium di dalam tubuhmu menjaga tekanan darah dan fungsi saraf.',
-    12: 'Magnesium di klorofil — tanpanya, fotosintesis tidak terjadi.',
-    13: 'Aluminium di kaleng minumanmu. Ringan, kuat, bisa didaur-ulang selamanya.',
-    14: 'Silikon adalah fondasi chip semikonduktor — dan era digital kita.',
-    15: 'Fosfor ada di DNA-mu. Tanpanya, informasi genetik tidak bisa tersimpan.',
-    16: 'Belerang = bau telur busuk. Tapi juga ada di setiap protein tubuhmu.',
-    17: 'Klorin di air kolam renang membunuh bakteri. Dosis tinggi = gas beracun perang.',
-    18: 'Argon mengisi lampu pijar dan layar plasma. Gas paling "malas" di alam semesta.',
-    19: 'Kalium menjaga jantungmu berdegup. Kram otot? Coba pisang.',
-    20: 'Kalsium di tulangmu adalah 99% dari total kalsium tubuh.',
-    26: 'Besi di hemoglobin membawa oksigen ke seluruh tubuh. Kekurangan besi = anemia.',
-    29: 'Tembaga pertama kali digunakan manusia 10.000 tahun lalu. Masih dipakai di kabel listrikmu.',
-    47: 'Perak paling reflektif dari semua logam. Juga antibakteri alami.',
-    79: 'Emas tidak pernah berkarat. Atom emasmu lahir dari tabrakan bintang neutron.',
-    82: 'Timbal dipakai Romawi kuno untuk pipa air. Para ilmuwan menduga ini yang membuat kekaisaran jatuh.',
-    92: 'Uranium radioaktif — bahan bakar PLTN yang memasok 10% listrik dunia.',
+  const identityFactsID: Record<number, string> = {
+    1: 'Paling ringan di alam semesta. ~75% dari semua materi biasa adalah Hidrogen.',
+    2: 'Gas mulia pertama — tidak bereaksi dengan apapun. Helium adalah elemen terbanyak kedua di alam semesta.',
+    3: 'Logam alkali paling ringan. Ion litium (Li+) digunakan di baterai ponsel dan kendaraan listrik.',
+    4: 'Rasio kekuatan-terhadap-berat tinggi. Digunakan di cermin teleskop luar angkasa dan jendela detektor sinar-X.',
+    5: 'Boron dipakai di serat kaca, keramik tahan api, dan sebagai penyerap neutron di reaktor nuklir.',
+    6: 'Fondasi semua kehidupan. ~18% massa tubuhmu adalah Karbon — 4 elektron valensi membuatnya sangat fleksibel.',
+    7: '78% udara yang kamu hirup adalah N2. Nitrogen inert tapi senyawanya (protein, DNA, ATP) vital untuk kehidupan.',
+    8: 'Kamu tidak bisa bertahan lebih dari ~4 menit tanpa Oksigen. Sangat reaktif — menyebabkan karat dan pembakaran.',
+    9: 'Paling elektronegatif dari semua elemen. Fluorin bereaksi dengan hampir segalanya — bahkan kaca dan gas mulia.',
+    10: 'Gas mulia kedua. Neon memancarkan cahaya merah-oranye khas saat dialiri listrik dalam tabung tertutup.',
+    11: 'Ion Natrium (Na+) menjaga tekanan osmotik sel dan menghantarkan sinyal saraf di seluruh tubuh.',
+    12: 'Magnesium ada di pusat molekul klorofil. Tanpa ion Mg2+, fotosintesis tidak bisa terjadi.',
+    13: 'Logam paling melimpah di kerak bumi. Ringan, kuat, bisa didaur-ulang tanpa batas kualitas.',
+    14: 'Silikon bersifat semikonduktor karena 4 elektron valensinya — fondasi semua chip komputer modern.',
+    15: 'Fosfor ada di tulangmu (hidroksiapatit), tulang punggung DNA, dan ATP — molekul energi universal.',
+    16: 'Belerang = bau telur busuk (H2S). Penting di asam amino sistein dan metionin di setiap protein.',
+    17: 'Klorin digunakan untuk desinfeksi air minum dan kolam renang. Gas Cl2 murni adalah senjata kimia berbahaya.',
+    18: 'Argon mengisi lampu pijar dan jendela berlapis ganda. Gas mulia paling banyak di atmosfer bumi (~0,93%).',
+    19: 'Ion Kalium (K+) menjaga irama jantung dan kontraksi otot. Kekurangan Kalium menyebabkan kram dan aritmia.',
+    20: '99% kalsium tubuhmu ada di tulang dan gigi. Sisa 1% kritis untuk kontraksi otot dan transmisi saraf.',
+    26: 'Besi di hemoglobin mengikat O2 dan mengangkutnya ke seluruh tubuh. Kekurangan besi = anemia.',
+    29: 'Tembaga pertama digunakan manusia ~10.000 tahun lalu. Konduktor listrik terbaik kedua setelah Perak.',
+    47: 'Perak paling reflektif dari semua logam (>99%). Bersifat antibakteri — dipakai di perban dan alat medis.',
+    79: 'Emas tidak pernah terkorosi. Atom Au di perhiasanmu lahir dari tabrakan dua bintang neutron (kilonova).',
+    82: 'Timbal tidak radioaktif — paling stabil dari semua elemen berat. Pipa timbal Romawi kuno diduga berkontribusi pada kejatuhan kekaisaran.',
+    92: 'Uranium sedikit radioaktif dengan waktu paruh panjang. Bahan bakar reaktor nuklir yang memasok ~10% listrik dunia.',
   };
+  const identityFactsEN: Record<number, string> = {
+    1: 'Lightest element. Hydrogen makes up ~75% of all ordinary (baryonic) matter in the universe.',
+    2: 'First noble gas — chemically inert. Helium is the second most abundant element, formed in the Big Bang.',
+    3: 'Lightest alkali metal. Lithium ions (Li+) are the charge carriers in lithium-ion batteries powering EVs and phones.',
+    4: 'High stiffness-to-weight ratio. Beryllium is used in space telescope mirrors and X-ray detector windows.',
+    5: 'Boron is used in glass fibers, heat-resistant ceramics, and as a neutron absorber in nuclear reactor control rods.',
+    6: 'The backbone of all life. ~18% of your body mass is Carbon. Its 4 valence electrons enable near-infinite molecular structures.',
+    7: '78% of air is N2 gas. Nitrogen is inert, but its compounds (proteins, DNA, ATP) are essential to all known life.',
+    8: 'You survive only ~4 minutes without Oxygen. Highly electronegative — drives combustion and oxidation (rust).',
+    9: 'Most electronegative element on the periodic table. Fluorine reacts with nearly everything, including noble gases and glass.',
+    10: 'Second noble gas. Neon emits characteristic red-orange light when excited by electricity in a sealed tube.',
+    11: 'Sodium ions (Na+) maintain cell osmotic pressure and carry nerve impulses via Na+/K+ pumps across membranes.',
+    12: 'Magnesium (Mg2+) sits at the center of every chlorophyll molecule. Without it, plants cannot perform photosynthesis.',
+    13: 'Most abundant metal in Earth\'s crust. Aluminum is lightweight, strong, and endlessly recyclable without quality loss.',
+    14: 'Silicon\'s 4 valence electrons make it an ideal semiconductor — the foundation of all modern transistors and CPUs.',
+    15: 'Phosphorus is in bone mineral (hydroxyapatite), the DNA backbone, and ATP — the universal energy currency of all cells.',
+    16: 'Sulfur gives rotten eggs their smell (H2S). It forms disulfide bonds in proteins and is in amino acids cysteine and methionine.',
+    17: 'Chlorine disinfects drinking water and swimming pools. Pure Cl2 gas is a highly toxic chemical warfare agent.',
+    18: 'Argon fills incandescent bulbs and insulated windows. Most abundant noble gas in Earth\'s atmosphere (~0.93%).',
+    19: 'Potassium ions (K+) regulate heartbeat and muscle contraction via the Na+/K+ pump. Low K+ = cramps and arrhythmia.',
+    20: '99% of body calcium is in bones and teeth as hydroxyapatite. The remaining 1% is critical for muscle contraction and signaling.',
+    26: 'Iron in hemoglobin cooperatively binds O2 and transports it to every cell. Iron deficiency causes anemia worldwide.',
+    29: 'Copper has been smelted for ~10,000 years. Second only to silver in electrical conductivity.',
+    47: 'Silver has the highest electrical conductivity and optical reflectivity (>99%) of all metals. Also a natural antimicrobial.',
+    79: 'Gold is extraordinarily unreactive — it never corrodes. The gold atoms in jewelry were forged in a kilonova explosion.',
+    82: 'Lead is the heaviest stable element. Roman lead plumbing (aqua plumbea) is suspected to have caused chronic poisoning in the empire.',
+    92: 'Uranium is mildly radioactive (half-life: 4.5 billion years). It fuels nuclear fission reactors supplying ~10% of global electricity.',
+  };
+  const identityFacts = isEN ? identityFactsEN : identityFactsID;
 
   let protonCount = 6;
   const idCount = document.getElementById('id-count')!;
@@ -534,9 +572,9 @@ export function renderDashboard(container: HTMLElement): () => void {
     idSym.style.color = color;
     idCard.style.borderColor = color + '55';
     idCard.style.background = color + '0a';
-    idName.textContent = el.nameId || el.name;
-    idCat.textContent = cat?.nameId || el.cat;
-    idFact.textContent = identityFacts[protonCount] || el.desc || `Elemen nomor ${protonCount}.`;
+    idName.textContent = isEN ? el.name : (el.nameId || el.name);
+    idCat.textContent = isEN ? (cat?.nameEn || el.cat) : (cat?.nameId || el.cat);
+    idFact.textContent = identityFacts[protonCount] || el.desc || (isEN ? `Element number ${protonCount}.` : `Elemen nomor ${protonCount}.`);
   }
   updateIdentity(6);
 

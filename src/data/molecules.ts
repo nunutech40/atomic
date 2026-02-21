@@ -42,7 +42,9 @@ export interface Molecule {
     shape: string;
     bondType: string;
     desc: string;
+    descEn?: string;
     funFact: string;
+    funFactEn?: string;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import { elements } from '../data/elements';
 import { categories } from '../data/categories';
 import { navigate } from '../core/router';
-import { t } from '../core/i18n';
+import { t, getLang } from '../core/i18n';
 
 const GRID_POS: Record<number, [number, number]> = {
   1: [1, 1], 2: [1, 18],
@@ -36,6 +36,7 @@ const BG_SYMBOLS = [
 export function renderPeriodicTable(container: HTMLElement) {
   container.innerHTML = '';
   let activeFilter: string | null = null;
+  const isEN = getLang() === 'en';
 
   // ── HOME HUB ─────────────────────────────────────────────────────────
   const hub = document.createElement('div');
@@ -61,31 +62,30 @@ export function renderPeriodicTable(container: HTMLElement) {
 
         <!-- LEFT: Text & CTAs -->
         <div class="hero-left">
-          <div class="hero-tag-pill">⚛ Tahukah kamu?</div>
+          <div class="hero-tag-pill">⚛ ${isEN ? 'Did you know?' : 'Tahukah kamu?'}</div>
 
           <!-- Rotating wonder facts -->
           <div class="hero-fact">
             <span class="hero-fact-text" id="hero-fact-text">
-              Materi yang kamu pegang adalah 99.9999999% ruang kosong.
+              ${isEN ? 'The matter you hold is 99.9999999% empty space.' : 'Materi yang kamu pegang adalah 99.9999999% ruang kosong.'}
             </span>
           </div>
 
           <p class="home-subtitle" id="hero-fact-sub">
-            Atom tidak terlihat, tidak bisa disentuh satu per satu — tapi mereka menyusun
-            <em>segalanya</em>. Termasuk dirimu.
+            ${isEN ? 'Atoms are invisible, untouchable one by one — yet they make up <em>everything</em>. Including you.' : 'Atom tidak terlihat, tidak bisa disentuh satu per satu — tapi mereka menyusun <em>segalanya</em>. Termasuk dirimu.'}
           </p>
 
           <div class="hero-stats-row">
-            <span>⚛ <strong>118</strong> Elemen</span>
+            <span>⚛ <strong>118</strong> ${isEN ? 'Elements' : 'Elemen'}</span>
             <span>·</span>
-            <span>🎬 <strong>3D</strong> Visualisasi</span>
+            <span>🎬 <strong>3D</strong> ${isEN ? 'Visualizations' : 'Visualisasi'}</span>
             <span>·</span>
-            <span>📚 <strong>16</strong> Modul</span>
+            <span>📚 <strong>16</strong> ${isEN ? 'Modules' : 'Modul'}</span>
           </div>
 
           <div class="hero-actions">
-            <button class="hero-btn-primary" id="cta-learn">🌱 Mulai dari Nol</button>
-            <button class="hero-btn-secondary" id="cta-explore">🔬 Langsung Eksplorasi ↓</button>
+            <button class="hero-btn-primary" id="cta-learn">🌱 ${isEN ? 'Start from Zero' : 'Mulai dari Nol'}</button>
+            <button class="hero-btn-secondary" id="cta-explore">🔬 ${isEN ? 'Explore Now ↓' : 'Langsung Eksplorasi ↓'}</button>
           </div>
         </div>
 
@@ -107,56 +107,56 @@ export function renderPeriodicTable(container: HTMLElement) {
                 <div class="hero-electron hero-electron--3"></div>
               </div>
             </div>
-            <div class="hero-atom-label">Model Atom Bohr — Emas (Au)</div>
+            <div class="hero-atom-label">${isEN ? 'Bohr Atom Model — Gold (Au)' : 'Model Atom Bohr — Emas (Au)'}</div>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- ═══ PILIH JALURMU ═══ -->
+    <!-- ═══ PATH SECTION ═══ -->
     <section class="path-section">
       <div class="path-section-title">
-        Baru di sini? <span>Pilih jalurmu</span>
+        ${isEN ? 'New here? <span>Pick your path</span>' : 'Baru di sini? <span>Pilih jalurmu</span>'}
       </div>
       <div class="path-cards">
 
         <div class="path-card path-card--green" id="path-beginner">
           <div class="path-card-icon">🌱</div>
-          <div class="path-card-head">Pemula</div>
-          <div class="path-card-desc">Baru kenal kimia, atau mau mulai dari nol</div>
+          <div class="path-card-head">${isEN ? 'Beginner' : 'Pemula'}</div>
+          <div class="path-card-desc">${isEN ? 'New to chemistry, or starting from scratch' : 'Baru kenal kimia, atau mau mulai dari nol'}</div>
           <div class="path-flow">
-            <span class="pf-step">📚 Belajar</span>
+            <span class="pf-step">📚 ${isEN ? 'Learn' : 'Belajar'}</span>
             <span class="pf-arrow">→</span>
-            <span class="pf-step">🔬 Tabel</span>
+            <span class="pf-step">🔬 ${isEN ? 'Table' : 'Tabel'}</span>
             <span class="pf-arrow">→</span>
-            <span class="pf-step">⚗️ Molekul</span>
+            <span class="pf-step">⚗️ ${isEN ? 'Molecules' : 'Molekul'}</span>
           </div>
-          <div class="path-card-cta">Mulai dari modul pertama →</div>
+          <div class="path-card-cta">${isEN ? 'Start from module one →' : 'Mulai dari modul pertama →'}</div>
         </div>
 
         <div class="path-card path-card--blue" id="path-student">
           <div class="path-card-icon">📖</div>
-          <div class="path-card-head">Pelajar / Mahasiswa</div>
-          <div class="path-card-desc">Sudah tahu dasar, ingin eksplorasi lebih dalam</div>
+          <div class="path-card-head">${isEN ? 'Student' : 'Pelajar / Mahasiswa'}</div>
+          <div class="path-card-desc">${isEN ? 'Know the basics, want to explore deeper' : 'Sudah tahu dasar, ingin eksplorasi lebih dalam'}</div>
           <div class="path-flow">
-            <span class="pf-step">🔬 Tabel</span>
+            <span class="pf-step">🔬 ${isEN ? 'Table' : 'Tabel'}</span>
             <span class="pf-arrow">→</span>
-            <span class="pf-step">⚛ Detail</span>
+            <span class="pf-step">⛛ ${isEN ? 'Details' : 'Detail'}</span>
             <span class="pf-arrow">→</span>
-            <span class="pf-step">⚗️ Molekul</span>
+            <span class="pf-step">⚗️ ${isEN ? 'Molecules' : 'Molekul'}</span>
           </div>
-          <div class="path-card-cta">Jelajahi tabel periodik →</div>
+          <div class="path-card-cta">${isEN ? 'Explore the periodic table →' : 'Jelajahi tabel periodik →'}</div>
         </div>
 
         <div class="path-card path-card--amber" id="path-curious">
           <div class="path-card-icon">🚀</div>
-          <div class="path-card-head">Penasaran</div>
-          <div class="path-card-desc">Mau eksplor bebas tanpa urutan tertentu</div>
+          <div class="path-card-head">${isEN ? 'Just Curious' : 'Penasaran'}</div>
+          <div class="path-card-desc">${isEN ? 'Want to explore freely in any order' : 'Mau eksplor bebas tanpa urutan tertentu'}</div>
           <div class="path-flow">
-            <span class="pf-step" style="font-style:italic;color:var(--text-3)">Bebas ke mana saja</span>
+            <span class="pf-step" style="font-style:italic;color:var(--text-3)">${isEN ? 'Go anywhere' : 'Bebas ke mana saja'}</span>
           </div>
-          <div class="path-card-cta">Scroll ke tabel ↓</div>
+          <div class="path-card-cta">${isEN ? 'Scroll to table ↓' : 'Scroll ke tabel ↓'}</div>
         </div>
 
       </div>
@@ -165,175 +165,171 @@ export function renderPeriodicTable(container: HTMLElement) {
     <!-- ═══ PREREQ ACCORDION ═══ -->
     <section class="prereq-box" id="prereq-box">
       <button class="prereq-toggle" id="prereq-toggle" aria-expanded="false">
-        <span>💡 Nyasar di tabel periodik? Cek prasyarat dulu</span>
+        <span>💡 ${isEN ? 'Lost in the periodic table? Check prerequisites first' : 'Nyasar di tabel periodik? Cek prasyarat dulu'}</span>
         <span class="prereq-arrow" id="prereq-arrow">▼</span>
       </button>
       <div class="prereq-content" id="prereq-content">
         <p class="prereq-intro">
-          Untuk nyaman jelajahi tabel periodik, kamu perlu paham konsep-konsep ini dulu:
+          ${isEN ? 'To comfortably explore the periodic table, you need to understand these concepts first:' : 'Untuk nyaman jelajahi tabel periodik, kamu perlu paham konsep-konsep ini dulu:'}
         </p>
         <div class="prereq-list">
-          <div class="prereq-item"><span class="prereq-dot"></span>Apa itu atom — partikel terkecil penyusun materi</div>
-          <div class="prereq-item"><span class="prereq-dot"></span>Proton, neutron, elektron — peran dan perbedaannya</div>
-          <div class="prereq-item"><span class="prereq-dot"></span>Kulit elektron — mengapa elektron ada di "lapisan" tertentu</div>
-          <div class="prereq-item"><span class="prereq-dot"></span>Nomor atom — kenapa tiap elemen punya nomor unik</div>
-          <div class="prereq-item"><span class="prereq-dot"></span>Konfigurasi elektron — cara membaca 2, 8, 18, 32...</div>
+          <div class="prereq-item"><span class="prereq-dot"></span>${isEN ? 'What is an atom — the smallest particle that makes up matter' : 'Apa itu atom — partikel terkecil penyusun materi'}</div>
+          <div class="prereq-item"><span class="prereq-dot"></span>${isEN ? 'Protons, neutrons, electrons — their roles and differences' : 'Proton, neutron, elektron — peran dan perbedaannya'}</div>
+          <div class="prereq-item"><span class="prereq-dot"></span>${isEN ? 'Electron shells — why electrons occupy specific "energy levels"' : 'Kulit elektron — mengapa elektron ada di "lapisan" tertentu'}</div>
+          <div class="prereq-item"><span class="prereq-dot"></span>${isEN ? 'Atomic number — why every element has a unique number' : 'Nomor atom — kenapa tiap elemen punya nomor unik'}</div>
+          <div class="prereq-item"><span class="prereq-dot"></span>${isEN ? 'Electron configuration — how to read 2, 8, 18, 32...' : 'Konfigurasi elektron — cara membaca 2, 8, 18, 32...'}</div>
         </div>
         <div class="prereq-footer">
-          <span>Belum paham semuanya?</span>
-          <button class="prereq-cta-btn" id="prereq-goto-learn">Mulai dari modul pertama →</button>
+          <span>${isEN ? "Don't understand all of it yet?" : 'Belum paham semuanya?'}</span>
+          <button class="prereq-cta-btn" id="prereq-goto-learn">${isEN ? 'Start from module one →' : 'Mulai dari modul pertama →'}</button>
         </div>
       </div>
     </section>
 
-    <!-- ═══ CARA MEMBACA TABEL PERIODIK ═══ -->
+    <!-- ═══ HOW TO READ THE PERIODIC TABLE ═══ -->
     <section class="how-to-section" id="how-to-section">
       <button class="how-to-toggle" id="how-to-toggle" aria-expanded="false">
         <span class="how-to-toggle-left">
           <span class="how-to-toggle-icon">🗺️</span>
-          <span>Cara Membaca Tabel Periodik <span class="how-to-subtitle-pill">tanpa hafalan</span></span>
+          <span>${isEN ? 'How to Read the Periodic Table' : 'Cara Membaca Tabel Periodik'} <span class="how-to-subtitle-pill">${isEN ? 'no memorization needed' : 'tanpa hafalan'}</span></span>
         </span>
         <span class="how-to-arrow" id="how-to-arrow">▼</span>
       </button>
 
       <div class="how-to-content" id="how-to-content">
 
-        <!-- Intro -->
         <p class="how-to-intro">
-          Tabel periodik bukan daftar hafalan — ini adalah <strong>peta logis</strong>.
-          Setiap posisi elemen mengandung informasi. Sekali paham sistemnya, kamu bisa <em>membaca</em> sifat elemen hanya dari letaknya.
+          ${isEN
+      ? 'The periodic table is not a list to memorize — it is a <strong>logical map</strong>. Every position encodes information. Once you understand the system, you can <em>read</em> an element\'s properties from its location alone.'
+      : 'Tabel periodik bukan daftar hafalan — ini adalah <strong>peta logis</strong>. Setiap posisi elemen mengandung informasi. Sekali paham sistemnya, kamu bisa <em>membaca</em> sifat elemen hanya dari letaknya.'}
         </p>
 
-        <!-- Step 1: Anatomy of one cell -->
         <div class="how-to-step">
           <div class="how-to-step-num">01</div>
           <div class="how-to-step-body">
-            <div class="how-to-step-title">Baca satu kotak elemen</div>
-            <p class="how-to-step-desc">Setiap kotak berisi 4 informasi utama:</p>
+            <div class="how-to-step-title">${isEN ? 'Reading a single element cell' : 'Baca satu kotak elemen'}</div>
+            <p class="how-to-step-desc">${isEN ? 'Each cell contains 4 key pieces of information:' : 'Setiap kotak berisi 4 informasi utama:'}</p>
             <div class="how-to-cell-demo">
               <div class="hcd-cell">
                 <span class="hcd-num">26</span>
                 <span class="hcd-sym">Fe</span>
-                <span class="hcd-name">Besi</span>
+                <span class="hcd-name">${isEN ? 'Iron' : 'Besi'}</span>
                 <span class="hcd-mass">55.85</span>
               </div>
               <div class="hcd-labels">
-                <div class="hcd-label hcd-label--num">← Nomor Atom<br><small>Jumlah proton, identitas unik elemen</small></div>
-                <div class="hcd-label hcd-label--sym">← Simbol<br><small>1–2 huruf singkatan internasional</small></div>
-                <div class="hcd-label hcd-label--name">← Nama<br><small>Nama resmi elemen</small></div>
-                <div class="hcd-label hcd-label--mass">← Massa Atom<br><small>Rata-rata massa isotop (dalam satuan u)</small></div>
+                <div class="hcd-label hcd-label--num">← ${isEN ? 'Atomic Number<br><small>Proton count — the unique identity of the element</small>' : 'Nomor Atom<br><small>Jumlah proton, identitas unik elemen</small>'}</div>
+                <div class="hcd-label hcd-label--sym">← ${isEN ? 'Symbol<br><small>1–2 letter international abbreviation</small>' : 'Simbol<br><small>1–2 huruf singkatan internasional</small>'}</div>
+                <div class="hcd-label hcd-label--name">← ${isEN ? 'Name<br><small>Official IUPAC element name</small>' : 'Nama<br><small>Nama resmi elemen</small>'}</div>
+                <div class="hcd-label hcd-label--mass">← ${isEN ? 'Atomic Mass<br><small>Weighted average of isotope masses (in u)</small>' : 'Massa Atom<br><small>Rata-rata massa isotop (dalam satuan u)</small>'}</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Step 2: Periods (rows) -->
         <div class="how-to-step">
           <div class="how-to-step-num">02</div>
           <div class="how-to-step-body">
-            <div class="how-to-step-title">BARIS = Periode → jumlah kulit elektron</div>
-            <p class="how-to-step-desc">Tabel punya <strong>7 baris (periode)</strong>. Nomor periode = jumlah kulit elektron yang terisi elemen itu.</p>
+            <div class="how-to-step-title">${isEN ? 'ROWS = Periods → number of electron shells' : 'BARIS = Periode → jumlah kulit elektron'}</div>
+            <p class="how-to-step-desc">${isEN ? 'The table has <strong>7 rows (periods)</strong>. The period number = the number of filled electron shells.' : 'Tabel punya <strong>7 baris (periode)</strong>. Nomor periode = jumlah kulit elektron yang terisi elemen itu.'}</p>
             <div class="how-to-periods">
-              <div class="how-to-period-row" style="--pc:#60a5fa"><span class="hp-num">Periode 1</span><span class="hp-bar" style="width:11%">H, He</span><span class="hp-note">2 elemen · 1 kulit</span></div>
-              <div class="how-to-period-row" style="--pc:#34d399"><span class="hp-num">Periode 2</span><span class="hp-bar" style="width:44%">Li → Ne</span><span class="hp-note">8 elemen · 2 kulit</span></div>
-              <div class="how-to-period-row" style="--pc:#fbbf24"><span class="hp-num">Periode 3</span><span class="hp-bar" style="width:44%">Na → Ar</span><span class="hp-note">8 elemen · 3 kulit</span></div>
-              <div class="how-to-period-row" style="--pc:#f97316"><span class="hp-num">Periode 4</span><span class="hp-bar" style="width:100%">K → Kr</span><span class="hp-note">18 elemen · 4 kulit</span></div>
-              <div class="how-to-period-row" style="--pc:#f43f5e"><span class="hp-num">P. 6 &amp; 7</span><span class="hp-bar" style="width:100%">Cs-Rn &amp; Fr-Og</span><span class="hp-note">32 elemen · 6-7 kulit<br>Lantanida &amp; Aktinida disisipkan di bawah</span></div>
+              <div class="how-to-period-row" style="--pc:#60a5fa"><span class="hp-num">${isEN ? 'Period 1' : 'Periode 1'}</span><span class="hp-bar" style="width:11%">H, He</span><span class="hp-note">${isEN ? '2 elements · 1 shell' : '2 elemen · 1 kulit'}</span></div>
+              <div class="how-to-period-row" style="--pc:#34d399"><span class="hp-num">${isEN ? 'Period 2' : 'Periode 2'}</span><span class="hp-bar" style="width:44%">Li → Ne</span><span class="hp-note">${isEN ? '8 elements · 2 shells' : '8 elemen · 2 kulit'}</span></div>
+              <div class="how-to-period-row" style="--pc:#fbbf24"><span class="hp-num">${isEN ? 'Period 3' : 'Periode 3'}</span><span class="hp-bar" style="width:44%">Na → Ar</span><span class="hp-note">${isEN ? '8 elements · 3 shells' : '8 elemen · 3 kulit'}</span></div>
+              <div class="how-to-period-row" style="--pc:#f97316"><span class="hp-num">${isEN ? 'Period 4' : 'Periode 4'}</span><span class="hp-bar" style="width:100%">K → Kr</span><span class="hp-note">${isEN ? '18 elements · 4 shells' : '18 elemen · 4 kulit'}</span></div>
+              <div class="how-to-period-row" style="--pc:#f43f5e"><span class="hp-num">${isEN ? 'P. 6 &amp; 7' : 'P. 6 &amp; 7'}</span><span class="hp-bar" style="width:100%">Cs-Rn &amp; Fr-Og</span><span class="hp-note">${isEN ? '32 elements · 6-7 shells<br>Lanthanides &amp; Actinides placed below' : '32 elemen · 6-7 kulit<br>Lantanida &amp; Aktinida disisipkan di bawah'}</span></div>
             </div>
-            <div class="how-to-tip">💡 <strong>Trik:</strong> Makin ke bawah → atom makin besar, karena tambah kulit. Na lebih besar dari Li yang lebih besar dari H.</div>
+            <div class="how-to-tip">💡 <strong>${isEN ? 'Tip:' : 'Trik:'}</strong> ${isEN ? 'Going down → atoms get larger, because each period adds a shell. Na is bigger than Li, which is bigger than H.' : 'Makin ke bawah → atom makin besar, karena tambah kulit. Na lebih besar dari Li yang lebih besar dari H.'}</div>
           </div>
         </div>
 
-        <!-- Step 3: Groups (columns) -->
         <div class="how-to-step">
           <div class="how-to-step-num">03</div>
           <div class="how-to-step-body">
-            <div class="how-to-step-title">KOLOM = Golongan → elektron valensi yang sama</div>
-            <p class="how-to-step-desc">Tabel punya <strong>18 kolom (golongan)</strong>. Elemen satu kolom punya jumlah elektron valensi (terluar) yang sama → sifat kimia mirip!</p>
+            <div class="how-to-step-title">${isEN ? 'COLUMNS = Groups → same number of valence electrons' : 'KOLOM = Golongan → elektron valensi yang sama'}</div>
+            <p class="how-to-step-desc">${isEN ? 'The table has <strong>18 columns (groups)</strong>. Elements in the same column share the same number of valence (outermost) electrons → similar chemical behaviour!' : 'Tabel punya <strong>18 kolom (golongan)</strong>. Elemen satu kolom punya jumlah elektron valensi (terluar) yang sama → sifat kimia mirip!'}</p>
             <div class="how-to-groups">
               <div class="how-to-group-card" style="--gc:#ef4444">
-                <div class="hgc-num">Gol. 1</div>
-                <div class="hgc-name">Logam Alkali</div>
+                <div class="hgc-num">${isEN ? 'Group 1' : 'Gol. 1'}</div>
+                <div class="hgc-name">${isEN ? 'Alkali Metals' : 'Logam Alkali'}</div>
                 <div class="hgc-elems">Li, Na, K, Rb, Cs, Fr</div>
-                <div class="hgc-fact">1 elektron valensi → sangat reaktif, meledak di air</div>
+                <div class="hgc-fact">${isEN ? '1 valence electron → highly reactive, explode in water' : '1 elektron valensi → sangat reaktif, meledak di air'}</div>
               </div>
               <div class="how-to-group-card" style="--gc:#f97316">
-                <div class="hgc-num">Gol. 2</div>
-                <div class="hgc-name">Logam Alkali Tanah</div>
+                <div class="hgc-num">${isEN ? 'Group 2' : 'Gol. 2'}</div>
+                <div class="hgc-name">${isEN ? 'Alkaline Earth Metals' : 'Logam Alkali Tanah'}</div>
                 <div class="hgc-elems">Mg, Ca, Sr, Ba</div>
-                <div class="hgc-fact">2 elektron valensi → reaktif tapi lebih stabil dari gol. 1</div>
+                <div class="hgc-fact">${isEN ? '2 valence electrons → reactive but more stable than group 1' : '2 elektron valensi → reaktif tapi lebih stabil dari gol. 1'}</div>
               </div>
               <div class="how-to-group-card" style="--gc:#22c55e">
-                <div class="hgc-num">Gol. 17</div>
-                <div class="hgc-name">Halogen</div>
+                <div class="hgc-num">${isEN ? 'Group 17' : 'Gol. 17'}</div>
+                <div class="hgc-name">${isEN ? 'Halogens' : 'Halogen'}</div>
                 <div class="hgc-elems">F, Cl, Br, I, At</div>
-                <div class="hgc-fact">7 elektron valensi → sangat reaktif, butuh 1 elektron lagi</div>
+                <div class="hgc-fact">${isEN ? '7 valence electrons → highly reactive, need just 1 more' : '7 elektron valensi → sangat reaktif, butuh 1 elektron lagi'}</div>
               </div>
               <div class="how-to-group-card" style="--gc:#818cf8">
-                <div class="hgc-num">Gol. 18</div>
-                <div class="hgc-name">Gas Mulia</div>
+                <div class="hgc-num">${isEN ? 'Group 18' : 'Gol. 18'}</div>
+                <div class="hgc-name">${isEN ? 'Noble Gases' : 'Gas Mulia'}</div>
                 <div class="hgc-elems">He, Ne, Ar, Kr, Xe</div>
-                <div class="hgc-fact">8 elektron valensi → penuh, sama sekali tidak reaktif</div>
+                <div class="hgc-fact">${isEN ? '8 valence electrons → full shell, chemically inert' : '8 elektron valensi → penuh, sama sekali tidak reaktif'}</div>
               </div>
             </div>
-            <div class="how-to-tip">💡 <strong>Trik:</strong> Semua elemen di kolom yang sama bereaksi dengan cara serupa. NaCl (garam dapur) mirip dengan KCl, LiCl — karena Na, K, Li satu golongan.</div>
+            <div class="how-to-tip">💡 <strong>${isEN ? 'Tip:' : 'Trik:'}</strong> ${isEN ? 'All elements in the same column react similarly. NaCl (table salt) behaves like KCl and LiCl — because Na, K, and Li are in the same group.' : 'Semua elemen di kolom yang sama bereaksi dengan cara serupa. NaCl (garam dapur) mirip dengan KCl, LiCl — karena Na, K, Li satu golongan.'}</div>
           </div>
         </div>
 
-        <!-- Step 4: Trends -->
         <div class="how-to-step">
           <div class="how-to-step-num">04</div>
           <div class="how-to-step-body">
-            <div class="how-to-step-title">Tren dalam tabel — tanpa hafal, cukup pahami arahnya</div>
+            <div class="how-to-step-title">${isEN ? 'Periodic trends — understand direction, not memorization' : 'Tren dalam tabel — tanpa hafal, cukup pahami arahnya'}</div>
             <div class="how-to-trends">
               <div class="how-to-trend-item">
                 <div class="hti-arrow hti-arrow--right">→</div>
                 <div class="hti-content">
-                  <div class="hti-label">Ke kanan (periode sama)</div>
-                  <div class="hti-desc">Nomor atom naik → lebih banyak proton → tarikan nukleus lebih kuat → <strong>ukuran atom mengecil</strong>, <strong>elektronegativitas naik</strong></div>
+                  <div class="hti-label">${isEN ? 'Going right (same period)' : 'Ke kanan (periode sama)'}</div>
+                  <div class="hti-desc">${isEN ? 'Atomic number increases → more protons → stronger nuclear pull → <strong>atomic radius decreases</strong>, <strong>electronegativity increases</strong>' : 'Nomor atom naik → lebih banyak proton → tarikan nukleus lebih kuat → <strong>ukuran atom mengecil</strong>, <strong>elektronegativitas naik</strong>'}</div>
                 </div>
               </div>
               <div class="how-to-trend-item">
                 <div class="hti-arrow hti-arrow--down">↓</div>
                 <div class="hti-content">
-                  <div class="hti-label">Ke bawah (golongan sama)</div>
-                  <div class="hti-desc">Ditambah kulit → elektron terluar lebih jauh dari inti → lebih mudah dilepas → <strong>ukuran atom membesar</strong>, <strong>reaktivitas logam naik</strong></div>
+                  <div class="hti-label">${isEN ? 'Going down (same group)' : 'Ke bawah (golongan sama)'}</div>
+                  <div class="hti-desc">${isEN ? 'More shells added → outer electrons farther from nucleus → easier to remove → <strong>atomic radius increases</strong>, <strong>metallic reactivity increases</strong>' : 'Ditambah kulit → elektron terluar lebih jauh dari inti → lebih mudah dilepas → <strong>ukuran atom membesar</strong>, <strong>reaktivitas logam naik</strong>'}</div>
                 </div>
               </div>
               <div class="how-to-trend-item">
                 <div class="hti-arrow" style="background:var(--accent)20;color:var(--accent)">⚡</div>
                 <div class="hti-content">
-                  <div class="hti-label">Metalik vs Non-metalik</div>
-                  <div class="hti-desc">Kiri-bawah = paling metalik (Cs, Fr). Kanan-atas = paling non-metalik (F, O, N). Ada garis diagonal "metalloid" di tengah.</div>
+                  <div class="hti-label">${isEN ? 'Metallic vs Non-metallic' : 'Metalik vs Non-metalik'}</div>
+                  <div class="hti-desc">${isEN ? 'Bottom-left = most metallic (Cs, Fr). Top-right = most non-metallic (F, O, N). A diagonal "metalloid" boundary runs in between.' : 'Kiri-bawah = paling metalik (Cs, Fr). Kanan-atas = paling non-metalik (F, O, N). Ada garis diagonal "metalloid" di tengah.'}</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Step 5: What about lanthanides? -->
         <div class="how-to-step">
           <div class="how-to-step-num">05</div>
           <div class="how-to-step-body">
-            <div class="how-to-step-title">Kenapa ada 2 baris yang "mengambang" di bawah?</div>
+            <div class="how-to-step-title">${isEN ? 'Why are there 2 "floating" rows at the bottom?' : 'Kenapa ada 2 baris yang "mengambang" di bawah?'}</div>
             <p class="how-to-step-desc">
-              Lantanida (La–Lu) dan Aktinida (Ac–Lr) seharusnya ada di periode 6 dan 7, tapi karena akan membuat tabel terlalu lebar (32 kolom!),
-              mereka <em>dipindah ke bawah</em>. Konvensi visual untuk menghemat tempat — bukan karena mereka "spesial" secara kimia.
+              ${isEN
+      ? 'Lanthanides (La–Lu) and Actinides (Ac–Lr) technically belong in periods 6 and 7, but including them inline would make the table 32 columns wide. They are placed below as a display convention — not because they are chemically special.'
+      : 'Lantanida (La–Lu) dan Aktinida (Ac–Lr) seharusnya ada di periode 6 dan 7, tapi karena akan membuat tabel terlalu lebar (32 kolom!), mereka <em>dipindah ke bawah</em>. Konvensi visual untuk menghemat tempat — bukan karena mereka "spesial" secara kimia.'}
             </p>
-            <div class="how-to-tip">💡 Lantanida dan aktinida sebenarnya masuk antara kolom 2 (Ba/Ra) dan kolom 3 (Hf/Rf). Tanda putus-putus di tabel menunjukkan titik sisipannya.</div>
+            <div class="how-to-tip">💡 ${isEN ? 'Lanthanides and actinides actually slot in between column 2 (Ba/Ra) and column 3 (Hf/Rf). The dashed marker in the table shows exactly where they belong.' : 'Lantanida dan aktinida sebenarnya masuk antara kolom 2 (Ba/Ra) dan kolom 3 (Hf/Rf). Tanda putus-putus di tabel menunjukkan titik sisipannya.'}</div>
           </div>
         </div>
 
         <div class="how-to-footer">
-          <span>🎉 Sekarang kamu bisa membaca tabel periodik seperti peta — bukan seperti daftar hafalan.</span>
+          <span>🎉 ${isEN ? 'Now you can read the periodic table like a map — not memorize it like a list.' : 'Sekarang kamu bisa membaca tabel periodik seperti peta — bukan seperti daftar hafalan.'}</span>
         </div>
       </div>
     </section>
 
     <!-- ═══ TABLE SECTION HEADER ═══ -->
     <div class="home-section-title">
-      <span>🔬 Tabel Periodik</span>
-      <span class="home-section-count">118 elemen · klik untuk detail</span>
+      <span>🔬 ${isEN ? 'Periodic Table' : 'Tabel Periodik'}</span>
+      <span class="home-section-count">${isEN ? '118 elements · click for details' : '118 elemen · klik untuk detail'}</span>
     </div>
     `;
 
@@ -341,32 +337,23 @@ export function renderPeriodicTable(container: HTMLElement) {
   container.appendChild(hub);
 
   // ── Rotating wonder facts ─────────────────────────────────────────────
-  const wonderFacts: Array<{ fact: string; sub: string }> = [
-    {
-      fact: 'Materi yang kamu pegang adalah 99.9999999% ruang kosong.',
-      sub: 'Atom tidak terlihat, tidak bisa disentuh satu per satu — tapi mereka menyusun segalanya. Termasuk dirimu.',
-    },
-    {
-      fact: 'Setiap atom di tubuhmu pernah berada di dalam bintang.',
-      sub: 'Kita semua adalah debu bintang — secara harfiah. Carbon, nitrogen, oksigen di tubuhmu terbentuk di inti bintang yang meledak.',
-    },
-    {
-      fact: 'Emas di jarimu lahir dari tabrakan dua bintang neutron.',
-      sub: 'Bumi tidak bisa membuat emas sendiri. Semua emas di Bumi jatuh dari luar angkasa, miliaran tahun lalu.',
-    },
-    {
-      fact: 'Jika atom diperbesar sebesar stadion, nukleusnya hanya sekecil kelereng.',
-      sub: 'Betapa kosongnya materi. Meja kayu yang keras itu sebenarnya sebagian besar adalah "tidak ada".',
-    },
-    {
-      fact: '7.000.000.000.000.000.000.000.000.000 atom menyusun tubuh manusia.',
-      sub: '7 oktilion atom. Masing-masing bergerak, berinteraksi, membentuk sel, organ, pikiran — dan dirimu.',
-    },
-    {
-      fact: 'Kamu berbagi atom dengan Caesar, dinosaurus, dan bintang-bintang yang sudah mati.',
-      sub: 'Atom tidak pernah musnah. Mereka terus berpindah — dari bintang, ke bebatuan, ke makhluk hidup, ke kamu.',
-    },
+  const wonderFactsID: Array<{ fact: string; sub: string }> = [
+    { fact: 'Materi yang kamu pegang adalah 99.9999999% ruang kosong.', sub: 'Atom tidak terlihat, tidak bisa disentuh satu per satu — tapi mereka menyusun segalanya. Termasuk dirimu.' },
+    { fact: 'Sebagian besar atom di tubuhmu pernah menjadi bagian dari bintang.', sub: 'Kita semua adalah debu bintang — secara harfiah. Karbon, nitrogen, oksigen di tubuhmu terbentuk di inti bintang yang meledak.' },
+    { fact: 'Emas di jarimu lahir dari tabrakan dua bintang neutron.', sub: 'Bumi tidak bisa membuat emas sendiri. Semua emas di Bumi berasal dari luar angkasa, miliaran tahun lalu.' },
+    { fact: 'Jika atom diperbesar sebesar stadion, nukleusnya hanya sekecil kelereng.', sub: 'Betapa kosongnya materi. Meja kayu yang keras itu sebenarnya sebagian besar adalah "tidak ada".' },
+    { fact: '7.000.000.000.000.000.000.000.000.000 atom menyusun tubuh manusia.', sub: '7 oktilion atom. Masing-masing bergerak, berinteraksi, membentuk sel, organ, pikiran — dan dirimu.' },
+    { fact: 'Kamu berbagi atom dengan Caesar, dinosaurus, dan bintang yang sudah mati.', sub: 'Atom tidak pernah musnah. Mereka terus berpindah — dari bintang, ke bebatuan, ke makhluk hidup, ke kamu.' },
   ];
+  const wonderFactsEN: Array<{ fact: string; sub: string }> = [
+    { fact: 'The matter you hold is 99.9999999% empty space.', sub: 'Atoms are invisible, untouchable one by one — yet they compose everything around you. Including you.' },
+    { fact: 'Most atoms in your body were once forged inside a star.', sub: 'We are literally made of star stuff. Carbon, nitrogen, and oxygen in your body were fused in the cores of dying stars.' },
+    { fact: 'The gold on your finger was born from a neutron star collision.', sub: 'Earth cannot forge gold on its own. Every gold atom on Earth fell from space billions of years ago.' },
+    { fact: 'Scale an atom to a stadium — its nucleus is a marble at the center.', sub: 'Matter is mostly nothing. That solid wooden table is almost entirely empty space.' },
+    { fact: '7,000,000,000,000,000,000,000,000,000 atoms build a human body.', sub: '7 octillion atoms. Each one moving, interacting, forming cells, organs, thoughts — and you.' },
+    { fact: 'You share atoms with Caesar, dinosaurs, and long-dead stars.', sub: 'Atoms never disappear. They keep moving — from stars, to rocks, to living things, to you.' },
+  ];
+  const wonderFacts = isEN ? wonderFactsEN : wonderFactsID;
   let wfi = 0;
   const factTextEl = hub.querySelector('#hero-fact-text') as HTMLElement;
   const factSubEl = hub.querySelector('#hero-fact-sub') as HTMLElement;
@@ -485,7 +472,7 @@ export function renderPeriodicTable(container: HTMLElement) {
       cell.innerHTML = `
                 <span class="num">${el.n}</span>
                 <span class="sym" style="color:${color}">${el.sym}</span>
-                <span class="name">${el.name}</span>
+                <span class="name">${isEN ? el.name : (el.nameId || el.name)}</span>
                 <span class="mass">${typeof massVal === 'string' ? parseFloat(massVal).toFixed(2) : Number(massVal).toFixed(2)}</span>
             `;
       elMap[el.n] = cell;
@@ -496,7 +483,7 @@ export function renderPeriodicTable(container: HTMLElement) {
         const m = e as MouseEvent;
         tooltip.querySelector('.t-sym')!.textContent = el.sym;
         (tooltip.querySelector('.t-sym') as HTMLElement).style.color = color;
-        tooltip.querySelector('.t-name')!.textContent = el.name;
+        tooltip.querySelector('.t-name')!.textContent = isEN ? el.name : (el.nameId || el.name);
         tooltip.querySelector('.t-mass')!.textContent = `${t('element.atomicMass')}: ${el.mass}`;
         tooltip.classList.add('show');
         moveTooltip(m.clientX, m.clientY);
@@ -572,7 +559,7 @@ export function renderPeriodicTable(container: HTMLElement) {
     item.className = 'legend-item';
     item.style.setProperty('--item-color', cat.color);
     item.style.setProperty('--item-bg', cat.bgColor);
-    item.innerHTML = `<span class="legend-dot" style="background:${cat.color}"></span>${cat.nameId}`;
+    item.innerHTML = `<span class="legend-dot" style="background:${cat.color}"></span>${isEN ? cat.nameEn : cat.nameId}`;
     item.addEventListener('click', () => {
       if (activeFilter === id) {
         activeFilter = null;

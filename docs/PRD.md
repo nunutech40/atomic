@@ -1,14 +1,14 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 1.3  
+**Version:** 1.4  
 **Date:** 2026-02-21  
-**Status:** Phase 1 Complete · Dashboard Rebuild In Progress · Phase 2 & 3 Planned
+**Status:** Phase 1 Complete · Bilingual Complete · Next: Dashboard Rebuild + Explore Rebuild
 
 ---
 
 ## 1. Latar Belakang & Tujuan
 
-Atomic dibuat untuk menjawab kebutuhan alat belajar kimia yang interaktif, visual, dan menarik — khususnya untuk pelajar SMA/mahasiswa Indonesia. Bukan sekadar referensi statis, tapi pengalaman eksplorasi yang membangun intuisi.
+Atomic dibuat untuk menjawab kebutuhan alat belajar kimia yang interaktif, visual, dan menarik — khususnya untuk pelajar SMA/mahasiswa Indonesia. Bukan sekadar referensi statis, tapi pengalaman eksplorasi yang membangun intuisi dari bawah ke atas.
 
 **Tujuan utama:**
 1. Membuat eksplorasi tabel periodik menjadi pengalaman visual yang menyenangkan
@@ -33,65 +33,6 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 
 **Atomic mengejar Wow Eksistensial.** Visual hanyalah kendaraan — isinya adalah kisah yang menggetarkan.
 
-### 🗺️ The Journey — Dari Kagum ke Pemahaman
-
-Narasi yang harus dirasakan user saat menjelajahi Atomic, secara berurutan:
-
-```
-1. KAGUM dulu
-   "Materi yang gue pegang adalah 99.99% ruang kosong?!"
-   → User berhenti sejenak, tidak percaya
-
-2. PENASARAN terpicu
-   "Kalau begitu, apa yang 'nyata' dari meja ini?"
-   → Rasa ingin tahu muncul secara organik
-
-3. PETUALANGAN dimulai
-   "Oke, gue mau pahami ini dari nol."
-   → User memilih path belajar dengan motivasi internal
-
-4. KONEKSI personal
-   "Oh jadi emas di cincinku berasal dari tabrakan bintang neutron."
-   → Ilmu terasa relevan dan personal
-
-5. MAKIN DALAM
-   "Terus elektron itu gimana bisa ada di 'lapisan'?"
-   → User ingin tahu lebih, bukan karena harus tapi karena mau
-
-6. BERBAGI
-   "Eh, tau gak sih kalau..." → User menceritakan ke teman
-   → Pembelajaran menjadi bagian dari identitas mereka
-```
-
-### ✍️ Storytelling Principles untuk Setiap Halaman
-
-**Home page:**
-- Buka dengan fakta mengejutkan yang berputar (bukan tagline produk)
-- Contoh: *"Tubuhmu tersusun dari 7 oktilion atom. Setiap satu pernah berada di dalam bintang."*
-- Langsung tunjukkan: "Ini bukan hafalan — ini kisah tentang dirimu sendiri."
-
-**Element detail page:**
-- Setiap elemen punya **kisah penemuan** yang dramatis (bukan sekedar "ditemukan oleh X pada tahun Y")
-- Contoh Radium: "Marie Curie bekerja selama bertahun-tahun di gudang bocor atapnya, memproses ton bijih uranium untuk mendapat segelintir gram. Ia tidak tahu itu akan membunuhnya perlahan."
-- Contoh Emas: "Emas di cincinmu bukan dari Bumi. Ia lahir dari tabrakan dua bintang neutron, miliaran tahun sebelum tata surya terbentuk."
-
-**Modul belajar:**
-- Setiap modul dimulai dengan PERTANYAAN yang bikin penasaran, bukan penjelasan
-- Contoh mengganti "Elektron ada di lapisan karena..." dengan "Mengapa elektron tidak jatuh ke nukleus? Ini pertanyaan yang membuat fisikawan pusing selama puluhan tahun."
-
-**Molecule builder:**
-- Bukan sekedar "H₂ + O = H₂O"
-- Tapi: "Air yang kamu minum hari ini mungkin pernah melewati tubuh dinosaurus, 65 juta tahun lalu."
-
-### 📐 Hierarki Emosi dalam UI
-
-Setiap halaman harus menjawab 3 pertanyaan secara berurutan:
-1. **"Kenapa ini penting buat gue?"** → Koneksi personal dulu
-2. **"Ini keren banget, ada apa lagi?"** → Rasa ingin tahu
-3. **"Oke, gue mau pelajari lebih dalam."** → Baru aksi belajar
-
-Jika urutan ini terbalik (langsung ke materi tanpa membangun rasa kagum), user akan skip atau bosan.
-
 ---
 
 ## 2. Pengguna Target (User Persona)
@@ -107,7 +48,7 @@ Jika urutan ini terbalik (langsung ke materi tanpa membangun rasa kagum), user a
 
 ## 3. Scope & Feature Matrix
 
-### Phase 1 — Core Periodic Table (✅ Selesai)
+### ✅ Phase 1 — Core Periodic Table (Selesai)
 
 | Feature | Status | Catatan |
 |---------|--------|---------|
@@ -122,227 +63,164 @@ Jika urutan ini terbalik (langsung ke materi tanpa membangun rasa kagum), user a
 | Label model atom | ✅ | Badge "⚛ Model Bohr" + hint |
 | Badge elemen radioaktif | ✅ | Warning ☢ untuk elemen sintetis |
 | Dark/Light theme | ✅ | Persisted ke localStorage |
-| Bilingual ID/EN | ✅ | Toggle real-time |
 | Konfigurasi elektron | ✅ | Semua 118 elemen |
 | Kulit elektron (K–Q) | ✅ | Visual pills + 3D orbit |
 | Total elektron summary | ✅ | Jumlah elektron + kulit |
 | Graceful error handling | ✅ | Try/catch AtomScene, fallback UI |
+| `nameId` (nama Indonesia) | ✅ | Semua 118 elemen |
+| `desc` & `funFact` per elemen | ✅ | Semua 118 elemen |
+| Keyboard navigation | ✅ | ArrowLeft/Right di detail page |
+| Related elements section | ✅ | "Satu golongan" / "Satu periode" |
 | **Halaman Fenomena Atom** | ✅ | Route `/phenomena`, komponen PhenomenaList |
-| **6 Kategori Fenomena** | ✅ | Nuklir, Kuantum, Sehari-hari, Kosmik, Kehidupan, Fiksi & Sains |
-| **27 Entri Fenomena** | ✅ | 16 lama + 5 kategori Kehidupan + 6 kategori Fiksi & Sains |
+| **27 Fenomena, 6 Kategori** | ✅ | Nuklir, Kuantum, Sehari-hari, Kosmik, Kehidupan, Fiksi & Sains |
 | **Filter kategori tab** | ✅ | Filter real-time, count per kategori |
-| **Storyteller modal / detail view** | ✅ | Narasi lengkap per fenomena |
+| **Storyteller slide per fenomena** | ✅ | Narasi lengkap, animasi CSS per fenomena |
+| **Sejarah Atom (AtomHistory)** | ✅ | Route `/atom-history`, 22 slide cinematic deck |
+| **6 Babak sejarah atom** | ✅ | Democritus → Dalton → Thomson → Rutherford → Bohr → Schrödinger |
+| **Discoverer Story** | ✅ | Kisah penemu per elemen, route `/discoverer/:sym` |
+| **Bilingual ID/EN** | ✅ | Toggle real-time, semua komponen bilingual |
 
 ---
 
+## 4. Arsitektur Navigasi Saat Ini
+
+```
+/ (Dashboard)          → halaman utama
+/explore               → tabel periodik + molekul
+/element/:n            → detail elemen
+/discoverer/:sym       → kisah penemu
+/molecule              → kimia lab (molecule builder)
+/phenomena             → daftar fenomena
+/phenomena/:id         → story per fenomena
+/atom-history          → sejarah atom (dari dashboard section 4)
+```
+
+**Nav bar:** Dashboard · Explore · Kimia Lab · Fenomena
+
 ---
 
-## 🆕 Backlog — Sprint Aktif (2026-02-21)
+## 5. Backlog Sprint Aktif
 
-> Semua item di bawah ini sudah disetujui dan akan dikerjakan berurutan.
+> Urutan prioritas sudah disetujui. Kerjakan berurutan dari A ke D.
 
 ---
 
-### 🏠 A. Beranda Rebuild — "First Principle Experience" (🔨 In Progress)
+### 🏠 A. Dashboard Rebuild — "First Principle Experience" (🔨 Prioritas 1)
 
-> **Konsep:** Dashboard bukan lagi tabel periodik. Ini adalah **scrolling landing page cinematic** yang mengajarkan atom dari first principle, bottom-up, dan membuat orang yang baru masuk langsung **"WAUW"**.
+> **Konsep inti:** Dashboard adalah halaman utama. Bukan tabel periodik. Ini adalah **scrolling landing page cinematic** yang mengajarkan tentang atom dari **first principle, bottom-up**. User masuk → langsung "WAUW ini atom" → lalu perlahan-lahan memahami: apa itu atom, seberapa kecil, apa isinya, dari mana asalnya.
 >
-> Patokan: Feynman (atomic hypothesis) + Sagan (koneksi personal) + neal.fun (scroll-driven perspektif baru).
+> Analogi: mirip landing page produk, tapi yang dijual adalah **rasa kagum terhadap atom**.
 
-**Struktur halaman (scroll-driven, 5 chapter):**
+**Struktur halaman (scroll-driven, 5+ section):**
 
-| # | Chapter | Isi | Visual |
+| # | Section | Isi | Visual |
 |---|---------|-----|--------|
-| 0 | **HERO** | Atom 3D berputar gede, full screen | Three.js atom rotating |
-|   |  | *"Ini satu atom Carbon. Tubuhmu tersusun dari 7 oktilion seperti ini."* | Text fade-in dramatis |
-| 1 | **Sekecil apa?** | Scale comparison scroll-driven | Slider: rambut → sel → bakteri → atom |
-|   |  | *"1 rambut = 1 juta atom berjajar"* | |
-| 2 | **Apa isinya?** | Klik bongkar atom: nukleus → proton+neutron+elektron | Interaktif CSS/3D |
-|   |  | *"99.9999999% atom adalah ruang kosong"* | |
-| 3 | **Apa yang membuatmu, kamu?** | Ganti jumlah proton → elemen berubah live | Proton counter interactive |
-|   |  | *"1 proton membedakan besi dari kobalt"* | |
-| 4 | **Dari mana asalnya?** | Big Bang → stellar fusion → neutron star collision | Chain animasi |
-|   |  | *"Atom emas di cincinmu lahir dari tabrakan bintang neutron"* | |
-|   |  | **CTA: ["Lihat perjalanan penemuannya →"]** → membuka `/atom-history` | Tombol ke History page |
-| 5 | **CTA Final** | Jelajahi 118 Elemen · Bangun Molekul | Button cards |
+| **Hero** | Atom 3D berputar, **full screen, gede** | *"Ini satu atom Carbon."* | Three.js rotating atom, dramatis |
+| **1** | **Sekecil apa?** | Scale comparison scroll-driven | Slider: rambut → sel → bakteri → virus → atom |
+|  |  | *"1 rambut manusia = 1 juta atom berjajar."* |  |
+| **2** | **Apa isinya?** | Bongkar atom: nukleus → proton + neutron + elektron | Interaktif, click-to-reveal |
+|  |  | *"99.9999999% atom adalah ruang kosong."* |  |
+| **3** | **Apa yang membuatmu, kamu?** | Ganti jumlah proton → elemen berubah live | Proton counter interaktif |
+|  |  | *"1 proton membedakan besi dari kobalt."* |  |
+| **4** | **Dari mana asalnya?** | Big Bang → stellar fusion → neutron star collision | Chain animasi CSS/Canvas |
+|  |  | *"Atom emas di cincinmu lahir dari tabrakan bintang neutron."* |  |
+|  |  | **CTA inline: "Lihat sejarah penemuannya →"** → `/atom-history` |  |
+| **5** | **CTA Final** | Jelajahi 118 Elemen · Bangun Molekul · Fenomena | Card buttons |
 
-**File yang dibutuhkan:**
-- `src/components/Dashboard.ts` — komponen baru (replace PeriodicTable sebagai home)
-- `src/styles/global.css` — tambah section scroll-driven styles
-- Update router di `src/main.ts`
+**Prinsip desain:**
+- Atom 3D di hero harus **gede, dramatis, full screen** — ini momen "WAUW"
+- Setiap section scroll = satu insight baru yang membangun dari section sebelumnya (bottom-up)
+- Bukan storytelling fiksi — ini **first principle science yang disampaikan sinematik**
+- AtomHistory tetap tidak ada di nav, hanya accessible dari Section 4
 
-**Aturan penting:**
-- History page **TIDAK** ada di top nav — hanya accessible dari section 4 dashboard
-- CTA history = tombol inline di section "Dari mana asalnya"
+**File:** `src/components/Dashboard.ts`, `src/styles/global.css`
 
 ---
 
-### 📜 B. Sejarah Atom — Cinematic History Page (🗓️ Setelah Dashboard)
+### 🔬 B. Explore Rebuild — Tabel + Molekul (🗓️ Setelah Dashboard)
 
-> **Konsep:** Bukan timeline membosankan. **Setiap era = satu babak film** dengan gaya storytelling Nolan/Snyder — opening dramatis, konflik, twist, dan reveal.
-
-**Route:** `/atom-history` (tidak di top nav, hanya accessible dari Beranda section 4)
-
-**Struktur — 6 Babak:**
-
-| Babak | Tokoh | Era | Twist/Konflik | Visual Model |
-|-------|-------|-----|---------------|---------------|
-| **Prolog** | — | — | *"2400 tahun debat tentang sesuatu yang tak terlihat."* | Hitam total, text fade |
-| **I** | Democritus | 430 SM | Aristoteles menolak → ide terkubur 2000 tahun | Partikel solid CSS |
-| **II** | Dalton | 1803 | Ilmu akhirnya bicara. Dalton buta warna — ironisnya… | Billiard ball model |
-| **III** | Thomson | 1897 | Atom bisa dibagi. "Plum pudding" — tapi muridnya sendiri yang menghancurkannya | Plum pudding CSS |
-| **IV** | Rutherford | 1911 | Gold foil experiment. Semua salah. Atom adalah ruang kosong. | Alpha particle bounce anim |
-| **V** | Bohr | 1913 | Elektron melompat-lompat. Berhasil untuk hidrogen — tapi gagal di atom lain | Planetary orbit 2D anim |
-| **VI** | Schrödinger + Heisenberg | 1926 | *"Kamu tidak bisa tahu di mana elektron. Ini bukan ketidaktahuan — ini realitas."* | Probability cloud canvas |
-| **Epilog** | — | Kini | Atom masih menyimpan misteri | CTA → Jelajahi 118 Elemen |
-
-**Gaya visual Nolan/Snyder:**
-- Warna per chapter: desaturated, high contrast, hampir monokrom
-- Opening quote di layar hitam total sebelum reveal visual
-- Progress bar timeline horizontal di atas (00:00 → sekarang)
-- Transisi antar chapter: fade to black → chapter berikutnya
-- Setiap chapter punya **konflik** — bukan sekadar "ditemukan oleh X"
-- Back button → kembali ke Beranda
-
-**File yang dibutuhkan:**
-- `src/components/AtomHistory.ts` — komponen baru
-- Update router di `src/main.ts`
-
----
-
-### 🔬 C. Eksplorasi Rebuild — Tabel + Molekul Terkenal (🗓️ Setelah History)
-
-> **Konsep:** Tab "Eksplorasi" memuat tabel periodik DAN galeri molekul terkenal dalam satu halaman.
-
-**Route:** `/explore` (rename dari `/` yang sebelumnya tabel)
+> **Konsep:** Halaman `/explore` memuat tabel periodik **DAN** galeri molekul terkenal dalam satu halaman yang continuous. Di atas ada penjelasan cara baca tabel, di bawah ada seksi molekul dengan penjelasan.
 
 **Struktur:**
+
 ```
 ┌──────────────────────────────────────────────┐
-│  BANNER: "Cara membaca tabel periodik"        │
-│  (group, period, color legend explained)      │
+│  BANNER: Cara Membaca Tabel Periodik          │
+│  (group, period, warna, cara baca explained) │
 ├──────────────────────────────────────────────┤
 │  TABEL PERIODIK 118 elemen (existing)        │
 ├──────────────────────────────────────────────┤
-│  ── DIVIDER ──                                │
-│  "Dari atom ke molekul" (penjelasan singkat)  │
+│  ── DIVIDER ──                               │
+│  Penjelasan: "Dari Atom ke Molekul"          │
+│  (cara atom bergabung bbentuk molekul)       │
 ├──────────────────────────────────────────────┤
 │  MOLEKUL TERKENAL — Grid cards               │
-│  H₂O, CO₂, O₂, NaCl, CH₄, DNA, C₆H₁₂O₆    │
-│  Etanol, Aspirin, Kafein, Ozon, dll          │
-│  Click → detail + 3D render di sidebar       │
+│  H₂O, CO₂, O₂, N₂, NaCl, CH₄, NH₃         │
+│  C₂H₅OH (etanol), O₃, H₂O₂                 │
+│  C₆H₁₂O₆ (glukosa), C₈H₁₀N₄O₂ (kafein)   │
+│  Aspirin (C₉H₈O₄), DNA, dll                 │
+│  Click → detail + 3D render (modal/sidebar) │
 └──────────────────────────────────────────────┘
 ```
 
-**Molekul yang harus ada:** H₂O, CO₂, O₂, N₂, NaCl, CH₄, NH₃, C₂H₅OH, O₃, H₂O₂, C₆H₁₂O₆ (gula), C₈H₁₀N₄O₂ (kafein), Aspirin (C₉H₈O₄)
+**File:** `src/components/PeriodicTable.ts` (update), `src/data/molecules.ts` (tambah molekul)
 
 ---
 
-### ⚗️ D. Kimia Lab Standalone (🗓️ Setelah Eksplorasi)
+### ⚗️ C. Kimia Lab Rebuild — "Seperti Anak Kimia" (🗓️ Setelah Explore)
 
-> **Konsep:** Pisah dari tabel. Fokus pure pada pengalaman "seperti anak kimia belajar" — interaktif, langsung dipraktekkan, soal-soal gabung atom.
+> **Konsep:** Dipisah dari tabel. Fokus murni pada pengalaman belajar kimia seperti di buku — ada soal-soal menggabungkan atom, tapi dilakukan secara interaktif dan bisa langsung dipraktekkan.
 
-**Route:** `/molecule` (tetap, sudah ada)
+**Fitur target:**
+- Pilih atom dari palette → drag/klik untuk combine → lihat hasilnya dalam 3D
+- **Mode Tantangan:** Dikasih nama molekul (mis. "Air") → user harus merakit H₂O sendiri
+- **Mode Bebas:** Coba-coba kombinasi apapun (existing MoleculeBuilder)
+- Hint system untuk mode tantangan
+- Penjelasan lebih dalam per molekul (kegunaan, bahaya, fun fact)
+- Tambah molekul organik kompleks ke database
 
-**Penambahan fitur:**
-- Tambah lebih banyak molekul ke database (termasuk organik kompleks)
-- Mode "Tantangan": dikasih nama molekul → user harus merakit sendiri
-- Penjelasan lebih dalam per molekul (use, bahaya, fun fact)
-- Hint system (untuk mode tantangan)
-
----
-
-### 📡 E. Fenomena (✅ Sudah Oke — Hold)
-
-> Fenomena sudah berjalan baik. Tidak ada perubahan yang diprioritaskan saat ini.
+**Route:** `/molecule` (sudah ada, perlu upgrade)  
+**File:** `src/components/MoleculeBuilder.ts`, `src/data/molecules.ts`
 
 ---
 
-### 🧪 F. Molecule Builder — Status Sekarang (✅ Selesai Phase 1)
+### 📡 D. Fenomena (✅ Hold — Sudah Oke)
 
-> Fitur sudah berjalan: pilih atom, gabungkan, lihat 3D, info molekul. Penambahan molekul dan mode tantangan masuk ke item D di atas.
-
----
-
-
-### Phase 2 — Edukasi Pemula (🗓️ Planned)
-
-> **Konsep:** Sebelum masuk ke tabel periodik yang kompleks, pemula perlu membangun fondasi. Setiap topik = modul mandiri dengan animasi + narasi + cek pemahaman.
-> Lihat detail lengkap kurikulum di: [`docs/CURRICULUM.md`](./CURRICULUM.md)
-
-**Analisis Pre-requisite — Apa yang dibutuhkan pemula:**
-
-Seorang pemula tanpa background kimia yang masuk ke Atomic Phase 1 akan kebingungan karena perlu memahami konsep-konsep ini terlebih dahulu:
-
-| # | Topik | Konsep Kunci | Animasi yang Dibutuhkan |
-|---|-------|-------------|------------------------|
-| 1 | **Apa itu Materi?** | Materi tersusun dari atom, atom tersusun dari partikel | Zoom-in dari benda ke atom |
-| 2 | **Proton, Neutron, Elektron** | 3 partikel pokok, muatan, massa relatif | 3D atom sederhana bisa diklik per partikel |
-| 3 | **Nomor Atom & Nomor Massa** | Z = proton, A = proton + neutron | Animasi hitung partikel dalam nukleus |
-| 4 | **Mengapa Atom Stabil?** | Balans muatan positif-negatif | Animasi tarik-menarik muatan |
-| 5 | **Kulit Elektron (Bohr)** | Elektron hanya boleh ada di level tertentu | Animasi elektron naik/turun kulit |
-| 6 | **Cara Menulis Konfigurasi** | 2, 8, 18, 32 per kulit — Aturan Aufbau | Step-by-step pengisian kulit |
-| 7 | **Valensi & Reaktivitas** | Elektron terluar menentukan sifat kimia | Highlight kulit terluar |
-| 8 | **Golongan & Periode** | Kolom = valensi sama, baris = jumlah kulit | Animasi pengelompokan tabel |
-| 9 | **Sifat Periodik Dasar** | Tren jari-jari, elektronegativitas | Heatmap visual di tabel |
-| 10 | **Ikatan Kimia Intro** | Mengapa atom bergabung (valensi 8) | Animasi 2 atom berbagi elektron |
-
-**Format setiap modul:**
-- ⏱ Durasi baca: ~3–5 menit
-- 🎬 Animasi interaktif (Canvas 2D atau Three.js ringan)
-- 📖 Narasi step-by-step dalam bahasa awam
-- ✅ Mini quiz 2–3 soal (multiple choice)
-- 🔗 Link "Lihat di Tabel Periodik" ke elemen relevan
-
-**Route:** `/learn` → daftar topik | `/learn/:slug` → konten modul
+> Fenomena sudah berjalan baik dengan 27 fenomena dan 6 kategori. Tidak ada perubahan yang diprioritaskan saat ini.
 
 ---
 
-### Phase 3 — Multi-Level Atom Visualizer (🗓️ Planned — After Phase 2)
+## 6. Phase 2 — Edukasi Pemula (🗓️ Planned)
 
-> **Konsep:** Di halaman detail setiap elemen, user bisa switch antara 3 representasi atom sesuai level pemahamannya.
+> 10 modul edukasi di route `/learn` → `/learn/:slug`.  
+> Lihat detail lengkap di: [`docs/CURRICULUM.md`](./CURRICULUM.md)
 
-| Level | Nama Model | Deskripsi Visual | Target Pengguna | Status |
-|-------|-----------|-----------------|----------------|--------|
-| **1** | ⚛ **Model Bohr** | Orbit lingkaran 2D-like, kulit K/L/M/... | Pemula, SMA | ✅ Sudah ada |
-| **2** | 🌫 **Model Orbital** | Lobus s/p/d/f, awan probabilitas per orbital | Mahasiswa | 🗓️ Planned |
-| **3** | 🌀 **Model Kuantum** | Density plot fungsi gelombang ψ², angka kuantum | Advanced/Riset | 🗓️ Planned |
-
-**Detail per level:**
-
-**Level 2 — Model Orbital:**
-- Visualisasi bentuk orbital: s (bola), p (dumbbell), d (cloverleaf), f (kompleks)
-- User bisa klik orbital individual untuk highlight
-- Label n, l, ml per orbital
-- Implementasi: `THREE.LatheGeometry` / custom shader untuk lobe
-
-**Level 3 — Model Kuantum:**
-- Particle system untuk visualisasi awan probabilitas
-- Slider untuk set bilangan kuantum (n, l, ml)
-- Color gradient intensity = probabilitas keberadaan elektron
-- Implementasi: custom WebGL shader / `THREE.Points` dengan density function
-
-**UI switch:** Toggle pill `[Bohr] [Orbital] [Kuantum]` di atas canvas
+| # | Topik | Animasi |
+|---|-------|---------|
+| 1 | Apa itu Materi? | Zoom-in dari benda ke atom |
+| 2 | Proton, Neutron, Elektron | 3D atom diklik per partikel |
+| 3 | Nomor Atom & Nomor Massa | Animasi hitung partikel |
+| 4 | Mengapa Atom Stabil? | Animasi tarik-menarik muatan |
+| 5 | Kulit Elektron (Bohr) | Elektron naik/turun kulit |
+| 6 | Cara Menulis Konfigurasi | Step-by-step pengisian |
+| 7 | Valensi & Reaktivitas | Highlight kulit terluar |
+| 8 | Golongan & Periode | Animasi pengelompokan tabel |
+| 9 | Sifat Periodik Dasar | Heatmap visual |
+| 10 | Ikatan Kimia Intro | Animasi 2 atom berbagi elektron |
 
 ---
 
-## 4. Improvement Struktural yang Diidentifikasi
+## 7. Phase 3 — Multi-Level Atom Visualizer (🗓️ Planned)
 
-Dari review Phase 1, beberapa hal yang bisa ditingkatkan:
-
-| Area | Masalah | Solusi |
-|------|---------|--------|
-| **Data** | `nameId` (nama Indonesia) kosong untuk mayoritas elemen | Tambahkan terjemahan nama unsur dalam ID |
-| **Visualisasi** | Model Bohr tidak realistis untuk elemen berat (orbital s/p/d/f tercampur) | Label disclaimer + Link ke Phase 3 |
-| **Konten** | Field `desc` kosong hampir semua elemen | Tambahkan deskripsi singkat per elemen |
-| **Navigasi** | Tidak ada breadcrumb atau "elemen terkait" | Tambahkan "Satu golongan" / "Satu periode" |
-| **Aksesibilitas** | Keyboard navigation di tabel belum ada | `tabIndex`, `onKeyDown` per cell |
-| **Mobile** | Detail page kurang optimal di layar kecil | Responsive layout improvement |
-| **Fun facts** | Tidak ada | Tambahkan 1 fakta menarik per elemen |
+| Level | Model | Deskripsi | Status |
+|-------|-------|-----------|--------|
+| 1 | ⚛ Model Bohr | Orbit lingkaran, kulit K/L/M | ✅ Ada |
+| 2 | 🌫 Model Orbital | Lobus s/p/d/f, awan probabilitas | 🗓️ |
+| 3 | 🌀 Model Kuantum | Density plot ψ², angka kuantum | 🗓️ |
 
 ---
 
-## 5. Non-Functional Requirements
+## 8. Non-Functional Requirements
 
 | Aspek | Target | Status |
 |-------|--------|--------|
@@ -355,35 +233,31 @@ Dari review Phase 1, beberapa hal yang bisa ditingkatkan:
 
 ---
 
-## 6. Out of Scope (v1.x)
+## 9. Out of Scope (v1.x)
 
 - Login/user account
 - Progress tracking & quiz score tersimpan
 - Backend/database/API (saat ini static SPA)
 - Mobile app native
 - Simulasi reaksi kimia / stoikiometri
-- **Subscription / payment gateway** → butuh backend (lihat catatan di bawah)
-
-> **Catatan Monetisasi (jika direncanakan):**  
-> Karena Atomic saat ini adalah static SPA tanpa database, sistem subscription **tidak dapat diimplementasikan secara aman** di sisi client saja. Opsi yang direkomendasikan:
-> - **Lemon Squeezy / Paddle** — payment gateway dengan built-in license key management (tidak perlu backend sendiri)
-> - **Supabase** — PostgreSQL + Auth + RLS, gratis tier cocok untuk MVP
-> - **Pola rekomendasi:** User bayar → dapat license key → divalidasi via API call ke payment provider → status di localStorage (atau JWT singkat)
-> - **Jangan** simpan status premium hanya di localStorage (mudah dimanipulasi)
+- Subscription/payment gateway (butuh backend)
 
 ---
 
-## 7. Success Metrics
+## 10. Success Metrics
 
 | Metrik | Target | Status |
-|--------|--------| -------|
-| Zero crash untuk semua 118 elemen | ✅ done | ✅ |
-| Animasi 3D berjalan di semua elemen | ✅ done | ✅ |
-| Navigasi prev/next lancar | ✅ done | ✅ |
-| Elemen radioaktif ditandai jelas | ✅ done | ✅ |
-| Halaman Fenomena — 27 fenomena, 6 kategori | ✅ done | ✅ |
-| Kategori Kehidupan (5 fenomena komposisi atom) | ✅ done | ✅ |
-| Kategori Fiksi & Sains (6 fenomena) | ✅ done | ✅ |
-| PhenomenaList komponen + filter tab | ✅ done | ✅ |
-| Phase 2: 10 modul edukasi tersedia | 🗓️ | — |
+|--------|--------|--------|
+| Zero crash untuk semua 118 elemen | ✅ | ✅ |
+| Animasi 3D berjalan di semua elemen | ✅ | ✅ |
+| Navigasi prev/next lancar | ✅ | ✅ |
+| Elemen radioaktif ditandai jelas | ✅ | ✅ |
+| nameId, desc, funFact semua 118 elemen | ✅ | ✅ |
+| Halaman Fenomena — 27 fenomena, 6 kategori | ✅ | ✅ |
+| Sejarah Atom — 22 slide cinematic | ✅ | ✅ |
+| Bilingual EN/ID — semua komponen | ✅ | ✅ |
+| Dashboard rebuild — first principle | 🔨 | — |
+| Explore rebuild — tabel + molekul | 🗓️ | — |
+| Kimia Lab — mode tantangan | 🗓️ | — |
+| Phase 2: 10 modul edukasi | 🗓️ | — |
 | Phase 3: 3 level visualisasi | 🗓️ | — |

@@ -1,7 +1,9 @@
 import { phenomena, PHENOMENON_CATEGORIES } from '../data/phenomena';
 import { navigate } from '../core/router';
+import { getLang } from '../core/i18n';
 
 export function renderPhenomenaList(container: HTMLElement) {
+    const isEN = getLang() === 'en';
     container.innerHTML = '';
 
     const page = document.createElement('div');
@@ -12,15 +14,16 @@ export function renderPhenomenaList(container: HTMLElement) {
     header.className = 'phenomena-header';
     header.innerHTML = `
         <div class="phenomena-hero-icon">⚡</div>
-        <h1 class="phenomena-title">Fenomena Atom</h1>
+        <h1 class="phenomena-title">${isEN ? 'Atomic Phenomena' : 'Fenomena Atom'}</h1>
         <p class="phenomena-subtitle">
-            Dari ledakan bintang hingga layar sentuhmu — semua adalah atom yang berinteraksi.
-            Pilih fenomena untuk melihat cerita lengkapnya.
+            ${isEN
+            ? 'From stellar explosions to your touchscreen \u2014 all of it is atoms interacting. Pick a phenomenon to explore its full story.'
+            : 'Dari ledakan bintang hingga layar sentuhmu \u2014 semua adalah atom yang berinteraksi. Pilih fenomena untuk melihat cerita lengkapnya.'}
         </p>
         <div class="phenomena-stats">
-            <span>⚡ <strong>${phenomena.length}</strong> Fenomena</span>
+            <span>⚡ <strong>${phenomena.length}</strong> ${isEN ? 'Phenomena' : 'Fenomena'}</span>
             <span>·</span>
-            <span>🗂 <strong>${Object.keys(PHENOMENON_CATEGORIES).length}</strong> Kategori</span>
+            <span>🗂 <strong>${Object.keys(PHENOMENON_CATEGORIES).length}</strong> ${isEN ? 'Categories' : 'Kategori'}</span>
         </div>
     `;
     page.appendChild(header);
@@ -35,7 +38,7 @@ export function renderPhenomenaList(container: HTMLElement) {
                 type="text"
                 id="phenomena-search"
                 class="phenomena-search-input"
-                placeholder="Cari fenomena... (fisi, laser, osmosis)"
+                placeholder="${isEN ? 'Search phenomena... (fission, laser, osmosis)' : 'Cari fenomena... (fisi, laser, osmosis)'}"
                 autocomplete="off"
             />
         </div>
@@ -46,7 +49,7 @@ export function renderPhenomenaList(container: HTMLElement) {
     const tabs = document.createElement('div');
     tabs.className = 'phenomena-tabs';
     tabs.innerHTML = `
-        <button class="ptab ptab--active" data-cat="all">🌐 Semua <span class="ptab-count">${phenomena.length}</span></button>
+        <button class="ptab ptab--active" data-cat="all">🌐 ${isEN ? 'All' : 'Semua'} <span class="ptab-count">${phenomena.length}</span></button>
         ${Object.entries(PHENOMENON_CATEGORIES).map(([key, cat]) => {
         const count = phenomena.filter(p => p.category === key).length;
         return `<button class="ptab" data-cat="${key}" style="--tc:${cat.color}">${cat.label} <span class="ptab-count">${count}</span></button>`;
@@ -62,7 +65,7 @@ export function renderPhenomenaList(container: HTMLElement) {
     // ── NO RESULTS ────────────────────────────────────────────────────────
     const noResult = document.createElement('div');
     noResult.className = 'phenomena-no-result';
-    noResult.innerHTML = `<span style="font-size:40px">🔭</span><p>Tidak ada fenomena yang sesuai.</p>`;
+    noResult.innerHTML = `<span style="font-size:40px">🔭</span><p>${isEN ? 'No matching phenomena found.' : 'Tidak ada fenomena yang sesuai.'}</p>`;
     noResult.style.display = 'none';
     page.appendChild(noResult);
 
@@ -95,13 +98,13 @@ export function renderPhenomenaList(container: HTMLElement) {
                     <div class="phen-card-icon">${p.icon}</div>
                     <div class="phen-card-cat" style="color:${cat.color};background:${cat.bg};">${cat.label}</div>
                 </div>
-                <div class="phen-card-title">${p.title}</div>
-                <div class="phen-card-en">${p.titleEn}</div>
+                <div class="phen-card-title">${isEN ? p.titleEn : p.title}</div>
+                <div class="phen-card-en">${isEN ? p.title : p.titleEn}</div>
                 <div class="phen-card-tagline">${p.tagline}</div>
                 <div class="phen-card-atoms">
                     ${p.atoms.map(a => `<span class="phen-atom-chip">${a}</span>`).join('')}
                 </div>
-                <div class="phen-card-cta">Baca Ceritanya →</div>
+                <div class="phen-card-cta">${isEN ? 'Read the story \u2192' : 'Baca Ceritanya \u2192'}</div>
             `;
             card.addEventListener('click', () => navigate(`/phenomena/${p.id}`));
             grid.appendChild(card);

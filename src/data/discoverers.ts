@@ -18,7 +18,8 @@ export interface Discoverer {
     nationality: string;      // country flag + name
     photoUrl: string;         // Wikimedia Commons URL
     wikiUrl: string;          // Wikipedia article URL
-    shortBio: string;         // 1–2 sentence bio
+    shortBio: string;         // 1–2 sentence bio (Indonesian)
+    shortBioEn?: string;      // 1–2 sentence bio (English, optional)
     discoveryStory: DiscoveryStep[];  // step-by-step story
 }
 

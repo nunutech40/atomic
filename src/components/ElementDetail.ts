@@ -2,16 +2,17 @@ import { elements } from '../data/elements';
 import { categories } from '../data/categories';
 import { AtomScene } from '../three/atomScene';
 import { getElectronShells, getShellLabel } from '../utils/electronConfig';
-import { t } from '../core/i18n';
+import { t, getLang } from '../core/i18n';
 import { navigate } from '../core/router';
 import { getDiscoverer } from '../data/discoverers';
 import { getOrigin } from '../data/origins';
 
 
 export function renderElementDetail(container: HTMLElement, n: number) {
+    const isEN = getLang() === 'en';
     const el = elements.find(e => e.n === n);
     if (!el) {
-        container.innerHTML = `<p style="color:var(--text-2);padding:24px">Elemen tidak ditemukan.</p>`;
+        container.innerHTML = `<p style="color:var(--text-2);padding:24px">${isEN ? 'Element not found.' : 'Elemen tidak ditemukan.'}</p>`;
         return () => { };
     }
 
@@ -69,8 +70,8 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     const modelLabel = document.createElement('div');
     modelLabel.className = 'model-label';
     modelLabel.innerHTML = `
-        <span class="model-badge">⚛ Model Bohr</span>
-        <span class="model-hint">Representasi visual — orbit elektron disederhanakan</span>
+        <span class="model-badge">⚛ ${isEN ? 'Bohr Model' : 'Model Bohr'}</span>
+        <span class="model-hint">${isEN ? 'Visual representation — electron orbits are simplified' : 'Representasi visual — orbit elektron disederhanakan'}</span>
     `;
     left.appendChild(modelLabel);
 
@@ -97,7 +98,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     shells.forEach((count, i) => {
         const pill = document.createElement('div');
         pill.className = 'shell-pill';
-        pill.title = `Kulit ${getShellLabel(i)}: ${count} elektron`;
+        pill.title = isEN ? `Shell ${getShellLabel(i)}: ${count} electron${count !== 1 ? 's' : ''}` : `Kulit ${getShellLabel(i)}: ${count} elektron`;
         pill.innerHTML = `<span>${getShellLabel(i)}:</span> ${count}`;
         shellsViz.appendChild(pill);
     });
@@ -117,7 +118,9 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     if (totalE > 0) {
         const eSummary = document.createElement('div');
         eSummary.style.cssText = 'margin-top:12px;padding:10px 14px;background:var(--bg);border-radius:8px;border:1px solid var(--border);font-size:12px;color:var(--text-2);';
-        eSummary.innerHTML = `<span style="color:var(--accent);font-weight:600;">${totalE}</span> elektron · <span style="color:var(--accent);font-weight:600;">${shells.length}</span> kulit`;
+        eSummary.innerHTML = isEN
+            ? `<span style="color:var(--accent);font-weight:600;">${totalE}</span> electron${totalE !== 1 ? 's' : ''} · <span style="color:var(--accent);font-weight:600;">${shells.length}</span> shell${shells.length !== 1 ? 's' : ''}`
+            : `<span style="color:var(--accent);font-weight:600;">${totalE}</span> elektron · <span style="color:var(--accent);font-weight:600;">${shells.length}</span> kulit`;
         left.appendChild(eSummary);
     }
 
@@ -139,7 +142,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
 
     // ── Properties grid ──────────────────────────────────────────────────
     const propsTitle = document.createElement('div');
-    propsTitle.innerHTML = `<div class="section-title" style="margin-top:16px">Data Fisika &amp; Kimia</div>`;
+    propsTitle.innerHTML = `<div class="section-title" style="margin-top:16px">${isEN ? 'Physical &amp; Chemical Data' : 'Data Fisika &amp; Kimia'}</div>`;
     right.appendChild(propsTitle);
 
     const propsGrid = document.createElement('div');
@@ -186,7 +189,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     const discoverer = getDiscoverer(el.sym);
     if (discoverer) {
         const discSec = document.createElement('div');
-        discSec.innerHTML = `<div class="section-title" style="margin-top:20px">Penemu</div>`;
+        discSec.innerHTML = `<div class="section-title" style="margin-top:20px">${isEN ? 'Discoverer' : 'Penemu'}</div>`;
 
         const card = document.createElement('div');
         card.className = 'discoverer-card';
@@ -201,11 +204,11 @@ export function renderElementDetail(container: HTMLElement, n: number) {
                 onerror="this.outerHTML='<div class=discoverer-thumb-fallback>👤</div>'"
             />
             <div class="discoverer-card-info">
-                <div class="discoverer-card-label">Penemu &amp; Pengisolasi</div>
+                <div class="discoverer-card-label">${isEN ? 'Discoverer &amp; Isolator' : 'Penemu &amp; Pengisolasi'}</div>
                 <div class="discoverer-card-name">${discoverer.name}</div>
                 <div class="discoverer-card-meta">${discoverer.nationality} · ${discoverer.born}–${discoverer.died}</div>
             </div>
-            <div class="discoverer-card-cta">Selengkapnya →</div>
+            <div class="discoverer-card-cta">${isEN ? 'Full story →' : 'Selengkapnya →'}</div>
         `;
         card.addEventListener('click', () => navigate(`/discoverer/${el.sym}`));
         card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') navigate(`/discoverer/${el.sym}`); });
@@ -219,7 +222,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     if (origin) {
         const originSec = document.createElement('div');
         originSec.style.marginTop = '20px';
-        originSec.innerHTML = `<div class="section-title">Asal Usul Kosmik</div>`;
+        originSec.innerHTML = `<div class="section-title">${isEN ? 'Cosmic Origin' : 'Asal Usul Kosmik'}</div>`;
 
         const originCard = document.createElement('div');
         originCard.className = 'origin-card';
@@ -242,7 +245,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
             <div class="origin-story" style="font-size:12.5px;color:var(--text-2);line-height:1.7;display:none;">
                 ${origin.story.split('\n\n').map(p => `<p style="margin:0 0 8px 0;">${p}</p>`).join('')}
             </div>
-            <div class="origin-toggle" style="font-size:11px;color:${origin.color};margin-top:6px;font-weight:600;">Baca selengkapnya ▾</div>
+            <div class="origin-toggle" style="font-size:11px;color:${origin.color};margin-top:6px;font-weight:600;">${isEN ? 'Read more ▾' : 'Baca selengkapnya ▾'}</div>
         `;
 
         let expanded = false;
@@ -252,8 +255,8 @@ export function renderElementDetail(container: HTMLElement, n: number) {
             const toggleEl = originCard.querySelector('.origin-toggle') as HTMLElement;
             storyEl.style.display = expanded ? 'block' : 'none';
             toggleEl.textContent = expanded
-                ? 'Tutup ▴'
-                : 'Baca selengkapnya ▾';
+                ? (isEN ? 'Collapse ▴' : 'Tutup ▴')
+                : (isEN ? 'Read more ▾' : 'Baca selengkapnya ▾');
             toggleEl.style.color = origin.color;
         });
         originCard.addEventListener('mouseenter', () => { originCard.style.borderColor = origin.color + '60'; });
@@ -282,7 +285,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
             <div class="fun-fact-card">
                 <span class="fun-fact-icon">💡</span>
                 <div>
-                    <div class="fun-fact-label">Tahukah kamu?</div>
+                    <div class="fun-fact-label">${isEN ? 'Did you know?' : 'Tahukah kamu?'}</div>
                     <div class="fun-fact-text">${el.funFact}</div>
                 </div>
             </div>
@@ -294,7 +297,9 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     if (Array.isArray(el.mass)) {
         const warning = document.createElement('div');
         warning.className = 'radioactive-badge';
-        warning.innerHTML = `☢ Elemen Radioaktif — massa pada kurung siku menunjukkan isotop paling stabil`;
+        warning.innerHTML = isEN
+            ? `☢ Radioactive Element — bracketed mass indicates the most stable isotope`
+            : `☢ Elemen Radioaktif — massa pada kurung siku menunjukkan isotop paling stabil`;
         right.appendChild(warning);
     }
 
@@ -330,9 +335,9 @@ export function renderElementDetail(container: HTMLElement, n: number) {
         };
 
         relSec.innerHTML = `
-            <div class="section-title">Elemen Terkait</div>
-            ${renderGroup('Golongan sama', '↕', sameGroup)}
-            ${renderGroup('Periode sama', '↔', samePeriod)}
+            <div class="section-title">${isEN ? 'Related Elements' : 'Elemen Terkait'}</div>
+            ${renderGroup(isEN ? 'Same group' : 'Golongan sama', '↕', sameGroup)}
+            ${renderGroup(isEN ? 'Same period' : 'Periode sama', '↔', samePeriod)}
         `;
 
         relSec.addEventListener('click', e => {
@@ -362,7 +367,7 @@ export function renderElementDetail(container: HTMLElement, n: number) {
                 scene.start();
             } catch (err) {
                 console.error('AtomScene error:', err);
-                canvasWrap.innerHTML = `<p style="color:var(--text-3);padding:24px;text-align:center;font-size:12px;">3D tidak tersedia</p>`;
+                canvasWrap.innerHTML = `<p style="color:var(--text-3);padding:24px;text-align:center;font-size:12px;">${isEN ? '3D view unavailable' : '3D tidak tersedia'}</p>`;
             }
         } else if (initialized && scene) {
             const nw = entry.contentRect.width || 300;
