@@ -3,7 +3,7 @@ import { initTheme } from './core/theme';
 import { initRouter, addRoute, setCleanup, resolve } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderDashboard } from './components/Dashboard';
-import { renderPeriodicTable } from './components/PeriodicTable';
+import { renderExplore } from './components/Explore';
 import { renderElementDetail } from './components/ElementDetail';
 import { renderMoleculeBuilder } from './components/MoleculeBuilder';
 import { renderPhenomenonStory } from './components/PhenomenonStory';
@@ -42,7 +42,7 @@ addRoute('/', () => {
 addRoute('/explore', () => {
     if (tableCleanup) { tableCleanup(); tableCleanup = null; }
     main.innerHTML = '';
-    tableCleanup = renderPeriodicTable(main) || null;
+    tableCleanup = renderExplore(main) || null;
     setCleanup(() => { if (tableCleanup) { tableCleanup(); tableCleanup = null; } });
 });
 
