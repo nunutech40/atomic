@@ -1,4 +1,5 @@
 import { navigate } from '../core/router';
+import { getLang } from '../core/i18n';
 
 /* ════════════════════════════════════════════════════════════════════════
    ATOM HISTORY v3 — Scroll × Slide Hybrid
@@ -327,10 +328,316 @@ const CHAPTERS: Chapter[] = [
     },
 ];
 
+function getChapters(isEN: boolean): Chapter[] { return isEN ? CHAPTERS_EN : CHAPTERS; }
+
+/* ─────────────────────────────────────────────────────────────────────
+   CHAPTER DATA (BILINGUAL)
+   ───────────────────────────────────────────────────────────────────── */
+const CHAPTERS_EN: Chapter[] = [
+
+    /* ══ PROLOG ══════════════════════════════════════════ */
+    {
+        id: 'prolog', chapterNum: '⬡', chapterName: 'Prologue',
+        year: '—', protagonist: '', color: '#7c73ff',
+        model: 'prolog',
+        slides: [
+            {
+                eyebrow: 'Before Everything',
+                title: '2,400 years of debate\nabout something no one\nhas ever seen.',
+                body: `<p>You are touching something right now. A table. A chair. The air. It all feels real.</p>
+                       <p>But one question tormented the greatest thinkers in human history:</p>
+                       <p><em>If you keep splitting matter into smaller and smaller pieces — is there a limit? Or can matter be divided forever?</em></p>
+                       <p>This wasn't an academic question. The answer changed the way humanity understands reality itself.</p>`,
+                highlight: '"Two roads diverge: matter can be split forever — or there is a smallest unit that cannot be divided further."',
+                highlightLabel: 'The question that started 2,400 years of debate',
+            },
+        ],
+    },
+
+    /* ══ ACT I — DEMOCRITUS ════════════════════════════ */
+    {
+        id: 'democritus', chapterNum: 'I', chapterName: 'Democritus',
+        year: '~450 BC', protagonist: 'Leucippus & Democritus', color: '#c8a040',
+        model: 'solid-demo',
+        slides: [
+            {
+                eyebrow: 'Ancient Greece · ~450 BC',
+                title: 'Atomos —\nThe Uncuttable',
+                body: `<p>Leucippus was the first to propose the idea: there is a smallest limit to matter. Democritus, his student, developed it into a complete theory.</p>
+                       <p>He called it <strong>atomos</strong> — from the Greek <em>a-</em> (not) + <em>tomos</em> (cut). <strong>Something that cannot be cut further.</strong></p>
+                       <p>According to Democritus, everything in the universe is just atoms moving through empty space (<em>kenon</em>). The difference between stone, water, and air? Only the shape, size, and arrangement of atoms.</p>`,
+                highlight: '"Sweet exists by convention, bitter by convention — in reality there are only atoms and the void."',
+                highlightLabel: '— Democritus, ~400 BC',
+            },
+            {
+                eyebrow: "Democritus's Atom Properties",
+                title: 'A Theory Shockingly\nAhead of Its Time',
+                body: `<ul class="ah-list">
+                         <li><span class="ah-list-num">01</span><div><strong>Atoms are eternal</strong> — They cannot be created or destroyed. Their total count has been constant since the beginning of the universe.</div></li>
+                         <li><span class="ah-list-num">02</span><div><strong>Atoms are in constant motion</strong> — In the void, atoms move freely. Collisions between atoms form the world we see.</div></li>
+                         <li><span class="ah-list-num">03</span><div><strong>Atoms differ in shape and size</strong> — Fire is made of small, round atoms. Iron from larger atoms that hook together.</div></li>
+                         <li><span class="ah-list-num">04</span><div><strong>Even the soul is made of atoms</strong> — Soul atoms are the finest and most spherical, spread throughout the body.</div></li>
+                       </ul>`,
+                highlight: 'Atoms have no color, taste, or smell — all sensations are the result of atoms interacting with our senses. An insight that was only proven ~2,300 years later.',
+                highlightLabel: 'Still true today',
+            },
+            {
+                eyebrow: 'Plot Twist · ~400 BC',
+                title: 'One Man Buried It\nfor 2,000 Years',
+                body: `<p>Aristotle — student of Plato, teacher of Alexander the Great — was the most influential thinker in the Western world. And he <strong>completely rejected</strong> atomic theory.</p>
+                       <p>His argument: the void (<em>kenon</em>) cannot exist. "Nature abhors a vacuum" (<em>horror vacui</em>). And matter is made of 4 elements: <strong>Earth, Water, Air, Fire</strong>.</p>
+                       <p>Aristotle didn't prove Democritus wrong. He was simply more influential. For nearly 2,000 years, the Western world followed Aristotle — not because of evidence, but because of <strong>authority</strong>.</p>`,
+                highlight: '"Democritus\'s idea was buried not because it was wrong — but because it lost a popularity contest." This is the greatest danger in the history of science.',
+                highlightLabel: '↯ The Biggest Lesson in Science History',
+            },
+        ],
+    },
+
+    /* ══ ACT II — DALTON ═══════════════════════════════ */
+    {
+        id: 'dalton', chapterNum: 'II', chapterName: 'Dalton',
+        year: '1803', protagonist: 'John Dalton', color: '#5090d0',
+        model: 'billiard',
+        slides: [
+            {
+                eyebrow: 'Manchester · Early 1800s',
+                title: 'Two Thousand Years Later,\nScience Finally Speaks',
+                body: `<p>The industrial revolution was in full swing. Factories needed predictable chemistry — not philosophy. And there, a math teacher named <strong>John Dalton</strong> noticed something strange.</p>
+                       <p>When two elements combine to form a compound, their mass ratios are always <strong>simple whole numbers</strong>. Carbon and oxygen always combine in fixed ratios — never random.</p>
+                       <p>This was no coincidence. It was a pattern. And to explain it, Dalton made a logical leap that transformed chemistry forever.</p>`,
+                highlight: 'Law of Multiple Proportions: when two elements combine to form more than one compound, the mass of one of them is always in a simple whole-number ratio.',
+                highlightLabel: "Dalton's Law — The Starting Point of Modern Atomic Theory",
+            },
+            {
+                eyebrow: "Dalton's Postulates · 1803",
+                title: 'Five Propositions That\nChanged Chemistry',
+                body: `<ul class="ah-list">
+                         <li><span class="ah-list-num">01</span><div>All matter is made of <strong>atoms that cannot be further divided</strong>.</div></li>
+                         <li><span class="ah-list-num">02</span><div>All atoms of the same element have <strong>exactly the same mass</strong>.</div></li>
+                         <li><span class="ah-list-num">03</span><div>Atoms of different elements have <strong>different masses</strong>.</div></li>
+                         <li><span class="ah-list-num">04</span><div>Atoms combine in <strong>simple whole-number ratios</strong> to form compounds.</div></li>
+                         <li><span class="ah-list-num">05</span><div>Atoms cannot be created or destroyed — they only <strong>rearrange</strong> in chemical reactions.</div></li>
+                       </ul>`,
+                highlight: "Historical irony: Dalton was the first well-documented colorblind person. He couldn't distinguish colors — yet he 'saw' differences between invisible atoms.",
+                highlightLabel: '↯ The Dalton Irony',
+            },
+            {
+                eyebrow: 'Right — Wrong',
+                title: 'A Revolutionary Theory\nThat Wasn\'t Perfect',
+                body: `<div class="ah-compare">
+                         <div class="ah-compare-col correct">
+                           <div class="ah-compare-header">✓ Still True Today</div>
+                           <ul>
+                             <li>Atoms of different elements have different masses</li>
+                             <li>Atoms combine in fixed ratios</li>
+                             <li>Chemical reactions are just rearrangements of atoms</li>
+                           </ul>
+                         </div>
+                         <div class="ah-compare-col wrong">
+                           <div class="ah-compare-header">✗ Turned Out Wrong</div>
+                           <ul>
+                             <li>Atoms can't be split — <em>they can (electrons, protons, neutrons)</em></li>
+                             <li>Same-element atoms are identical — <em>isotopes prove otherwise</em></li>
+                             <li>Atoms can't be created — <em>nuclear reactions can change them</em></li>
+                           </ul>
+                         </div>
+                       </div>`,
+                highlight: "Though imperfect, Dalton's model was accurate enough to transform chemistry into a predictable, reproducible science — and that was enough to change the industrial world.",
+                highlightLabel: 'Why an Imperfect Model Still Has Value',
+            },
+        ],
+    },
+
+    /* ══ ACT III — THOMSON ═════════════════════════════ */
+    {
+        id: 'thomson', chapterNum: 'III', chapterName: 'Thomson',
+        year: '1897', protagonist: 'J.J. Thomson', color: '#9060c0',
+        model: 'plum',
+        slides: [
+            {
+                eyebrow: 'Cavendish Laboratory · 1897',
+                title: 'The Cathode Ray Tube That\nShook Everything',
+                body: `<p>J.J. Thomson was experimenting with a glass vacuum tube containing two electrodes. When electricity flowed through, a <strong>mysterious ray</strong> appeared from the cathode (negative electrode).</p>
+                       <p>This ray bent in magnetic and electric fields — always deflecting the same way, regardless of electrode material.</p>
+                       <p>Thomson's conclusion: this ray is not light. <strong>It is a negatively charged particle far smaller than an atom.</strong> And it's identical across all elements.</p>`,
+                highlight: '"I was discovering what was inside an atom — and the result: atoms can be split."',
+                highlightLabel: '— J.J. Thomson, 1897 · Nobel Prize in Physics 1906',
+            },
+            {
+                eyebrow: 'Discovery of the Electron · 1897',
+                title: 'Corpuscle —\nThe First Sub-Atomic Particle',
+                body: `<p>Thomson called it a "corpuscle." Others later named it the <strong>electron</strong>.</p>
+                       <p>If atoms contain negatively charged electrons, and atoms as a whole are neutral — <strong>there must be a positive charge somewhere</strong>. But where?</p>
+                       <p>Thomson proposed: positive charge is spread evenly like dough, electrons are embedded in it like raisins. The world called it the <strong>Plum Pudding Model</strong>.</p>`,
+                highlight: "An electron's mass is only 1/1,836 of a proton's. If an atom were the size of Earth, an electron would only be the size of a basketball court. That's how small the particle that 'builds' the world is.",
+                highlightLabel: 'How tiny an electron is',
+            },
+            {
+                eyebrow: 'Plum Pudding Model · 1904',
+                title: 'The Logical Model —\nThat Was Completely Wrong',
+                body: `<p>Thomson's model made logical sense: if negative charges are spread evenly, positive charges must balance them — also spread evenly. Thomson even proved mathematically this model matched hydrogen's spectrum.</p>
+                       <p>But there was one problem. His own student was conducting an experiment that would destroy this model in fewer than 10 years.</p>
+                       <p><strong>Thomson's best student? Ernest Rutherford.</strong> Who would prove his teacher was completely wrong.</p>`,
+                highlight: '"I thought I knew the structure of the atom. Turns out I was wrong." — Thomson never truly accepted Rutherford\'s nuclear model until the end of his life.',
+                highlightLabel: '↯ Irony in Science',
+            },
+        ],
+    },
+
+    /* ══ ACT IV — RUTHERFORD ═══════════════════════════ */
+    {
+        id: 'rutherford', chapterNum: 'IV', chapterName: 'Rutherford',
+        year: '1911', protagonist: 'Ernest Rutherford', color: '#e06030',
+        model: 'rutherford',
+        slides: [
+            {
+                eyebrow: 'University of Manchester · 1909',
+                title: 'The Gold Foil Experiment —\nA Simple Design',
+                body: `<p>Rutherford asked two assistants — Hans Geiger and Ernest Marsden — to do a simple experiment: <strong>fire alpha particles at an extremely thin gold foil</strong>.</p>
+                       <p>Based on Thomson's model, the particles should pass through with little or no deflection — since positive charge was thought to be spread thin and even.</p>
+                       <p>Rutherford nearly didn't ask Marsden to do this — he thought the result was obvious and <strong>boring</strong>. He almost missed the greatest discovery of the 20th century.</p>`,
+                highlight: 'Gold foil was chosen because it can be made ~1,000 atoms thin. The detector: a screen that glowed when hit by alpha particles — observed by eye in darkness for days.',
+                highlightLabel: 'Experiment Setup',
+            },
+            {
+                eyebrow: 'Unexpected Results · 1909',
+                title: 'Bullets That\nBounced Back',
+                body: `<p>Most alpha particles passed straight through — as predicted. But then Marsden saw something that shouldn't have happened:</p>
+                       <p><strong>Some particles deflected at large angles. Some bounced almost straight back.</strong></p>
+                       <p>Frequency: 1 in about 8,000 particles bounced back at angles greater than 90°.</p>
+                       <p>Marsden ran to Rutherford. Rutherford didn't believe him. He made Marsden repeat the experiment many times. The results were always the same.</p>`,
+                highlight: '"It was as if you fired 15-inch artillery shells at tissue paper, and the shells came back and hit you. I was absolutely dumbfounded when it happened."',
+                highlightLabel: '— Ernest Rutherford, 1911',
+            },
+            {
+                eyebrow: 'Conclusion · 1911',
+                title: 'An Atom Is (Almost)\nAll Empty Space',
+                body: `<p>Rutherford spent 18 months calculating. The only explanation that made sense:</p>
+                       <p>All the positive mass of the atom is concentrated in a <strong>tiny core</strong> — he called it the nucleus. Electrons orbit around it at proportionally enormous distances.</p>
+                       <p>If the nucleus were the size of a marble (1 cm), the nearest electron would be <strong>one kilometer</strong> away. In between? Perfect empty space.</p>`,
+                highlight: 'The atoms that make up your hand are 99.9999999999996% empty space. Matter feels solid not because it\'s full — but because electromagnetic forces prevent other atoms from coming close.',
+                highlightLabel: '↯ A Fact That Changes Your Intuition',
+            },
+            {
+                eyebrow: "Rutherford's Fatal Flaw",
+                title: 'A Beautiful Model —\nWith a Deadly Problem',
+                body: `<p>Rutherford's model was elegant: nucleus in the center, electrons orbiting like planets. But there was one fatal flaw according to Maxwell's classical physics:</p>
+                       <p><strong>A charged particle that accelerates (circular motion = acceleration) must emit electromagnetic radiation.</strong></p>
+                       <p>If electrons continuously emit energy, they would spiral inward and crash into the nucleus in just <strong>16 picoseconds</strong>. But hydrogen has existed since the Big Bang. Something was wrong.</p>`,
+                highlight: "Rutherford's model perfectly explained the gold foil experiment — but theoretically, the atom he described should be unstable and couldn't exist. This paradox drove the birth of quantum mechanics.",
+                highlightLabel: 'The Door to the Quantum World',
+            },
+        ],
+    },
+
+    /* ══ ACT V — BOHR ════════════════════════════════ */
+    {
+        id: 'bohr', chapterNum: 'V', chapterName: 'Bohr',
+        year: '1913', protagonist: 'Niels Bohr', color: '#40a080',
+        model: 'bohr',
+        slides: [
+            {
+                eyebrow: 'Copenhagen · 1913',
+                title: 'Electrons Don\'t Follow\nClassical Physics',
+                body: `<p>Niels Bohr, a young Danish physicist who had just interned at Rutherford's lab, proposed a radical idea: <strong>Classical physics doesn't apply inside the atom.</strong></p>
+                       <p>He was inspired by an old unsolved puzzle — the <strong>hydrogen emission spectrum</strong>. When hydrogen is heated to glow, it only emits light at specific wavelengths — not all colors.</p>
+                       <p>4 specific lines: 656nm (red), 486nm (blue-green), 434nm (blue-violet), 410nm (violet). The pattern had been known since 1885 — but no one could explain it. Until Bohr.</p>`,
+                highlight: '"Classical physics doesn\'t apply at the atomic level. We need new rules." — An idea that sounded crazy in 1913 is now the foundation of all modern chemistry.',
+                highlightLabel: 'Bohr · 1913',
+            },
+            {
+                eyebrow: "Bohr's Postulates · 1913",
+                title: 'Quantum Orbits —\nAstonishing New Rules',
+                body: `<ul class="ah-list">
+                         <li><span class="ah-list-num">01</span><div><strong>Electrons can only exist in specific orbits</strong> — these orbits have fixed, specific energy levels. No in-between allowed.</div></li>
+                         <li><span class="ah-list-num">02</span><div><strong>While in that orbit, electrons emit no energy</strong> — this rule violates classical physics, but Bohr stated it as a fundamental postulate.</div></li>
+                         <li><span class="ah-list-num">03</span><div><strong>Electrons can jump between orbits</strong> — by absorbing a photon (moving up) or emitting a photon (moving down). Photon energy = energy difference between orbits.</div></li>
+                       </ul>`,
+                highlight: 'This immediately explained hydrogen\'s spectrum perfectly — the spectral lines EXACTLY matched the energy differences between orbits Bohr calculated. Accurate to 4 decimal places.',
+                highlightLabel: '✓ Perfect for Hydrogen',
+            },
+            {
+                eyebrow: "Bohr's Failure",
+                title: 'Works for Hydrogen.\nFails for Everything Else.',
+                body: `<p>The Bohr model was a major victory — for hydrogen. But when physicists tried applying it to helium (2 electrons) or larger atoms: <strong>total failure</strong>.</p>
+                       <p>No one could explain <em>why</em> electrons were only allowed in specific orbits. Bohr's postulates were empirically correct, but had no theoretical foundation.</p>
+                       <p>And a deeper question: if electrons can "jump" from one orbit to another instantaneously — without crossing the space between — what does the "location" of an electron even mean?</p>`,
+                highlight: '"I hope someone will solve this problem." — Bohr to Heisenberg, 1922. The answer came 3 years later and changed everything.',
+                highlightLabel: '↯ The Door to Quantum Mechanics',
+            },
+        ],
+    },
+
+    /* ══ ACT VI — QUANTUM ════════════════════════════ */
+    {
+        id: 'quantum', chapterNum: 'VI', chapterName: 'Quantum Mechanics',
+        year: '1924–1927', protagonist: 'de Broglie · Heisenberg · Schrödinger', color: '#5060e0',
+        model: 'quantum',
+        slides: [
+            {
+                eyebrow: 'Paris · 1924 · Louis de Broglie',
+                title: 'Electrons Are\nWaves — And Particles',
+                body: `<p>A PhD student named Louis de Broglie proposed a wild idea in his thesis: <strong>if light can behave as a particle (photon), maybe particles like electrons can behave as waves.</strong></p>
+                       <p>He derived a simple formula: electron wavelength = Planck's constant ÷ electron momentum. His examiners didn't know what to do with this idea — they sent it to Einstein.</p>
+                       <p>Einstein replied: <em>"This looks crazy, but I'm sure it's right."</em> Two years later, electron diffraction experiments proved de Broglie correct. Nobel 1929.</p>`,
+                highlight: 'The 1929 Nobel Prize in Physics was awarded to de Broglie for a PhD thesis — something that had almost never happened before in science history.',
+                highlightLabel: 'de Broglie Waves · 1924',
+            },
+            {
+                eyebrow: 'Göttingen · 1925 · Werner Heisenberg',
+                title: 'The Uncertainty Principle —\nNot a Measurement Limitation',
+                body: `<p>Werner Heisenberg, aged 23, went to a remote island because of severe rhinitis. There, in isolation, he developed the <strong>Uncertainty Principle</strong>.</p>
+                       <p>The statement: you cannot know the position and momentum of a particle simultaneously with unlimited precision. The more precisely you know position, the less precisely you know momentum. And vice versa.</p>
+                       <p><strong>This is not because instruments aren't advanced enough</strong> — it's a fundamental property of the universe. Uncertainty is built into reality itself, not a limitation of ours.</p>`,
+                highlight: 'Δx · Δp ≥ ℏ/2',
+                highlightLabel: 'The Heisenberg Uncertainty Equation — where ℏ is Planck\'s constant / 2π',
+            },
+            {
+                eyebrow: 'Zürich · 1926 · Erwin Schrödinger',
+                title: 'The Wave Function —\nElectrons Are Everywhere',
+                body: `<p>Schrödinger developed a wave equation describing electron evolution. The squared wave function (|ψ|²) at a point = <strong>the probability of finding the electron at that point</strong>.</p>
+                       <p>An electron doesn't exist in one place. It exists as a probability distribution — a "cloud" spread out. Only when measured does the electron "collapse" to one position. Before measurement: it exists everywhere (superposition).</p>`,
+                highlight: '"God does not play dice." — Einstein, rejecting this probabilistic interpretation until the end of his life.\n"Don\'t tell God what to do." — Bohr\'s reply. This debate was never resolved.',
+                highlightLabel: '↯ Einstein vs. Bohr — The Greatest Debate in Physics History',
+            },
+            {
+                eyebrow: 'Modern Atomic Model · 1927–Now',
+                title: 'Orbitals — Probability Clouds,\nNot Planetary Orbits',
+                body: `<p>The modern atomic model accepted today comes from quantum mechanics. Electrons don't move in circular orbits — they inhabit <strong>orbitals</strong>, which are 3D regions of probability.</p>
+                       <p>Each orbital has a different shape: spherical (s), dumbbell (p), complex (d, f). Electrons exist in these orbitals as probability distributions — not tiny balls spinning around.</p>
+                       <p>This model holds to this day, predicting chemical properties, molecular bonding, and atomic spectra with accuracy up to <strong>12 decimal places</strong>.</p>`,
+                highlight: 'Quantum theory is the most accurate theory in physics history. Its predictions match experiments to 12 decimal places — equivalent to measuring the distance from New York to LA with the accuracy of a hair\'s width.',
+                highlightLabel: 'The Atomic Model We Use Today',
+            },
+        ],
+    },
+
+    /* ══ EPILOGUE ══════════════════════════════════════ */
+    {
+        id: 'epilog', chapterNum: '∞', chapterName: 'Epilogue',
+        year: 'Now', protagonist: '', color: '#7c73ff',
+        model: 'epilog',
+        slides: [
+            {
+                eyebrow: 'The Journey Continues',
+                title: 'Atoms still\nhold secrets.',
+                body: `<p>We know protons and neutrons are made of <strong>quarks</strong> — more fundamental particles. But are quarks the smallest unit? Or is there a deeper level?</p>
+                       <p>And the biggest unsolved problem: <strong>quantum mechanics and Einstein's general relativity cannot be unified</strong>. Both are correct in their domains — but they can't describe reality in one consistent theory.</p>
+                       <p>The Copenhagen interpretation, Many-Worlds, Pilot Wave — physicists are still debating the true meaning of quantum mechanics. 2,400 years of debate — and still unfinished.</p>`,
+                highlight: '"If you are not shocked by quantum mechanics, you haven\'t really understood it."',
+                highlightLabel: '— Richard Feynman',
+            },
+        ],
+    },
+];
+
+
+
 /* ─────────────────────────────────────────────────────────────────────
    ATOM MODEL RENDERERS
    ───────────────────────────────────────────────────────────────────── */
-function renderAtomModel(model: string, color: string): string {
+function renderAtomModel(model: string, color: string, isEN: boolean): string {
+    const cap = (id: string, en: string) => isEN ? en : id;
     switch (model) {
         case 'prolog':
             return `<div class="amod amod-prolog">
@@ -346,7 +653,7 @@ function renderAtomModel(model: string, color: string): string {
                     <div class="amod-solid-shine"></div>
                     <div class="amod-solid-label">atomos</div>
                 </div>
-                <div class="amod-caption">Model Democritus — Bola Solid</div>
+                <div class="amod-caption">${cap('Model Democritus — Bola Solid', 'Democritus Model — Solid Sphere')}</div>
             </div>`;
 
         case 'billiard':
@@ -355,7 +662,7 @@ function renderAtomModel(model: string, color: string): string {
                     <div class="amod-billiard-gloss"></div>
                     <div class="amod-billiard-band"></div>
                 </div>
-                <div class="amod-caption">Model Bola Biliar — Dalton</div>
+                <div class="amod-caption">${cap('Model Bola Biliar — Dalton', 'Billiard Ball Model — Dalton')}</div>
             </div>`;
 
         case 'plum':
@@ -366,12 +673,12 @@ function renderAtomModel(model: string, color: string): string {
             ).join('')}
                     <div class="amod-plum-plus">+ + +<br>+ + +<br>+ + +</div>
                 </div>
-                <div class="amod-caption">Model Plum Pudding — Thomson 1904</div>
+                <div class="amod-caption">${cap('Model Plum Pudding — Thomson 1904', 'Plum Pudding Model — Thomson 1904')}</div>
             </div>`;
 
         case 'rutherford':
             return `<div class="amod amod-rutherford-wrap" style="--mc:${color}">
-                <div class="amod-foil-label">Foil Emas</div>
+                <div class="amod-foil-label">${cap('Foil Emas', 'Gold Foil')}</div>
                 <div class="amod-rfield">
                     <div class="amod-foil-line"></div>
                     ${Array.from({ length: 7 }).map((_, i) =>
@@ -379,7 +686,7 @@ function renderAtomModel(model: string, color: string): string {
             ).join('')}
                     <div class="amod-rnucleus">Au<br><small>79</small></div>
                 </div>
-                <div class="amod-caption">Eksperimen Gold Foil — Rutherford 1909</div>
+                <div class="amod-caption">${cap('Eksperimen Gold Foil — Rutherford 1909', 'Gold Foil Experiment — Rutherford 1909')}</div>
             </div>`;
 
         case 'bohr':
@@ -391,13 +698,13 @@ function renderAtomModel(model: string, color: string): string {
                     <div class="amod-borbit o3"><div class="amod-be3">e⁻</div></div>
                 </div>
                 <div class="amod-photon">hν</div>
-                <div class="amod-caption">Model Bohr — Orbit Kuantum 1913</div>
+                <div class="amod-caption">${cap('Model Bohr — Orbit Kuantum 1913', 'Bohr Model — Quantum Orbits 1913')}</div>
             </div>`;
 
         case 'quantum':
             return `<div class="amod amod-quantum-wrap">
                 <canvas id="qcloud-canvas" class="amod-qcanvas" width="280" height="280"></canvas>
-                <div class="amod-caption">Orbital Kuantum — Awan Probabilitas</div>
+                <div class="amod-caption">${cap('Orbital Kuantum — Awan Probabilitas', 'Quantum Orbital — Probability Cloud')}</div>
             </div>`;
 
         case 'epilog':
@@ -415,7 +722,7 @@ function renderAtomModel(model: string, color: string): string {
 /* ─────────────────────────────────────────────────────────────────────
    RENDER CHAPTER SECTION
    ───────────────────────────────────────────────────────────────────── */
-function renderChapterSection(ch: Chapter, chIdx: number): string {
+function renderChapterSection(ch: Chapter, chIdx: number, isEN: boolean): string {
     const hasMultiSlide = ch.slides.length > 1;
 
     const slidesHTML = ch.slides.map((sl, sIdx) => `
@@ -480,21 +787,21 @@ function renderChapterSection(ch: Chapter, chIdx: number): string {
 
         <!-- Right: persistent atom model -->
         <div class="ah-right">
-            ${renderAtomModel(ch.model, ch.color)}
+            ${renderAtomModel(ch.model, ch.color, isEN)}
         </div>
 
         <!-- Scroll hint (first section only) -->
-        ${chIdx === 0 ? `<div class="ah-scroll-hint">Scroll untuk babak berikutnya ↓</div>` : ''}
+        ${chIdx === 0 ? `<div class="ah-scroll-hint">${isEN ? 'Scroll for the next act ↓' : 'Scroll untuk babak berikutnya ↓'}</div>` : ''}
     </section>`;
 }
 
 /* ─────────────────────────────────────────────────────────────────────
    CHAPTER PROGRESS BAR (sticky top)
    ───────────────────────────────────────────────────────────────────── */
-function renderChapterBar(): string {
+function renderChapterBar(chapters: Chapter[]): string {
     return `
     <div class="ah-chapter-bar" id="ah-chapter-bar">
-        ${CHAPTERS.map((ch, i) => `
+        ${chapters.map((ch, i) => `
         <button class="ah-cb-item ${i === 0 ? 'active' : ''}" data-cb="${i}" data-href="#ch-${ch.id}" title="${ch.chapterName} · ${ch.year}">
             <span class="ah-cb-num">${ch.chapterNum}</span>
             <span class="ah-cb-label">${ch.chapterName}</span>
@@ -507,26 +814,28 @@ function renderChapterBar(): string {
    ───────────────────────────────────────────────────────────────────── */
 export function renderAtomHistory(container: HTMLElement): () => void {
     const cleanups: Array<() => void> = [];
+    const isEN = getLang() === 'en';
+    const chapters = getChapters(isEN);
 
     container.innerHTML = `
     <div class="ah3-root">
         <!-- Back -->
-        <button class="ah3-back" id="ah3-back">← Beranda</button>
+        <button class="ah3-back" id="ah3-back">← ${isEN ? 'Home' : 'Beranda'}</button>
 
         <!-- Chapter progress -->
-        ${renderChapterBar()}
+        ${renderChapterBar(chapters)}
 
         <!-- Sections -->
         <div class="ah3-scroll" id="ah3-scroll">
-            ${CHAPTERS.map((ch, i) => renderChapterSection(ch, i)).join('')}
+            ${chapters.map((ch, i) => renderChapterSection(ch, i, isEN)).join('')}
 
             <!-- Final CTA -->
             <section class="ah3-cta">
-                <h3>Perdebatan 2.400 tahun telah mengantarkan kita ke sini.</h3>
-                <p>Sekarang, jelajahi tabel periodik — 118 elemen hasil pemahaman kita tentang atom.</p>
+                <h3>${isEN ? '2,400 years of debate have brought us here.' : 'Perdebatan 2.400 tahun telah mengantarkan kita ke sini.'}</h3>
+                <p>${isEN ? 'Now, explore the periodic table — 118 elements, the fruit of our understanding of the atom.' : 'Sekarang, jelajahi tabel periodik — 118 elemen hasil pemahaman kita tentang atom.'}</p>
                 <div class="ah3-cta-btns">
-                    <button class="ah3-cta-btn primary" id="ah3-go-explore">🧪 Jelajahi 118 Elemen →</button>
-                    <button class="ah3-cta-btn secondary" id="ah3-go-home">Kembali ke Beranda</button>
+                    <button class="ah3-cta-btn primary" id="ah3-go-explore">🧪 ${isEN ? 'Explore 118 Elements →' : 'Jelajahi 118 Elemen →'}</button>
+                    <button class="ah3-cta-btn secondary" id="ah3-go-home">${isEN ? 'Back to Home' : 'Kembali ke Beranda'}</button>
                 </div>
             </section>
         </div>
@@ -551,7 +860,7 @@ export function renderAtomHistory(container: HTMLElement): () => void {
                 (e.target as HTMLElement).classList.add('revealed');
             }
         });
-    }, { threshold: 0.35, rootElement: scrollEl });
+    }, { threshold: 0.35, root: scrollEl });
     sections.forEach(s => sectionObs.observe(s));
     cleanups.push(() => sectionObs.disconnect());
 

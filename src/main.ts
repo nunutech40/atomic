@@ -1,6 +1,6 @@
 import './styles/global.css';
 import { initTheme } from './core/theme';
-import { initRouter, addRoute, setCleanup } from './core/router';
+import { initRouter, addRoute, setCleanup, resolve } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderDashboard } from './components/Dashboard';
 import { renderPeriodicTable } from './components/PeriodicTable';
@@ -27,6 +27,7 @@ let tableCleanup: (() => void) | null = null;
 
 function rerender() {
     renderNav(navContainer, () => { }, rerender);
+    resolve(); // re-render current page so content translates too
 }
 
 renderNav(navContainer, () => { }, rerender);

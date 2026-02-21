@@ -2,8 +2,84 @@ import * as THREE from 'three';
 import { navigate } from '../core/router';
 import { elements } from '../data/elements';
 import { categories } from '../data/categories';
+import { getLang } from '../core/i18n';
 
 export function renderDashboard(container: HTMLElement): () => void {
+  const isEN = getLang() === 'en';
+
+  // ─── Bilingual copy ──────────────────────────────────────────────────────
+  const copy = {
+    heroLabel: isEN ? '⚛ one carbon atom' : '⚛ satu atom karbon',
+    heroTitle: isEN ? 'Everything<br>is made of this.' : 'Segalanya<br>tersusun dari ini.',
+    heroNum: isEN ? '7,000,000,000,000,000,000,000,000,000' : '7.000.000.000.000.000.000.000.000.000',
+    heroSub1: isEN ? 'Your body contains' : 'Tubuhmu mengandung',
+    heroSub2: isEN ? 'atoms. Every single one was once part of a star.' : 'atom. Setiap satu pernah menjadi bagian dari bintang.',
+    heroScroll: isEN ? 'Scroll to explore ↓' : 'Scroll untuk menjelajahi ↓',
+
+    ch1Tag: isEN ? 'Chapter 1' : 'Chapter 1',
+    ch1Title: isEN ? 'How small is an atom, really?' : 'Sekecil apa, sebenarnya?',
+    ch1Sub: isEN ? 'Drag the slider to grasp a scale your brain wasn\'t built to imagine.' : 'Geser slider untuk memahami skala yang tidak bisa dibayangkan akal biasa.',
+    ch1Fact: isEN
+      ? 'If an atom were the size of a football field, its <strong>nucleus</strong> would be a <strong>grain of dust at the center</strong>.'
+      : 'Jika sebuah atom sebesar lapangan bola, maka <strong>nukleus</strong>-nya sekecil <strong>butir debu di tengah lapangan</strong> itu.',
+
+    ch2Tag: isEN ? 'Chapter 2' : 'Chapter 2',
+    ch2Title: isEN ? 'What\'s actually inside?' : 'Apa yang ada di dalamnya?',
+    ch2Sub: isEN ? 'Click each particle to learn more.' : 'Klik setiap partikel untuk belajar lebih.',
+    ch2Prompt: isEN ? 'Click a particle' : 'Klik partikel',
+    ch2PromptSub: isEN ? 'Select a proton, neutron, or electron to see the details.' : 'Pilih proton, neutron, atau elektron untuk melihat detailnya.',
+    protonBody: isEN
+      ? 'Carries <strong>positive charge (+1)</strong>. Lives in the nucleus. Number of protons = <strong>atomic number</strong> = element identity.<br><br><em>1 proton = Hydrogen. 6 protons = Carbon. 79 protons = Gold.</em>'
+      : 'Bermuatan <strong>positif (+1)</strong>. Berada di inti atom (nukleus). Jumlah proton = <strong>nomor atom</strong> = identitas elemen.<br><br><em>1 proton = Hidrogen. 6 proton = Karbon. 79 proton = Emas.</em>',
+    neutronBody: isEN
+      ? '<strong>Neutral</strong> — no charge. Lives in the nucleus alongside protons. Neutrons are the "glue" keeping protons from repelling each other.<br><br><em>Isotope = same element, different number of neutrons.</em>'
+      : '<strong>Netral</strong> — tidak bermuatan. Berada di inti bersama proton. Neutron adalah "lem" yang menahan proton agar tidak saling tolak menolak.<br><br><em>Isotop = atom yang protonnya sama tapi neutronnya beda.</em>',
+    electronBody: isEN
+      ? 'Carries <strong>negative charge (−1)</strong>. Moves in a cloud around the nucleus. Mass is 1,836× lighter than a proton — nearly zero.<br><br><em>Outer electrons determine how an atom reacts with others.</em>'
+      : 'Bermuatan <strong>negatif (−1)</strong>. Bergerak di "awan" di sekitar nukleus. Massanya 1.836× lebih ringan dari proton — hampir nol.<br><br><em>Elektron terluar menentukan bagaimana atom bereaksi dengan atom lain.</em>',
+    emptyLabel: isEN ? 'of an atom is <strong>empty space</strong>' : 'dari atom adalah <strong>ruang kosong</strong>',
+    emptySub: isEN
+      ? 'If you removed all the empty space from every atom in every human body,<br>all of humanity would fit inside a <strong>sugar cube</strong>.'
+      : 'Jika semua ruang kosong dari atom-atom di tubuhmu dihilangkan,<br>seluruh umat manusia muat dalam ukuran <strong>segelas gula</strong>.',
+
+    ch3Tag: isEN ? 'Chapter 3' : 'Chapter 3',
+    ch3Title: isEN ? 'One proton changes everything.' : 'Satu proton mengubah segalanya.',
+    ch3Sub: isEN
+      ? 'Add or remove a proton — and the atom becomes an entirely different element.'
+      : 'Tambah atau kurangi proton — dan atom berubah menjadi elemen yang sama sekali berbeda.',
+    ch3DefaultFact: isEN ? 'The foundation of all life. You are made of Carbon.' : 'Fondasi semua kehidupan. Kamu tersusun dari Karbon.',
+    ch3Quote: isEN
+      ? '"Everything that makes <em>you</em> different from <em>a rock</em> is just a different arrangement of protons."'
+      : '"Semua yang membuat <em>kamu</em> berbeda dari <em>batu</em> hanyalah susunan proton yang berbeda."',
+
+    ch4Tag: isEN ? 'Chapter 4' : 'Chapter 4',
+    ch4Title: isEN ? 'Where did they come from?' : 'Dari mana asalnya?',
+    bb: isEN ? 'Big Bang' : 'Big Bang',
+    bbBody: isEN ? '13.8 billion years ago — Hydrogen & Helium forged in the first seconds of the universe.' : '13,8 miliar tahun lalu — Hidrogen & Helium dicipta dalam detik pertama alam semesta.',
+    fusion: isEN ? 'Stellar Fusion' : 'Fusi Bintang',
+    fusionBody: isEN ? 'Inside massive stars, Hydrogen fuses into Carbon, Oxygen, Iron over billions of years.' : 'Di dalam inti bintang masif, Hidrogen melebur menjadi Karbon, Oksigen, Besi selama miliaran tahun.',
+    supernova: isEN ? 'Supernova' : 'Supernova',
+    supernovaBody: isEN ? 'A star explodes — scattering all those elements across the galaxy. Including the ones in your body.' : 'Bintang meledak — menyebarkan semua elemen itu ke seluruh galaksi. Termasuk yang ada di tubuhmu.',
+    neutronStar: isEN ? 'Neutron Star Collision' : 'Tabrakan Bintang Neutron',
+    neutronStarBody: isEN ? 'Gold, Platinum, Uranium — only born from the collision of two neutron stars, an incredibly rare event.' : 'Emas, Platinum, Uranium — hanya bisa terbentuk dari tumbukan dua bintang neutron yang sangat langka.',
+    sagan: isEN ? '"We are a way for the cosmos to know itself."' : '"Kita adalah cara alam semesta mengenal dirinya sendiri."',
+    historyP: isEN
+      ? 'But it took <strong>2,400 years</strong> for humanity to prove atoms were real.<br>A journey full of debate, wild experiments, and Eureka moments.'
+      : 'Tapi butuh <strong>2.400 tahun</strong> bagi manusia untuk membuktikan atom itu nyata.<br>Itu perjalanan yang penuh perdebatan, eksperimen gila, dan momen "Eureka".',
+    historyBtn: isEN ? 'See the full discovery story' : 'Lihat perjalanan penemuannya',
+
+    ctaTitle: isEN ? 'Now, meet them one by one.' : 'Sekarang, kenali mereka satu per satu.',
+    ctaSub: isEN ? '118 elements. Every one has a story.' : '118 elemen. Setiap satu punya cerita.',
+    exploreTitle: isEN ? 'Explore the Table' : 'Eksplorasi Tabel',
+    exploreBody: isEN ? 'Browse 118 elements — click for full details, 3D atom models, and discovery stories.' : 'Jelajahi 118 elemen — klik untuk detail lengkap, 3D atom, dan kisah penemuannya.',
+    exploreBtn: isEN ? 'Open Periodic Table →' : 'Buka Tabel Periodik →',
+    labTitle: isEN ? 'Chem Lab' : 'Kimia Lab',
+    labBody: isEN ? 'Combine atoms and build molecules — H₂O, CO₂, DNA, and more, interactively.' : 'Gabungkan atom dan bangun molekul — H₂O, CO₂, DNA, dan lainnya secara interaktif.',
+    labBtn: isEN ? 'Enter Lab →' : 'Masuk Lab →',
+    phenTitle: isEN ? 'Atomic Phenomena' : 'Fenomena Atom',
+    phenBody: isEN ? 'From radioactivity to superconductors — atoms behind real-world wonders.' : 'Dari radioaktivitas hingga superkonduktor — atom di balik keajaiban dunia nyata.',
+    phenBtn: isEN ? 'See Phenomena →' : 'Lihat Fenomena →',
+  };
   container.innerHTML = `
     <div class="dash-root">
 
@@ -13,14 +89,13 @@ export function renderDashboard(container: HTMLElement): () => void {
       <section class="dash-hero" id="dash-hero">
         <canvas id="hero-canvas"></canvas>
         <div class="dash-hero-content">
-          <div class="dash-hero-label">⚛ satu atom karbon</div>
-          <h1 class="dash-hero-title">Segalanya<br>tersusun dari ini.</h1>
+          <div class="dash-hero-label">${copy.heroLabel}</div>
+          <h1 class="dash-hero-title">${copy.heroTitle}</h1>
           <p class="dash-hero-sub">
-            Tubuhmu mengandung <span class="dash-hero-num">7.000.000.000.000.000.000.000.000.000</span> atom.<br>
-            Setiap satu pernah menjadi bagian dari bintang.
+            ${copy.heroSub1} <span class="dash-hero-num">${copy.heroNum}</span> ${copy.heroSub2}
           </p>
           <button class="dash-scroll-hint" id="dash-scroll-btn">
-            Scroll untuk menjelajahi ↓
+            ${copy.heroScroll}
           </button>
         </div>
         <div class="dash-hero-gradient"></div>
@@ -31,11 +106,9 @@ export function renderDashboard(container: HTMLElement): () => void {
       ═══════════════════════════════════════════════════ -->
       <section class="dash-section dash-scale" id="sec-scale">
         <div class="dash-section-inner">
-          <div class="dash-chapter-tag reveal-up">Chapter 1</div>
-          <h2 class="dash-section-title reveal-up">Sekecil apa, sebenarnya?</h2>
-          <p class="dash-section-sub reveal-up">
-            Geser slider untuk memahami skala yang tidak bisa dibayangkan akal biasa.
-          </p>
+          <div class="dash-chapter-tag reveal-up">${copy.ch1Tag}</div>
+          <h2 class="dash-section-title reveal-up">${copy.ch1Title}</h2>
+          <p class="dash-section-sub reveal-up">${copy.ch1Sub}</p>
 
           <div class="scale-box reveal-up">
             <div class="scale-track" id="scale-track">
@@ -48,7 +121,7 @@ export function renderDashboard(container: HTMLElement): () => void {
 
           <div class="scale-fact reveal-up">
             <span class="scale-fact-icon">💡</span>
-            <p>Jika sebuah atom sebesar lapangan bola, maka <strong>nukleus</strong>-nya sekecil <strong>butir debu di tengah lapangan</strong> itu.</p>
+            <p>${copy.ch1Fact}</p>
           </div>
         </div>
       </section>
@@ -58,11 +131,9 @@ export function renderDashboard(container: HTMLElement): () => void {
       ═══════════════════════════════════════════════════ -->
       <section class="dash-section dash-anatomy" id="sec-anatomy">
         <div class="dash-section-inner">
-          <div class="dash-chapter-tag reveal-up">Chapter 2</div>
-          <h2 class="dash-section-title reveal-up">Apa yang ada di dalamnya?</h2>
-          <p class="dash-section-sub reveal-up">
-            Klik setiap partikel untuk belajar lebih.
-          </p>
+          <div class="dash-chapter-tag reveal-up">${copy.ch2Tag}</div>
+          <h2 class="dash-section-title reveal-up">${copy.ch2Title}</h2>
+          <p class="dash-section-sub reveal-up">${copy.ch2Sub}</p>
 
           <div class="anatomy-wrap reveal-up">
             <div class="anatomy-diagram" id="anatomy-diagram">
@@ -85,49 +156,31 @@ export function renderDashboard(container: HTMLElement): () => void {
             <div class="anatomy-info-panel">
               <div class="anatomy-card active" id="anat-card-default">
                 <div class="anatomy-card-icon">⚛</div>
-                <div class="anatomy-card-title">Klik partikel</div>
-                <div class="anatomy-card-body">Pilih proton, neutron, atau elektron untuk melihat detailnya.</div>
+                <div class="anatomy-card-title">${copy.ch2Prompt}</div>
+                <div class="anatomy-card-body">${copy.ch2PromptSub}</div>
               </div>
               <div class="anatomy-card" id="anat-card-proton">
                 <div class="anatomy-card-icon" style="color:#ff6b6b">p⁺</div>
                 <div class="anatomy-card-title">Proton</div>
-                <div class="anatomy-card-body">
-                  Bermuatan <strong>positif (+1)</strong>. Berada di inti atom (nukleus). 
-                  Jumlah proton = <strong>nomor atom</strong> = identitas elemen.
-                  <br><br>
-                  <em>1 proton = Hidrogen. 6 proton = Karbon. 79 proton = Emas.</em>
-                </div>
+                <div class="anatomy-card-body">${copy.protonBody}</div>
               </div>
               <div class="anatomy-card" id="anat-card-neutron">
                 <div class="anatomy-card-icon" style="color:#74b9ff">n</div>
                 <div class="anatomy-card-title">Neutron</div>
-                <div class="anatomy-card-body">
-                  <strong>Netral</strong> — tidak bermuatan. Berada di inti bersama proton.
-                  Neutron adalah "lem" yang menahan proton agar tidak saling tolak menolak.
-                  <br><br>
-                  <em>Isotop = atom yang protonnya sama tapi neutronnya beda.</em>
-                </div>
+                <div class="anatomy-card-body">${copy.neutronBody}</div>
               </div>
               <div class="anatomy-card" id="anat-card-electron">
                 <div class="anatomy-card-icon" style="color:#a29bfe">e⁻</div>
-                <div class="anatomy-card-title">Elektron</div>
-                <div class="anatomy-card-body">
-                  Bermuatan <strong>negatif (−1)</strong>. Bergerak di "awan" di sekitar nukleus.
-                  Massanya 1.836× lebih ringan dari proton — hampir nol.
-                  <br><br>
-                  <em>Elektron terluar menentukan bagaimana atom bereaksi dengan atom lain.</em>
-                </div>
+                <div class="anatomy-card-title">Electron</div>
+                <div class="anatomy-card-body">${copy.electronBody}</div>
               </div>
             </div>
           </div>
 
           <div class="empty-fact reveal-up">
-            <div class="empty-fact-num">99,9999999%</div>
-            <div class="empty-fact-label">dari atom adalah <strong>ruang kosong</strong></div>
-            <div class="empty-fact-sub">
-              Jika semua ruang kosong dari atom-atom di tubuhmu dihilangkan,<br>
-              seluruh umat manusia muat dalam ukuran <strong>segelas gula</strong>.
-            </div>
+            <div class="empty-fact-num">99.9999999%</div>
+            <div class="empty-fact-label">${copy.emptyLabel}</div>
+            <div class="empty-fact-sub">${copy.emptySub}</div>
           </div>
         </div>
       </section>
@@ -137,11 +190,9 @@ export function renderDashboard(container: HTMLElement): () => void {
       ═══════════════════════════════════════════════════ -->
       <section class="dash-section dash-identity" id="sec-identity">
         <div class="dash-section-inner">
-          <div class="dash-chapter-tag reveal-up">Chapter 3</div>
-          <h2 class="dash-section-title reveal-up">Satu proton mengubah segalanya.</h2>
-          <p class="dash-section-sub reveal-up">
-            Tambah atau kurangi proton — dan atom berubah menjadi elemen yang sama sekali berbeda.
-          </p>
+          <div class="dash-chapter-tag reveal-up">${copy.ch3Tag}</div>
+          <h2 class="dash-section-title reveal-up">${copy.ch3Title}</h2>
+          <p class="dash-section-sub reveal-up">${copy.ch3Sub}</p>
 
           <div class="identity-box reveal-up">
             <div class="identity-controls">
@@ -155,15 +206,15 @@ export function renderDashboard(container: HTMLElement): () => void {
 
             <div class="identity-element-card" id="id-card">
               <div class="identity-sym" id="id-sym">C</div>
-              <div class="identity-name" id="id-name">Karbon</div>
+              <div class="identity-name" id="id-name">${isEN ? 'Carbon' : 'Karbon'}</div>
               <div class="identity-cat" id="id-cat">Nonmetal</div>
-              <div class="identity-fact" id="id-fact">Fondasi semua kehidupan. Kamu tersusun dari Karbon.</div>
+              <div class="identity-fact" id="id-fact">${copy.ch3DefaultFact}</div>
             </div>
           </div>
 
           <div class="identity-quote reveal-up">
             <span class="identity-quote-icon">✦</span>
-            <p>"Semua yang membuat <em>kamu</em> berbeda dari <em>batu</em> hanyalah susunan proton yang berbeda."</p>
+            <p>${copy.ch3Quote}</p>
           </div>
         </div>
       </section>
@@ -173,47 +224,44 @@ export function renderDashboard(container: HTMLElement): () => void {
       ═══════════════════════════════════════════════════ -->
       <section class="dash-section dash-origin" id="sec-origin">
         <div class="dash-section-inner">
-          <div class="dash-chapter-tag reveal-up">Chapter 4</div>
-          <h2 class="dash-section-title reveal-up">Dari mana asalnya?</h2>
+          <div class="dash-chapter-tag reveal-up">${copy.ch4Tag}</div>
+          <h2 class="dash-section-title reveal-up">${copy.ch4Title}</h2>
 
           <div class="origin-chain reveal-up">
             <div class="origin-step">
               <div class="origin-step-icon">💥</div>
-              <div class="origin-step-title">Big Bang</div>
-              <div class="origin-step-body">13,8 miliar tahun lalu — Hidrogen & Helium dicipta dalam detik pertama alam semesta.</div>
+              <div class="origin-step-title">${copy.bb}</div>
+              <div class="origin-step-body">${copy.bbBody}</div>
             </div>
             <div class="origin-arrow">→</div>
             <div class="origin-step">
               <div class="origin-step-icon">⭐</div>
-              <div class="origin-step-title">Fusi Bintang</div>
-              <div class="origin-step-body">Di dalam inti bintang masif, Hidrogen melebur menjadi Karbon, Oksigen, Besi selama miliaran tahun.</div>
+              <div class="origin-step-title">${copy.fusion}</div>
+              <div class="origin-step-body">${copy.fusionBody}</div>
             </div>
             <div class="origin-arrow">→</div>
             <div class="origin-step">
               <div class="origin-step-icon">💫</div>
-              <div class="origin-step-title">Supernova</div>
-              <div class="origin-step-body">Bintang meledak — menyebarkan semua elemen itu ke seluruh galaksi. Termasuk yang ada di tubuhmu.</div>
+              <div class="origin-step-title">${copy.supernova}</div>
+              <div class="origin-step-body">${copy.supernovaBody}</div>
             </div>
             <div class="origin-arrow">→</div>
             <div class="origin-step">
               <div class="origin-step-icon">💛</div>
-              <div class="origin-step-title">Tabrakan Bintang Neutron</div>
-              <div class="origin-step-body">Emas, Platinum, Uranium — hanya bisa terbentuk dari tumbukan dua bintang neutron yang sangat langka.</div>
+              <div class="origin-step-title">${copy.neutronStar}</div>
+              <div class="origin-step-body">${copy.neutronStarBody}</div>
             </div>
           </div>
 
           <div class="origin-sagan reveal-up">
-            <div class="origin-sagan-quote">
-              "Kita adalah cara alam semesta mengenal dirinya sendiri."
-            </div>
+            <div class="origin-sagan-quote">${copy.sagan}</div>
             <div class="origin-sagan-name">— Carl Sagan</div>
           </div>
 
           <div class="origin-history-cta reveal-up">
-            <p>Tapi butuh <strong>2.400 tahun</strong> bagi manusia untuk membuktikan atom itu nyata.<br>
-            Itu perjalanan yang penuh perdebatan, eksperimen gila, dan momen "Eureka".</p>
+            <p>${copy.historyP}</p>
             <button class="origin-history-btn" id="btn-history">
-              <span>Lihat perjalanan penemuannya</span>
+              <span>${copy.historyBtn}</span>
               <span class="origin-btn-arrow">→</span>
             </button>
           </div>
@@ -225,27 +273,27 @@ export function renderDashboard(container: HTMLElement): () => void {
       ═══════════════════════════════════════════════════ -->
       <section class="dash-section dash-cta-final" id="sec-cta">
         <div class="dash-section-inner">
-          <h2 class="dash-cta-title reveal-up">Sekarang, kenali mereka satu per satu.</h2>
-          <p class="dash-cta-sub reveal-up">118 elemen. Setiap satu punya cerita.</p>
+          <h2 class="dash-cta-title reveal-up">${copy.ctaTitle}</h2>
+          <p class="dash-cta-sub reveal-up">${copy.ctaSub}</p>
 
           <div class="dash-cta-cards reveal-up">
             <div class="dash-cta-card" id="cta-explore">
               <div class="dash-cta-card-icon">🔬</div>
-              <div class="dash-cta-card-title">Eksplorasi Tabel</div>
-              <div class="dash-cta-card-body">Jelajahi 118 elemen — klik untuk detail lengkap, 3D atom, dan kisah penemuannya.</div>
-              <div class="dash-cta-card-btn">Buka Tabel Periodik →</div>
+              <div class="dash-cta-card-title">${copy.exploreTitle}</div>
+              <div class="dash-cta-card-body">${copy.exploreBody}</div>
+              <div class="dash-cta-card-btn">${copy.exploreBtn}</div>
             </div>
             <div class="dash-cta-card" id="cta-molecule">
               <div class="dash-cta-card-icon">⚗️</div>
-              <div class="dash-cta-card-title">Kimia Lab</div>
-              <div class="dash-cta-card-body">Gabungkan atom dan bangun molekul — H₂O, CO₂, DNA, dan lainnya secara interaktif.</div>
-              <div class="dash-cta-card-btn">Masuk Lab →</div>
+              <div class="dash-cta-card-title">${copy.labTitle}</div>
+              <div class="dash-cta-card-body">${copy.labBody}</div>
+              <div class="dash-cta-card-btn">${copy.labBtn}</div>
             </div>
             <div class="dash-cta-card" id="cta-phenomena">
               <div class="dash-cta-card-icon">⚡</div>
-              <div class="dash-cta-card-title">Fenomena Atom</div>
-              <div class="dash-cta-card-body">Dari radioaktivitas hingga superkonduktor — atom di balik keajaiban dunia nyata.</div>
-              <div class="dash-cta-card-btn">Lihat Fenomena →</div>
+              <div class="dash-cta-card-title">${copy.phenTitle}</div>
+              <div class="dash-cta-card-body">${copy.phenBody}</div>
+              <div class="dash-cta-card-btn">${copy.phenBtn}</div>
             </div>
           </div>
         </div>

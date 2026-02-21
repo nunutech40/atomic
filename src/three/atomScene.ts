@@ -21,7 +21,9 @@ export class AtomScene {
     private sphereGroup!: THREE.Group;
     private color: THREE.Color;
 
-    constructor(private canvas: HTMLCanvasElement, colorHex: string) {
+    private canvas: HTMLCanvasElement;
+    constructor(canvas: HTMLCanvasElement, colorHex: string) {
+        this.canvas = canvas;
         this.color = new THREE.Color(colorHex);
         this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));

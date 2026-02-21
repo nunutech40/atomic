@@ -622,9 +622,7 @@ body {
 /* Active item uses chapter color (--sc) which already works */
 
 /* Sections: light background with subtle accent glow */
-[data-theme="light"] .ah-section {
-  /* radial bg accent is still var(--sc) based — works fine */
-}
+
 
 /* Chapter tag elements */
 [data-theme="light"] .ah-ch-dot {

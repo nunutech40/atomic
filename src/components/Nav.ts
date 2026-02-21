@@ -13,10 +13,10 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
         <input type="text" id="search-input" placeholder="${t('nav.search')}" autocomplete="off" />
       </div>
       <div class="nav-links">
-        <a class="nav-link" id="nav-home" href="#/">🏠 Beranda</a>
-        <a class="nav-link" id="nav-tabel" href="#/explore">🔬 Tabel</a>
-        <a class="nav-link" id="nav-kimia-lab" href="#/molecule">⚗️ Kimia Lab</a>
-        <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ Fenomena</a>
+        <a class="nav-link" id="nav-home" href="#/">🏠 ${t('nav.home')}</a>
+        <a class="nav-link" id="nav-tabel" href="#/explore">🔬 ${t('nav.explore')}</a>
+        <a class="nav-link" id="nav-kimia-lab" href="#/molecule">⚗️ ${t('nav.lab')}</a>
+        <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ ${t('nav.phenomena')}</a>
       </div>
       <button class="nav-btn" id="lang-btn">${getLang() === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'}</button>
       <button class="nav-btn" id="theme-btn">${getTheme() === 'dark' ? '☀️' : '🌙'}</button>

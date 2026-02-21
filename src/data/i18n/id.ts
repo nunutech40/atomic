@@ -1,6 +1,14 @@
 export default {
     app: { title: 'Atomic', subtitle: 'Penjelajah Atom 3D Interaktif' },
-    nav: { home: 'Tabel Periodik', search: 'Cari elemen...', language: 'Bahasa', theme: 'Tema' },
+    nav: {
+        home: 'Beranda',
+        explore: 'Tabel',
+        lab: 'Kimia Lab',
+        phenomena: 'Fenomena',
+        search: 'Cari elemen...',
+        language: 'Bahasa',
+        theme: 'Tema',
+    },
     element: {
         atomicNumber: 'Nomor Atom', atomicMass: 'Massa Atom', protons: 'Proton', neutrons: 'Neutron',
         electrons: 'Elektron', electronConfig: 'Konfigurasi Elektron', shells: 'Kulit Elektron',
