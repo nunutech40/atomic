@@ -17,6 +17,7 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
         <a class="nav-link" id="nav-tabel" href="#/explore">🔬 ${t('nav.explore')}</a>
         <a class="nav-link" id="nav-kimia-lab" href="#/molecule">⚗️ ${t('nav.lab')}</a>
         <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ ${t('nav.phenomena')}</a>
+        <a class="nav-link" id="nav-anatomi" href="#/composition">🧬 ${getLang() === 'en' ? 'Anatomy' : 'Anatomi'}</a>
       </div>
       <button class="nav-btn" id="lang-btn">${getLang() === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'}</button>
       <button class="nav-btn" id="theme-btn">${getTheme() === 'dark' ? '☀️' : '🌙'}</button>
@@ -42,7 +43,9 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
       const el = a as HTMLAnchorElement;
       const href = el.getAttribute('href') ?? '';
       const isHome = href === '#/' && (hash === '' || hash === '#/');
-      el.classList.toggle('nav-link--active', hash === href || isHome);
+      // Match /composition sub-routes to #nav-anatomi
+      const isComposition = href === '#/composition' && hash.startsWith('#/composition');
+      el.classList.toggle('nav-link--active', hash === href || isHome || isComposition);
     });
   }
   updateActiveLink();

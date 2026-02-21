@@ -45,7 +45,37 @@ export function renderPhenomenaList(container: HTMLElement) {
     `;
     page.appendChild(searchWrap);
 
+    // ── FEATURED: ANATOMI ATOM CTA ────────────────────────────────────────
+    const anatomiCta = document.createElement('div');
+    anatomiCta.className = 'phen-anatomi-cta';
+    anatomiCta.innerHTML = `
+        <div class="phen-anatomi-cards">
+            <div class="phen-anatomi-card" id="cta-human" data-href="/composition/human">
+                <div class="phen-anatomi-card-icon">🧬</div>
+                <div class="phen-anatomi-card-body">
+                    <div class="phen-anatomi-card-title">${isEN ? 'Human Body' : 'Tubuh Manusia'}</div>
+                    <div class="phen-anatomi-card-sub">${isEN ? 'O · C · H · N and 10 more elements' : 'O · C · H · N dan 10 elemen lainnya'}</div>
+                </div>
+                <div class="phen-anatomi-card-arrow">→</div>
+            </div>
+            <div class="phen-anatomi-card" id="cta-earth" data-href="/composition/earth">
+                <div class="phen-anatomi-card-icon">🌍</div>
+                <div class="phen-anatomi-card-body">
+                    <div class="phen-anatomi-card-title">${isEN ? 'Planet Earth' : 'Planet Bumi'}</div>
+                    <div class="phen-anatomi-card-sub">${isEN ? '6 layers · from core to atmosphere' : '6 lapisan · dari inti hingga atmosfer'}</div>
+                </div>
+                <div class="phen-anatomi-card-arrow">→</div>
+            </div>
+        </div>
+    `;
+    anatomiCta.addEventListener('click', (e) => {
+        const card = (e.target as HTMLElement).closest('[data-href]') as HTMLElement | null;
+        if (card) navigate(card.dataset.href!);
+    });
+    page.appendChild(anatomiCta);
+
     // ── CATEGORY FILTER TABS ──────────────────────────────────────────────
+
     const tabs = document.createElement('div');
     tabs.className = 'phenomena-tabs';
     tabs.innerHTML = `
