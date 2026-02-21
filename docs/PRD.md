@@ -2,7 +2,7 @@
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
 **Version:** 1.4  
 **Date:** 2026-02-21  
-**Status:** Phase 1 Complete · Bilingual Complete · Next: Dashboard Rebuild + Explore Rebuild
+**Status:** Phase 1 Complete · Bilingual Complete · Dashboard Complete · Next: Explore Rebuild + Kimia Lab
 
 ---
 
@@ -75,6 +75,7 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 | **27 Fenomena, 6 Kategori** | ✅ | Nuklir, Kuantum, Sehari-hari, Kosmik, Kehidupan, Fiksi & Sains |
 | **Filter kategori tab** | ✅ | Filter real-time, count per kategori |
 | **Storyteller slide per fenomena** | ✅ | Narasi lengkap, animasi CSS per fenomena |
+| **Dashboard** — first principle, 5 chapter, bilingual | ✅ | Scroll-driven, Three.js hero, bilingual |
 | **Sejarah Atom (AtomHistory)** | ✅ | Route `/atom-history`, 22 slide cinematic deck |
 | **6 Babak sejarah atom** | ✅ | Democritus → Dalton → Thomson → Rutherford → Bohr → Schrödinger |
 | **Discoverer Story** | ✅ | Kisah penemu per elemen, route `/discoverer/:sym` |
@@ -105,39 +106,11 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 
 ---
 
-### 🏠 A. Dashboard Rebuild — "First Principle Experience" (🔨 Prioritas 1)
+### 🔬 A. Explore Rebuild — Tabel + Molekul (🔨 Prioritas 1)
 
-> **Konsep inti:** Dashboard adalah halaman utama. Bukan tabel periodik. Ini adalah **scrolling landing page cinematic** yang mengajarkan tentang atom dari **first principle, bottom-up**. User masuk → langsung "WAUW ini atom" → lalu perlahan-lahan memahami: apa itu atom, seberapa kecil, apa isinya, dari mana asalnya.
->
-> Analogi: mirip landing page produk, tapi yang dijual adalah **rasa kagum terhadap atom**.
+> **Konsep:** Halaman `/explore` memuat tabel periodik **DAN** galeri molekul terkenal dalam satu halaman yang continuous. Di atas ada penjelasan cara baca tabel, di bawah ada seksi molekul dengan penjelasan.
 
-**Struktur halaman (scroll-driven, 5+ section):**
-
-| # | Section | Isi | Visual |
-|---|---------|-----|--------|
-| **Hero** | Atom 3D berputar, **full screen, gede** | *"Ini satu atom Carbon."* | Three.js rotating atom, dramatis |
-| **1** | **Sekecil apa?** | Scale comparison scroll-driven | Slider: rambut → sel → bakteri → virus → atom |
-|  |  | *"1 rambut manusia = 1 juta atom berjajar."* |  |
-| **2** | **Apa isinya?** | Bongkar atom: nukleus → proton + neutron + elektron | Interaktif, click-to-reveal |
-|  |  | *"99.9999999% atom adalah ruang kosong."* |  |
-| **3** | **Apa yang membuatmu, kamu?** | Ganti jumlah proton → elemen berubah live | Proton counter interaktif |
-|  |  | *"1 proton membedakan besi dari kobalt."* |  |
-| **4** | **Dari mana asalnya?** | Big Bang → stellar fusion → neutron star collision | Chain animasi CSS/Canvas |
-|  |  | *"Atom emas di cincinmu lahir dari tabrakan bintang neutron."* |  |
-|  |  | **CTA inline: "Lihat sejarah penemuannya →"** → `/atom-history` |  |
-| **5** | **CTA Final** | Jelajahi 118 Elemen · Bangun Molekul · Fenomena | Card buttons |
-
-**Prinsip desain:**
-- Atom 3D di hero harus **gede, dramatis, full screen** — ini momen "WAUW"
-- Setiap section scroll = satu insight baru yang membangun dari section sebelumnya (bottom-up)
-- Bukan storytelling fiksi — ini **first principle science yang disampaikan sinematik**
-- AtomHistory tetap tidak ada di nav, hanya accessible dari Section 4
-
-**File:** `src/components/Dashboard.ts`, `src/styles/global.css`
-
----
-
-### 🔬 B. Explore Rebuild — Tabel + Molekul (🗓️ Setelah Dashboard)
+**Status Dashboard (sudah selesai):** Scroll-driven landing page 5 chapter — Hero (3D atom full screen) → Scale slider → Bongkar atom → Proton counter → Asal usul atom → CTA final. Semua bilingual.
 
 > **Konsep:** Halaman `/explore` memuat tabel periodik **DAN** galeri molekul terkenal dalam satu halaman yang continuous. Di atas ada penjelasan cara baca tabel, di bawah ada seksi molekul dengan penjelasan.
 
@@ -256,7 +229,7 @@ Bukan sekedar platform yang "bagus secara visual". Atomic harus menjadi pengalam
 | Halaman Fenomena — 27 fenomena, 6 kategori | ✅ | ✅ |
 | Sejarah Atom — 22 slide cinematic | ✅ | ✅ |
 | Bilingual EN/ID — semua komponen | ✅ | ✅ |
-| Dashboard rebuild — first principle | 🔨 | — |
+| Dashboard rebuild — first principle | ✅ | ✅ |
 | Explore rebuild — tabel + molekul | 🗓️ | — |
 | Kimia Lab — mode tantangan | 🗓️ | — |
 | Phase 2: 10 modul edukasi | 🗓️ | — |
