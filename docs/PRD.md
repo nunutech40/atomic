@@ -345,5 +345,5 @@ Hosting:  Railway (backend) + Supabase (DB)
 | Kimia Lab — mode tantangan | ✅ | ✅ |
 | Card Keberadaan di Alam | ✅ | ✅ |
 | Card Fenomena Terkait | ✅ | ✅ |
-| Phase 2: 10 modul edukasi | 🔨 | In Progress |
-| Phase 3: 3 level visualisasi | 🗓️ | — |
+| Phase 2: 10 modul edukasi | ✅ | ✅ |
+| Phase 3: Model Orbital (awan probabilitas s/p/d/f) | ✅ | ✅ |

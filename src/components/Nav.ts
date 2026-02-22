@@ -22,7 +22,29 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
       </div>
       <button class="nav-btn" id="lang-btn">${getLang() === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'}</button>
       <button class="nav-btn" id="theme-btn">${getTheme() === 'dark' ? '☀️' : '🌙'}</button>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu">☰</button>
     </nav>
+
+    <!-- Mobile drawer -->
+    <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+      <div class="nav-drawer-header">
+        <span class="nav-drawer-logo">⚛ Atomic</span>
+        <button class="nav-drawer-close" id="nav-drawer-close">✕</button>
+      </div>
+      <div class="nav-drawer-links">
+        <a class="nav-drawer-link" href="#/">🏠 ${t('nav.home')}</a>
+        <a class="nav-drawer-link" href="#/explore">🔬 ${t('nav.explore')}</a>
+        <a class="nav-drawer-link" href="#/learn">📚 ${getLang() === 'en' ? 'Learn' : 'Belajar'}</a>
+        <a class="nav-drawer-link" href="#/molecule">⚗️ ${t('nav.lab')}</a>
+        <a class="nav-drawer-link" href="#/phenomena">⚡ ${t('nav.phenomena')}</a>
+        <a class="nav-drawer-link" href="#/composition">🧬 ${getLang() === 'en' ? 'Anatomy' : 'Anatomi'}</a>
+      </div>
+      <div class="nav-drawer-footer">
+        <button class="nav-drawer-util" id="drawer-lang-btn">${getLang() === 'id' ? '🇮🇩 Bahasa Indonesia' : '🇬🇧 English'}</button>
+        <button class="nav-drawer-util" id="drawer-theme-btn">${getTheme() === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}</button>
+      </div>
+    </div>
+    <div class="nav-drawer-overlay" id="nav-drawer-overlay"></div>
 
     <div id="search-dropdown" style="display:none;position:absolute;z-index:200;width:340px;
       background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius);
@@ -34,8 +56,47 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
   const langBtn = container.querySelector('#lang-btn') as HTMLButtonElement;
   const themeBtn = container.querySelector('#theme-btn') as HTMLButtonElement;
   const logoEl = container.querySelector('#nav-logo') as HTMLElement;
+  const burger = container.querySelector('#nav-burger') as HTMLButtonElement;
+  const drawer = container.querySelector('#nav-drawer') as HTMLElement;
+  const drawerOverlay = container.querySelector('#nav-drawer-overlay') as HTMLElement;
+  const drawerClose = container.querySelector('#nav-drawer-close') as HTMLButtonElement;
+  const drawerLangBtn = container.querySelector('#drawer-lang-btn') as HTMLButtonElement;
+  const drawerThemeBtn = container.querySelector('#drawer-theme-btn') as HTMLButtonElement;
 
   logoEl.addEventListener('click', () => navigate('/'));
+
+  // Drawer open/close
+  function openDrawer() {
+    drawer.classList.add('nav-drawer--open');
+    drawerOverlay.classList.add('nav-drawer-overlay--visible');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('nav-drawer--open');
+    drawerOverlay.classList.remove('nav-drawer-overlay--visible');
+    document.body.style.overflow = '';
+  }
+  burger.addEventListener('click', openDrawer);
+  drawerClose.addEventListener('click', closeDrawer);
+  drawerOverlay.addEventListener('click', closeDrawer);
+  // Close drawer on link click
+  container.querySelectorAll('.nav-drawer-link').forEach(a => {
+    a.addEventListener('click', closeDrawer);
+  });
+
+  // Drawer lang/theme mirrors desktop buttons
+  drawerLangBtn.addEventListener('click', () => {
+    toggleLang();
+    onLangChange();
+    langBtn.textContent = getLang() === 'id' ? '🇮🇩 ID' : '🇬🇧 EN';
+    drawerLangBtn.textContent = getLang() === 'id' ? '🇮🇩 Bahasa Indonesia' : '🇬🇧 English';
+    searchInput.placeholder = t('nav.search');
+  });
+  drawerThemeBtn.addEventListener('click', () => {
+    toggleTheme();
+    themeBtn.textContent = getTheme() === 'dark' ? '☀️' : '🌙';
+    drawerThemeBtn.textContent = getTheme() === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+  });
 
   // Highlight active nav link
   function updateActiveLink() {
