@@ -1,7 +1,7 @@
 # Backend & Subscription Plan — SAINS Platform
 **Project:** SAINS Platform (Multi-Product Learning)  
-**Version:** 1.0  
-**Date:** 2026-02-21  
+**Version:** 1.1  
+**Date:** 2026-02-22  
 **Status:** 📋 PLANNED — Belum diimplementasi. Ini blueprint arsitektur.
 
 ---
@@ -30,37 +30,53 @@ sains.id/biologi             → Produk masa depan: Biologi
 
 | Tipe | Deskripsi | Cara Dapat | Lifetime | Login Limit | Session |
 |------|-----------|-----------|---------|-------------|---------|
-| `guest` | Pengguna coba-coba | Di-generate BE (oleh admin) | 1–2 hari | 3x login | 1 session aktif |
+| `guest` | Pengguna trial via guest code | Admin generate code, user login dgn email + code | Adjustable (1–7 hari) | 2x login per email per code | 1 session aktif |
 | `subscriber` | Pengguna berbayar | Register + bayar via Xendit | Sesuai subscription | Unlimited | 1 session aktif |
 | `admin` | Pengelola platform | Seeded langsung di DB | Selamanya | Unlimited | 2 session aktif |
 
-### 1.2 Guest User — Detail
+### 1.2 Guest User — Detail (Guest Code System)
 
-Guest user bukan daftar sendiri. Admin/operator **men-generate token guest** dari dashboard, lalu membagikan link ke teman/kenalan untuk dicoba.
+Guest user bukan daftar sendiri. Admin **men-generate guest code** dari dashboard — satu kode bisa dishare ke banyak orang sekaligus.
 
 ```
 Flow Guest:
-1. Admin buka dashboard → klik "Generate Guest"
-2. Admin isi: nama/label (internal), email/HP calon (opsional, untuk rekap)
-3. BE buat record `guest_tokens` + link: https://sains.id/atomic?guest=<token>
-4. Admin bagikan link ke calon user
-5. Guest buka link → masukkan email atau no HP (untuk rekap saja, tidak diverifikasi)
-6. BE validasi token guest: belum expired, login belum >3x
-7. Guest dapat session 24 jam
-8. Setelah 3x login ATAU sudah >48 jam sejak generate → token mati otomatis
+1. Admin buka dashboard → klik "Generate Guest Code"
+2. Admin isi: label (e.g. "Promo Februari"), durasi expired (1 hari / 2 hari / 1 minggu)
+3. BE buat record `guest_codes` + code: "ATOM-A7X2" (pendek, mudah dishare)
+4. Admin copy code → share ke banyak orang (WA group, IG story, poster, dll)
+5. Orang buka sains.id/atomic → klik "Coba Gratis" / "Login Guest"
+6. Masukkan: email sendiri + guest code
+7. BE validasi:
+   a. Code masih aktif & belum expired?
+   b. Email ini sudah login berapa kali dengan code ini? (cek `guest_logins`)
+   c. Jika login_count < max_logins_per_email (default: 2) → OK
+   d. Jika sudah >= max → tolak ("Kesempatan trial sudah habis")
+8. Guest dapat session 24 jam
+9. Jika guest code expired → semua session guest dengan code itu mati otomatis
 ```
 
-**Catatan penting:** Guest tidak bisa self-register. Hanya admin yang bisa generate guest token.
+**Keunggulan model Guest Code:**
+- 🎯 Satu code bisa dishare ke banyak orang sekaligus (viral-friendly)
+- 🔒 Setiap email tetap punya batas (2x login per code)
+- ⏱️ Admin bisa set durasi expired: 1 hari, 2 hari, atau 1 minggu
+- 📊 Admin bisa lihat siapa saja yang sudah pakai code (by email)
+- 🚫 Guest tidak bisa self-register. Hanya admin yang bisa generate code.
 
 ### 1.3 Session Rules — Anti Multi-Account Sharing
 
-**Aturan utama: 1 akun = 1 session aktif (subscriber). 3 login guest = habis.**
+**Aturan utama: 1 akun = 1 session aktif (subscriber). Guest: 2 login per email per code.**
 
 ```
-Login baru masuk:
+Login baru masuk (subscriber):
   → Cek apakah ada session aktif untuk user ini
   → JA: revoke session lama + catat anomaly log
   → Buat session baru → simpan device fingerprint + IP
+
+Login guest:
+  → Cek: code aktif & belum expired?
+  → Cek: email ini sudah login berapa kali dgn code ini?
+  → Jika < max → buat session 24 jam
+  → Jika >= max → tolak ("Trial habis, silakan berlangganan")
 ```
 
 ---
@@ -206,7 +222,7 @@ Login request masuk → BE:
   5. Return JWT access token + set refresh token cookie
 ```
 
-**Untuk guest:** Maksimal 3x login (bukan 3 session bersamaan, tapi total lifetime). Counter di `guest_tokens.login_count`.
+**Untuk guest:** Maksimal 2x login per email per guest code. Counter di `guest_logins.login_count`. Satu guest code bisa dipakai banyak orang — masing-masing dibatasi per email.
 
 ### 4.3 Device Fingerprint
 
@@ -312,18 +328,30 @@ CREATE TABLE users (
   created_at    TIMESTAMPTZ DEFAULT now()
 );
 
--- ─── GUEST TOKENS ──────────────────────────────────────────────────────
-CREATE TABLE guest_tokens (
-  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  token         TEXT UNIQUE NOT NULL,    -- random URL-safe token
-  product_id    TEXT REFERENCES products(id),
-  label         TEXT,                    -- label internal admin ("Budi - teman SMA")
-  contact_info  TEXT,                    -- email/HP yang diisi saat akses (opsional)
-  login_count   INTEGER DEFAULT 0,
-  max_logins    INTEGER DEFAULT 2,
-  expires_at    TIMESTAMPTZ NOT NULL,    -- generated_at + 48 jam
-  generated_by  UUID REFERENCES users(id),  -- admin yang generate
-  created_at    TIMESTAMPTZ DEFAULT now()
+-- ─── GUEST CODES ───────────────────────────────────────────────────────
+-- Admin generate 1 code → bisa dishare ke banyak orang
+CREATE TABLE guest_codes (
+  id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  code                  TEXT UNIQUE NOT NULL,    -- short code, e.g. "ATOM-A7X2"
+  product_id            TEXT REFERENCES products(id),
+  label                 TEXT,                    -- label internal admin ("Promo Februari")
+  max_logins_per_email  INTEGER DEFAULT 2,       -- max login per email per code
+  expires_at            TIMESTAMPTZ NOT NULL,    -- adjustable: 1d / 2d / 7d
+  is_active             BOOLEAN DEFAULT TRUE,
+  generated_by          UUID REFERENCES users(id),  -- admin yang generate
+  created_at            TIMESTAMPTZ DEFAULT now()
+);
+
+-- ─── GUEST LOGINS ──────────────────────────────────────────────────────
+-- Track per-email usage per guest code
+CREATE TABLE guest_logins (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guest_code_id   UUID REFERENCES guest_codes(id) ON DELETE CASCADE,
+  email           TEXT NOT NULL,
+  login_count     INTEGER DEFAULT 1,
+  last_login_at   TIMESTAMPTZ DEFAULT now(),
+  created_at      TIMESTAMPTZ DEFAULT now(),
+  UNIQUE(guest_code_id, email)   -- 1 record per email per code
 );
 
 -- ─── SUBSCRIPTIONS ─────────────────────────────────────────────────────
@@ -347,7 +375,8 @@ CREATE TABLE subscriptions (
 CREATE TABLE sessions (
   id                   UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id              UUID REFERENCES users(id) ON DELETE CASCADE,  -- NULL jika guest
-  guest_token_id       UUID REFERENCES guest_tokens(id),             -- NULL jika user biasa
+  guest_code_id        UUID REFERENCES guest_codes(id),              -- NULL jika user biasa
+  guest_email          TEXT,                                          -- email guest (tracking)
   refresh_token_hash   TEXT NOT NULL,
   device_fingerprint   TEXT,
   ip_at_login          INET,
@@ -389,7 +418,8 @@ CREATE INDEX idx_sessions_user ON sessions(user_id) WHERE is_active = TRUE;
 CREATE INDEX idx_sessions_token ON sessions(refresh_token_hash);
 CREATE INDEX idx_anomaly_user ON anomaly_logs(user_id, created_at DESC);
 CREATE INDEX idx_access_logs_user ON access_logs(user_id, created_at DESC);
-CREATE INDEX idx_guest_tokens_token ON guest_tokens(token);
+CREATE INDEX idx_guest_codes_code ON guest_codes(code);
+CREATE INDEX idx_guest_logins_code_email ON guest_logins(guest_code_id, email);
 ```
 
 ---
@@ -405,8 +435,8 @@ POST /api/auth/refresh            → AT expired → tukar RT → AT baru
 POST /api/auth/logout             → Revoke RT → clear cookies
 GET  /api/auth/me                 → Return user info + subscriptions aktif
 
-POST /api/auth/guest-login        → Login sebagai guest via token URL
-     Body: { token: string, contact_info?: string }
+POST /api/auth/guest-login        → Login sebagai guest via code + email
+     Body: { code: string, email: string }
 ```
 
 ### 7.2 Subscription & Checkout Routes
@@ -430,10 +460,11 @@ GET  /admin/users/:id             → Detail user + session history + anomaly lo
 GET  /admin/subscriptions         → Semua subscription (filter by product, status, segment)
 GET  /admin/anomalies             → Daftar akun dengan anomaly_score > threshold
 
-POST /admin/guest-tokens          → Generate guest token baru
-     Body: { product_id, label, contact_info?, max_logins?, expires_hours? }
-GET  /admin/guest-tokens          → List semua guest tokens
-DELETE /admin/guest-tokens/:id    → Revoke guest token
+POST /admin/guest-codes           → Generate guest code baru
+     Body: { product_id, label, max_logins_per_email?, expires_hours? }
+GET  /admin/guest-codes           → List semua guest codes + usage stats
+GET  /admin/guest-codes/:id       → Detail code + list email yang sudah pakai
+DELETE /admin/guest-codes/:id     → Revoke guest code (matikan)
 
 POST /admin/users/:id/lock        → Lock akun
 POST /admin/users/:id/unlock      → Unlock akun
@@ -466,18 +497,22 @@ Frontend atomic: sebelum render konten premium, call endpoint ini.
 ┌─────────────────────────────────────────────────────────────┐
 │                     sains.id (domain utama)                  │
 ├──────────────────────┬──────────────────────────────────────┤
-│   FRONTEND (Static)  │           BACKEND (Server)            │
-│   Vercel / Netlify   │        Railway / Render / VPS         │
+│   FRONTEND (Static)  │        BACKEND (Go Binary)            │
+│   Vercel / Netlify   │           Railway                     │
 │                      │                                        │
-│  sains.id/atomic     │  api.sains.id  → Node.js (Hono)      │
+│  sains.id/atomic     │  api.sains.id  → Go (Gin)            │
 │  sains.id/energi     │                                        │
-│  sains.id/pricing/*  │         DATABASE                       │
-│  sains.id/admin      │        Supabase Postgres              │
+│  sains.id/pricing/*  │  /admin/*  → Templ + HTMX (embedded) │
+│                      │                                        │
+│                      │         DATABASE                       │
+│                      │        Supabase Postgres              │
 │                      │                  +                     │
-│                      │         EMAIL: Resend                  │
-│                      │         PAYMENT: Xendit               │
+│                      │         EMAIL: Resend (Go SDK)        │
+│                      │         PAYMENT: Xendit (REST API)    │
 └──────────────────────┴────────────────────────────────────── ┘
 ```
+
+> **Admin dashboard** bukan project terpisah. Ini route HTML yang di-serve langsung dari Go binary menggunakan Templ + HTMX + Alpine.js. Static assets (CSS, JS) di-embed via `go:embed`.
 
 ### 8.2 Environment Variables (Backend)
 
@@ -490,11 +525,12 @@ JWT_SECRET=<random 64 char>
 JWT_EXPIRY=1h
 REFRESH_TOKEN_EXPIRY_DAYS=30
 
-# Xendit
+# Xendit (REST API langsung, tanpa SDK)
 XENDIT_API_KEY=xk_...
 XENDIT_WEBHOOK_TOKEN=...   # untuk verifikasi callback
+XENDIT_BASE_URL=https://api.xendit.co
 
-# Resend (Email)
+# Resend (Email — Go SDK)
 RESEND_API_KEY=re_...
 FROM_EMAIL=noreply@sains.id
 
@@ -503,6 +539,10 @@ CORS_ORIGINS=https://sains.id,https://atomic.sains.id
 
 # Admin
 ADMIN_SECRET_KEY=...       # untuk seed admin pertama
+
+# Server
+PORT=8080
+GIN_MODE=release           # 'debug' untuk development
 ```
 
 ### 8.3 Frontend Config (per Produk)
@@ -522,23 +562,57 @@ export const config = {
 
 | Komponen | Pilihan | Alasan |
 |----------|---------|--------|
-| Runtime | **Node.js 22+** | Stable LTS |
-| Framework | **Hono** | Ringan, TypeScript-first, Cloudflare-ready |
-| Database ORM | **Drizzle ORM** + Postgres | Type-safe, migration terkelola |
-| Auth | `jsonwebtoken` + `bcryptjs` | Standard, battle-tested |
-| Email | **Resend** | DX terbaik, reliable deliverability |
-| Payment | **Xendit** | QRIS, VA BCA, OVO, GoPay, CC — coverage Indonesia |
-| IP Geolocation | **ip-api.com** (free tier) atau `maxmind-geoip2` | Untuk anomaly detection negara |
-| Logging | **Pino** | JSON structured logs, performa tinggi |
-| Validation | **Zod** | Schema validation, compatible Hono |
-| Hosting BE | **Railway** | Mudah, auto-deploy dari Git |
-| Hosting DB | **Supabase** | Postgres managed, ada realtime jika butuh nanti |
+| Language | **Go 1.23+** | Compiled, fast, single binary deploy, concurrency built-in |
+| Framework | **Gin** | HTTP framework paling populer di Go, middleware ecosystem mature |
+| DB Driver | **pgx** (jackc/pgx) | Driver Postgres tercepat di Go, pure Go, connection pooling built-in |
+| Query Layer | **sqlc** | Tulis SQL → auto-generate Go code. Zero reflection, type-safe, compile-time check |
+| Migration | **golang-migrate** | Standard, CLI + library, support Postgres |
+| Auth JWT | **golang-jwt/jwt** | Battle-tested, standard Go JWT library |
+| Password Hash | **golang.org/x/crypto/bcrypt** | Standard library, no third-party dependency |
+| Validation | **go-playground/validator** | Struct tag validation, well-maintained |
+| Email | **Resend** (Go SDK) | DX terbaik, reliable deliverability, official Go SDK tersedia |
+| Payment | **Xendit** (REST API langsung) | QRIS, VA BCA, OVO, GoPay, CC — no official Go SDK, pakai `net/http` langsung |
+| IP Geolocation | **ip-api.com** (free tier) atau **MaxMind GeoIP2** | Untuk anomaly detection negara |
+| Logging | **zerolog** atau **slog** (stdlib) | JSON structured logs, zero-allocation (zerolog) atau built-in (slog) |
+| Config | **env** / **viper** | Environment-based configuration |
+| Admin Dashboard | **Templ** + **HTMX** + **Alpine.js** | Server-rendered HTML, embedded di Go binary, no separate build |
+| Charting | **Chart.js** (CDN) | Revenue chart, subscriber graph — loaded di admin pages |
+| Hosting BE | **Railway** | Mudah, auto-deploy dari Git, support Go, 1 binary |
+| Hosting DB | **Supabase** | Postgres managed, free tier 500MB |
+
+### 9.1 Kenapa Go + sqlc (bukan ORM)
+
+DB schema di doc ini sudah ditulis raw SQL (7 tabel + indexes). Dengan **sqlc**:
+- Tulis query SQL biasa di `db/queries/*.sql`
+- `sqlc generate` → auto-generate Go struct + function
+- **Zero runtime reflection** (beda dengan GORM)
+- Query complex (JOIN, aggregasi revenue, anomaly scoring) lebih natural ditulis SQL
+- Compile-time type check — kalau query salah, build gagal
+
+### 9.2 Kenapa Templ + HTMX (bukan SPA terpisah)
+
+Admin dashboard bukan project terpisah — ini **route HTML** di Go server yang sama.
+
+```
+Go Binary
+├── /api/*       → JSON responses (untuk Atomic frontend)
+└── /admin/*     → HTML responses (Templ + HTMX)
+```
+
+- **Templ**: compiled Go templates, type-safe, IDE autocomplete
+- **HTMX**: bikin server-rendered HTML terasa kayak SPA (ajax, swap, polling) tanpa nulis JS
+- **Alpine.js**: micro-interactivity (dropdown, modal, toggle)
+- **Chart.js**: revenue charts, subscriber graphs
+- Semua static assets di-embed ke binary via `go:embed` → deploy = 1 file
 
 ---
 
 ## 10. Admin Dashboard
 
-> Status: **Planned** — dibuat setelah backend siap. Frontend admin di `/admin` (protected route).
+> Status: **Planned** — dibuat setelah backend siap.
+> Tech: **Templ + HTMX + Alpine.js + Chart.js** — embedded di Go binary, route `/admin/*`.
+> Auth: Session cookie admin, middleware `requireAdmin()`.
+> UI Base: **Tabler** (open-source admin template) — agar cepat dan konsisten.
 
 ### 10.1 Halaman Utama Dashboard
 
@@ -549,6 +623,8 @@ export const config = {
 │                                                          │
 │  [Per Segmen]  student: 60% · parent: 30% · global: 10% │
 │  [Per Durasi]  bulanan: 15% · tahunan: 55% · sisanya...  │
+│                                                          │
+│  📊 Chart.js line chart — revenue 30 hari terakhir       │
 └──────────────────────────────────────────────────────────┘
 
 ┌──── Subscriptions Aktif ────┐  ┌──── Anomalies ──────────┐
@@ -557,24 +633,62 @@ export const config = {
 │  Expired minggu ini: 3       │  │  [Lihat semua →]         │
 └──────────────────────────────┘  └─────────────────────────┘
 
-┌──── Guest Tokens ──────────────────────────────────────┐
-│  Aktif: 8 tokens  ·  Expired: 23 tokens                 │
-│  [+ Generate Guest Token]                               │
+┌──── Guest Codes ───────────────────────────────────────┐
+│  Aktif: 8 codes  ·  Expired: 23 codes                  │
+│  Total guest logins: 142  ·  Unique emails: 89         │
+│  [+ Generate Guest Code]                                │
 └──────────────────────────────────────────────────────────┘
 ```
 
 ### 10.2 Fitur Admin Dashboard
 
-| Fitur | Deskripsi |
-|-------|-----------|
-| Revenue overview | Total per produk, per segmen, per durasi |
-| Grafik subscriber | Daily/weekly new subscribers |
-| User management | Search, filter, detail per user |
-| Anomaly center | Flag, lock, kirim warning |
-| Guest token management | Generate, list, revoke |
-| Pricing management | Ubah harga plan tanpa deploy |
-| Product management | Tambah produk baru |
-| Subscription lookup | Cari subscription by email/ID |
+| Fitur | Deskripsi | Interaksi |
+|-------|-----------|----------|
+| Revenue overview | Total per produk, per segmen, per durasi | Chart.js line/bar chart |
+| Grafik subscriber | Daily/weekly new subscribers | Chart.js, HTMX auto-refresh |
+| User management | Search, filter, detail per user | HTMX search, Alpine.js modal |
+| Anomaly center | Flag, lock, kirim warning | HTMX inline actions |
+| Guest code management | Generate, list, revoke, view usage per email | HTMX form submit + swap |
+| Pricing management | Ubah harga plan tanpa deploy | Alpine.js inline edit |
+| Product management | Tambah produk baru | HTMX form |
+| Subscription lookup | Cari subscription by email/ID | HTMX search |
+
+### 10.3 Arsitektur Admin Dashboard
+
+```
+templates/
+├── layout.templ              ← base layout (sidebar + header, pakai Tabler CSS)
+├── components/
+│   ├── stat_card.templ       ← reusable stat card
+│   ├── data_table.templ      ← reusable table with pagination
+│   └── chart.templ           ← Chart.js wrapper
+├── pages/
+│   ├── dashboard.templ       ← /admin/
+│   ├── users.templ           ← /admin/users
+│   ├── user_detail.templ     ← /admin/users/:id
+│   ├── subscriptions.templ   ← /admin/subscriptions
+│   ├── anomalies.templ       ← /admin/anomalies
+│   ├── guest_codes.templ     ← /admin/guest-codes
+│   ├── guest_code_detail.templ ← /admin/guest-codes/:id (list email users)
+│   ├── pricing.templ         ← /admin/pricing
+│   ├── products.templ        ← /admin/products
+│   └── revenue.templ         ← /admin/revenue
+└── partials/
+    ├── user_row.templ        ← HTMX partial (swap per baris)
+    └── guest_login_row.templ ← HTMX partial (per email usage)
+
+static/
+├── css/
+│   ├── tabler.min.css        ← Tabler admin template (base styling)
+│   └── admin-custom.css      ← override / custom styles
+├── js/
+│   ├── htmx.min.js           ← HTMX (atau CDN)
+│   ├── alpine.min.js         ← Alpine.js (atau CDN)
+│   └── chart.min.js          ← Chart.js (atau CDN)
+└── img/                      ← logo, icons
+```
+
+> Semua file `static/` dan compiled `templates/` di-embed ke Go binary via `go:embed`. Deploy = upload 1 file binary.
 
 ---
 
@@ -582,60 +696,66 @@ export const config = {
 
 ```
 Phase BE-1: Foundation
-  → Setup Hono + Drizzle + Supabase
-  → Schema DB + migrations
+  → Setup Go project (Gin + pgx + sqlc)
+  → Connect Supabase Postgres
+  → Schema DB + migrations (golang-migrate)
+  → sqlc: tulis queries + generate Go code
   → Auth: register, login, refresh, logout, me
-  → JWT + httpOnly cookie + single session rule
-  → Basic middleware: auth, rate limit
+  → JWT (golang-jwt) + httpOnly cookie + single session rule
+  → Basic middleware: auth guard, CORS, rate limit
 
 Phase BE-2: Subscription
   → Pricing plans CRUD
-  → Checkout + Xendit integration
-  → Xendit webhook handler
+  → Checkout + Xendit REST API integration
+  → Xendit webhook handler (HMAC verify)
   → Subscription access check endpoint
-  → Email: welcome, renewal reminder
+  → Email: welcome, renewal reminder (Resend Go SDK)
 
 Phase BE-3: Guest + Security
-  → Guest token generate + login flow
+  → Guest code generate + guest login flow
   → Device fingerprint logging
   → Anomaly scoring engine
   → IP geolocation logging
-  → Admin: anomaly dashboard + user management
+  → Admin API: anomaly + user management
 
-Phase BE-4: Multi-Product + Admin Dashboard
-  → Products CRUD
-  → Admin dashboard frontend (/admin)
-  → Revenue analytics
-  → Guest token management UI
+Phase BE-4: Admin Dashboard
+  → Setup Templ + HTMX + Alpine.js + Tabler CSS
+  → Admin layout + auth middleware (requireAdmin)
+  → Dashboard halaman utama (stats + Chart.js)
+  → User management pages
+  → Revenue analytics pages
+  → Guest code management UI
   → Pricing management UI
+  → go:embed static assets + templates
 
 Phase BE-5: Hardening
-  → Rate limiting per endpoint
-  → CORS lock down
+  → Rate limiting per endpoint (Gin middleware)
+  → CORS lock down (production origins only)
   → Audit logs
   → Load testing
   → Monitoring (Sentry / Grafana)
+  → Docker build + deploy optimization
 ```
 
 ---
 
 ## 12. Security Checklist
 
-| Kategori | Check | Status |
-|----------|-------|--------|
-| **Auth** | JWT di httpOnly cookie, bukan localStorage | 📋 Planned |
-| **Auth** | RT disimpan sebagai hash bcrypt, bukan plaintext | 📋 |
-| **Auth** | Session displacement saat login baru | 📋 |
-| **Payment** | Xendit webhook verify `X-Callback-Token` header | 📋 |
-| **Payment** | Idempotency: cek `xendit_payment_id` duplikat | 📋 |
-| **Rate Limit** | `/api/auth/login` max 5/menit per IP | 📋 |
-| **Rate Limit** | `/api/auth/register` max 3/jam per IP | 📋 |
-| **CORS** | Origin whitelist: hanya domain sains.id | 📋 |
-| **Input** | Semua input divalidasi via Zod schema | 📋 |
-| **SQL** | Drizzle ORM, tidak ada raw query unsanitized | 📋 |
-| **Secrets** | Semua secret di env var, tidak di git | 📋 |
-| **Anomaly** | Auto-lock jika score ≥ 50 | 📋 |
-| **Cookie** | `Secure` + `SameSite=Strict` untuk production | 📋 |
+| Kategori | Check | Tool/Cara | Status |
+|----------|-------|-----------|--------|
+| **Auth** | JWT di httpOnly cookie, bukan localStorage | `golang-jwt/jwt` + `gin.SetCookie()` | 📋 Planned |
+| **Auth** | RT disimpan sebagai hash bcrypt, bukan plaintext | `golang.org/x/crypto/bcrypt` | 📋 |
+| **Auth** | Session displacement saat login baru | sqlc query: revoke old session | 📋 |
+| **Payment** | Xendit webhook verify `X-Callback-Token` header | `crypto/hmac` + `crypto/sha256` | 📋 |
+| **Payment** | Idempotency: cek `xendit_payment_id` duplikat | sqlc unique constraint check | 📋 |
+| **Rate Limit** | `/api/auth/login` max 5/menit per IP | Gin rate limit middleware | 📋 |
+| **Rate Limit** | `/api/auth/register` max 3/jam per IP | Gin rate limit middleware | 📋 |
+| **CORS** | Origin whitelist: hanya domain sains.id | `gin-contrib/cors` | 📋 |
+| **Input** | Semua input divalidasi via struct tags | `go-playground/validator` | 📋 |
+| **SQL** | sqlc generated code, tidak ada raw query unsanitized | `sqlc` compile-time check | 📋 |
+| **Secrets** | Semua secret di env var, tidak di git | `.env` + `.gitignore` | 📋 |
+| **Anomaly** | Auto-lock jika score ≥ 50 | Business logic di Go service layer | 📋 |
+| **Cookie** | `Secure` + `SameSite=Strict` untuk production | `gin.SetCookie()` options | 📋 |
 
 ---
 
@@ -655,7 +775,7 @@ Semua open questions sudah diputuskan per 2026-02-21.
 
 ### Update dari keputusan di atas
 
-**Guest user** → max **2x login** (bukan 3x), lifetime **48 jam** sejak token di-generate.
+**Guest user** → model **guest code**: admin generate 1 kode, dishare ke banyak orang. Per email: max **2x login**. Durasi code **adjustable** (1 hari, 2 hari, 1 minggu). Tracking per email via tabel `guest_logins`.
 
 **Currency:**
 ```
@@ -723,16 +843,18 @@ Login:
 
 > Harga USD di atas adalah contoh. Disesuaikan dengan kurs dan market research sebelum launch.
 
-### Guest
+### Guest Code System
 
 | Parameter | Value |
 |-----------|-------|
-| Cara dapat | Admin generate via dashboard |
-| Max login | **2x** |
-| Lifetime token | **48 jam** sejak generate |
-| Session lifetime | 24 jam per login |
+| Model | **1 code → banyak orang** (viral-friendly) |
+| Cara dapat | Admin generate **guest code** via dashboard |
+| Max login per email | **2x** per code |
+| Durasi code | **Adjustable**: 1 hari, 2 hari, atau 1 minggu |
+| Session per login | 24 jam |
 | Cost | Gratis (tidak bayar) |
-| Data yang dikumpulkan | Email atau no HP (opsional, untuk rekap admin) |
+| Data yang dikumpulkan | Email (wajib, untuk tracking + batas login) |
+| Admin visibility | List semua email yang sudah pakai code + jumlah login |
 
 ---
 
@@ -751,4 +873,159 @@ Email reminder (via Resend, otomatis):
   → 7 hari sebelum expired: "Langgananmu akan berakhir dalam 7 hari"
   → 1 hari sebelum expired: "Langgananmu berakhir besok"
   → Hari H expired: "Langgananmu sudah berakhir — renew sekarang"
+```
+
+---
+
+## 16. Quota & Capacity System
+
+> **Prinsip utama: yang bayar harus dijamin servernya nggak down.**
+>
+> Karena awalnya pakai VPS murah (~100rb/bulan), kita perlu sistem quota yang membatasi jumlah user aktif sesuai kapasitas server. Quota bisa dinaikkan admin seiring upgrade server.
+
+### 16.1 Filosofi Quota
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   SERVER CAPACITY                    │
+│                                                     │
+│  ┌─────────────────────────────────────┐            │
+│  │    SUBSCRIBER QUOTA (prioritas)     │ ← Dijamin  │
+│  │    max: 200 (adjustable)            │            │
+│  └─────────────────────────────────────┘            │
+│                                                     │
+│  ┌─────────────────────────────────────┐            │
+│  │    GUEST QUOTA (batasan ketat)      │ ← Bisa     │
+│  │    max: 50 session aktif            │   ditolak  │
+│  └─────────────────────────────────────┘            │
+│                                                     │
+│  Subscriber SELALU bisa login (sudah bayar)         │
+│  Guest dibatasi kalau server mulai penuh            │
+└─────────────────────────────────────────────────────┘
+```
+
+**Prioritas akses:**
+1. 🥇 **Subscriber** — selalu bisa login. Kalau subscriber quota penuh, register baru yang diblokir (bukan login existing).
+2. 🥈 **Guest** — dibatasi ketat. Kalau guest quota penuh → "Kuota trial penuh, silakan berlangganan langsung."
+3. ⚠️ **Register baru** — diblokir kalau mendekati subscriber quota max. Pesan: "Kapasitas penuh sementara, kami segera menambah server."
+
+### 16.2 Quota Config (Database)
+
+Tambahan di schema — tabel `system_config` untuk menyimpan setting yang bisa diubah admin tanpa deploy:
+
+```sql
+-- ─── SYSTEM CONFIG ────────────────────────────────────────────────────
+-- Key-value store untuk konfigurasi dinamis (quota, limits, dll)
+CREATE TABLE system_config (
+  key         TEXT PRIMARY KEY,
+  value       TEXT NOT NULL,
+  description TEXT,
+  updated_at  TIMESTAMPTZ DEFAULT now(),
+  updated_by  UUID REFERENCES users(id)
+);
+
+-- ─── SEED DATA ────────────────────────────────────────────────────────
+INSERT INTO system_config (key, value, description) VALUES
+  ('max_subscribers',       '200',  'Maks total subscriber aktif'),
+  ('max_active_guests',     '50',   'Maks guest session aktif bersamaan'),
+  ('quota_warning_pct',     '80',   'Notifikasi admin di persentase ini'),
+  ('guest_priority_mode',   'off',  'on = guest diblokir total saat > 90% subscriber quota');
+```
+
+### 16.3 Middleware Quota Check
+
+```
+Register baru masuk:
+  → current_subscribers = COUNT(*) FROM subscriptions 
+    WHERE status='active' AND expires_at > now()
+  → max = system_config['max_subscribers']
+  
+  Jika current >= max:
+    → 503 { error: "capacity_full", message: "Kapasitas penuh sementara" }
+    → Kirim notifikasi ke admin (email/dashboard alert)
+    
+  Jika current >= max * warning_pct:
+    → Tetap izinkan register
+    → Tapi kirim warning ke admin: "Subscriber 160/200 (80%)"
+
+Guest Login:
+  → current_guests = COUNT(*) FROM sessions 
+    WHERE guest_code_id IS NOT NULL AND is_active = TRUE
+  → max_guests = system_config['max_active_guests']
+  
+  Jika current_guests >= max_guests:
+    → 503 { error: "guest_quota_full", 
+            message: "Kuota trial penuh. Silakan berlangganan untuk akses langsung." }
+
+Login subscriber (existing):
+  → SELALU diizinkan — dia sudah bayar, harus bisa akses
+  → Tidak ada quota check untuk login subscriber yang sudah terdaftar
+```
+
+### 16.4 Admin API — Quota
+
+```
+GET  /admin/quota             → Status quota saat ini:
+                                { subscribers: { current: 156, max: 200, pct: 78 },
+                                  guests: { current: 32, max: 50, pct: 64 } }
+
+PUT  /admin/system-config/:key → Update config (misal max_subscribers = 300)
+     Body: { value: "300" }
+
+GET  /admin/system-config     → List semua config key-value
+```
+
+### 16.5 Admin Dashboard — Quota Widget
+
+```
+┌──── Server Capacity ──────────────────────────────────┐
+│                                                        │
+│  Subscribers:  ████████████████░░░░  156/200 (78%)     │
+│  Guest Active: ████████████░░░░░░░░   32/50  (64%)     │
+│                                                        │
+│  VPS: IDCloudHost 1vCPU/2GB (Rp 100rb/bln)            │
+│  [⚙️ Adjust Quota]  [📊 Scaling Guide]                 │
+│                                                        │
+│  ⚠️ Warning di 80%  ·  🚫 Block di 100%               │
+└────────────────────────────────────────────────────────┘
+```
+
+### 16.6 Notifikasi Otomatis ke Admin
+
+| Kondisi | Aksi |
+|---------|------|
+| Subscriber > 80% quota | 📧 Email admin: "Subscriber mendekati batas (160/200)" |
+| Subscriber > 95% quota | 📧 Email URGENT: "Capacity hampir habis! Upgrade server atau naikkan quota." |
+| Subscriber = 100% quota | 📧 Email CRITICAL: "Register diblokir! Segera upgrade." + log di dashboard |
+| Guest > 80% quota | Dashboard warning (tanpa email) |
+| Guest = 100% quota | Dashboard alert |
+
+### 16.7 Scaling Tiers — Panduan Kapan Upgrade
+
+| Tier | VPS Spec | Biaya/bln | Max Subscriber | Max Guest | Cocok Untuk |
+|------|----------|-----------|----------------|-----------|-------------|
+| **Starter** | 1 vCPU, 1GB | ~60rb | 100 | 30 | Soft launch, testing |
+| **Basic** | 1 vCPU, 2GB | ~100rb | 200 | 50 | 0-200 subscriber |
+| **Growth** | 2 vCPU, 4GB | ~200rb | 500 | 100 | 200-500 subscriber |
+| **Scale** | 4 vCPU, 8GB | ~400rb | 2000 | 300 | 500-2000 subscriber |
+| **Pro** | Dedicated / Cloud | ~800rb+ | 5000+ | 500+ | 2000+ subscriber |
+
+> 💡 **Rule of thumb:** Revenue dari subscriber harus > 2x biaya server. Kalau sudah 200 subscriber × Rp 25.000 = **Rp 5.000.000/bulan** → VPS 100rb itu cuma 2% dari revenue. Upgrade kapan aja.
+
+### 16.8 Frontend Handling
+
+Saat quota penuh, frontend menampilkan pesan yang berbeda:
+
+```
+Register diblokir (subscriber penuh):
+  → "Maaf, kapasitas kami sedang penuh. 
+     Kami sedang menambah server. Coba lagi dalam 1-2 hari.
+     [🔔 Notifikasi saya saat tersedia]"
+
+Guest diblokir (guest penuh):
+  → "Kuota trial sedang penuh.
+     Tapi kabar baiknya: dengan berlangganan, kamu langsung dapat akses tanpa antri!
+     [💳 Berlangganan Sekarang]"
+     
+  → Ini jadi UPSELL moment — guest penuh = push ke subscribe
 ```

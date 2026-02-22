@@ -1,8 +1,8 @@
 # TRD — Technical Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table  
-**Version:** 2.1  
-**Date:** 2026-02-21  
-**Status:** Sync dengan PRD v2.1
+**Version:** 2.2  
+**Date:** 2026-02-22  
+**Status:** Sync dengan PRD v2.4 + BACKEND_PLAN v1.1
 
 ---
 
@@ -397,26 +397,29 @@ interface ElementPhenomena {
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  FRONTEND (Static \u2014 per produk, deploy terpisah)              │
+│  FRONTEND (Static — per produk, deploy terpisah)              │
 │  sains.id/atomic · sains.id/energi · sains.id/biologi        │
-│  sains.id/pricing/* · sains.id/admin                         │
+│  sains.id/pricing/*                                          │
 └───────────────────────────────┬───────────────────────────────┘
                                  │ HTTPS
                  ┌───────────────▼───────────────┐
                  │     api.sains.id               │
-                 │     Node.js 22 + Hono          │
-                 │     Railway                    │
-                 └───────────────┬───────────────┘
+                 │     Go (Gin) + Templ/HTMX      │
+                 │     Railway (1 binary)          │
+                 └───────────────┬───────────────────────────────┘
                                  │
               ┌──────────────────┼──────────────────┐
               │                  │                  │
     ┌─────────▼──────┐  ┌───────▼───────┐  ┌──────▼──────┐
     │  Supabase      │  │  Xendit       │  │  Resend     │
     │  Postgres      │  │  Payment      │  │  Email      │
-    └────────────────┘  └───────────────┘  └────────────┘
+    │               │  │  (REST API)   │  │  (Go SDK)   │
+    └────────────────┘  └───────────────┘  └─────────────┘
 ```
 
 Setiap produk di frontend hanya mengirimkan header `X-Product: atomic` ke setiap request. Backend dan DB satu, dibedakan oleh `product_id` di tabel.
+
+> **Admin dashboard** di-serve langsung dari Go binary sebagai route `/admin/*` menggunakan Templ + HTMX + Alpine.js. Bukan project terpisah.
 
 ### 8.2 Tipe User & Session
 
@@ -489,39 +492,45 @@ Full schema: lihat `docs/BACKEND_PLAN.md` Section 6.
 
 > **Aturan nomor 1: server tidak pernah percaya client.**
 
-- ❌ `if (localStorage.isPremium)` \u2014 bisa dimanipulasi DevTools
-- ❌ Konten premium di bundle JS \u2014 bisa di-extract tanpa login
+- ❗ `if (localStorage.isPremium)` — bisa dimanipulasi DevTools
+- ❗ Konten premium di bundle JS — bisa di-extract tanpa login
 - ✅ Setiap request divalidasi ke DB: session aktif + subscription belum expired
-- ✅ Xendit webhook: selalu verifikasi `X-Callback-Token` header
-- ✅ Rate limiting: login max 5/menit per IP, register max 3/jam per IP
+- ✅ Xendit webhook: selalu verifikasi `X-Callback-Token` header (`crypto/hmac`)
+- ✅ Rate limiting: login max 5/menit per IP (Gin middleware)
 - ✅ Cookie: `httpOnly` + `Secure` + `SameSite=Strict`
+- ✅ Input validation: struct tags + `go-playground/validator`
+- ✅ SQL injection: `sqlc` generated code, zero raw query
 
 ### 8.8 Implementasi \u2014 Fase Backend
 
 ```
-Phase BE-1: Foundation    \u2192 Hono + Drizzle + Auth + Single session rule
-Phase BE-2: Subscription  \u2192 Pricing plans + Xendit + Access check endpoint
-Phase BE-3: Guest + Security \u2192 Guest token flow + Anomaly engine + IP logging
-Phase BE-4: Multi-Product + Admin \u2192 Products CRUD + Admin dashboard
-Phase BE-5: Hardening     \u2192 Rate limit + audit + monitoring
+Phase BE-1: Foundation    → Go (Gin) + pgx + sqlc + Auth + Single session rule
+Phase BE-2: Subscription  → Pricing plans + Xendit REST API + Access check endpoint
+Phase BE-3: Guest + Security → Guest token flow + Anomaly engine + IP logging
+Phase BE-4: Admin Dashboard → Templ + HTMX + Chart.js + Admin pages
+Phase BE-5: Hardening     → Rate limit + audit + monitoring + Docker
 ```
 
 ### 8.9 Tech Stack Backend
 
 | Komponen | Teknologi |
 |----------|-----------|
-| Runtime | **Node.js 22** |
-| Framework | **Hono** (TypeScript-first, Cloudflare-ready) |
-| Database ORM | **Drizzle ORM** + Postgres |
-| Auth | `jsonwebtoken` + `bcryptjs` |
-| Email | **Resend** |
-| Payment | **Xendit** (QRIS, VA BCA, OVO, GoPay, CC) |
+| Language | **Go 1.23+** |
+| Framework | **Gin** (middleware ecosystem, popular) |
+| DB Driver | **pgx** (jackc/pgx, pure Go, connection pooling) |
+| Query Layer | **sqlc** (SQL → Go code, type-safe, zero reflection) |
+| Migration | **golang-migrate** |
+| Auth JWT | **golang-jwt/jwt** |
+| Password | **golang.org/x/crypto/bcrypt** |
+| Validation | **go-playground/validator** |
+| Email | **Resend** (Go SDK) |
+| Payment | **Xendit** (REST API via `net/http`, no SDK) |
 | Geolocation | ip-api.com (free) atau MaxMind GeoIP2 |
-| Logging | **Pino** (JSON structured) |
-| Validation | **Zod** |
-| Hosting BE | **Railway** |
+| Logging | **zerolog** atau **slog** (stdlib Go 1.21+) |
+| Admin Dashboard | **Templ** + **HTMX** + **Alpine.js** + **Chart.js** |
+| Hosting BE | **Railway** (1 binary deploy) |
 | Hosting DB | **Supabase** Postgres |
 
-> **Implikasi deploy:** Dengan backend, Atomic tidak lagi pure static. Frontend tetap di Vercel/Netlify. Backend di Railway. Cookie cross-origin butuh konfigurasi CORS dengan `credentials: true`.
-
+> **Deploy:** Go binary single file. Admin dashboard (Templ + HTMX) dan static assets di-embed via `go:embed`. Frontend Atomic tetap static SPA di Vercel/Netlify. Cookie cross-origin butuh CORS `credentials: true` + `gin-contrib/cors`.
+>
 
