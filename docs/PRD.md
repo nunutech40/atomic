@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 2.3  
-**Date:** 2026-02-21  
-**Status:** Phase 1 ✅ SELESAI · Anatomi Atom ✅ SELESAI · Kimia Lab ✅ SELESAI · Next: Phase 2 Modul Edukasi
+**Version:** 2.4  
+**Date:** 2026-02-22  
+**Status:** Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Mobile Nav ✅ · Next: Backend + Landing Page
 
 ---
 
@@ -347,3 +347,7 @@ Hosting:  Railway (backend) + Supabase (DB)
 | Card Fenomena Terkait | ✅ | ✅ |
 | Phase 2: 10 modul edukasi | ✅ | ✅ |
 | Phase 3: Model Orbital (awan probabilitas s/p/d/f) | ✅ | ✅ |
+| Mobile hamburger nav + slide-in drawer | ✅ | ✅ |
+| Bilingual UI Chrome (nav, labels, buttons) — 100% | ✅ | ✅ |
+| Bilingual konten step/quiz modul — in progress | 🔄 | 🔄 |
+| Deploy ke production domain | ⏳ | ⏳ |

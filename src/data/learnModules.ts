@@ -6,14 +6,19 @@
 export interface LearningStep {
     type: 'question' | 'concept' | 'fact' | 'animation-hint' | 'formula';
     title?: string;
+    titleEn?: string;
     body: string;
+    bodyEn?: string;
 }
 
 export interface QuizQuestion {
     q: string;
+    qEn?: string;
     options: string[];
+    optionsEn?: string[];
     correct: number; // index
     explanation: string;
+    explanationEn?: string;
 }
 
 export interface LearnModule {
@@ -52,57 +57,83 @@ export const learnModules: LearnModule[] = [
             {
                 type: 'question',
                 title: 'Pertanyaan Pemantik',
+                titleEn: 'Opening Question',
                 body: 'Jika kamu terus memotong kayu menjadi lebih kecil dan lebih kecil — sampai berapa kecil kamu bisa memotong? Apakah ada batas terkecil?',
+                bodyEn: 'If you keep cutting wood into smaller and smaller pieces — how small can you go? Is there a smallest possible limit?',
             },
             {
                 type: 'concept',
                 title: 'Materi adalah Segala Sesuatu yang Punya Massa & Volume',
+                titleEn: 'Matter is Anything that Has Mass & Volume',
                 body: 'Batu, air, udara, bahkan api (jika dilihat sebagai plasma) — semua adalah materi. Perbedaan wujud padat, cair, gas bukan berasal dari *bahan* yang berbeda, tapi dari *kerapatan* dan *kebebasan gerak* partikel penyusunnya.',
+                bodyEn: 'Rock, water, air, even fire (viewed as plasma) — all are matter. The difference between solid, liquid, and gas does not come from *different substances*, but from the *density* and *freedom of movement* of their particles.',
             },
             {
                 type: 'animation-hint',
                 title: '🎬 Bayangkan ini',
+                titleEn: '🎬 Picture This',
                 body: 'Zoom in dari meja kayu → serat kayu → sel → molekul → atom. Di level atom, \"kayu\" tidak ada lagi — yang ada hanyalah atom karbon, oksigen, hidrogen yang tersusun dalam pola tertentu.',
+                bodyEn: 'Zoom in from a wooden table → wood fibers → cells → molecules → atoms. At the atomic level, \"wood\" no longer exists — only carbon, oxygen, and hydrogen atoms arranged in a specific pattern.',
             },
             {
                 type: 'concept',
                 title: '3 Wujud Materi — Bukan Soal Bahan, Tapi Soal Gerak',
+                titleEn: '3 States of Matter — Not About Substance, But About Motion',
                 body: 'Padat: partikel rapat, hanya bergetar di tempat.\nCair: partikel agak longgar, bisa mengalir.\nGas: partikel sangat jauh satu sama lain, bergerak bebas ke mana-mana.\n\nAir H₂O bisa jadi es (padat), air (cair), atau uap (gas) — tapi molekulnya tetap H₂O!',
+                bodyEn: 'Solid: particles tightly packed, only vibrating in place.\nLiquid: particles somewhat loose, can flow.\nGas: particles far apart, moving freely in all directions.\n\nWater H₂O can be ice (solid), water (liquid), or steam (gas) — but the molecule is always H₂O!',
             },
             {
                 type: 'fact',
                 title: '💡 Fakta yang Bikin Otak Pusing',
+                titleEn: '💡 Mind-Bending Fact',
                 body: 'Jika kamu bisa mengambil semua atom dalam tubuhmu dan menghilangkan seluruh ruang kosong di dalamnya, ukuranmu hanya akan sebesar ujung pensil.\n\nAtom itu mostly kosong. Yang kamu rasakan sebagai "padat" sebenarnya adalah gaya elektromagnetik antar elektron.',
+                bodyEn: 'If you could take all the atoms in your body and eliminate all the empty space inside them, you would be no bigger than a pencil tip.\n\nAtoms are mostly empty space. What you feel as "solid" is actually the electromagnetic force between electrons.',
             },
             {
                 type: 'question',
                 title: 'Tantangan Berpikir',
+                titleEn: 'Think Deeper',
                 body: 'Jika batu dan air terbuat dari partikel yang sama-sama kecil, mengapa batu keras dan air mengalir? Jawabannya bukan pada "jenis partikel" — tapi pada *cara partikel itu terhubung satu sama lain*.',
+                bodyEn: 'If rock and water are both made of tiny particles, why is rock hard and water flows? The answer is not about the "type of particle" — but about *how the particles are connected to each other*.',
             },
         ],
         quiz: [
             {
                 q: 'Apa yang membedakan wujud padat, cair, dan gas?',
+                qEn: 'What differentiates solid, liquid, and gas states?',
                 options: [
                     'Jenis atom yang berbeda',
                     'Kerapatan dan kebebasan gerak partikelnya',
                     'Berat partikelnya',
                     'Warna partikelnya',
                 ],
+                optionsEn: [
+                    'Different types of atoms',
+                    'Particle density and freedom of movement',
+                    'The weight of the particles',
+                    'The color of the particles',
+                ],
                 correct: 1,
                 explanation: 'Wujud materi ditentukan oleh kerapatan susunan dan kebebasan gerak partikel — bukan jenis atomnya. Air H₂O tetap H₂O dalam wujud es, cair, maupun uap.',
+                explanationEn: 'The state of matter is determined by particle arrangement density and freedom of movement — not the type of atom. Water H₂O remains H₂O whether it is ice, liquid, or steam.',
             },
             {
                 q: 'Jika terus memotong kayu menjadi lebih kecil, batas terkecilnya disebut?',
+                qEn: 'If you keep cutting wood into smaller pieces, the smallest possible unit is called?',
                 options: ['Molekul', 'Sel', 'Atom', 'Proton'],
+                optionsEn: ['Molecule', 'Cell', 'Atom', 'Proton'],
                 correct: 2,
                 explanation: 'Atom adalah unit terkecil suatu elemen yang masih mempertahankan sifat kimia elemen tersebut. Di bawah atom, sudah tidak ada lagi "kayu" — hanya partikel subatomik.',
+                explanationEn: 'An atom is the smallest unit of an element that still retains its chemical properties. Below the atom, there is no more "wood" — only subatomic particles.',
             },
             {
                 q: 'Sebagian besar volume atom terdiri dari?',
+                qEn: 'Most of an atom\'s volume consists of?',
                 options: ['Proton dan neutron yang padat', 'Ruang kosong', 'Elektron yang padat', 'Air'],
+                optionsEn: ['Dense protons and neutrons', 'Empty space', 'Dense electrons', 'Water'],
                 correct: 1,
                 explanation: 'Atom mostly kosong. Jika nukleus atom sebesar bola tenis, maka elektron terluarnya berjarak bermil-mil. Yang membuat benda terasa "padat" adalah gaya elektromagnetik.',
+                explanationEn: 'Atoms are mostly empty space. If the nucleus were the size of a tennis ball, the outermost electron would be miles away. What makes things feel "solid" is the electromagnetic force.',
             },
         ],
     },

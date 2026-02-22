@@ -39,10 +39,11 @@ export function renderLearnModule(container: HTMLElement, slug: string): () => v
       'animation-hint': isEN ? 'VISUALIZE' : 'BAYANGKAN',
       'formula': isEN ? 'FORMULA' : 'RUMUS',
     };
-    const bodyHtml = step.body
+    const bodyHtml = (isEN ? (step.bodyEn || step.body) : step.body)
       .split('\n')
       .map((line: string) => line.trim() === '' ? '<br>' : `<p>${line}</p>`)
       .join('');
+    const displayTitle = isEN ? (step.titleEn || step.title) : step.title;
 
     return `
         <div class="lm-step lm-step--${step.type}" style="--step-color:${color}">
@@ -50,7 +51,7 @@ export function renderLearnModule(container: HTMLElement, slug: string): () => v
               <span class="lm-step-icon">${icons[step.type] || '•'}</span>
               <span class="lm-step-type" style="color:${color}">${typeLabels[step.type] || step.type.toUpperCase()}</span>
             </div>
-            ${step.title ? `<h3 class="lm-step-title">${step.title}</h3>` : ''}
+            ${displayTitle ? `<h3 class="lm-step-title">${displayTitle}</h3>` : ''}
             <div class="lm-step-body">${bodyHtml}</div>
         </div>`;
   }
@@ -59,11 +60,15 @@ export function renderLearnModule(container: HTMLElement, slug: string): () => v
     return `
         <section class="lm-quiz" style="--quiz-color:${color}">
           <h2 class="lm-quiz-title">✅ ${isEN ? 'Check Your Understanding' : 'Cek Pemahaman'}</h2>
-          ${mod!.quiz.map((q, qi) => `
+          ${mod!.quiz.map((q, qi) => {
+      const displayQ = isEN ? (q.qEn || q.q) : q.q;
+      const displayOpts = isEN ? (q.optionsEn || q.options) : q.options;
+      const displayExp = isEN ? (q.explanationEn || q.explanation) : q.explanation;
+      return `
           <div class="lm-quiz-q" data-qi="${qi}" data-correct="${q.correct}">
-            <p class="lm-quiz-question"><span class="lm-quiz-num">${qi + 1}.</span> ${q.q}</p>
+            <p class="lm-quiz-question"><span class="lm-quiz-num">${qi + 1}.</span> ${displayQ}</p>
             <div class="lm-quiz-options">
-              ${q.options.map((opt, oi) => `
+              ${displayOpts.map((opt, oi) => `
               <button class="lm-quiz-opt" data-qi="${qi}" data-oi="${oi}">
                 <span class="lm-quiz-opt-letter">${String.fromCharCode(65 + oi)}</span>
                 ${opt}
@@ -71,9 +76,10 @@ export function renderLearnModule(container: HTMLElement, slug: string): () => v
             </div>
             <div class="lm-quiz-explanation" id="explain-${qi}" hidden>
               <span class="lm-quiz-exp-icon">📖</span>
-              ${q.explanation}
+              ${displayExp}
             </div>
-          </div>`).join('')}
+          </div>`;
+    }).join('')}
         </section>`;
   }
 
