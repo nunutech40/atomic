@@ -1,6 +1,7 @@
 import { elements } from '../data/elements';
 import { categories } from '../data/categories';
 import { AtomScene } from '../three/atomScene';
+import { OrbitalScene } from '../three/orbitalScene';
 import { getElectronShells, getShellLabel } from '../utils/electronConfig';
 import { t, getLang } from '../core/i18n';
 import { navigate } from '../core/router';
@@ -68,18 +69,27 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     const left = document.createElement('div');
     left.className = 'detail-panel';
 
-    // 3D atom model label
-    const modelLabel = document.createElement('div');
-    modelLabel.className = 'model-label';
-    modelLabel.innerHTML = `
-        <span class="model-badge">⚛ ${isEN ? 'Bohr Model' : 'Model Bohr'}</span>
-        <span class="model-hint">${isEN ? 'Visual representation — electron orbits are simplified' : 'Representasi visual — orbit elektron disederhanakan'}</span>
+    // ── Model toggle (Bohr / Orbital) ─────────────────────────────────────
+    let activeModel: 'bohr' | 'orbital' = 'bohr';
+
+    const modelToggleWrap = document.createElement('div');
+    modelToggleWrap.className = 'model-toggle-wrap';
+    modelToggleWrap.innerHTML = `
+        <div class="model-toggle" id="model-toggle">
+          <button class="model-toggle-btn model-toggle-btn--active" data-model="bohr" style="--btn-accent:${color}">
+            ⚛ ${isEN ? 'Bohr' : 'Bohr'}
+          </button>
+          <button class="model-toggle-btn" data-model="orbital" style="--btn-accent:${color}">
+            🌫 ${isEN ? 'Orbital' : 'Orbital'}
+          </button>
+        </div>
+        <span class="model-hint" id="model-hint">${isEN ? 'Simplified orbit visualization' : 'Visualisasi orbit disederhanakan'}</span>
     `;
-    left.appendChild(modelLabel);
+    left.appendChild(modelToggleWrap);
 
     const canvasWrap = document.createElement('div');
     canvasWrap.className = 'atom-canvas-wrap';
-    canvasWrap.style.cssText = 'border-radius:12px;min-height:300px;';
+    canvasWrap.style.cssText = 'border-radius:12px;min-height:300px;position:relative;';
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'width:100%;height:100%;display:block;';
     canvasWrap.appendChild(canvas);
@@ -439,31 +449,90 @@ export function renderElementDetail(container: HTMLElement, n: number) {
     view.appendChild(right);
 
     // ── Init 3D — ResizeObserver waits for real layout dimensions ─────────
-    let scene: AtomScene | null = null;
+    let bohrScene: AtomScene | null = null;
+    let orbScene: OrbitalScene | null = null;
     let initialized = false;
+    let canvasSize = 300;
+
+    function switchModel(model: 'bohr' | 'orbital') {
+        activeModel = model;
+        // Update toggle buttons
+        modelToggleWrap.querySelectorAll('.model-toggle-btn').forEach(b => {
+            const btn = b as HTMLButtonElement;
+            btn.classList.toggle('model-toggle-btn--active', btn.dataset.model === model);
+        });
+        // Update hint
+        const hint = modelToggleWrap.querySelector('#model-hint') as HTMLElement;
+        if (hint) {
+            hint.textContent = model === 'bohr'
+                ? (isEN ? 'Simplified orbit visualization' : 'Visualisasi orbit disederhanakan')
+                : (isEN ? 'Electron probability cloud (s/p/d/f orbitals)' : 'Awan probabilitas elektron (orbital s/p/d/f)');
+        }
+
+        if (model === 'bohr') {
+            orbScene?.destroy();
+            orbScene = null;
+            // Re-create canvas for bohr (Three.js context conflict)
+            canvasWrap.innerHTML = '';
+            const c2 = document.createElement('canvas');
+            c2.style.cssText = 'width:100%;height:100%;display:block;';
+            c2.width = canvasSize;
+            c2.height = canvasSize;
+            canvasWrap.appendChild(c2);
+            try {
+                bohrScene = new AtomScene(c2, color);
+                bohrScene.build(el!.n);
+                bohrScene.start();
+            } catch (err) { console.error('Bohr err:', err); }
+        } else {
+            bohrScene?.destroy();
+            bohrScene = null;
+            canvasWrap.innerHTML = '';
+            const c2 = document.createElement('canvas');
+            c2.style.cssText = 'width:100%;height:100%;display:block;';
+            c2.width = canvasSize;
+            c2.height = canvasSize;
+            canvasWrap.appendChild(c2);
+            try {
+                orbScene = new OrbitalScene(c2, color);
+                orbScene.build(el!.n, el!.config || '1s1');
+                orbScene.start();
+            } catch (err) { console.error('Orbital err:', err); }
+        }
+    }
+
+    // Toggle click handler
+    modelToggleWrap.querySelector('#model-toggle')?.addEventListener('click', e => {
+        const btn = (e.target as HTMLElement).closest('[data-model]') as HTMLElement | null;
+        if (btn && btn.dataset.model !== activeModel) switchModel(btn.dataset.model as 'bohr' | 'orbital');
+    });
+
     const ro = new ResizeObserver((entries) => {
         const entry = entries[0];
         const w = entry.contentRect.width || 300;
         if (!initialized && w > 0) {
             initialized = true;
+            canvasSize = w;
             canvasWrap.style.height = w + 'px';
             canvas.width = w;
             canvas.height = w;
             try {
-                scene = new AtomScene(canvas, color);
-                scene.build(el.n);
-                scene.start();
+                bohrScene = new AtomScene(canvas, color);
+                bohrScene.build(el.n);
+                bohrScene.start();
             } catch (err) {
                 console.error('AtomScene error:', err);
                 canvasWrap.innerHTML = `<p style="color:var(--text-3);padding:24px;text-align:center;font-size:12px;">${isEN ? '3D view unavailable' : '3D tidak tersedia'}</p>`;
             }
-        } else if (initialized && scene) {
+        } else if (initialized) {
             const nw = entry.contentRect.width || 300;
+            canvasSize = nw;
             canvasWrap.style.height = nw + 'px';
-            scene.resize(nw, nw);
+            bohrScene?.resize(nw, nw);
+            orbScene?.resize(nw, nw);
         }
     });
     ro.observe(canvasWrap);
 
-    return () => { scene?.destroy(); ro.disconnect(); };
+    return () => { bohrScene?.destroy(); orbScene?.destroy(); ro.disconnect(); };
 }
