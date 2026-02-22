@@ -2,7 +2,7 @@
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
 **Version:** 2.3  
 **Date:** 2026-02-21  
-**Status:** Phase 1 ✅ SELESAI · Anatomi Atom ✅ SELESAI · Next: Kimia Lab Mode Tantangan
+**Status:** Phase 1 ✅ SELESAI · Anatomi Atom ✅ SELESAI · Kimia Lab ✅ SELESAI · Next: Phase 2 Modul Edukasi
 
 ---
 
@@ -170,9 +170,9 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 
 ---
 
-## 5. 🔨 Sprint Aktif — Kimia Lab Rebuild (Mode Tantangan)
+## 5. ✅ Sprint Selesai — Kimia Lab Rebuild (Mode Tantangan)
 
-> **Status:** Next up. Dikerjakan setelah Anatomi Atom selesai ✅
+> **Status:** DONE ✅ — Selesai
 
 **Konsep:** Upgrade `/molecule` dari mode bebas menjadi pengalaman belajar seperti di buku kimia — ada soal, ada tantangan, ada feedback.
 
@@ -195,7 +195,7 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 
 ---
 
-## 6. 🗓️ Backlog — Dikerjakan Setelah Kimia Lab
+## 6. ✅ Backlog — Dikerjakan, Semua SELESAI
 
 ### 6.1 Element Detail — Card Lanjutan
 
@@ -206,7 +206,7 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 | **Card "Keberadaan di Alam"** | Kelimpahan di kerak bumi, alam semesta, sumber mineral, peta negara penghasil | `src/data/elementAbundance.ts` (baru) |
 | **Card "Fenomena Terkait"** | Link ke phenomena yang relevan per elemen | `src/data/elementPhenomena.ts` (baru) |
 
-### 6.2 Phase 2 — Modul Edukasi Pemula
+## 6.5 🔨 Sprint Aktif — Phase 2: Modul Edukasi Pemula
 
 > Route: `/learn` → `/learn/:slug`. Detail kurikulum: [`docs/CURRICULUM.md`](./CURRICULUM.md)
 
@@ -342,8 +342,8 @@ Hosting:  Railway (backend) + Supabase (DB)
 | Explore — tabel + galeri molekul 3D | ✅ | ✅ |
 | **Anatomi Atom** — 5 tab (Human, Earth, Sun, Plant, Universe) | ✅ | ✅ |
 | **Navbar Anatomi** — link + entry dari Phenomena banner 5-card | ✅ | ✅ |
-| Kimia Lab — mode tantangan | 🗓️ | — |
-| Card Keberadaan di Alam | 🗓️ | — |
-| Card Fenomena Terkait | 🗓️ | — |
-| Phase 2: 10 modul edukasi | 🗓️ | — |
+| Kimia Lab — mode tantangan | ✅ | ✅ |
+| Card Keberadaan di Alam | ✅ | ✅ |
+| Card Fenomena Terkait | ✅ | ✅ |
+| Phase 2: 10 modul edukasi | 🔨 | In Progress |
 | Phase 3: 3 level visualisasi | 🗓️ | — |

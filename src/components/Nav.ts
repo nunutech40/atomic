@@ -15,6 +15,7 @@ export function renderNav(container: HTMLElement, onSearch: (q: string) => void,
       <div class="nav-links">
         <a class="nav-link" id="nav-home" href="#/">🏠 ${t('nav.home')}</a>
         <a class="nav-link" id="nav-tabel" href="#/explore">🔬 ${t('nav.explore')}</a>
+        <a class="nav-link" id="nav-belajar" href="#/learn">📚 ${getLang() === 'en' ? 'Learn' : 'Belajar'}</a>
         <a class="nav-link" id="nav-kimia-lab" href="#/molecule">⚗️ ${t('nav.lab')}</a>
         <a class="nav-link" id="nav-fenomena" href="#/phenomena">⚡ ${t('nav.phenomena')}</a>
         <a class="nav-link" id="nav-anatomi" href="#/composition">🧬 ${getLang() === 'en' ? 'Anatomy' : 'Anatomi'}</a>

@@ -265,177 +265,77 @@ export function renderDashboard(container: HTMLElement): () => void {
       </section>
 
       <!-- ═══════════════════════════════════════════════════
-           CHAPTER 5 — PUSAT ATOM (narrative finale)
+           CHAPTER 5 — JELAJAHI
       ═══════════════════════════════════════════════════ -->
-      <section class="dash-section dash-finale" id="sec-cta">
-        <div class="dash-finale-inner">
+      <section class="dash-section dash-cta-clean" id="sec-cta">
+        <div class="dash-section-inner">
 
-          <div class="dash-finale-nucleus reveal-up">⚛</div>
+          <div class="dash-cta-clean-head reveal-up">
+            <p class="dash-cta-clean-overline">${isEN ? 'Now you know' : 'Sekarang kamu tahu'}</p>
+            <h2 class="dash-cta-clean-title">${isEN ? 'Where do you want to go?' : 'Mau ke mana?'}</h2>
+          </div>
 
-          <div class="dash-finale-prose reveal-up">
+          <div class="dash-cta-clean-grid reveal-up">
 
-            <p class="dash-finale-opening">
-              ${isEN
-      ? 'Everything started here.'
-      : 'Segalanya dimulai dari sini.'}
-            </p>
-
-            <p>
-              ${isEN
-      ? '13.8 billion years ago, the universe was a single, unimaginably hot point. Then it exploded. In the first three minutes, the only atoms that formed were <strong>Hydrogen</strong> and <strong>Helium</strong>. Nothing else existed.'
-      : '13,8 miliar tahun lalu, alam semesta adalah satu titik yang tidak terbayangkan panasnya. Lalu ia meledak. Dalam tiga menit pertama, satu-satunya atom yang terbentuk adalah <strong>Hidrogen</strong> dan <strong>Helium</strong>. Tidak ada yang lain.'}
-            </p>
-
-            <p>
-              ${isEN
-      ? 'Hydrogen collapsed under its own gravity. A star ignited. Inside that furnace, hydrogen fused into carbon, oxygen, nitrogen, iron — the atoms that make up our bones, our air, our blood. It took a billion years. There was no rush.'
-      : 'Hidrogen runtuh karena gravitasinya sendiri. Sebuah bintang menyala. Di dalam tungku itu, hidrogen melebur menjadi karbon, oksigen, nitrogen, besi — atom yang membentuk tulang, udara, dan darah kita. Prosesnya butuh satu miliar tahun. Tidak ada yang terburu-buru.'}
-            </p>
-
-            <p>
-              ${isEN
-      ? 'Then the star died. It exploded in a supernova — scattering all those atoms across the galaxy at a fraction of the speed of light. Some landed on a young planet orbiting a modest star in the Milky Way\'s outer arm.'
-      : 'Lalu bintang itu mati. Ia meledak dalam supernova — menyebarkan semua atom itu ke seluruh galaksi dengan kecepatan sebagian dari kecepatan cahaya. Sebagian mendarat di sebuah planet muda yang mengorbit bintang biasa di lengan terluar Bima Sakti.'}
-            </p>
-
-            <p>
-              ${isEN
-      ? 'That planet is Earth. And those atoms — after billions of years of drifting, combining, and recombining — eventually became you.'
-      : 'Planet itu adalah Bumi. Dan atom-atom itu — setelah miliaran tahun melayang, bergabung, dan bergabung kembali — akhirnya menjadi kamu.'}
-            </p>
-
-            <div class="dash-finale-pause">
-              ${isEN
-      ? 'You are stardust that learned to wonder about its own origin.'
-      : 'Kamu adalah abu bintang yang belajar bertanya-tanya tentang asal-usulnya sendiri.'}
+            <div class="dash-cta-card" id="cta-explore" data-route="/explore">
+              <div class="dash-cta-card-icon">🔬</div>
+              <div class="dash-cta-card-body">
+                <strong>${isEN ? 'Periodic Table' : 'Tabel Periodik'}</strong>
+                <span>${isEN ? '118 elements · 3D models · discovery stories' : '118 elemen · 3D model · kisah penemu'}</span>
+              </div>
+              <div class="dash-cta-card-arr">→</div>
             </div>
 
-            <p>
-              ${isEN
-      ? 'The carbon in your body was inside a star before Earth existed. The iron in your blood was forged in a stellar core. The oxygen in every breath you take was scattered across the galaxy by a dying giant.'
-      : 'Karbon di tubuhmu pernah berada di dalam bintang sebelum Bumi ada. Besi di darahmu ditempa di inti bintang. Oksigen di setiap napasmu disebarkan ke seluruh galaksi oleh raksasa yang sekarat.'}
-            </p>
-
-            <p>
-              ${isEN
-      ? 'And it doesn\'t stop with you. The same story — the same atoms — play out across the Sun, across every plant that converts light into sugar, across the entire observable universe. The elements don\'t care about the scale. Hydrogen behaves the same way in your body as it does at the core of the Sun.'
-      : 'Dan itu tidak berhenti di kamu. Cerita yang sama — atom yang sama — berlangsung di Matahari, di setiap tumbuhan yang mengubah cahaya menjadi gula, di seluruh alam semesta yang bisa diamati. Elemen tidak peduli skala. Hidrogen berperilaku sama di tubuhmu seperti di inti Matahari.'}
-            </p>
-
-            <div class="dash-finale-branches">
-              <div class="dash-finale-branch" id="hub-composition" data-route="/composition/human">
-                <div class="dash-finale-branch-icon">🧬</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'What atoms make up your body?' : 'Atom apa yang membentuk tubuhmu?'}</strong>
-                  <span>${isEN ? 'And the Sun. And a plant. And the entire Universe.' : 'Dan Matahari. Dan tumbuhan. Dan seluruh Semesta.'}</span>
-                </div>
-                <div class="dash-finale-branch-arrow">→</div>
+            <div class="dash-cta-card" id="cta-phenomena" data-route="/phenomena">
+              <div class="dash-cta-card-icon">⚡</div>
+              <div class="dash-cta-card-body">
+                <strong>${isEN ? 'Phenomena' : 'Fenomena Atom'}</strong>
+                <span>${isEN ? '27 phenomena — nuclear, quantum, cosmos' : '27 fenomena — nuklir, kuantum, kosmik'}</span>
               </div>
-              <div class="dash-finale-branch" id="hub-phenomena" data-route="/phenomena">
-                <div class="dash-finale-branch-icon">⚡</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'What can atoms do?' : 'Apa yang bisa atom lakukan?'}</strong>
-                  <span>${isEN ? '27 phenomena — from radioactivity to superconductors.' : '27 fenomena — dari radioaktivitas hingga superkonduktor.'}</span>
-                </div>
-                <div class="dash-finale-branch-arrow">→</div>
-              </div>
+              <div class="dash-cta-card-arr">→</div>
             </div>
 
-            <p>
-              ${isEN
-      ? 'But this story — the one you\'ve just lived through on this page — didn\'t come easy. For 2,400 years, from Democritus to Schrödinger, humanity argued, experimented, and nearly got it wrong a hundred times before getting it right.'
-      : 'Tapi cerita ini — yang baru saja kamu jalani di halaman ini — tidak datang dengan mudah. Selama 2.400 tahun, dari Democritus hingga Schrödinger, manusia berdebat, bereksperimen, dan hampir salah ratusan kali sebelum akhirnya benar.'}
-            </p>
-
-            <div class="dash-finale-branches">
-              <div class="dash-finale-branch" id="hub-history" data-route="/atom-history">
-                <div class="dash-finale-branch-icon">📜</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'How did we figure all this out?' : 'Bagaimana kita berhasil mengetahui semua ini?'}</strong>
-                  <span>${isEN ? '22 cinematic slides. 2,400 years of science.' : '22 slide sinematik. 2.400 tahun perjalanan sains.'}</span>
-                </div>
-                <div class="dash-finale-branch-arrow">→</div>
+            <div class="dash-cta-card" id="cta-composition" data-route="/composition/human">
+              <div class="dash-cta-card-icon">🧬</div>
+              <div class="dash-cta-card-body">
+                <strong>${isEN ? 'Atomic Anatomy' : 'Anatomi Atom'}</strong>
+                <span>${isEN ? 'Human · Earth · Sun · Plants · Universe' : 'Manusia · Bumi · Matahari · Tumbuhan · Semesta'}</span>
               </div>
+              <div class="dash-cta-card-arr">→</div>
             </div>
 
-            <p>
-              ${isEN
-      ? 'And once you know the story, you can meet every character individually. 118 elements. Each with a different number of protons. Each born from a different corner of the cosmos. Each with a role — in your body, in the Earth\'s crust, in the stars.'
-      : 'Dan begitu kamu tahu ceritanya, kamu bisa bertemu setiap karakter satu per satu. 118 elemen. Masing-masing dengan jumlah proton yang berbeda. Masing-masing lahir dari sudut kosmos yang berbeda. Masing-masing punya peran — di tubuhmu, di kerak Bumi, di bintang-bintang.'}
-            </p>
-
-            <div class="dash-finale-branches">
-              <div class="dash-finale-branch" id="hub-explore" data-route="/explore">
-                <div class="dash-finale-branch-icon">🔬</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'Meet all 118 elements.' : 'Kenali semua 118 elemen.'}</strong>
-                  <span>${isEN ? 'Periodic table · 3D models · discovery stories.' : 'Tabel periodik · 3D model · kisah penemu.'}</span>
-                </div>
-                <div class="dash-finale-branch-arrow">→</div>
+            <div class="dash-cta-card" id="cta-history" data-route="/atom-history">
+              <div class="dash-cta-card-icon">📜</div>
+              <div class="dash-cta-card-body">
+                <strong>${isEN ? 'Atom History' : 'Sejarah Atom'}</strong>
+                <span>${isEN ? '22 cinematic slides · 2,400 years of science' : '22 slide sinematik · 2.400 tahun perjalanan sains'}</span>
               </div>
-              <div class="dash-finale-branch" id="hub-molecule" data-route="/molecule">
-                <div class="dash-finale-branch-icon">⚗️</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'Now combine them.' : 'Sekarang gabungkan mereka.'}</strong>
-                  <span>${isEN ? 'Build H₂O, CO₂, DNA — and see what atoms become.' : 'Rakit H₂O, CO₂, DNA — dan lihat atom menjadi apa.'}</span>
-                </div>
-                <div class="dash-finale-branch-arrow">→</div>
-              </div>
+              <div class="dash-cta-card-arr">→</div>
             </div>
 
-            <p>
-              ${isEN
-      ? 'But knowing the cast is only the beginning. The deeper question is: <em>how do they behave?</em> How do they bond? What rules govern them? That is where the journey goes next.'
-      : 'Tapi mengenal semua karakternya hanyalah awal. Pertanyaan yang lebih dalam adalah: <em>bagaimana mereka berperilaku?</em> Bagaimana mereka berikatan? Aturan apa yang mengatur mereka? Itulah ke mana perjalanan ini akan berlanjut.'}
-            </p>
-
-            <div class="dash-finale-branches">
-              <div class="dash-finale-branch dash-finale-branch--soon">
-                <div class="dash-finale-branch-icon">📚</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'Belajar Dari Awal — 10 Learning Modules' : 'Belajar Dari Awal — 10 Modul Belajar'}</strong>
-                  <span>${isEN ? 'Matter → Electrons → Electron Config → Bonding. Step-by-step, with animations.' : 'Materi → Elektron → Konfigurasi → Ikatan Kimia. Bertahap, dengan animasi.'}</span>
-                </div>
-                <div class="dash-finale-branch-badge">${isEN ? 'Soon' : 'Segera'}</div>
+            <div class="dash-cta-card" id="cta-molecule" data-route="/molecule">
+              <div class="dash-cta-card-icon">⚗️</div>
+              <div class="dash-cta-card-body">
+                <strong>${isEN ? 'Chem Lab' : 'Kimia Lab'}</strong>
+                <span>${isEN ? 'Build H₂O · CO₂ · DNA and more' : 'Rakit H₂O · CO₂ · DNA dan lainnya'}</span>
               </div>
-              <div class="dash-finale-branch dash-finale-branch--soon">
-                <div class="dash-finale-branch-icon">🧪</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'Chem Lab: Challenge Mode' : 'Kimia Lab: Mode Tantangan'}</strong>
-                  <span>${isEN ? 'Given a molecule name — build it yourself. With hints and real-time feedback.' : 'Dikasih nama molekul — rakit sendiri. Ada petunjuk dan feedback real-time.'}</span>
-                </div>
-                <div class="dash-finale-branch-badge">${isEN ? 'Soon' : 'Segera'}</div>
-              </div>
-              <div class="dash-finale-branch dash-finale-branch--soon">
-                <div class="dash-finale-branch-icon">🌀</div>
-                <div class="dash-finale-branch-text">
-                  <strong>${isEN ? 'Orbital Model — Quantum Visualization' : 'Model Orbital — Visualisasi Kuantum'}</strong>
-                  <span>${isEN ? 'Beyond Bohr. See the actual probability clouds where electrons live.' : 'Melampaui Bohr. Lihat awan probabilitas nyata tempat elektron berada.'}</span>
-                </div>
-                <div class="dash-finale-branch-badge">${isEN ? 'Soon' : 'Segera'}</div>
-              </div>
-            </div>
-
-            <p class="dash-finale-closing">
-              ${isEN
-      ? 'You started this page not knowing why any of this matters. Now you know: every single thing — you, this screen, the air between you and it — is a different arrangement of the same handful of particles, born from the first seconds of existence.'
-      : 'Kamu memulai halaman ini tanpa tahu mengapa semua ini penting. Sekarang kamu tahu: setiap hal — kamu, layar ini, udara di antara kamu dan layar ini — adalah susunan berbeda dari segelintir partikel yang sama, lahir dari detik-detik pertama keberadaan alam semesta.'}
-            </p>
-
-            <div class="dash-finale-coda">
-              ${isEN
-      ? '"We are a way for the cosmos to know itself."'
-      : '"Kita adalah cara alam semesta mengenal dirinya sendiri."'}
-              <span>— Carl Sagan</span>
+              <div class="dash-cta-card-arr">→</div>
             </div>
 
           </div>
+
+          <div class="dash-cta-story-replay reveal-up">
+            <button class="dash-cta-story-btn" id="btn-replay-onboarding">
+              <span class="replay-icon">↺</span>
+              ${isEN ? 'Replay the origin story' : 'Putar ulang kisah asal atom'}
+            </button>
+          </div>
+
         </div>
       </section>
 
     </div>
   `;
-
 
   // ─── CLEANUPS ────────────────────────────────────────────────────────────
   const cleanups: Array<() => void> = [];
@@ -731,14 +631,19 @@ export function renderDashboard(container: HTMLElement): () => void {
   // ─── NAV BUTTONS ─────────────────────────────────────────────────────────
   document.getElementById('btn-history')?.addEventListener('click', () => navigate('/atom-history'));
 
-  // Hub content cards — delegate via data-route
-  const hubIds = ['hub-phenomena', 'hub-composition', 'hub-explore', 'hub-history', 'hub-molecule'];
-  hubIds.forEach(id => {
+  // ─── CHAPTER 5 CTA CARDS ──────────────────────────────────────────────────
+  ['cta-explore', 'cta-phenomena', 'cta-composition', 'cta-history', 'cta-molecule'].forEach(id => {
     const el = document.getElementById(id);
-    el?.addEventListener('click', () => {
-      const route = el.dataset.route;
-      if (route) navigate(route);
-    });
+    el?.addEventListener('click', () => { const r = el.dataset.route; if (r) navigate(r); });
+  });
+
+  // Replay onboarding
+  document.getElementById('btn-replay-onboarding')?.addEventListener('click', () => navigate('/onboarding'));
+
+  // Legacy hub cards
+  ['hub-phenomena', 'hub-composition', 'hub-explore', 'hub-history', 'hub-molecule'].forEach(id => {
+    const el = document.getElementById(id);
+    el?.addEventListener('click', () => { const r = el.dataset.route; if (r) navigate(r); });
   });
 
   return () => cleanups.forEach(fn => fn());

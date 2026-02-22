@@ -1,6 +1,6 @@
 import './styles/global.css';
 import { initTheme } from './core/theme';
-import { initRouter, addRoute, setCleanup, resolve } from './core/router';
+import { initRouter, addRoute, setCleanup, resolve, navigate } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderDashboard } from './components/Dashboard';
 import { renderExplore } from './components/Explore';
@@ -11,6 +11,9 @@ import { renderDiscovererStory } from './components/DiscovererStory';
 import { renderPhenomenaList } from './components/PhenomenaList';
 import { renderAtomHistory } from './components/AtomHistory';
 import { renderCompositionPage } from './components/CompositionPage';
+import { renderOnboarding, hasSeenOnboarding } from './components/Onboarding';
+import { renderLearnList } from './components/LearnList';
+import { renderLearnModule } from './components/LearnModule';
 
 
 initTheme();
@@ -96,5 +99,27 @@ addRoute('/composition', () => {
     setCleanup(cleanup);
 });
 
+addRoute('/learn', () => {
+    main.innerHTML = '';
+    const cleanup = renderLearnList(main);
+    setCleanup(cleanup);
+});
+
+addRoute('/learn/:slug', (params) => {
+    main.innerHTML = '';
+    const cleanup = renderLearnModule(main, params?.slug ?? '');
+    setCleanup(cleanup);
+});
+
+addRoute('/onboarding', () => {
+    main.innerHTML = '';
+    const cleanup = renderOnboarding(main);
+    setCleanup(cleanup);
+});
 
 initRouter();
+
+// Auto-redirect to onboarding on first visit
+if (!hasSeenOnboarding() && window.location.hash.slice(1) === '/') {
+    navigate('/onboarding');
+}
