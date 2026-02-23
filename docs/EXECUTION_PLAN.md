@@ -376,7 +376,7 @@ Deliverable:
 - ✅ Recent subscriptions table (real DB data)
 - ✅ Recent anomalies section
 - ✅ Active guest codes summary with login counts
-- ⏳ Chart.js: revenue line chart (belum — butuh data historis)
+- ✅ Chart.js: revenue line chart (dedicated revenue analytics page)
 - ✅ Chart.js: doughnut chart subscription by segment
 - ⏳ System config panel (belum — next iteration)
 - ✅ Test: buka /admin/ → data real dari DB tampil
@@ -428,9 +428,9 @@ Deliverable:
 ```
 Deliverable:
 - ✅ GET /admin/pricing → tabel harga per segmen × durasi (segment grouping)
-- ⏳ Inline edit harga (belum — template sudah siap, handler belum)
-- ⏳ GET /admin/revenue → revenue analytics (belum — butuh data historis)
-- ⏳ Chart.js integration (belum)
+- ✅ Inline edit harga (PUT /admin/pricing/:id — HTMX inline price editing)
+- ✅ GET /admin/revenue → revenue analytics (3 charts: line, doughnut, stacked bar)
+- ✅ Chart.js integration (revenue line, segment doughnut, subscription trend bar)
 - ⏳ Product management (belum — saat ini hanya 'atomic')
 - ✅ Pricing plans list with IDR formatting
 ```
