@@ -15,7 +15,7 @@ import { renderCompositionPage } from './components/CompositionPage';
 import { renderOnboarding, hasSeenOnboarding } from './components/Onboarding';
 import { renderLearnList } from './components/LearnList';
 import { renderLearnModule } from './components/LearnModule';
-import { renderAuthGate, renderUserBadge, wireUserBadge } from './components/AuthGate';
+import { renderAuthGate, renderSubscriberGate, renderUserBadge, wireUserBadge } from './components/AuthGate';
 import { mountFeedbackWidget, unmountFeedbackWidget } from './components/FeedbackWidget';
 
 
@@ -44,11 +44,21 @@ initAuth().then((loggedIn) => {
 function showGate() {
     app.innerHTML = '';
     unmountFeedbackWidget();
-    renderAuthGate(app, () => {
-        // On successful login, boot the full app
-        app.innerHTML = '';
-        bootApp();
-    });
+
+    const isSubscriberLogin = window.location.pathname === '/login';
+
+    if (isSubscriberLogin) {
+        renderSubscriberGate(app, () => {
+            app.innerHTML = '';
+            window.history.replaceState({}, '', '/');
+            bootApp();
+        });
+    } else {
+        renderAuthGate(app, () => {
+            app.innerHTML = '';
+            bootApp();
+        });
+    }
 }
 
 // ── Full App — shown after auth ──────────────────────────────────────

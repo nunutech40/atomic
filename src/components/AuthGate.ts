@@ -1,9 +1,6 @@
-// ── Auth Gate — Login / Register / OTP screens ──────────────────────
+// ── Auth Gate — Separate Guest & Subscriber login screens ───────────
 import { login, guestLogin, guestVerify, register, getUser, logout } from '../core/auth';
 import { getLang } from '../core/i18n';
-
-type GateMode = 'login' | 'register' | 'otp';
-type LoginType = 'subscriber' | 'guest';
 
 // State for the OTP step
 interface OtpState {
@@ -13,11 +10,12 @@ interface OtpState {
   referralSource: string;
 }
 
-// ── Main entry: mount the auth gate ──────────────────────────────────
+// ═════════════════════════════════════════════════════════════════════
+// GUEST AUTH GATE — default screen, no mention of subscriber/admin
+// ═════════════════════════════════════════════════════════════════════
 
 export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
-  let mode: GateMode = 'login';
-  let loginType: LoginType = 'guest'; // default to guest since most users will use guest code
+  let mode: 'guest' | 'otp' = 'guest';
   let otpState: OtpState | null = null;
 
   function render() {
@@ -37,8 +35,7 @@ export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
           <h1 class="auth-title">Atomic</h1>
           <p class="auth-subtitle">${isId ? 'Penjelajah Atom 3D Interaktif' : 'Interactive 3D Atom Explorer'}</p>
 
-          ${mode === 'login' ? renderLoginPage(isId, loginType) : ''}
-          ${mode === 'register' ? renderRegisterPage(isId) : ''}
+          ${mode === 'guest' ? renderGuestForm(isId) : ''}
           ${mode === 'otp' ? renderOtpPage(isId, otpState!) : ''}
 
           <div id="auth-error" class="auth-error" style="display:none"></div>
@@ -47,43 +44,22 @@ export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
       </div>
     `;
 
-    // Wire form
     if (mode === 'otp') {
       wireOtpForm(container, isId, onSuccess, otpState!);
     } else {
-      wireForm(container, isId, onSuccess, () => mode, () => loginType, (s) => {
+      wireGuestForm(container, isId, onSuccess, (s) => {
         otpState = s;
         mode = 'otp';
         render();
       });
     }
 
-    // Wire login type toggle
-    const toggleLink = container.querySelector('#toggle-login-type');
-    if (toggleLink) {
-      toggleLink.addEventListener('click', (e) => {
+    // Wire "back to login" from OTP page
+    const backLink = container.querySelector('#goto-login');
+    if (backLink) {
+      backLink.addEventListener('click', (e) => {
         e.preventDefault();
-        loginType = loginType === 'subscriber' ? 'guest' : 'subscriber';
-        render();
-      });
-    }
-
-    // Wire navigation to register
-    const registerLink = container.querySelector('#goto-register');
-    if (registerLink) {
-      registerLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        mode = 'register';
-        render();
-      });
-    }
-
-    // Wire navigation back to login
-    const loginLink = container.querySelector('#goto-login');
-    if (loginLink) {
-      loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        mode = 'login';
+        mode = 'guest';
         otpState = null;
         render();
       });
@@ -93,14 +69,12 @@ export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
   render();
 }
 
-// ── Login Page (single form, toggles between subscriber & guest) ─────
+// ── Guest login form ─────────────────────────────────────────────────
 
-function renderLoginPage(isId: boolean, loginType: LoginType): string {
-  const isGuest = loginType === 'guest';
-
+function renderGuestForm(isId: boolean): string {
   return `
     <div class="auth-page-header">
-      <h2 class="auth-page-title">${isGuest ? '🎟️' : '🔑'} ${isId ? 'Masuk' : 'Sign In'}</h2>
+      <h2 class="auth-page-title">🎟️ ${isId ? 'Masuk dengan Kode' : 'Enter with Code'}</h2>
     </div>
 
     <form id="auth-form" class="auth-form">
@@ -111,16 +85,13 @@ function renderLoginPage(isId: boolean, loginType: LoginType): string {
                required autocomplete="email" />
       </div>
       <div class="auth-field">
-        <label>${isGuest
-      ? (isId ? 'Kode Akses' : 'Access Code')
-      : 'Password'}</label>
-        <input type="${isGuest ? 'text' : 'password'}" id="auth-password"
-               placeholder="${isGuest ? 'ATOM-XXXX' : '••••••••'}"
-               required autocomplete="${isGuest ? 'off' : 'current-password'}"
-               ${isGuest ? 'class="auth-code-input"' : ''} />
-        ${isGuest ? `<span class="auth-field-hint">${isId ? 'Kode dari admin atau guru kamu' : 'Code from your admin or teacher'}</span>` : ''}
+        <label>${isId ? 'Kode Akses' : 'Access Code'}</label>
+        <input type="text" id="auth-password"
+               placeholder="ATOM-XXXX"
+               required autocomplete="off"
+               class="auth-code-input" />
+        <span class="auth-field-hint">${isId ? 'Kode dari admin atau guru kamu' : 'Code from your admin or teacher'}</span>
       </div>
-      ${isGuest ? `
       <div class="auth-field">
         <label>${isId ? 'Tau dari mana?' : 'How did you find us?'}</label>
         <select id="auth-referral" class="auth-select" required>
@@ -135,17 +106,153 @@ function renderLoginPage(isId: boolean, loginType: LoginType): string {
           <option value="Dari Teman">🤝 ${isId ? 'Dari Teman' : 'From a Friend'}</option>
         </select>
       </div>
-      ` : ''}
       <button type="submit" class="auth-submit">
-        ${isGuest ? '🎟️' : '🔑'} ${isId ? 'Masuk' : 'Sign In'}
+        🎟️ ${isId ? 'Masuk' : 'Enter'}
       </button>
     </form>
+  `;
+}
 
-    <a href="#" id="toggle-login-type" class="auth-toggle-link">
-      ${isGuest
-      ? (isId ? '🔑 Punya akun subscriber? Login di sini' : '🔑 Have a subscriber account? Login here')
-      : (isId ? '🎟️ Punya guest code? Masuk di sini' : '🎟️ Have a guest code? Enter here')}
-    </a>
+// ── Wire guest form submission ───────────────────────────────────────
+
+function wireGuestForm(
+  container: HTMLElement,
+  isId: boolean,
+  onSuccess: () => void,
+  onOtpPending: (s: OtpState) => void,
+) {
+  const form = container.querySelector('#auth-form') as HTMLFormElement;
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const btn = form.querySelector('.auth-submit') as HTMLButtonElement;
+    const errorEl = container.querySelector('#auth-error') as HTMLElement;
+
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="auth-spinner"></span>';
+
+    try {
+      const email = (form.querySelector('#auth-email') as HTMLInputElement).value.trim();
+      const code = (form.querySelector('#auth-password') as HTMLInputElement).value.trim();
+      const referralEl = form.querySelector('#auth-referral') as HTMLSelectElement;
+      const referralSource = referralEl?.value || '';
+
+      const result = await guestLogin(code, email, referralSource);
+
+      if (result.ok && result.pendingOtp) {
+        onOtpPending({
+          email,
+          code,
+          maskedEmail: result.maskedEmail || email,
+          referralSource,
+        });
+        return;
+      }
+
+      if (result.ok) {
+        onSuccess();
+      } else {
+        errorEl.textContent = result.error || (isId ? 'Terjadi kesalahan' : 'Something went wrong');
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    } catch {
+      errorEl.textContent = isId ? 'Gagal terhubung ke server' : 'Failed to connect to server';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  });
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// SUBSCRIBER AUTH GATE — separate page at /login, for admin/subscriber
+// ═════════════════════════════════════════════════════════════════════
+
+export function renderSubscriberGate(container: HTMLElement, onSuccess: () => void) {
+  let mode: 'login' | 'register' = 'login';
+
+  function render() {
+    const isId = getLang() === 'id';
+
+    container.innerHTML = `
+      <div class="auth-gate">
+        <div class="auth-gate-bg">
+          <div class="auth-orbit auth-orbit-1"></div>
+          <div class="auth-orbit auth-orbit-2"></div>
+          <div class="auth-orbit auth-orbit-3"></div>
+          <div class="auth-nucleus"></div>
+        </div>
+
+        <div class="auth-card">
+          <div class="auth-logo">⚛</div>
+          <h1 class="auth-title">Atomic</h1>
+          <p class="auth-subtitle">${isId ? 'Login Akun' : 'Account Login'}</p>
+
+          ${mode === 'login' ? renderSubscriberForm(isId) : ''}
+          ${mode === 'register' ? renderRegisterPage(isId) : ''}
+
+          <div id="auth-error" class="auth-error" style="display:none"></div>
+          <div id="auth-success" class="auth-success" style="display:none"></div>
+        </div>
+      </div>
+    `;
+
+    wireSubscriberForm(container, isId, onSuccess, () => mode);
+
+    // Wire navigation links
+    const registerLink = container.querySelector('#goto-register');
+    if (registerLink) {
+      registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        mode = 'register';
+        render();
+      });
+    }
+
+    const loginLink = container.querySelector('#goto-login');
+    if (loginLink) {
+      loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        mode = 'login';
+        render();
+      });
+    }
+  }
+
+  render();
+}
+
+// ── Subscriber login form ────────────────────────────────────────────
+
+function renderSubscriberForm(isId: boolean): string {
+  return `
+    <div class="auth-page-header">
+      <h2 class="auth-page-title">🔑 ${isId ? 'Masuk' : 'Sign In'}</h2>
+    </div>
+
+    <form id="auth-form" class="auth-form">
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="auth-email"
+               placeholder="${isId ? 'emailmu@contoh.com' : 'your@email.com'}"
+               required autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="auth-password"
+               placeholder="••••••••"
+               required autocomplete="current-password" />
+      </div>
+      <button type="submit" class="auth-submit">
+        🔑 ${isId ? 'Masuk' : 'Sign In'}
+      </button>
+    </form>
 
     <div class="auth-nav-bottom">
       ${isId ? 'Belum punya akun?' : "Don't have an account?"}
@@ -154,7 +261,7 @@ function renderLoginPage(isId: boolean, loginType: LoginType): string {
   `;
 }
 
-// ── Register Page ────────────────────────────────────────────────────
+// ── Register form ────────────────────────────────────────────────────
 
 function renderRegisterPage(isId: boolean): string {
   return `
@@ -193,7 +300,76 @@ function renderRegisterPage(isId: boolean): string {
   `;
 }
 
-// ── OTP Verification Page ────────────────────────────────────────────
+// ── Wire subscriber/register form ────────────────────────────────────
+
+function wireSubscriberForm(
+  container: HTMLElement,
+  isId: boolean,
+  onSuccess: () => void,
+  getMode: () => 'login' | 'register',
+) {
+  const form = container.querySelector('#auth-form') as HTMLFormElement;
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const btn = form.querySelector('.auth-submit') as HTMLButtonElement;
+    const errorEl = container.querySelector('#auth-error') as HTMLElement;
+    const successEl = container.querySelector('#auth-success') as HTMLElement;
+
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    btn.disabled = true;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="auth-spinner"></span>';
+
+    try {
+      if (getMode() === 'login') {
+        const email = (form.querySelector('#auth-email') as HTMLInputElement).value.trim();
+        const password = (form.querySelector('#auth-password') as HTMLInputElement).value;
+        const result = await login(email, password);
+
+        if (result.ok) {
+          onSuccess();
+        } else {
+          errorEl.textContent = result.error || (isId ? 'Email atau password salah' : 'Invalid email or password');
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      } else {
+        const name = (form.querySelector('#auth-name') as HTMLInputElement).value.trim();
+        const email = (form.querySelector('#auth-email') as HTMLInputElement).value.trim();
+        const password = (form.querySelector('#auth-password') as HTMLInputElement).value;
+        const result = await register(email, password, name);
+
+        if (result.ok) {
+          successEl.textContent = isId
+            ? '✅ Berhasil daftar! Silakan login.'
+            : '✅ Registered! Please login.';
+          successEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        } else {
+          errorEl.textContent = result.error || (isId ? 'Terjadi kesalahan' : 'Something went wrong');
+          errorEl.style.display = 'block';
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      }
+    } catch {
+      errorEl.textContent = isId ? 'Gagal terhubung ke server' : 'Failed to connect to server';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  });
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// SHARED — OTP page (used by guest flow)
+// ═════════════════════════════════════════════════════════════════════
 
 function renderOtpPage(isId: boolean, otpInfo: OtpState): string {
   return `
@@ -232,96 +408,9 @@ function renderOtpPage(isId: boolean, otpInfo: OtpState): string {
     </div>
 
     <div class="auth-nav-bottom">
-      <a href="#" id="goto-login">${isId ? '← Kembali ke login' : '← Back to login'}</a>
+      <a href="#" id="goto-login">${isId ? '← Kembali' : '← Back'}</a>
     </div>
   `;
-}
-
-// ── Wire form submission ─────────────────────────────────────────────
-
-function wireForm(
-  container: HTMLElement,
-  isId: boolean,
-  onSuccess: () => void,
-  getMode: () => GateMode,
-  getLoginType: () => LoginType,
-  onOtpPending: (s: OtpState) => void,
-) {
-  const form = container.querySelector('#auth-form') as HTMLFormElement;
-  if (!form) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const mode = getMode();
-    const btn = form.querySelector('.auth-submit') as HTMLButtonElement;
-    const errorEl = container.querySelector('#auth-error') as HTMLElement;
-    const successEl = container.querySelector('#auth-success') as HTMLElement;
-
-    errorEl.style.display = 'none';
-    successEl.style.display = 'none';
-    btn.disabled = true;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span class="auth-spinner"></span>';
-
-    let result: { ok: boolean; error?: string; pendingOtp?: boolean; maskedEmail?: string };
-
-    try {
-      if (mode === 'login') {
-        const email = (form.querySelector('#auth-email') as HTMLInputElement).value.trim();
-        const passwordOrCode = (form.querySelector('#auth-password') as HTMLInputElement).value.trim();
-
-        if (getLoginType() === 'guest') {
-          const referralEl = form.querySelector('#auth-referral') as HTMLSelectElement;
-          const referralSource = referralEl?.value || '';
-          result = await guestLogin(passwordOrCode, email, referralSource);
-
-          // Check if OTP was sent
-          if (result.ok && result.pendingOtp) {
-            onOtpPending({
-              email,
-              code: passwordOrCode,
-              maskedEmail: result.maskedEmail || email,
-              referralSource,
-            });
-            return;
-          }
-        } else {
-          result = await login(email, passwordOrCode);
-        }
-      } else {
-        // Register
-        const name = (form.querySelector('#auth-name') as HTMLInputElement).value.trim();
-        const email = (form.querySelector('#auth-email') as HTMLInputElement).value.trim();
-        const password = (form.querySelector('#auth-password') as HTMLInputElement).value;
-        result = await register(email, password, name);
-
-        if (result.ok) {
-          successEl.textContent = isId
-            ? '✅ Berhasil daftar! Silakan login.'
-            : '✅ Registered! Please login.';
-          successEl.style.display = 'block';
-          btn.disabled = false;
-          btn.innerHTML = originalText;
-          return;
-        }
-      }
-
-      if (result!.ok) {
-        onSuccess();
-      } else {
-        errorEl.textContent = result!.error || (isId ? 'Terjadi kesalahan' : 'Something went wrong');
-        errorEl.style.display = 'block';
-        btn.disabled = false;
-        btn.innerHTML = originalText;
-      }
-    } catch {
-      errorEl.textContent = isId ? 'Gagal terhubung ke server' : 'Failed to connect to server';
-      errorEl.style.display = 'block';
-      btn.disabled = false;
-      btn.innerHTML = originalText;
-    }
-  });
 }
 
 // ── Wire OTP form ────────────────────────────────────────────────────
@@ -397,7 +486,9 @@ function wireOtpForm(
   }
 }
 
-// ── User Badge (for nav bar after login) ─────────────────────────────
+// ═════════════════════════════════════════════════════════════════════
+// USER BADGE — for nav bar after login
+// ═════════════════════════════════════════════════════════════════════
 
 export function renderUserBadge(): string {
   const user = getUser();
