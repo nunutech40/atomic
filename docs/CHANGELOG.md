@@ -4,6 +4,34 @@ Semua perubahan signifikan didokumentasikan di sini, urutan terbaru dahulu.
 
 ---
 
+## [2.7.0] — 2026-02-24
+
+### Admin Access + Guest OTP Verification
+
+#### 👑 Admin Login ke Atomic
+- Admin bisa login ke Atomic via mode subscriber (email + password)
+- `AccessCheck` di-bypass untuk role admin — tidak perlu subscription
+- Admin mendapat segment `"admin"` dan akses permanen
+
+#### 🔐 Guest OTP Email Verification
+- **2-step guest login flow**: email + kode → OTP dikirim ke email → verifikasi OTP → akses diberikan
+- **OTP page UI**: Halaman verifikasi dengan input 6 digit monospace, masked email, countdown hint
+- **Email template**: Branded OTP email via Resend (dev mode: OTP muncul di terminal log)
+- **Rate limiting**: Max 3 OTP per 10 menit per email, OTP berlaku 5 menit
+- **Shake animation**: Input field bergoyang saat OTP salah
+- **Resend button**: Kirim ulang OTP tanpa kembali ke halaman login
+- **Login count**: Hanya di-increment setelah OTP verified (bukan saat request)
+
+#### Backend
+- **Migration 000005**: Tabel `guest_otps` (email, guest_code_id, otp_code, expires_at, verified, ip)
+- **SQL queries**: CreateGuestOTP, GetPendingOTP, MarkOTPVerified, CleanExpiredOTPs, CountRecentOTPs
+- **Handler**: `GuestLogin` refactored → kirim OTP, `GuestVerify` baru → validasi OTP
+- **Route**: `POST /api/auth/guest-verify` (public, rate limited)
+- **Email service**: `SendGuestOTPEmail` template
+- **AccessCheck**: Admin bypass subscription check
+
+---
+
 ## [2.6.0] — 2026-02-24
 
 ### Feedback Widget — Kotak Saran

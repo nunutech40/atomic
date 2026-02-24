@@ -17033,6 +17033,91 @@ body {
   font-weight: 700 !important;
 }
 
+/* OTP Input — big centered digits */
+.auth-otp-input {
+  text-align: center;
+  font-family: var(--font-mono) !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: 10px;
+  padding: 16px 14px !important;
+}
+
+/* OTP info block */
+.auth-otp-info {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 20px 16px;
+  background: rgba(124, 115, 255, 0.06);
+  border: 1px solid rgba(124, 115, 255, 0.12);
+  border-radius: var(--radius-sm);
+}
+
+.auth-otp-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.auth-otp-info p {
+  font-size: 14px;
+  color: var(--text-2);
+  margin: 0 0 4px;
+  line-height: 1.5;
+}
+
+.auth-otp-info strong {
+  color: var(--accent);
+}
+
+.auth-otp-hint {
+  font-size: 12px !important;
+  color: var(--text-3) !important;
+}
+
+/* OTP actions */
+.auth-otp-actions {
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* OTP submit variant */
+.auth-submit--otp {
+  background: linear-gradient(135deg, #059669, #10b981, #34d399);
+}
+
+.auth-submit--otp:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+}
+
+/* Shake animation for wrong OTP */
+.auth-shake {
+  animation: auth-shake 0.4s ease;
+}
+
+@keyframes auth-shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-8px);
+  }
+
+  40% {
+    transform: translateX(8px);
+  }
+
+  60% {
+    transform: translateX(-4px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
+}
+
 .auth-field-hint {
   display: block;
   margin-top: 4px;

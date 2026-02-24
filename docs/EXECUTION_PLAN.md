@@ -529,6 +529,23 @@ Deliverable:
 
 ---
 
+### Step FE-3 — Admin Access + Guest OTP Verification ✅
+**Goal:** Admin bisa login ke Atomic tanpa subscription. Guest login pakai OTP email verification.
+
+```
+Deliverable:
+- ✅ Backend: migration 000005 (guest_otps table), OTP queries, email template
+- ✅ Backend: GuestLogin refactored → 2-step (send OTP → verify)
+- ✅ Backend: POST /api/auth/guest-verify endpoint
+- ✅ Backend: AccessCheck admin bypass (no subscription needed)
+- ✅ Frontend: auth.ts → guestLogin returns pending, guestVerify() baru
+- ✅ Frontend: AuthGate.ts → OTP page (6-digit input, resend, shake error)
+- ✅ CSS: OTP input monospace, info block, green verify button, shake animation
+- ✅ Rate limit: max 3 OTP per 10 min per email, 5 min expiry
+```
+
+---
+
 ## Ringkasan
 
 | Phase | Steps | Inti |
@@ -538,15 +555,15 @@ Deliverable:
 | **BE-3** Guest + Security | 3.1 → 3.4 ✅ | Guest codes, Login flow, Fingerprint, Anomaly |
 | **BE-4** Admin Dashboard | 4.1 → 4.5 ✅ | Templ/HTMX layout, Stats + **Quota widget**, Users, Codes, Revenue |
 | **BE-5** Hardening | 5.1 ✅, 5.2 ✅, 5.3 ⏳ | Rate limit, Audit, Settings, Docker deploy |
-| **FE-INT** Integration | FE-1 ✅, FE-2 ✅ | Auth Gate, Feedback Widget |
-| **Total** | **27 steps** (25 done) | Setiap step ≈ 1 conversation session |
+| **FE-INT** Integration | FE-1 ✅, FE-2 ✅, FE-3 ✅ | Auth Gate, Feedback Widget, Admin Access + Guest OTP |
+| **Total** | **28 steps** (26 done) | Setiap step ≈ 1 conversation session |
 
 ---
 
 ## Cara Resume
 
 Kalau mau lanjut, tinggal bilang:
-> "Lanjut step 1.3"
+> "Lanjut step 5.3"
 
 atau
 

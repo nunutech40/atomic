@@ -1,15 +1,23 @@
-// ── Auth Gate — Login / Register screens ─────────────────────────────
-import { login, guestLogin, register, getUser, logout } from '../core/auth';
+// ── Auth Gate — Login / Register / OTP screens ──────────────────────
+import { login, guestLogin, guestVerify, register, getUser, logout } from '../core/auth';
 import { getLang } from '../core/i18n';
 
-type GateMode = 'login' | 'register';
+type GateMode = 'login' | 'register' | 'otp';
 type LoginType = 'subscriber' | 'guest';
+
+// State for the OTP step
+interface OtpState {
+  email: string;
+  code: string;
+  maskedEmail: string;
+}
 
 // ── Main entry: mount the auth gate ──────────────────────────────────
 
 export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
   let mode: GateMode = 'login';
   let loginType: LoginType = 'guest'; // default to guest since most users will use guest code
+  let otpState: OtpState | null = null;
 
   function render() {
     const isId = getLang() === 'id';
@@ -28,7 +36,9 @@ export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
           <h1 class="auth-title">Atomic</h1>
           <p class="auth-subtitle">${isId ? 'Penjelajah Atom 3D Interaktif' : 'Interactive 3D Atom Explorer'}</p>
 
-          ${mode === 'login' ? renderLoginPage(isId, loginType) : renderRegisterPage(isId)}
+          ${mode === 'login' ? renderLoginPage(isId, loginType) : ''}
+          ${mode === 'register' ? renderRegisterPage(isId) : ''}
+          ${mode === 'otp' ? renderOtpPage(isId, otpState!) : ''}
 
           <div id="auth-error" class="auth-error" style="display:none"></div>
           <div id="auth-success" class="auth-success" style="display:none"></div>
@@ -37,7 +47,15 @@ export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
     `;
 
     // Wire form
-    wireForm(container, isId, onSuccess, () => mode, () => loginType);
+    if (mode === 'otp') {
+      wireOtpForm(container, isId, onSuccess, otpState!);
+    } else {
+      wireForm(container, isId, onSuccess, () => mode, () => loginType, (s) => {
+        otpState = s;
+        mode = 'otp';
+        render();
+      });
+    }
 
     // Wire login type toggle
     const toggleLink = container.querySelector('#toggle-login-type');
@@ -65,6 +83,7 @@ export function renderAuthGate(container: HTMLElement, onSuccess: () => void) {
       loginLink.addEventListener('click', (e) => {
         e.preventDefault();
         mode = 'login';
+        otpState = null;
         render();
       });
     }
@@ -157,6 +176,50 @@ function renderRegisterPage(isId: boolean): string {
   `;
 }
 
+// ── OTP Verification Page ────────────────────────────────────────────
+
+function renderOtpPage(isId: boolean, otpInfo: OtpState): string {
+  return `
+    <div class="auth-page-header">
+      <h2 class="auth-page-title">📧 ${isId ? 'Cek Email Kamu' : 'Check Your Email'}</h2>
+    </div>
+
+    <div class="auth-otp-info">
+      <div class="auth-otp-icon">📬</div>
+      <p>${isId
+      ? `Kami sudah kirim kode 6 digit ke <strong>${otpInfo.maskedEmail}</strong>`
+      : `We sent a 6-digit code to <strong>${otpInfo.maskedEmail}</strong>`}</p>
+      <p class="auth-otp-hint">${isId ? 'Cek inbox (dan folder spam juga ya)' : 'Check your inbox (and spam folder)'}</p>
+    </div>
+
+    <form id="auth-otp-form" class="auth-form">
+      <div class="auth-field">
+        <label>${isId ? 'Kode OTP' : 'OTP Code'}</label>
+        <input type="text" id="auth-otp"
+               placeholder="000000"
+               required maxlength="6" minlength="6"
+               inputmode="numeric" pattern="[0-9]{6}"
+               class="auth-otp-input"
+               autocomplete="one-time-code" />
+        <span class="auth-field-hint">${isId ? 'Kode berlaku 5 menit' : 'Code expires in 5 minutes'}</span>
+      </div>
+      <button type="submit" class="auth-submit auth-submit--otp">
+        🔐 ${isId ? 'Verifikasi' : 'Verify'}
+      </button>
+    </form>
+
+    <div class="auth-otp-actions">
+      <a href="#" id="resend-otp" class="auth-toggle-link">
+        ${isId ? '📨 Kirim ulang kode' : '📨 Resend code'}
+      </a>
+    </div>
+
+    <div class="auth-nav-bottom">
+      <a href="#" id="goto-login">${isId ? '← Kembali ke login' : '← Back to login'}</a>
+    </div>
+  `;
+}
+
 // ── Wire form submission ─────────────────────────────────────────────
 
 function wireForm(
@@ -165,6 +228,7 @@ function wireForm(
   onSuccess: () => void,
   getMode: () => GateMode,
   getLoginType: () => LoginType,
+  onOtpPending: (s: OtpState) => void,
 ) {
   const form = container.querySelector('#auth-form') as HTMLFormElement;
   if (!form) return;
@@ -183,7 +247,7 @@ function wireForm(
     const originalText = btn.innerHTML;
     btn.innerHTML = '<span class="auth-spinner"></span>';
 
-    let result: { ok: boolean; error?: string };
+    let result: { ok: boolean; error?: string; pendingOtp?: boolean; maskedEmail?: string };
 
     try {
       if (mode === 'login') {
@@ -192,6 +256,16 @@ function wireForm(
 
         if (getLoginType() === 'guest') {
           result = await guestLogin(passwordOrCode, email);
+
+          // Check if OTP was sent
+          if (result.ok && result.pendingOtp) {
+            onOtpPending({
+              email,
+              code: passwordOrCode,
+              maskedEmail: result.maskedEmail || email,
+            });
+            return;
+          }
         } else {
           result = await login(email, passwordOrCode);
         }
@@ -228,6 +302,79 @@ function wireForm(
       btn.innerHTML = originalText;
     }
   });
+}
+
+// ── Wire OTP form ────────────────────────────────────────────────────
+
+function wireOtpForm(
+  container: HTMLElement,
+  isId: boolean,
+  onSuccess: () => void,
+  otpInfo: OtpState,
+) {
+  const form = container.querySelector('#auth-otp-form') as HTMLFormElement;
+  if (!form) return;
+
+  // Auto-focus OTP input
+  const otpInput = form.querySelector('#auth-otp') as HTMLInputElement;
+  setTimeout(() => otpInput?.focus(), 100);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const btn = form.querySelector('.auth-submit') as HTMLButtonElement;
+    const errorEl = container.querySelector('#auth-error') as HTMLElement;
+
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span class="auth-spinner"></span>';
+
+    const otp = otpInput.value.trim();
+
+    try {
+      const result = await guestVerify(otpInfo.code, otpInfo.email, otp);
+
+      if (result.ok) {
+        onSuccess();
+      } else {
+        errorEl.textContent = result.error || (isId ? 'Kode OTP salah' : 'Invalid OTP code');
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        // Shake the input
+        otpInput.classList.add('auth-shake');
+        setTimeout(() => otpInput.classList.remove('auth-shake'), 500);
+      }
+    } catch {
+      errorEl.textContent = isId ? 'Gagal terhubung ke server' : 'Failed to connect to server';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  });
+
+  // Resend OTP
+  const resendLink = container.querySelector('#resend-otp');
+  if (resendLink) {
+    resendLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const successEl = container.querySelector('#auth-success') as HTMLElement;
+      const errorEl = container.querySelector('#auth-error') as HTMLElement;
+
+      errorEl.style.display = 'none';
+
+      const result = await guestLogin(otpInfo.code, otpInfo.email);
+      if (result.ok) {
+        successEl.textContent = isId ? '📨 Kode baru sudah dikirim!' : '📨 New code sent!';
+        successEl.style.display = 'block';
+        setTimeout(() => { successEl.style.display = 'none'; }, 4000);
+      } else {
+        errorEl.textContent = result.error || (isId ? 'Gagal kirim ulang' : 'Failed to resend');
+        errorEl.style.display = 'block';
+      }
+    });
+  }
 }
 
 // ── User Badge (for nav bar after login) ─────────────────────────────

@@ -115,9 +115,9 @@ export async function login(email: string, password: string): Promise<{ ok: bool
     }
 }
 
-// ── Guest Login (code + email) ───────────────────────────────────────
+// ── Guest Login Step 1 (code + email → sends OTP) ───────────────────
 
-export async function guestLogin(code: string, email: string): Promise<{ ok: boolean; error?: string }> {
+export async function guestLogin(code: string, email: string): Promise<{ ok: boolean; error?: string; pendingOtp?: boolean; maskedEmail?: string }> {
     try {
         const res = await fetch(`${config.apiBase}/api/auth/guest-login`, {
             method: 'POST',
@@ -131,12 +131,54 @@ export async function guestLogin(code: string, email: string): Promise<{ ok: boo
             return { ok: false, error: msg };
         }
         const data = await res.json();
-        // Extract access_token from response
+        const d = data?.data || data;
+
+        // New 2-step flow: server returns pending_verification
+        if (d?.pending_verification) {
+            return { ok: true, pendingOtp: true, maskedEmail: d.email };
+        }
+
+        // Fallback: direct login (shouldn't happen with new backend)
+        const accessToken = d?.access_token;
+        if (accessToken) {
+            state.accessToken = accessToken;
+        }
+        state.user = {
+            id: 'guest',
+            email: email,
+            name: email.split('@')[0],
+            role: 'guest',
+            is_active: true,
+        };
+        state.type = 'guest';
+        saveToStorage();
+        notify();
+        return { ok: true };
+    } catch {
+        return { ok: false, error: 'Network error — is the server running?' };
+    }
+}
+
+// ── Guest Login Step 2 (verify OTP) ──────────────────────────────────
+
+export async function guestVerify(code: string, email: string, otp: string): Promise<{ ok: boolean; error?: string }> {
+    try {
+        const res = await fetch(`${config.apiBase}/api/auth/guest-verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ code, email, otp }),
+        });
+        if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            const msg = data?.error?.message || data?.message || 'OTP verification failed';
+            return { ok: false, error: msg };
+        }
+        const data = await res.json();
         const accessToken = data?.data?.access_token || data?.access_token;
         if (accessToken) {
             state.accessToken = accessToken;
         }
-        // For guest, we don't get a full user object — construct from input
         state.user = {
             id: 'guest',
             email: email,
