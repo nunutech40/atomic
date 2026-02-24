@@ -1,8 +1,11 @@
 // ── SAINS API Configuration ──────────────────────────────────────────
-// In dev: backend runs on localhost:8080
-// In prod: change to your deployed API URL (e.g. https://api.sains.id)
+// In dev:  Vite proxy or direct to localhost:8080
+// In prod: same origin (nginx proxies /api/ → Go backend)
+
+const isDev = import.meta.env.DEV;
 
 export const config = {
   product: 'atomic',
-  apiBase: 'http://localhost:8080',
+  apiBase: isDev ? 'http://localhost:8080' : '',  // prod: '' = same origin
 } as const;
+
