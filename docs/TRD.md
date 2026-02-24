@@ -1,8 +1,8 @@
 # TRD — Technical Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table  
-**Version:** 2.2  
-**Date:** 2026-02-22  
-**Status:** Sync dengan PRD v2.4 + BACKEND_PLAN v1.1
+**Version:** 2.3  
+**Date:** 2026-02-24  
+**Status:** Sync dengan PRD v2.5 + Backend v1.1
 
 ---
 
@@ -150,6 +150,8 @@ interface Molecule {
 | `PhenomenaStory.ts` | `/phenomena/:id` | Storyteller slide per fenomena |
 | `AtomHistory.ts` | `/atom-history` | 22 slide cinematic sejarah atom |
 | `Nav.ts` | global | Navbar + search dropdown + bilingual toggle |
+| `AuthGate.ts` | global | Login (subscriber/guest toggle) + Register + OTP verification |
+| `FeedbackWidget.ts` | global | Floating 💡 Saran pill + slide panel (rating, category, message) |
 
 ---
 
@@ -387,9 +389,9 @@ interface ElementPhenomena {
 
 ## 8. Backend & Subscription Architecture
 
-> **Status: PLANNED** \u2014 Belum diimplementasikan. Detail lengkap: [`docs/BACKEND_PLAN.md`](./BACKEND_PLAN.md)
+> **Status: IMPLEMENTED ✅** — Backend sudah berjalan. Detail teknis: [`../../api/docs/TRD.md`](../../api/docs/TRD.md)
 >
-> Section ini adalah ringkasan teknis. Untuk skema DB lengkap, API routes, dan security checklist, lihat `BACKEND_PLAN.md`.
+> Section ini adalah ringkasan dari implementasi aktual.
 
 ### 8.1 Platform Architecture
 
@@ -431,7 +433,9 @@ Setiap produk di frontend hanya mengirimkan header `X-Product: atomic` ke setiap
 
 **Single session rule:** Login baru → session lama di-revoke otomatis + catat di `anomaly_logs`.
 
-**Guest user:** Tidak self-register. Admin generate token via dashboard → bagikan link → user masukkan email/HP (untuk rekap) → dapat akses 24 jam per session.
+**Guest user:** Tidak self-register. Admin generate code via dashboard → user masukkan email + code → OTP dikirim ke email → verifikasi OTP → akses 24 jam per session.
+
+**Admin di Atomic:** Login via mode subscriber (email + password) → `AccessCheck` bypass subscription → full access tanpa berlangganan.
 
 ### 8.3 Token Architecture
 
@@ -476,14 +480,19 @@ Threshold: `≥25` \u2192 warning email \u2192 `≥50` \u2192 auto-lock. Admin d
 ### 8.6 Core Database Tables
 
 ```
-products           \u2014 'atomic', 'energi', 'biologi', ...
-pricing_plans      \u2014 segment × durasi × harga (bisa update tanpa deploy)
-users              \u2014 subscriber + admin
-guest_tokens       \u2014 token guest, max_logins, expires_at
-subscriptions      \u2014 per user, per product, per plan
-sessions           \u2014 refresh tokens + device_fp + ip logging
-anomaly_logs       \u2014 event scoring per user
-access_logs        \u2014 audit trail semua request terauth
+ ─ Per-table schema:
+products           — 'atomic', 'energi', 'biologi', ...
+pricing_plans      — segment × durasi × harga (bisa update tanpa deploy)
+users              — subscriber + admin
+guest_codes        — kode guest, max_logins, expires_at
+guest_logins       — login history per email per code
+guest_otps         — 6-digit OTP, 5 min expiry, rate limited
+subscriptions      — per user, per product, per plan
+sessions           — refresh tokens + device_fp + ip logging
+anomaly_logs       — event scoring per user
+access_logs        — audit trail semua request terauth
+feedback           — user feedback (saran, bug, tanya)
+system_config      — key-value config (quota, limits)
 ```
 
 Full schema: lihat `docs/BACKEND_PLAN.md` Section 6.
@@ -529,7 +538,7 @@ Phase BE-5: Hardening     → Rate limit + audit + monitoring + Docker
 | Logging | **zerolog** atau **slog** (stdlib Go 1.21+) |
 | Admin Dashboard | **Templ** + **HTMX** + **Alpine.js** + **Chart.js** |
 | Hosting BE | **Railway** (1 binary deploy) |
-| Hosting DB | **Supabase** Postgres |
+| Hosting DB | **Neon** Postgres |
 
 > **Deploy:** Go binary single file. Admin dashboard (Templ + HTMX) dan static assets di-embed via `go:embed`. Frontend Atomic tetap static SPA di Vercel/Netlify. Cookie cross-origin butuh CORS `credentials: true` + `gin-contrib/cors`.
 >

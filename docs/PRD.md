@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
-**Version:** 2.4  
-**Date:** 2026-02-22  
-**Status:** Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Mobile Nav ✅ · Next: Backend + Landing Page
+**Version:** 2.5  
+**Date:** 2026-02-24  
+**Status:** Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Mobile Nav ✅ · Backend ✅ · Auth Gate ✅ · Guest OTP ✅
 
 ---
 
@@ -253,11 +253,13 @@ sains.id/energi   → Produk 2 (masa depan)
 
 | Tipe | Cara Dapat | Lifetime | Session |
 |------|-----------|---------|---------|
-| `guest` | Di-generate admin, dibagikan via link | 48 jam, max 3x login | 1 aktif |
+| `guest` | Di-generate admin, dibagikan via link | 48 jam, max 5x login | 1 aktif |
 | `subscriber` | Register + bayar Xendit | Sesuai plan | 1 aktif |
 | `admin` | Seeded di DB | Selamanya | 2 aktif |
 
-**Guest:** tidak self-register. Admin generate token → user akses via link → masukkan email/HP untuk rekap → dapat session 24 jam — setelah 3x login atau 48 jam, mati otomatis.
+**Guest:** tidak self-register. Admin generate code → user masukkan email + code → OTP dikirim ke email → verifikasi OTP → akses diberikan.
+
+**Admin di Atomic:** Login via mode subscriber (email + password) → `AccessCheck` bypass subscription → akses langsung tanpa perlu berlangganan.
 
 **Single session rule:** Login baru otomatis revoke session lama. Satu akun = satu device aktif.
 
@@ -288,12 +290,12 @@ Threshold: `score ≥ 25` → warning email → `score ≥ 50` → auto-lock.
 ### 7.5 Tech Stack Backend
 
 ```
-Runtime:  Node.js 22 + Hono framework
-Database: Supabase Postgres + Drizzle ORM
-Auth:     JWT (httpOnly cookie) + bcrypt
+Runtime:  Go 1.23+ (Gin framework)
+Database: Neon Postgres + pgx + sqlc
+Auth:     JWT (Bearer header) + bcrypt + OTP email
 Email:    Resend
 Payment:  Xendit (QRIS, VA, GoPay, OVO, CC)
-Hosting:  Railway (backend) + Supabase (DB)
+Hosting:  Railway (backend) + Neon (DB)
 ```
 
 ---
@@ -350,4 +352,8 @@ Hosting:  Railway (backend) + Supabase (DB)
 | Mobile hamburger nav + slide-in drawer | ✅ | ✅ |
 | Bilingual UI Chrome (nav, labels, buttons) — 100% | ✅ | ✅ |
 | Bilingual konten step/quiz modul — in progress | 🔄 | 🔄 |
+| **Auth Gate** — Login (subscriber/guest toggle) + Register | ✅ | ✅ |
+| **Guest OTP Verification** — 2-step login (code+email → OTP) | ✅ | ✅ |
+| **Admin Atomic Access** — Admin bypass subscription check | ✅ | ✅ |
+| **Feedback Widget** — Floating saran/bug/tanya panel | ✅ | ✅ |
 | Deploy ke production domain | ⏳ | ⏳ |
