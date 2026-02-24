@@ -1,5 +1,5 @@
 # Execution Plan — SAINS Backend
-**Date:** 2026-02-22  
+**Date:** 2026-02-24 (last updated)  
 **Ref:** `BACKEND_PLAN.md` v1.1  
 **Stack:** Go + Gin + pgx + sqlc + Templ + HTMX + Tabler  
 
@@ -441,32 +441,35 @@ Deliverable:
 
 ## Phase BE-5: Hardening (3 Steps)
 
-### Step 5.1 — Rate Limit + CORS Production ⏳
+### Step 5.1 — Rate Limit + CORS Production ✅
 **Goal:** Production-grade rate limiting dan CORS.
 
 ```
 Deliverable:
-- Per-endpoint rate limit (bukan global): login, register, checkout
-- CORS: only allow sains.id origins in production
-- Request size limit
-- Timeout per handler
-- Test: ab/wrk load test → rate limit works
+- ✅ Per-endpoint rate limit: login/register (5rps burst 10), global (20rps burst 40)
+- ✅ CORS: configurable via CORS_ORIGINS env var
+- ✅ Security headers middleware (X-Frame-Options, X-Content-Type-Options, etc.)
+- ✅ Request timeout: 10s read/write, 30s idle
+- ✅ Test: rate limit works on auth endpoints
 ```
 
 **Depends on:** Step 4.5
 
 ---
 
-### Step 5.2 — Audit Logs + Monitoring ⏳
-**Goal:** Comprehensive logging dan error tracking.
+### Step 5.2 — Audit Logs + Settings ✅
+**Goal:** Admin audit logging dan system configuration.
 
 ```
 Deliverable:
-- Structured logging: zerolog/slog → semua handler
-- Request ID per request (middleware)
-- Sentry integration untuk error tracking
-- Health check endpoint extended: DB, Xendit, Resend
-- Test: trigger error → muncul di Sentry
+- ✅ admin_audit_logs table + migration 000003
+- ✅ AuditLogger middleware → tracks admin actions
+- ✅ GET /admin/audit → audit log viewer (paginated)
+- ✅ GET /admin/settings → system config management
+- ✅ PUT /admin/settings/:key → update config values
+- ✅ GET /admin/products → product management
+- ✅ POST /admin/products, PUT /admin/products/:id, toggle active
+- ⏳ Sentry integration (deferred)
 ```
 
 **Depends on:** Step 5.1
@@ -490,16 +493,53 @@ Deliverable:
 
 ---
 
+## Phase FE-INT: Frontend Integration (2 Steps)
+
+### Step FE-1 — Auth Gate ✅
+**Goal:** Gerbang autentikasi di Atomic frontend, terintegrasi dengan SAINS API.
+
+```
+Deliverable:
+- ✅ src/core/auth.ts: Auth service (login, register, guest-login, me, logout)
+- ✅ src/core/config.ts: API base URL configuration
+- ✅ src/components/AuthGate.ts: Login + Register UI (2 halaman)
+  - Login: toggle guest code / subscriber password
+  - Register: nama, email, password
+- ✅ User badge di navbar (nama, role, logout)
+- ✅ Token di localStorage + Authorization Bearer header
+- ✅ Auto-init auth saat app load
+- ✅ CSS: glassmorphism card, gradient buttons, dark/light mode
+```
+
+---
+
+### Step FE-2 — Feedback Widget ✅
+**Goal:** Floating suggestion box untuk collect user feedback.
+
+```
+Deliverable:
+- ✅ Backend: migration 000004 (feedback table), queries, handler, route
+- ✅ Frontend: FeedbackWidget.ts (floating pill + slide panel)
+  - Emoji rating (1-5), category pills, textarea + charcount
+  - Success animation, error handling
+  - Auto user context from auth state
+- ✅ CSS: glassmorphism panel, pulse glow, responsive mobile
+- ✅ Wired in main.ts: mount after login, unmount on logout
+```
+
+---
+
 ## Ringkasan
 
 | Phase | Steps | Inti |
 |-------|-------|------|
-| **BE-1** Foundation | 1.1 → 1.8 | Project setup, DB, Auth, Session, Middleware |
-| **BE-2** Subscription | 2.1 → 2.5 | Pricing, Xendit, Webhook, Access check + **Quota**, Email |
-| **BE-3** Guest + Security | 3.1 → 3.4 | Guest codes, Login flow, Fingerprint, Anomaly |
-| **BE-4** Admin Dashboard | 4.1 → 4.5 | Templ/HTMX layout, Stats + **Quota widget**, Users, Codes, Revenue |
-| **BE-5** Hardening | 5.1 → 5.3 | Rate limit, Monitoring, Docker deploy |
-| **Total** | **25 steps** | Setiap step ≈ 1 conversation session |
+| **BE-1** Foundation | 1.1 → 1.8 ✅ | Project setup, DB, Auth, Session, Middleware |
+| **BE-2** Subscription | 2.1 → 2.5 ✅ | Pricing, Xendit, Webhook, Access check + **Quota**, Email |
+| **BE-3** Guest + Security | 3.1 → 3.4 ✅ | Guest codes, Login flow, Fingerprint, Anomaly |
+| **BE-4** Admin Dashboard | 4.1 → 4.5 ✅ | Templ/HTMX layout, Stats + **Quota widget**, Users, Codes, Revenue |
+| **BE-5** Hardening | 5.1 ✅, 5.2 ✅, 5.3 ⏳ | Rate limit, Audit, Settings, Docker deploy |
+| **FE-INT** Integration | FE-1 ✅, FE-2 ✅ | Auth Gate, Feedback Widget |
+| **Total** | **27 steps** (25 done) | Setiap step ≈ 1 conversation session |
 
 ---
 

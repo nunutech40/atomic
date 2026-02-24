@@ -1,5 +1,6 @@
 import './styles/global.css';
 import { initTheme } from './core/theme';
+import { initAuth, isLoggedIn, onAuthChange } from './core/auth';
 import { initRouter, addRoute, setCleanup, resolve, navigate } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderDashboard } from './components/Dashboard';
@@ -14,112 +15,174 @@ import { renderCompositionPage } from './components/CompositionPage';
 import { renderOnboarding, hasSeenOnboarding } from './components/Onboarding';
 import { renderLearnList } from './components/LearnList';
 import { renderLearnModule } from './components/LearnModule';
+import { renderAuthGate, renderUserBadge, wireUserBadge } from './components/AuthGate';
+import { mountFeedbackWidget, unmountFeedbackWidget } from './components/FeedbackWidget';
 
 
 initTheme();
 
 const app = document.getElementById('app')!;
+
+// ── Show loading state while checking auth ───────────────────────────
 app.innerHTML = `
-  <div id="nav-container"></div>
-  <main class="main-content" id="main-container"></main>
+  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;gap:12px;color:var(--text-3)">
+    <div class="auth-spinner" style="border-color:var(--border);border-top-color:var(--accent)"></div>
+    <span style="font-size:14px">Loading...</span>
+  </div>
 `;
 
-const navContainer = document.getElementById('nav-container')!;
-const main = document.getElementById('main-container')!;
+// ── Check if user is already logged in (has valid cookie) ────────────
+initAuth().then((loggedIn) => {
+    if (loggedIn) {
+        bootApp();
+    } else {
+        showGate();
+    }
+});
 
-let tableCleanup: (() => void) | null = null;
-
-function rerender() {
-    renderNav(navContainer, () => { }, rerender);
-    resolve(); // re-render current page so content translates too
+// ── Auth Gate — shown when not logged in ─────────────────────────────
+function showGate() {
+    app.innerHTML = '';
+    unmountFeedbackWidget();
+    renderAuthGate(app, () => {
+        // On successful login, boot the full app
+        app.innerHTML = '';
+        bootApp();
+    });
 }
 
-renderNav(navContainer, () => { }, rerender);
+// ── Full App — shown after auth ──────────────────────────────────────
+function bootApp() {
+    app.innerHTML = `
+    <div id="nav-container"></div>
+    <main class="main-content" id="main-container"></main>
+  `;
 
-addRoute('/', () => {
-    if (tableCleanup) { tableCleanup(); tableCleanup = null; }
-    main.innerHTML = '';
-    const cleanup = renderDashboard(main);
-    setCleanup(cleanup);
-});
+    const navContainer = document.getElementById('nav-container')!;
+    const main = document.getElementById('main-container')!;
 
-addRoute('/explore', () => {
-    if (tableCleanup) { tableCleanup(); tableCleanup = null; }
-    main.innerHTML = '';
-    tableCleanup = renderExplore(main) || null;
-    setCleanup(() => { if (tableCleanup) { tableCleanup(); tableCleanup = null; } });
-});
+    let tableCleanup: (() => void) | null = null;
 
-addRoute('/atom-history', () => {
-    main.innerHTML = '';
-    const cleanup = renderAtomHistory(main);
-    setCleanup(cleanup);
-});
+    function rerender() {
+        renderNavWithUser(navContainer, rerender);
+        resolve();
+    }
 
-addRoute('/element/:n', (params) => {
-    const n = parseInt(params?.n || '1', 10);
-    main.innerHTML = '';
-    const cleanup = renderElementDetail(main, n);
-    setCleanup(cleanup);
-});
+    renderNavWithUser(navContainer, rerender);
 
-addRoute('/molecule', () => {
-    main.innerHTML = '';
-    const cleanup = renderMoleculeBuilder(main);
-    setCleanup(cleanup);
-});
+    addRoute('/', () => {
+        if (tableCleanup) { tableCleanup(); tableCleanup = null; }
+        main.innerHTML = '';
+        const cleanup = renderDashboard(main);
+        setCleanup(cleanup);
+    });
 
-addRoute('/phenomena', () => {
-    main.innerHTML = '';
-    renderPhenomenaList(main);
-    setCleanup(() => { });
-});
+    addRoute('/explore', () => {
+        if (tableCleanup) { tableCleanup(); tableCleanup = null; }
+        main.innerHTML = '';
+        tableCleanup = renderExplore(main) || null;
+        setCleanup(() => { if (tableCleanup) { tableCleanup(); tableCleanup = null; } });
+    });
 
-addRoute('/phenomena/:id', (params) => {
-    main.innerHTML = '';
-    const cleanup = renderPhenomenonStory(main, params?.id ?? '');
-    setCleanup(cleanup);
-});
+    addRoute('/atom-history', () => {
+        main.innerHTML = '';
+        const cleanup = renderAtomHistory(main);
+        setCleanup(cleanup);
+    });
 
-addRoute('/discoverer/:sym', (params) => {
-    main.innerHTML = '';
-    const cleanup = renderDiscovererStory(main, params?.sym ?? '');
-    setCleanup(cleanup);
-});
+    addRoute('/element/:n', (params) => {
+        const n = parseInt(params?.n || '1', 10);
+        main.innerHTML = '';
+        const cleanup = renderElementDetail(main, n);
+        setCleanup(cleanup);
+    });
 
-addRoute('/composition/:subject', (params) => {
-    main.innerHTML = '';
-    const cleanup = renderCompositionPage(main, params?.subject ?? 'human');
-    setCleanup(cleanup);
-});
+    addRoute('/molecule', () => {
+        main.innerHTML = '';
+        const cleanup = renderMoleculeBuilder(main);
+        setCleanup(cleanup);
+    });
 
-addRoute('/composition', () => {
-    main.innerHTML = '';
-    const cleanup = renderCompositionPage(main, 'human');
-    setCleanup(cleanup);
-});
+    addRoute('/phenomena', () => {
+        main.innerHTML = '';
+        renderPhenomenaList(main);
+        setCleanup(() => { });
+    });
 
-addRoute('/learn', () => {
-    main.innerHTML = '';
-    const cleanup = renderLearnList(main);
-    setCleanup(cleanup);
-});
+    addRoute('/phenomena/:id', (params) => {
+        main.innerHTML = '';
+        const cleanup = renderPhenomenonStory(main, params?.id ?? '');
+        setCleanup(cleanup);
+    });
 
-addRoute('/learn/:slug', (params) => {
-    main.innerHTML = '';
-    const cleanup = renderLearnModule(main, params?.slug ?? '');
-    setCleanup(cleanup);
-});
+    addRoute('/discoverer/:sym', (params) => {
+        main.innerHTML = '';
+        const cleanup = renderDiscovererStory(main, params?.sym ?? '');
+        setCleanup(cleanup);
+    });
 
-addRoute('/onboarding', () => {
-    main.innerHTML = '';
-    const cleanup = renderOnboarding(main);
-    setCleanup(cleanup);
-});
+    addRoute('/composition/:subject', (params) => {
+        main.innerHTML = '';
+        const cleanup = renderCompositionPage(main, params?.subject ?? 'human');
+        setCleanup(cleanup);
+    });
 
-initRouter();
+    addRoute('/composition', () => {
+        main.innerHTML = '';
+        const cleanup = renderCompositionPage(main, 'human');
+        setCleanup(cleanup);
+    });
 
-// Auto-redirect to onboarding on first visit
-if (!hasSeenOnboarding() && window.location.hash.slice(1) === '/') {
-    navigate('/onboarding');
+    addRoute('/learn', () => {
+        main.innerHTML = '';
+        const cleanup = renderLearnList(main);
+        setCleanup(cleanup);
+    });
+
+    addRoute('/learn/:slug', (params) => {
+        main.innerHTML = '';
+        const cleanup = renderLearnModule(main, params?.slug ?? '');
+        setCleanup(cleanup);
+    });
+
+    addRoute('/onboarding', () => {
+        main.innerHTML = '';
+        const cleanup = renderOnboarding(main);
+        setCleanup(cleanup);
+    });
+
+    initRouter();
+
+    // Mount feedback widget (only after login)
+    mountFeedbackWidget();
+
+    // Auto-redirect to onboarding on first visit
+    if (!hasSeenOnboarding() && window.location.hash.slice(1) === '/') {
+        navigate('/onboarding');
+    }
+
+    // When user logs out, show gate again
+    onAuthChange(() => {
+        if (!isLoggedIn()) {
+            window.location.reload();
+        }
+    });
+}
+
+// ── Render nav with user badge ───────────────────────────────────────
+function renderNavWithUser(container: HTMLElement, onLangChange: () => void) {
+    renderNav(container, () => { }, onLangChange);
+
+    // Inject user badge into nav
+    const nav = container.querySelector('.nav');
+    if (nav && isLoggedIn()) {
+        // Add before the theme button
+        const themeBtn = nav.querySelector('#theme-btn');
+        if (themeBtn) {
+            const badgeWrapper = document.createElement('div');
+            badgeWrapper.innerHTML = renderUserBadge();
+            themeBtn.parentNode!.insertBefore(badgeWrapper.firstElementChild!, themeBtn);
+            wireUserBadge(container);
+        }
+    }
 }

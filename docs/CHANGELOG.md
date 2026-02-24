@@ -4,6 +4,49 @@ Semua perubahan signifikan didokumentasikan di sini, urutan terbaru dahulu.
 
 ---
 
+## [2.6.0] — 2026-02-24
+
+### Feedback Widget — Kotak Saran
+- **Floating pill button**: Tombol `💡 Saran` di pojok kanan bawah dengan pulse glow animation
+- **Slide panel**: Klik tombol → panel slide-up dari kanan dengan glassmorphism
+- **Rating emoji**: 😢 😕 😐 😊 😍 (1-5 scale, opsional)
+- **Category pills**: 💡 Saran · 🐛 Bug · ❓ Tanya
+- **Message textarea**: Dengan char counter (max 2000)
+- **Auto user context**: Email dan role ter-isi dari auth state
+- **Success animation**: Bounce emoji 🎉 setelah submit
+- **Backend API**: `POST /api/feedback` → simpan ke tabel `feedback` di database
+- **Mobile responsive**: Label hidden di < 480px, panel full-width
+- **Widget lifecycle**: Mount setelah login, unmount saat logout
+
+#### Backend — Feedback System
+- **Migration 000004**: Tabel `feedback` (id, user_email, user_role, category, rating, message, page_url, user_agent, ip, is_read, created_at)
+- **SQL queries**: CreateFeedback, ListFeedback, ListFeedbackByCategory, ListUnreadFeedback, CountUnread, MarkRead, GetFeedbackStats
+- **Handler**: `feedback_handler.go` → Submit endpoint (protected, auth required)
+- **Route**: `POST /api/feedback` di protected group (setelah auth middleware)
+
+---
+
+## [2.5.0] — 2026-02-23
+
+### Auth Gate — Login & Register UI
+- **Simplified flow**: 2 halaman — Login (dengan toggle) dan Register (terpisah)
+- **Login page**:
+  - Default mode: Guest Access (Email + Kode Akses)
+  - Toggle ke Subscriber Login (Email + Password) via link
+  - Kode akses: monospace font, uppercase, center-aligned, placeholder `ATOM-XXXX`
+  - Hint: "Kode dari admin atau guru kamu"
+- **Register page**: Form Nama + Email + Password, tombol hijau "✨ Daftar"
+- **User badge**: Di navbar setelah login — avatar, nama, role, tombol logout
+- **Auth service** (`auth.ts`):
+  - Token di `localStorage` + `Authorization: Bearer` header
+  - Handle nested error format `{ error: { code, message } }`
+  - `initAuth()` → cek session saat app load
+  - `checkAccess()` → verifikasi hak akses
+  - Guest login → konstruksi user dari input data
+- **CSS**: Glassmorphism card, gradient button, dark mode + light mode support
+
+---
+
 ## [2.4.0] — 2026-02-22
 
 ### Mobile Responsiveness & Navigation
