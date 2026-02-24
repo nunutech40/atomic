@@ -117,13 +117,13 @@ export async function login(email: string, password: string): Promise<{ ok: bool
 
 // ── Guest Login Step 1 (code + email → sends OTP) ───────────────────
 
-export async function guestLogin(code: string, email: string): Promise<{ ok: boolean; error?: string; pendingOtp?: boolean; maskedEmail?: string }> {
+export async function guestLogin(code: string, email: string, referralSource: string = ''): Promise<{ ok: boolean; error?: string; pendingOtp?: boolean; maskedEmail?: string }> {
     try {
         const res = await fetch(`${config.apiBase}/api/auth/guest-login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ code, email }),
+            body: JSON.stringify({ code, email, referral_source: referralSource }),
         });
         if (!res.ok) {
             const data = await res.json().catch(() => ({}));
@@ -161,13 +161,13 @@ export async function guestLogin(code: string, email: string): Promise<{ ok: boo
 
 // ── Guest Login Step 2 (verify OTP) ──────────────────────────────────
 
-export async function guestVerify(code: string, email: string, otp: string): Promise<{ ok: boolean; error?: string }> {
+export async function guestVerify(code: string, email: string, otp: string, referralSource: string = ''): Promise<{ ok: boolean; error?: string }> {
     try {
         const res = await fetch(`${config.apiBase}/api/auth/guest-verify`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ code, email, otp }),
+            body: JSON.stringify({ code, email, otp, referral_source: referralSource }),
         });
         if (!res.ok) {
             const data = await res.json().catch(() => ({}));

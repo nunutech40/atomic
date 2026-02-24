@@ -10,6 +10,7 @@ interface OtpState {
   email: string;
   code: string;
   maskedEmail: string;
+  referralSource: string;
 }
 
 // ── Main entry: mount the auth gate ──────────────────────────────────
@@ -119,6 +120,22 @@ function renderLoginPage(isId: boolean, loginType: LoginType): string {
                ${isGuest ? 'class="auth-code-input"' : ''} />
         ${isGuest ? `<span class="auth-field-hint">${isId ? 'Kode dari admin atau guru kamu' : 'Code from your admin or teacher'}</span>` : ''}
       </div>
+      ${isGuest ? `
+      <div class="auth-field">
+        <label>${isId ? 'Tau dari mana?' : 'How did you find us?'}</label>
+        <select id="auth-referral" class="auth-select" required>
+          <option value="" disabled selected>${isId ? '— Pilih —' : '— Select —'}</option>
+          <option value="WhatsApp Story">📱 WhatsApp Story</option>
+          <option value="LinkedIn">💼 LinkedIn</option>
+          <option value="Twitter/X">🐦 Twitter / X</option>
+          <option value="Instagram Story">📸 Instagram Story</option>
+          <option value="Facebook">👥 Facebook</option>
+          <option value="YouTube">▶️ YouTube</option>
+          <option value="TikTok">🎵 TikTok</option>
+          <option value="Dari Teman">🤝 ${isId ? 'Dari Teman' : 'From a Friend'}</option>
+        </select>
+      </div>
+      ` : ''}
       <button type="submit" class="auth-submit">
         ${isGuest ? '🎟️' : '🔑'} ${isId ? 'Masuk' : 'Sign In'}
       </button>
@@ -255,7 +272,9 @@ function wireForm(
         const passwordOrCode = (form.querySelector('#auth-password') as HTMLInputElement).value.trim();
 
         if (getLoginType() === 'guest') {
-          result = await guestLogin(passwordOrCode, email);
+          const referralEl = form.querySelector('#auth-referral') as HTMLSelectElement;
+          const referralSource = referralEl?.value || '';
+          result = await guestLogin(passwordOrCode, email, referralSource);
 
           // Check if OTP was sent
           if (result.ok && result.pendingOtp) {
@@ -263,6 +282,7 @@ function wireForm(
               email,
               code: passwordOrCode,
               maskedEmail: result.maskedEmail || email,
+              referralSource,
             });
             return;
           }
@@ -333,7 +353,7 @@ function wireOtpForm(
     const otp = otpInput.value.trim();
 
     try {
-      const result = await guestVerify(otpInfo.code, otpInfo.email, otp);
+      const result = await guestVerify(otpInfo.code, otpInfo.email, otp, otpInfo.referralSource);
 
       if (result.ok) {
         onSuccess();
