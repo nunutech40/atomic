@@ -218,13 +218,15 @@ export async function register(email: string, password: string, name: string): P
 
 // ── Logout ───────────────────────────────────────────────────────────
 
-export async function logout(): Promise<void> {
+export async function logout(): Promise<'guest' | 'subscriber' | null> {
+    const wasType = state.type;
     try {
         await authFetch(`${config.apiBase}/api/auth/logout`, { method: 'POST' });
     } catch { /* ignore */ }
     state = { user: null, type: null, accessToken: null };
     saveToStorage();
     notify();
+    return wasType;
 }
 
 // ── Access Check ─────────────────────────────────────────────────────

@@ -17347,20 +17347,23 @@ body {
 }
 
 .user-badge-logout {
-  background: none;
-  border: none;
-  color: var(--text-3);
-  font-size: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-2);
   cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
-  transition: all var(--transition);
-  margin-left: 4px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-badge-logout:hover {
   color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
 }
 
 @media (max-width: 480px) {
