@@ -351,13 +351,8 @@ export function renderMoleculeBuilder(container: HTMLElement, opts?: MoleculeBui
   const landingUrl = opts?.landingUrl ?? DEMO_LANDING_URL;
   const ALL_PALETTE = isEN ? ALL_PALETTE_EN : ALL_PALETTE_ID;
   const ALL_QUICK = isEN ? QUICK_EXAMPLES_EN : QUICK_EXAMPLES_ID;
-  // In demo mode, only show H₂O and CO₂ quick examples
-  const QUICK_EXAMPLES = demoMode
-    ? ALL_QUICK.filter(ex => {
-      const keys = Object.keys(ex.composition);
-      return keys.every(k => DEMO_UNLOCKED_ATOMS.has(k));
-    })
-    : ALL_QUICK;
+  // In demo mode, show ALL quick examples but mark locked ones
+  const QUICK_EXAMPLES = ALL_QUICK;
 
   // State
   let selection: Record<string, number> = {};
@@ -408,9 +403,10 @@ export function renderMoleculeBuilder(container: HTMLElement, opts?: MoleculeBui
 
             <div class="mb-section-label" style="margin-top:20px">${isEN ? 'Try These' : 'Coba Langsung'}</div>
             <div class="mb-quick" id="mb-quick">
-              ${QUICK_EXAMPLES.map((ex, i) => `
-                <button class="mb-quick-btn" data-qi="${i}">${ex.label}</button>
-              `).join('')}
+              ${QUICK_EXAMPLES.map((ex, i) => {
+    const isLocked = demoMode && !Object.keys(ex.composition).every(k => DEMO_UNLOCKED_ATOMS.has(k));
+    return `<button class="mb-quick-btn${isLocked ? ' mb-quick-btn--locked' : ''}" data-qi="${i}"${isLocked ? ' title="' + (isEN ? 'Upgrade to unlock' : 'Upgrade untuk membuka') + '"' : ''}>${isLocked ? '🔒 ' : ''}${ex.label}</button>`;
+  }).join('')}
             </div>
 
             <div class="mb-section-label" style="margin-top:20px">
@@ -673,7 +669,13 @@ export function renderMoleculeBuilder(container: HTMLElement, opts?: MoleculeBui
   quickEl.addEventListener('click', e => {
     const btn = (e.target as HTMLElement).closest('[data-qi]') as HTMLElement | null;
     if (!btn) return;
-    selection = { ...QUICK_EXAMPLES[parseInt(btn.dataset.qi!)].composition };
+    const ex = QUICK_EXAMPLES[parseInt(btn.dataset.qi!)];
+    // Check if this quick example requires locked atoms in demo mode
+    if (demoMode && !Object.keys(ex.composition).every(k => DEMO_UNLOCKED_ATOMS.has(k))) {
+      showDemoUpgrade();
+      return;
+    }
+    selection = { ...ex.composition };
     updateMixFree();
     // Auto-combine — no need to click the Combine button
     const mol = matchMolecule(selection);
