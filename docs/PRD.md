@@ -1,8 +1,8 @@
 # PRD — Product Requirements Document
 **Project:** Atomic — Interactive 3D Periodic Table & Atom Visualizer  
 **Version:** 2.5  
-**Date:** 2026-02-24  
-**Status:** Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Mobile Nav ✅ · Backend ✅ · Auth Gate ✅ · Guest OTP ✅
+**Date:** 2026-02-27  
+**Status:** Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Mobile Nav ✅ · Backend ✅ · Auth Gate ✅ · Guest OTP ✅ · Demo Mode ✅
 
 ---
 
@@ -89,6 +89,7 @@ Gabungan: Hook dramatis → mekanisme sains yang mengejutkan → ironi kosmik
 /element/:n                → detail elemen (3D, data, penemu, asal kosmik)
 /discoverer/:sym           → kisah penemu elemen
 /molecule                  → kimia lab (molecule builder)
+/molecule-demo             → kimia lab demo mode (restricted, iframe embed)
 /phenomena                 → daftar 27 fenomena atom
 /phenomena/:id             → story per fenomena
 /atom-history              → sejarah atom, 22 slide cinematic
@@ -141,6 +142,7 @@ Semua fitur di bawah ini sudah diimplementasi dan berjalan production-ready.
 | **Kimia Lab: Chemistry Deduction Engine** — deduksi kimiawi atom bebas, rule-based engine, warna severity | ✅ |
 | **Discoverer Story** — kisah penemu per elemen, route `/discoverer/:sym` | ✅ |
 | **Kimia Lab (MoleculeBuilder)** — mode bebas, 3D builder | ✅ |
+| **Kimia Lab Demo Mode** — restricted palette (H/O/C), iframe embed di landing page | ✅ |
 | **Dark/Light theme** — persisted localStorage | ✅ |
 | **Bilingual ID/EN** — toggle real-time, semua komponen | ✅ |
 | **Anatomi Atom** — 5 tab subject, shared helpers, entry dari navbar + banner | ✅ |
@@ -356,4 +358,5 @@ Hosting:  Railway (backend) + Neon (DB)
 | **Guest OTP Verification** — 2-step login (code+email → OTP) | ✅ | ✅ |
 | **Admin Atomic Access** — Admin bypass subscription check | ✅ | ✅ |
 | **Feedback Widget** — Floating saran/bug/tanya panel | ✅ | ✅ |
+| **Demo Mode** — `/molecule-demo` embedded di landing page, 3 atom unlocked, 32 molekul | ✅ | ✅ |
 | Deploy ke production domain | ⏳ | ⏳ |

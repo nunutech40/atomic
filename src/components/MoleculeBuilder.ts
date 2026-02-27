@@ -5,6 +5,16 @@ import { MoleculeScene } from '../three/moleculeScene';
 import { navigate } from '../core/router';
 import { getLang } from '../core/i18n';
 
+// ─── Demo Mode Config ─────────────────────────────────────────────────────────
+// Atoms unlocked in demo mode (free for landing page visitors)
+const DEMO_UNLOCKED_ATOMS = new Set(['H', 'O', 'C']);
+const DEMO_LANDING_URL = '/#pricing'; // relative to landing page origin
+
+export interface MoleculeBuilderOptions {
+  demoMode?: boolean;   // restricted palette, no challenges, upgrade CTA
+  landingUrl?: string;  // base URL for upgrade CTA
+}
+
 // ─── Palette (full) ───────────────────────────────────────────────────────────
 const ALL_PALETTE_ID = [
   { sym: 'H', name: 'Hidrogen', color: '#60a5fa' },
@@ -335,10 +345,19 @@ function deduceFreeExperiment(sel: Record<string, number>, _isEN: boolean): Dedu
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
-export function renderMoleculeBuilder(container: HTMLElement): () => void {
+export function renderMoleculeBuilder(container: HTMLElement, opts?: MoleculeBuilderOptions): () => void {
   const isEN = getLang() === 'en';
+  const demoMode = opts?.demoMode ?? false;
+  const landingUrl = opts?.landingUrl ?? DEMO_LANDING_URL;
   const ALL_PALETTE = isEN ? ALL_PALETTE_EN : ALL_PALETTE_ID;
-  const QUICK_EXAMPLES = isEN ? QUICK_EXAMPLES_EN : QUICK_EXAMPLES_ID;
+  const ALL_QUICK = isEN ? QUICK_EXAMPLES_EN : QUICK_EXAMPLES_ID;
+  // In demo mode, only show H₂O and CO₂ quick examples
+  const QUICK_EXAMPLES = demoMode
+    ? ALL_QUICK.filter(ex => {
+      const keys = Object.keys(ex.composition);
+      return keys.every(k => DEMO_UNLOCKED_ATOMS.has(k));
+    })
+    : ALL_QUICK;
 
   // State
   let selection: Record<string, number> = {};
@@ -353,21 +372,30 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
 
       <!-- TOP BAR -->
       <div class="mb-topbar">
-        <button class="mb-back" id="mb-back">← ${isEN ? 'Back' : 'Kembali'}</button>
+        ${demoMode ? '<div></div>' : `<button class="mb-back" id="mb-back">← ${isEN ? 'Back' : 'Kembali'}</button>`}
         <div class="mb-topbar-center">
           <span class="mb-topbar-icon">⚗️</span>
-          <span class="mb-topbar-title-text">${isEN ? 'Chemistry Lab' : 'Kimia Lab'}</span>
+          <span class="mb-topbar-title-text">${isEN ? 'Chemistry Lab' : 'Kimia Lab'}${demoMode ? ' <span style="font-size:11px;background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:2px 8px;border-radius:8px;margin-left:8px;color:#fff">DEMO</span>' : ''}</span>
         </div>
         <!-- Mode toggle -->
         <div class="mb-mode-toggle" id="mb-mode-toggle">
           <button class="mb-mode-btn mb-mode-btn--active" id="mb-mode-free" data-mode="free">
             🧪 ${isEN ? 'Free Build' : 'Mode Bebas'}
           </button>
-          <button class="mb-mode-btn" id="mb-mode-challenge" data-mode="challenge">
-            🏆 ${isEN ? 'Challenge' : 'Mode Tantangan'}
+          <button class="mb-mode-btn${demoMode ? ' mb-mode-btn--locked' : ''}" id="mb-mode-challenge" data-mode="challenge"${demoMode ? ' title="Upgrade to unlock"' : ''}>
+            ${demoMode ? '🔒' : '🏆'} ${isEN ? 'Challenge' : 'Mode Tantangan'}
           </button>
         </div>
       </div>
+      <!-- Demo upgrade overlay (initially hidden) -->
+      ${demoMode ? `
+      <div class="mb-demo-upgrade" id="mb-demo-upgrade" style="display:none;position:absolute;inset:0;z-index:100;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;border-radius:16px;backdrop-filter:blur(8px);">
+        <div style="font-size:48px;">🔒</div>
+        <div style="font-size:18px;font-weight:700;color:#e2e8f0;">Fitur Premium</div>
+        <div style="font-size:14px;color:#94a3b8;text-align:center;max-width:280px;">Upgrade ke Atomic untuk akses semua 18 atom, 30+ molekul, Mode Tantangan, dan eksperimen bebas!</div>
+        <a id="mb-demo-cta" href="${landingUrl}" target="_top" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:12px 28px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;transition:transform 0.2s;">Upgrade — Seharga 2 Gelas Kopi ☕</a>
+        <button id="mb-demo-close" style="position:absolute;top:12px;right:12px;background:none;border:none;color:#64748b;font-size:24px;cursor:pointer;">✕</button>
+      </div>` : ''}
 
       <!-- BODY -->
       <div class="mb-body" id="mb-body">
@@ -583,12 +611,27 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
   let chWinScene: MoleculeScene | null = null;
 
   // ── Navigation ─────────────────────────────────────────────────────────
-  container.querySelector('#mb-back')!.addEventListener('click', () => navigate('/'));
+  const backBtn = container.querySelector('#mb-back');
+  if (backBtn) backBtn.addEventListener('click', () => navigate('/'));
+
+  // ── Demo mode: upgrade overlay logic ──────────────────────────────────
+  const demoUpgrade = demoMode ? container.querySelector('#mb-demo-upgrade') as HTMLElement : null;
+  const demoClose = demoMode ? container.querySelector('#mb-demo-close') : null;
+  if (demoClose && demoUpgrade) {
+    demoClose.addEventListener('click', () => { demoUpgrade.style.display = 'none'; });
+  }
+  function showDemoUpgrade() {
+    if (demoUpgrade) demoUpgrade.style.display = 'flex';
+  }
 
   // Mode toggle
   container.querySelector('#mb-mode-toggle')!.addEventListener('click', e => {
     const btn = (e.target as HTMLElement).closest('[data-mode]') as HTMLElement | null;
     if (!btn) return;
+    if (demoMode && btn.dataset.mode === 'challenge') {
+      showDemoUpgrade();
+      return;
+    }
     switchMode(btn.dataset.mode as 'free' | 'challenge');
   });
 
@@ -604,19 +647,27 @@ export function renderMoleculeBuilder(container: HTMLElement): () => void {
 
   // Build palette
   ALL_PALETTE.forEach(a => {
+    const isLocked = demoMode && !DEMO_UNLOCKED_ATOMS.has(a.sym);
     const btn = document.createElement('button');
-    btn.className = 'mb-atom-btn';
+    btn.className = 'mb-atom-btn' + (isLocked ? ' mb-atom-btn--locked' : '');
     btn.dataset.sym = a.sym;
-    btn.title = a.name;
-    btn.style.setProperty('--atom-clr', a.color);
-    btn.innerHTML = `<span class="mb-atom-sym">${a.sym}</span><span class="mb-atom-name">${a.name}</span>`;
+    btn.title = isLocked ? (isEN ? 'Upgrade to unlock' : 'Upgrade untuk membuka') : a.name;
+    btn.style.setProperty('--atom-clr', isLocked ? '#374151' : a.color);
+    btn.innerHTML = isLocked
+      ? `<span class="mb-atom-sym" style="opacity:0.4">${a.sym}</span><span class="mb-atom-name" style="opacity:0.4">🔒</span>`
+      : `<span class="mb-atom-sym">${a.sym}</span><span class="mb-atom-name">${a.name}</span>`;
     paletteEl.appendChild(btn);
   });
 
   paletteEl.addEventListener('click', e => {
     const btn = (e.target as HTMLElement).closest('[data-sym]') as HTMLElement | null;
     if (!btn) return;
-    addAtomFree(btn.dataset.sym!);
+    const sym = btn.dataset.sym!;
+    if (demoMode && !DEMO_UNLOCKED_ATOMS.has(sym)) {
+      showDemoUpgrade();
+      return;
+    }
+    addAtomFree(sym);
   });
 
   quickEl.addEventListener('click', e => {

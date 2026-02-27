@@ -23,22 +23,58 @@ initTheme();
 
 const app = document.getElementById('app')!;
 
-// ── Show loading state while checking auth ───────────────────────────
-app.innerHTML = `
-  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;gap:12px;color:var(--text-3)">
-    <div class="auth-spinner" style="border-color:var(--border);border-top-color:var(--accent)"></div>
-    <span style="font-size:14px">Loading...</span>
-  </div>
-`;
+// ── Show loading state while checking auth (skip in demo mode) ───────
+if (window.location.hash !== '#/molecule-demo') {
+    app.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;gap:12px;color:var(--text-3)">
+      <div class="auth-spinner" style="border-color:var(--border);border-top-color:var(--accent)"></div>
+      <span style="font-size:14px">Loading...</span>
+    </div>
+  `;
+}
 
-// ── Check if user is already logged in (has valid cookie) ────────────
-initAuth().then((loggedIn) => {
-    if (loggedIn) {
-        bootApp();
-    } else {
-        showGate();
-    }
-});
+// ── Demo mode: isolated boot, no auth, no router ────────────────────
+const isDemoMode = window.location.hash === '#/molecule-demo';
+
+if (isDemoMode) {
+    // SECURITY: Demo mode is fully isolated.
+    // - No auth, no router, no navigate(), no Nav component
+    // - Only renders MoleculeBuilder with demoMode=true
+    // - Palette restricted to H, O, C (3 atoms)
+    // - Challenge mode locked
+    // - Cannot navigate to any other route
+    app.innerHTML = '';
+    app.style.cssText = 'min-height:100vh;background:var(--bg-1,#0f172a);';
+    const demoContainer = document.createElement('div');
+    demoContainer.style.cssText = 'position:relative;width:100%;min-height:100vh;';
+    app.appendChild(demoContainer);
+
+    // Determine landing page URL for upgrade CTA
+    // When embedded in iframe, parent origin is the landing page
+    const landingUrl = document.referrer
+        ? new URL('/#pricing', document.referrer).href
+        : '/#pricing';
+
+    renderMoleculeBuilder(demoContainer, {
+        demoMode: true,
+        landingUrl,
+    });
+
+    // SECURITY: Block hash navigation attempts
+    window.addEventListener('hashchange', (e) => {
+        e.preventDefault();
+        window.location.hash = '#/molecule-demo';
+    });
+} else {
+    // ── Normal app: check auth then boot ─────────────────────────────
+    initAuth().then((loggedIn) => {
+        if (loggedIn) {
+            bootApp();
+        } else {
+            showGate();
+        }
+    });
+}
 
 // ── Auth Gate — shown when not logged in ─────────────────────────────
 function showGate() {

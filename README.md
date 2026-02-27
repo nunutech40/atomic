@@ -32,8 +32,12 @@
 ### 🛠️ General
 - **Bilingual** — Bahasa Indonesia & English, toggle real-time
 - **Dark / Light Mode** — persisted ke localStorage
-- **Kimia Lab** — molecule builder 3D mode bebas
-- **Chemistry Deduction Engine** — deduksi kimia rule-based per kombinasi atom (bahaya, peringatan, menarik)
+- **Kimia Lab** — molecule builder 3D, mode bebas + mode tantangan
+  - **32 molekul** — database lengkap (gas, organik, anorganik, asam, basa, oksida, garam, material)
+  - **18 atom di palette** — H, O, C, N, Na, Cl, S, K, Ca, Fe, Cu, Mg, P, Al, Zn, Ag, Au, Pb
+  - **15 tantangan** — 5 easy, 5 medium, 5 hard dengan hint system
+  - **Chemistry Deduction Engine** — deduksi kimia rule-based per kombinasi atom
+  - **Demo Mode** — restricted palette (H, O, C saja), 15 atom terkunci, embed via iframe di landing page
 
 ---
 
@@ -90,7 +94,7 @@ atomic/
 │   │   ├── Explore.ts            # Tabel periodik + galeri molekul
 │   │   ├── ElementDetail.ts      # Halaman detail elemen
 │   │   ├── DiscovererStory.ts    # Kisah penemu per elemen
-│   │   ├── MoleculeBuilder.ts    # Kimia Lab — builder 3D
+│   │   ├── MoleculeBuilder.ts    # Kimia Lab — builder 3D + demo mode
 │   │   ├── PhenomenaList.ts      # Daftar fenomena
 │   │   ├── PhenomenaStory.ts     # Story per fenomena
 │   │   ├── AtomHistory.ts        # Sejarah atom — 22 slide
@@ -126,7 +130,8 @@ Lihat [PRD.md](docs/PRD.md) untuk detail lengkap.
 | ✅ Done | Phase 1 — Core (tabel, detail, fenomena, sejarah, explore, dashboard) |
 | ✅ Done | **Phenomena Stories** — 27 story narasi lengkap (Kehidupan + Fiksi & Sains) |
 | ✅ Done | **Chemistry Deduction Engine** — Kimia Lab free mode |
-| 🔨 Next | **Kimia Lab — Mode Tantangan** (challenge system, hint, feedback) |
+| ✅ Done | **Kimia Lab — Mode Tantangan** (15 challenges, hint system, feedback) |
+| ✅ Done | **Demo Mode** — restricted palette embed di landing page |
 | 🗓️ Planned | Card "Keberadaan di Alam" per elemen |
 | 🗓️ Planned | Card "Fenomena Terkait" per elemen |
 | 🗓️ Planned | Phase 2 — 10 Modul Edukasi Pemula (`/learn`) |
