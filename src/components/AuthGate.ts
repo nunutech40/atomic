@@ -89,7 +89,8 @@ function renderGuestForm(isId: boolean): string {
         <input type="text" id="auth-password"
                placeholder="ATOM-XXXX"
                required autocomplete="off"
-               class="auth-code-input" />
+               class="auth-code-input"
+               style="text-transform: uppercase;" />
         <span class="auth-field-hint">${isId ? 'Kode dari admin atau guru kamu' : 'Code from your admin or teacher'}</span>
       </div>
       <div class="auth-field">
@@ -137,7 +138,7 @@ function wireGuestForm(
 
     try {
       const email = (form.querySelector('#auth-email') as HTMLInputElement).value.trim();
-      const code = (form.querySelector('#auth-password') as HTMLInputElement).value.trim();
+      const code = (form.querySelector('#auth-password') as HTMLInputElement).value.trim().toUpperCase();
       const referralEl = form.querySelector('#auth-referral') as HTMLSelectElement;
       const referralSource = referralEl?.value || '';
 
