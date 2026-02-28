@@ -203,7 +203,8 @@ function bootApp() {
     mountFeedbackWidget();
 
     // Auto-redirect to onboarding on first visit
-    if (!hasSeenOnboarding() && window.location.hash.slice(1) === '/') {
+    const currentHash = window.location.hash.slice(1) || '/';
+    if (!hasSeenOnboarding() && currentHash === '/') {
         navigate('/onboarding');
     }
 
