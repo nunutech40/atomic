@@ -1,7 +1,7 @@
 import './styles/global.css';
 import { initTheme } from './core/theme';
 import { initAuth, isLoggedIn, onAuthChange } from './core/auth';
-import { initRouter, addRoute, setCleanup, resolve, navigate } from './core/router';
+import { initRouter, addRoute, setCleanup, resolve } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderDashboard } from './components/Dashboard';
 import { renderExplore } from './components/Explore';
@@ -197,16 +197,16 @@ function bootApp() {
         setCleanup(cleanup);
     });
 
+    // Auto-redirect to onboarding on first visit (BEFORE initRouter so hash is set before first resolve)
+    const currentHash = window.location.hash.slice(1) || '/';
+    if (!hasSeenOnboarding() && currentHash === '/') {
+        window.location.hash = '#/onboarding';
+    }
+
     initRouter();
 
     // Mount feedback widget (only after login)
     mountFeedbackWidget();
-
-    // Auto-redirect to onboarding on first visit
-    const currentHash = window.location.hash.slice(1) || '/';
-    if (!hasSeenOnboarding() && currentHash === '/') {
-        navigate('/onboarding');
-    }
 
     // When user logs out, show gate again
     onAuthChange(() => {
