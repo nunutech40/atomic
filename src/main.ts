@@ -1,6 +1,6 @@
 import './styles/global.css';
 import { initTheme } from './core/theme';
-import { initAuth, isLoggedIn, onAuthChange } from './core/auth';
+import { initAuth, isLoggedIn, onAuthChange, checkAccess, getLoginType, getUser } from './core/auth';
 import { initRouter, addRoute, setCleanup, resolve } from './core/router';
 import { renderNav } from './components/Nav';
 import { renderDashboard } from './components/Dashboard';
@@ -17,6 +17,7 @@ import { renderLearnList } from './components/LearnList';
 import { renderLearnModule } from './components/LearnModule';
 import { renderAuthGate, renderSubscriberGate, renderUserBadge, wireUserBadge } from './components/AuthGate';
 import { mountFeedbackWidget, unmountFeedbackWidget } from './components/FeedbackWidget';
+import { renderPricingPage } from './components/PricingPage';
 
 
 initTheme();
@@ -67,9 +68,9 @@ if (isDemoMode) {
     });
 } else {
     // ── Normal app: check auth then boot ─────────────────────────────
-    initAuth().then((loggedIn) => {
+    initAuth().then(async (loggedIn) => {
         if (loggedIn) {
-            bootApp();
+            await bootApp();
         } else {
             showGate();
         }
@@ -81,24 +82,52 @@ function showGate() {
     app.innerHTML = '';
     unmountFeedbackWidget();
 
-    const isSubscriberLogin = window.location.pathname === '/login';
+    // Default = subscriber login, /guest = guest login
+    const isGuestLogin = window.location.pathname === '/guest';
 
-    if (isSubscriberLogin) {
-        renderSubscriberGate(app, () => {
+    if (isGuestLogin) {
+        renderAuthGate(app, async () => {
             app.innerHTML = '';
-            window.history.replaceState({}, '', '/');
-            bootApp();
+            await bootApp();
         });
     } else {
-        renderAuthGate(app, () => {
+        renderSubscriberGate(app, async () => {
             app.innerHTML = '';
-            bootApp();
+            window.history.replaceState({}, '', '/');
+            await bootApp();
         });
     }
 }
 
-// ── Full App — shown after auth ──────────────────────────────────────
-function bootApp() {
+// ── Pricing Page — shown when subscriber needs to pay ────────────────
+function showPricingPage() {
+    app.innerHTML = '';
+    unmountFeedbackWidget();
+    renderPricingPage(app, async () => {
+        // Called when access is granted (after payment success)
+        app.innerHTML = '';
+        await bootApp();
+    });
+}
+
+// ── Full App — shown after auth + access check ──────────────────────
+async function bootApp() {
+    // ── Access Gate: subscribers must have active subscription ──
+    const loginType = getLoginType();
+    const user = getUser();
+    const isGuest = loginType === 'guest';
+    const isAdmin = user?.role === 'admin';
+
+    if (!isGuest && !isAdmin) {
+        // Subscriber → check if they have an active subscription
+        const hasAccess = await checkAccess();
+        if (!hasAccess) {
+            showPricingPage();
+            return;
+        }
+    }
+    // Guest and admin → bypass, go straight to full app
+
     app.innerHTML = `
     <div id="nav-container"></div>
     <main class="main-content" id="main-container"></main>

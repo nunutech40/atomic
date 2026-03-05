@@ -248,7 +248,7 @@ sains.id/atomic   → Produk 1 (existing)
 sains.id/energi   → Produk 2 (masa depan)
                          ↕
                   api.sains.id (satu backend)
-                  Supabase Postgres (satu DB)
+                  PostgreSQL lokal di VPS (satu DB)
 ```
 
 ### 7.2 Tipe User
@@ -256,7 +256,7 @@ sains.id/energi   → Produk 2 (masa depan)
 | Tipe | Cara Dapat | Lifetime | Session |
 |------|-----------|---------|---------|
 | `guest` | Di-generate admin, dibagikan via link | 48 jam, max 5x login | 1 aktif |
-| `subscriber` | Register + bayar Xendit | Sesuai plan | 1 aktif |
+| `subscriber` | Register + bayar Midtrans | Sesuai plan | 1 aktif |
 | `admin` | Seeded di DB | Selamanya | 2 aktif |
 
 **Guest:** tidak self-register. Admin generate code → user masukkan email + code → OTP dikirim ke email → verifikasi OTP → akses diberikan.
@@ -293,11 +293,11 @@ Threshold: `score ≥ 25` → warning email → `score ≥ 50` → auto-lock.
 
 ```
 Runtime:  Go 1.23+ (Gin framework)
-Database: Neon Postgres + pgx + sqlc
+Database: PostgreSQL 16 (lokal di VPS) + pgx + sqlc
 Auth:     JWT (Bearer header) + bcrypt + OTP email
-Email:    Resend
-Payment:  Xendit (QRIS, VA, GoPay, OVO, CC)
-Hosting:  Railway (backend) + Neon (DB)
+Email:    DomainNesia SMTP (noreply@sains-atomic.web.id)
+Payment:  Midtrans Snap (QRIS, VA, GoPay, CC)
+Hosting:  IDCloudHost VPS (103.181.143.73)
 ```
 
 ---

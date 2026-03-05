@@ -407,15 +407,15 @@ interface ElementPhenomena {
                  ┌───────────────▼───────────────┐
                  │     api.sains.id               │
                  │     Go (Gin) + Templ/HTMX      │
-                 │     Railway (1 binary)          │
+                 │     IDCloudHost VPS (1 binary)    │
                  └───────────────┬───────────────────────────────┘
                                  │
               ┌──────────────────┼──────────────────┐
               │                  │                  │
     ┌─────────▼──────┐  ┌───────▼───────┐  ┌──────▼──────┐
-    │  Supabase      │  │  Xendit       │  │  Resend     │
-    │  Postgres      │  │  Payment      │  │  Email      │
-    │               │  │  (REST API)   │  │  (Go SDK)   │
+    │  PostgreSQL   │  │  Midtrans     │  │  DomainNesia│
+    │  16 (lokal)   │  │  Snap API     │  │  SMTP       │
+    │               │  │  (REST API)   │  │             │
     └────────────────┘  └───────────────┘  └─────────────┘
 ```
 
@@ -462,7 +462,7 @@ segment=student   25rb     65rb    110rb     180rb
 segment=parent    89rb    239rb    399rb     699rb
 ```
 
-Harga disimpan di tabel `pricing_plans` \u2014 dapat diubah admin tanpa deploy ulang. Tiga landing page terpisah dengan copywriting per segmen, semua checkout ke Xendit yang sama.
+Harga disimpan di tabel `pricing_plans` — dapat diubah admin tanpa deploy ulang. Tiga landing page terpisah dengan copywriting per segmen, semua checkout ke Midtrans Snap yang sama.
 
 ### 8.5 Anomaly Detection \u2014 Anti Multi-User Sharing
 
@@ -504,7 +504,7 @@ Full schema: lihat `docs/BACKEND_PLAN.md` Section 6.
 - ❗ `if (localStorage.isPremium)` — bisa dimanipulasi DevTools
 - ❗ Konten premium di bundle JS — bisa di-extract tanpa login
 - ✅ Setiap request divalidasi ke DB: session aktif + subscription belum expired
-- ✅ Xendit webhook: selalu verifikasi `X-Callback-Token` header (`crypto/hmac`)
+- ✅ Midtrans webhook: selalu verifikasi signature SHA512 (`crypto/sha512`)
 - ✅ Rate limiting: login max 5/menit per IP (Gin middleware)
 - ✅ Cookie: `httpOnly` + `Secure` + `SameSite=Strict`
 - ✅ Input validation: struct tags + `go-playground/validator`
@@ -514,7 +514,7 @@ Full schema: lihat `docs/BACKEND_PLAN.md` Section 6.
 
 ```
 Phase BE-1: Foundation    → Go (Gin) + pgx + sqlc + Auth + Single session rule
-Phase BE-2: Subscription  → Pricing plans + Xendit REST API + Access check endpoint
+Phase BE-2: Subscription  → Pricing plans + Midtrans Snap API + Access check endpoint
 Phase BE-3: Guest + Security → Guest token flow + Anomaly engine + IP logging
 Phase BE-4: Admin Dashboard → Templ + HTMX + Chart.js + Admin pages
 Phase BE-5: Hardening     → Rate limit + audit + monitoring + Docker
@@ -532,14 +532,14 @@ Phase BE-5: Hardening     → Rate limit + audit + monitoring + Docker
 | Auth JWT | **golang-jwt/jwt** |
 | Password | **golang.org/x/crypto/bcrypt** |
 | Validation | **go-playground/validator** |
-| Email | **Resend** (Go SDK) |
-| Payment | **Xendit** (REST API via `net/http`, no SDK) |
+| Email | **DomainNesia SMTP** (noreply@sains-atomic.web.id) |
+| Payment | **Midtrans** Snap API (REST via `net/http`) |
 | Geolocation | ip-api.com (free) atau MaxMind GeoIP2 |
 | Logging | **zerolog** atau **slog** (stdlib Go 1.21+) |
 | Admin Dashboard | **Templ** + **HTMX** + **Alpine.js** + **Chart.js** |
-| Hosting BE | **Railway** (1 binary deploy) |
-| Hosting DB | **Neon** Postgres |
+| Hosting BE | **IDCloudHost VPS** (103.181.143.73) |
+| Hosting DB | **PostgreSQL 16** (lokal di VPS) |
 
-> **Deploy:** Go binary single file. Admin dashboard (Templ + HTMX) dan static assets di-embed via `go:embed`. Frontend Atomic tetap static SPA di Vercel/Netlify. Cookie cross-origin butuh CORS `credentials: true` + `gin-contrib/cors`.
+> **Deploy:** Go binary single file. Admin dashboard (Templ + HTMX) dan static assets di-embed via `go:embed`. Frontend Atomic static SPA deploy manual ke VPS. Cookie cross-origin butuh CORS `credentials: true` + `gin-contrib/cors`.
 >
 
