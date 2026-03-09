@@ -138,12 +138,30 @@ async function bootApp() {
 
     let tableCleanup: (() => void) | null = null;
 
+    function trackPageView() {
+        const params = new URLSearchParams(window.location.search);
+        const data = {
+            url: '/app' + (window.location.hash.slice(1) || '/'),
+            referrer: document.referrer,
+            utm_source: params.get('utm_source') || '',
+            utm_medium: params.get('utm_medium') || '',
+            utm_campaign: params.get('utm_campaign') || ''
+        };
+        fetch('/api/analytics/collect', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).catch(() => { });
+    }
+
     function rerender() {
         renderNavWithUser(navContainer, rerender);
         resolve();
+        trackPageView();
     }
 
     renderNavWithUser(navContainer, rerender);
+    trackPageView();
 
     addRoute('/', () => {
         if (tableCleanup) { tableCleanup(); tableCleanup = null; }
